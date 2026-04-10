@@ -9,12 +9,14 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
   <script type="text/javascript" charset="utf-8">
   
-
-    function getDados() {
+ /*   function getDados() {
   return JSON.parse(localStorage.getItem('estoqueDeProdutos')) || [];
-}
+}*/
 function setDados(dados) {
   localStorage.setItem('estoqueDeProdutos', JSON.stringify(dados));
 }
@@ -25,6 +27,64 @@ function setUser(dados) {
   localStorage.setItem('userDados', JSON.stringify(dados));
 }
   </script>
+<script>
+  // 1. Configurações de acesso
+  const SUPABASE_URL = 'https://wyhqwprshbgwjlnxndhm.supabase.co'
+  
+  const SUPABASE_KEY ='sb_publishable_avVe0cMnriaF8Ogt42Z7Xg_PTD5pdnZ'
+
+  // 2. Inicializa o cliente
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+  // Exemplo de função para salvar seus dados (Opção 2 - JSONB)
+  async function enviarAoBanco() {
+    const estoqueDeProdutos = [
+      {
+        id_comercial: '0004',
+        classe: 'bomboniere',
+        categoria: 'amendoins',
+        marca: 'Fini',
+        nome: '  Bala Fini',
+        embalagens: [
+          { cod: 'B005', tipo: 'pct 70gr', preco: '3,50R$', estoque: 100, vendas: 0, desconto: 0.5, ativo: true, destaque: false }
+        ]
+      }
+    ];
+
+    const { data, error } = await _supabase
+      .from('estoque')
+      .insert(estoqueDeProdutos)
+
+    if (error) {
+      console.error('Erro:', error.message)
+    } else {
+      console.log('Sucesso:', data)
+    }
+  }
+  //enviarAoBanco()
+  
+  async function getDados() {
+  const { data, error } = await _supabase
+    .from('estoque')
+    .select('*'); // O asterisco traz todas as colunas
+
+  if (error) {
+    console.error('Erro ao ler dados:', error.message);
+  } else {
+    
+    return data || []
+    // Para acessar a primeira embalagem do primeiro produto:
+     
+  }
+}
+/*async function inicializarApp() {
+  const produtos = await getDados();
+alert(produtos)
+}
+inicializarApp()*/
+
+ 
+</script>
 
 </head>
 <body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
@@ -76,6 +136,10 @@ function setUser(dados) {
        
          <script type="text/javascript" charset="utf-8">
          
+    async function listaCateg() {
+ 
+const dbListExist = await getDados();
+         
    function headerToolsList(idAtivo){
          
     const listCateg = document.getElementById('listCateg')
@@ -98,7 +162,7 @@ function setUser(dados) {
     
     listCateg.innerHTML='' 
     
-      const dbListExist = JSON.parse(localStorage.getItem('estoqueDeProdutos'))||[]
+      
       
       /* PAREI AQUI */
       
@@ -179,6 +243,8 @@ const classeComItem = [...new Set(dbListExist.map(item =>
          }
          headerToolsList('')
         
+    }
+    listaCateg()
     </script>
 
     </div>
@@ -356,7 +422,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 </button>
 </a>
 
-  <button class=" bg-yellow-300 rounded-lg py-1 px-2 shrink-0 h-fit w-fit">
+  <button class=" bg-yellow-300 rounded-lg py-1 px-2 shrink-0 h-fit w-fit" onclick="enviarAoBanco()">
   <i class="w-4 h-4 text-gray-700" data-lucide="log-out"></i>
 </button>
 
@@ -449,7 +515,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
 
  <!----------------VITRINE---------------> 
- <section id="splash" class="hidden">
+ <section id="splash">
    
   
      <div id="splash-pulse-container">
@@ -580,9 +646,12 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     
     <script type="text/javascript" charset="utf-8">
     
+         
+    async function listaTop20() {
+ 
+const dbGeral = await getDados();
+         
 
-// 1. Recuperar e Filtrar os dados
-const dbGeral = getDados()
 const divtop10 = document.getElementById('boxTop10');
 
 // Filtramos apenas a categoria cerveja antes de processar as variações
@@ -617,7 +686,7 @@ top10.forEach(item => {
   // Formatando o preço para o padrão brasileiro
   const precoFormatado = item.preco.replace(/[^0-9,.]/g,"").replace(",",".")
   
-  const descontoFormatado = item.desconto.replace(/[^0-9,.]/g,"").replace(",",".")
+  const descontoFormatado = item.desconto
   
    const precoFinal = precoFormatado - descontoFormatado
    
@@ -657,7 +726,7 @@ const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
   `;
   divtop10.appendChild(card);
 });
-    
+    }listaTop20()
     </script>
     
   </div>
@@ -681,16 +750,19 @@ const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
 
   <script type="text/javascript" charset="utf-8">
     
+               
+    async function listaProm() {
+ 
+const db = await getDados();
+         
       
-      const db =  getDados()
    const boxPromocoes= document.getElementById('boxPromocoes')
       
       db.forEach(pr=>{
         
     const  dbEmbalagens  = pr.embalagens.forEach(de=>{
       
-       const descontoLimpo =de.desconto.replace(/[^0-9.,]/g,"")
-          .replace(",",".")
+       const descontoLimpo =de.desconto
      
      const precoFormatado = de.preco.replace(/[^0-9,.]/g,"").replace(",",".")
   
@@ -741,6 +813,8 @@ const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
   
       })
       if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+    listaProm()
   </script>
 </div>   
       
@@ -974,6 +1048,18 @@ slcEndereco.addEventListener('change', (event) => {
     
     
   </div>
+
+
+ <!----script------>
+ <script>
+   
+   
+ </script>
+ <!----fim------>
+ 
+ 
+ 
+ 
  
 <!---MODAL ADICIONAR  PRODUTO--->
  <div id="modalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center transition-opacity duration-300">
@@ -983,7 +1069,7 @@ slcEndereco.addEventListener('change', (event) => {
 <!----FIM--> 
  
 </footer>
-<script src="main.js"></script>
+<script src="main.js" defer ></script>
 
 <script type="text/javascript" charset="utf-8">
 
