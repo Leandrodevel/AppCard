@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //////////////////////////////////
 //////////////////////////////////
 function verificaLogin() {
-  navegacao('splash')
+  navegacao('home')
   
   const userExist = JSON.parse(localStorage.getItem('userDados')) || []
   if(!userExist){
