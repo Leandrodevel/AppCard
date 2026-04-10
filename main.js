@@ -577,7 +577,7 @@ dbCategorias.forEach((item,index)=>{
     navCat.appendChild(btn);
     
   });
-  listaProdutos('','',classe)
+  
   navegacao('cardapio')
   
 }
