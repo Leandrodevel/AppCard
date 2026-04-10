@@ -178,7 +178,7 @@ function navegacao(open) {
       behavior: 'auto'
   })
       
-  const allSections=['splash','home','userCadastro','perfilUser','cardapio','modalCarrinho','pagePromocao','vitrineProdutos','editarUser','enderecoTemp']
+  const allSections=['splash','home','userCadastro','perfilUser','cardapio','modalCarrinho','pagePromocao','editarUser','enderecoTemp']
   
   
   if(open === 'userCadastro'|| open === 'perfilUser' || open==='editarUser' || open==='enderecoTemp' || open === 'modalCarrinho'){
