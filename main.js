@@ -1051,23 +1051,21 @@ document.getElementById('form-cadastro').addEventListener('submit', function(e) 
 /*==========================================================================================================================================================*/
 async function cadastrarEnderecoAlternativo(e){
   
-  const userDados = await userDados()
+  const userdados = await userDados()
    
   e.preventDefault(); // Impede a página de recarregar
   
-    userDados.rua = document.getElementById('inputRuaAlt').value
+    userdados.rua = document.getElementById('inputRuaAlt').value
 
-    userDados.casa =   document.getElementById('inputCasaAlt').value
+    userdados.casa =   document.getElementById('inputCasaAlt').value
 
-    userDados.bairro =   document.getElementById('inputBairroAlt').value
+    userdados.bairro =   document.getElementById('inputBairroAlt').value
 
-    userDados.cep =   document.getElementById('inputCEPAlt').value
+    userdados.cep =   document.getElementById('inputCEPAlt').value
 
-    userDados.complemento =  document.getElementById('inputComplementoAlt').value
+    userdados.complemento =  document.getElementById('inputComplementoAlt').value
 
-const { data, error } = await _supabase
-      .from('users')
-      .insert(userDados)
+localStorage.setItem('userDados',JSON.stringify(userdados))
 
   alert('Endereço Cadastrado')
   navegacao('home')
