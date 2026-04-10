@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a1a">
+    <title> Cardápio Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+  
+
+</head>
+<body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
+  
+  
+  
+  <div class="min-h-screen bg-gray-50 p-4 font-sans text-gray-800">
+  
+  <div class="max-w-4xl mx-auto mb-6">
+    <div class="flex justify-between items-center mb-6">
+       <a href="index.html">H</a>
+      <h1 class="text-2xl font-black tracking-tight">ADMIN <span class="text-yellow-500">CARDÁPIO</span></h1>
+   
+      <button onclick="abrirModalCadastro()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm transition-all active:scale-95">
+        + Novo Produto
+      </button>
+    </div>
+
+    <div class="relative">
+      <input type="text" id="inputBusca" oninput="renderizarAdmin()" placeholder="Pesquisar por nome ou código..." 
+             class="w-full p-4 rounded-2xl border-none shadow-md focus:ring-2 focus:ring-yellow-400 outline-none">
+    </div>
+  </div>
+
+  <div id="listaAdmin" class="max-w-4xl mx-auto space-y-3">
+    </div>
+</div>
+
+
+
+
+<div id="modalCadastro" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-black italic">NOVO PRODUTO</h2>
+            <button onclick="fecharModalCadastro()" class="text-gray-400">✕</button>
+        </div>
+
+        <form id="formCadastro" class="space-y-3">
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase">variação de ...</label>
+                    <select id="keyVariacao" placeholder="0001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                        
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase">Classe</label>
+                    <select id="cadClasse" required placeholder="bebidas" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none"></select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase">Categoria</label>
+                    <select id="cadCategoria" required placeholder="cerveja" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                        
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase">Marca</label>
+                    <input type="text" id="cadMarca" required placeholder="brahma" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label class="text-[10px] font-bold text-gray-400 uppercase">Nome Completo</label>
+                <input type="text" id="cadNome" required placeholder="Cerveja Brahma Chopp" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+            </div>
+
+            <hr class="my-2">
+            <p class="text-[10px] font-black text-yellow-600 uppercase">Primeira Embalagem/Variação</p>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase">Cód. SKU</label>
+                    <input type="text" disabled id="cadCod" required placeholder="B001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase">Tipo</label>
+                    <input type="text" id="cadTipo" required placeholder="Lata 350ml" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase">Preço</label>
+                    <input type="text" id="cadPreco" required placeholder="3,80" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase">Estoque</label>
+                    <input type="number" id="cadEstoque" required placeholder="100" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase">Vendas Init</label>
+                    <input type="number" id="cadVendas" value="0" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-yellow-400 text-gray-900 font-black py-3 rounded-xl shadow-lg mt-2">
+                CADASTRAR PRODUTO
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+  const classesCateg = {
+    'Bebidas': ['Águas', 'Cachaças', 'Cervejas', 'Whiskys', 'Vodkas', 'Destilados', 'Aperitivos', 'Refrigerantes', 'Energéticos','Combos','Drink'],
+    'Petiscos': ['Amendoins', 'Azeitonas', 'Queijos'],
+    'Carvão e Gelo': ['Carvão Vegetal', 'Gelo em Cubo', 'Gelo de Coco'],
+    'Snacks Salgados': ['Salgadinhos', 'Batata Chips'],
+    'Doces e Chocolates': ['Barras de Chocolate', 'Caixas de Bombom'],
+    'Copos e Descartáveis': ['Copos 300ml', 'Canudos', 'Guardanapos'],
+    'Tabacaria': ['Cigarros', 'Isqueiros', 'Palheiros'],
+    'Utensílios': ['Abridores', 'Saca-rolhas', 'Tímidas'],
+    'Bomboniere': ['Balas', 'Chicles', 'Pirulitos']
+};
+
+const optDefault = new Option('Selecione', '');
+optDefault.disabled = true;
+optDefault.selected = true;
+cadClasse.add(optDefault);
+
+Object.keys(classesCateg).forEach(cc=>{
+ const optCategoria = document.createElement('option')
+  optCategoria.value=cc
+  optCategoria.innerText = cc
+ document.getElementById('cadClasse').appendChild(optCategoria)   
+    
+})
+
+cadClasse.addEventListener('change', () => {
+    cadCategoria.innerHTML = '';
+    
+    classesCateg[cadClasse.value].forEach(item => {
+        cadCategoria.add(new Option(item, item));
+    });
+});
+
+
+    
+  // Função para pegar os dados limpos
+function obterDados() {
+    return JSON.parse(localStorage.getItem('estoqueDeProdutos')) || [];
+}
+
+// Função para salvar os dados atualizados
+function salvarDados(dados) {
+    localStorage.setItem('estoqueDeProdutos', JSON.stringify(dados));
+    renderizarAdmin();
+}
+const cadMarca =   document.getElementById('cadMarca')
+const cadNome =   document.getElementById('cadNome')
+const keyVariacao = document.getElementById('keyVariacao')
+ const optkeyVariacao=  new Option('Variação de...','')   
+    keyVariacao.add(optkeyVariacao)
+    optkeyVariacao.disabled=true
+    optkeyVariacao.selected=true
+
+const dbVariacoes = obterDados()
+
+    dbVariacoes.forEach(dv=>{
+    keyVariacao.add(new Option(dv.nome,dv.id))
+    })
+    
+  keyVariacao.addEventListener('change', () => {
+    
+    cadCategoria.innerHTML = '';
+    cadClasse.innerHTML = '';
+    cadMarca.innerHTML = '';
+    cadNome.innerHTML = '';
+    cadMarca.disabled=true  
+    cadNome.disabled=true  
+    cadCategoria.disabled=true  
+    cadClasse.disabled=true
+    
+  const  variacaoEscolida = dbVariacoes.filter(ve=>ve.id === keyVariacao.value
+  )
+  alert(JSON.stringify(variacaoEscolida))
+    cadCategoria.add(new Option(variacaoEscolida[0].categoria,variacaoEscolida[0].categoria))
+    cadClasse.add(new Option(variacaoEscolida[0].classe,variacaoEscolida[0].classe))
+    
+    cadMarca.value = variacaoEscolida[0].marca
+    cadNome.value = variacaoEscolida[0].nome
+    });
+
+
+function renderizarAdmin() {
+    const produtos = obterDados();
+    const termoBusca = document.getElementById('inputBusca').value.toLowerCase();
+    const container = document.getElementById('listaAdmin');
+    
+    container.innerHTML = '';
+
+    // Processamos as variações para exibição individual
+    let listaProcessada = [];
+    produtos.forEach((prod, indexProd) => {
+        prod.embalagens.forEach((emb, indexEmb) => {
+            if (prod.nome.toLowerCase().includes(termoBusca) || emb.cod.includes(termoBusca)) {
+                listaProcessada.push({ ...prod, emb, indexProd, indexEmb });
+            }
+        });
+    });
+    listaProcessada.forEach(item => {
+        const pOriginal = parseFloat(item.emb.preco.replace(",", "."));
+        const pDesconto = parseFloat(item.emb.desconto.replace(",", "."));
+        const pFinal = pOriginal - pDesconto;
+        const estaAtivo = item.emb.ativo !== false;
+
+        const card = document.createElement('div');
+        card.className = `bg-white p-4 rounded-2xl shadow-sm border-2 ${estaAtivo ? 'border-transparent' : 'border-red-100 opacity-60'}`;
+
+        card.innerHTML = `
+            <div class="flex justify-between items-start mb-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2">
+                        <h3 class="font-bold text-lg">${item.nome}</h3>
+                        <span class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-500">${item.emb.vendas} vendidos</span>
+                    </div>
+                    <p class="text-sm font-bold text-yellow-600">${item.emb.tipo}</p>
+                </div>
+                
+                <div class="flex flex-col items-end">
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" ${estaAtivo ? 'checked' : ''} onchange="toggleAtivo(${item.indexProd}, ${item.indexEmb})">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
+                        <span class="ml-2 text-xs font-bold text-gray-400 uppercase">${estaAtivo ? 'Ativo' : 'Off'}</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 border-t pt-4">
+                <div class="flex flex-col">
+                    <span class="text-[10px] text-gray-400 uppercase font-bold">Preço Final</span>
+                    <span class="font-black text-lg text-gray-700">R$ ${pFinal.toFixed(2).replace(".", ",")}</span>
+                </div>
+
+                <button onclick="editarPreco(${item.indexProd}, ${item.indexEmb}, 'desconto')" class="flex items-center justify-center gap-1 bg-red-50 text-red-600 p-2 rounded-xl text-xs font-black hover:bg-red-100 transition">
+                   🏷️ DESC.
+                </button>
+                
+                <button onclick="editarPreco(${item.indexProd}, ${item.indexEmb}, 'estoque')" class="flex items-center justify-center gap-1 bg-blue-50 text-blue-600 p-2 rounded-xl text-xs font-black hover:bg-blue-100 transition">
+                   📦 ESTOQUE (${item.emb.estoque || 0})
+                </button>
+
+                <button onclick="toggleDestaque(${item.indexProd}, ${item.indexEmb})" class="flex items-center justify-center gap-1 ${item.emb.destaque ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'} p-2 rounded-xl text-xs font-black transition">
+                   ⭐ DESTAQUE
+                </button>
+            </div>
+
+            <div class="flex justify-end gap-4 mt-4">
+                <button onclick="excluirItem(${item.indexProd}, ${item.indexEmb})" class="text-xs text-red-400 font-bold hover:underline">Apagar Variação</button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// --- FUNÇÕES DE CONTROLE ---
+
+function toggleAtivo(idxProd, idxEmb) {
+    let dados = obterDados();
+    dados[idxProd].embalagens[idxEmb].ativo = !dados[idxProd].embalagens[idxEmb].ativo;
+    salvarDados(dados);
+}
+
+function toggleDestaque(idxProd, idxEmb) {
+    let dados = obterDados();
+    dados[idxProd].embalagens[idxEmb].destaque = !dados[idxProd].embalagens[idxEmb].destaque;
+    salvarDados(dados);
+}
+
+function editarPreco(idxProd, idxEmb, tipo) {
+    let dados = obterDados();
+    const msg = tipo === 'desconto' ? "Valor do desconto (ex: 2.50):" : "Adicionar quanto ao estoque?";
+    const valor = prompt(msg);
+    
+    if (valor !== null) {
+        if (tipo === 'desconto') {
+            dados[idxProd].embalagens[idxEmb].desconto = valor.replace(".", ",");
+        } else {
+            let atual = parseInt(dados[idxProd].embalagens[idxEmb].vendas || 0);
+            dados[idxProd].embalagens[idxEmb].vendas = atual + parseInt(valor);
+        }
+        salvarDados(dados);
+    }
+}
+
+function excluirItem(idxProd, idxEmb) {
+    if (confirm("Tem certeza que deseja apagar esta variação?")) {
+        let dados = obterDados();
+        dados[idxProd].embalagens.splice(idxEmb, 1);
+        
+        // Se o produto não tiver mais embalagens, remove o produto pai também
+        if (dados[idxProd].embalagens.length === 0) {
+            dados.splice(idxProd, 1);
+        }
+        salvarDados(dados);
+    }
+}
+
+// Inicializar
+renderizarAdmin();
+
+  
+  
+  
+  
+  // --- FUNÇÕES DO MODAL ---
+function abrirModalCadastro() {
+    document.getElementById('modalCadastro').classList.remove('hidden');
+}
+
+function fecharModalCadastro() {
+    document.getElementById('modalCadastro').classList.add('hidden');
+    document.getElementById('formCadastro').reset();
+}
+
+// --- LÓGICA DE SALVAMENTO ---
+const gerarID = () => {
+    const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
+    const data = Date.now();
+    return letras + data;
+};
+
+
+
+document.getElementById('formCadastro').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    
+    // 1. Capturar todos os valores
+    const idProd = keyVariacao.value ? keyVariacao.value : gerarID()
+    const classe = document.getElementById('cadClasse').value;
+    const categoria = document.getElementById('cadCategoria').value;
+    const marca = document.getElementById('cadMarca').value;
+    const nome = document.getElementById('cadNome').value;
+    
+    // Variação
+    const cod = document.getElementById('cadCod').value = gerarID();
+    const tipo = document.getElementById('cadTipo').value;
+    const preco = document.getElementById('cadPreco').value;
+    const estoque = parseInt(document.getElementById('cadEstoque').value);
+    const vendas = parseInt(document.getElementById('cadVendas').value);
+    
+    // 2. Obter banco
+    let dados = JSON.parse(localStorage.getItem('estoqueDeProdutos')) || [];
+    
+    // 3. Objeto da Embalagem seguindo seu padrão
+    const novaEmbalagem = {
+        cod: cod,
+        tipo: tipo,
+        preco: preco.includes('R$') ? preco : `${preco}R$`,
+        estoque: estoque,
+        vendas: vendas,
+        desconto: "0,00",
+        ativo: true,
+        destaque: false
+    };
+    
+    // 4. Verificar se o produto (pelo ID ou Nome) já existe
+    const indexExistente = dados.findIndex(p => p.id === idProd || p.nome === nome);
+    
+    if (indexExistente !== -1) {
+        // Se já existe, apenas adicionamos a nova embalagem ao array
+        dados[indexExistente].embalagens.push(novaEmbalagem);
+    } else {
+        // Se não existe, cria o objeto completo
+        const novoProduto = {
+            id: idProd,
+            classe: classe,
+            categoria: categoria,
+            marca: marca,
+            nome: nome,
+            embalagens: [novaEmbalagem]
+        };
+        dados.push(novoProduto);
+    }
+    
+    // 5. Salvar e resetar
+    localStorage.setItem('estoqueDeProdutos', JSON.stringify(dados));
+    
+    alert("Produto/Variação salva com sucesso!");
+    fecharModalCadastro();
+    if (typeof renderizarAdmin === "function") renderizarAdmin();
+});
+
+
+
+
+
+
+
+</script>
+</body></html>

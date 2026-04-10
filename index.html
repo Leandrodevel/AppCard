@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a1a">
+    <title> Cardápio Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" charset="utf-8">
+  
+    function getDados() {
+  return JSON.parse(localStorage.getItem('estoqueDeProdutos')) || [];
+}
+function setDados(dados) {
+  localStorage.setItem('estoqueDeProdutos', JSON.stringify(dados));
+}
+    function getUser() {
+  return JSON.parse(localStorage.getItem('userDados')) || [];
+}
+function setUser(dados) {
+  localStorage.setItem('userDados', JSON.stringify(dados));
+}
+  </script>
+
+</head>
+<body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
+
+  <header id="header" class="transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2 border-b border-gray-100 bg-gray-900">
+
+            
+    <div class="flex items-center justify-between mb-4">
+      
+      <div class="flex gap-2 flex-row items-center">
+        <span class=" capitalize text-sm font-bold text-yellow-400 tracking-wider">Olá </span>
+        <span class="flex items-center text-sm font-bold text-gray-200"  id="btnViewEndereco">
+          Rua das Cervejarias, 123
+           </span>
+      </div>
+           
+         <div class="flex flex-row gap-2 items-center" id="statusOnline"></div>
+    
+    </div>
+     
+       
+     </div>
+    <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class="relative group">
+      <input id="search-bar" name="searchBar" list="listBusca" type="search" placeholder="O que vamos beber hoje?" class="w-full bg-gray-100 border-none rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-yellow-400 transition-all">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-4 top-3 group-focus-within:text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </form>
+   <datalist id="listBusca">
+   
+   </datalist>
+    
+  </header>
+
+<main class=" p-1 py-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+  
+  
+  <div id="headerTools">
+     <!----------menu superior----------> 
+      
+    <div class="w-full px-2">
+    <div id="faixaTicker" class=" w-full px-2 py-2  overflow-x-auto font-bold bg-white text-red-400 rounded-lg">
+    </div>
+    </div>
+
+ 
+    <div id="listCateg" class="w-full flex flex-nowrap justify-around gap-1.5 overflow-x-auto relative ">
+       
+         <script type="text/javascript" charset="utf-8">
+         
+   function headerToolsList(idAtivo){
+         
+    const listCateg = document.getElementById('listCateg')
+   
+   
+    const primeCateList =[
+  { nome: 'Todos', icone: 'arrow-down-a-z',lista:'' },
+  { nome: 'Bebidas', icone: 'bottle-wine',lista:'bebidas' },
+  { nome: 'Petiscos', icone: 'hand-platter',lista:'petiscos' },
+  { nome: 'Churrasco', subCategoria: 'churrasco', icone: 'beef',lista:'conveniencia' },
+  { nome: 'Carvão/gelo', subCategoria: [], icone: 'brick-wall-fire',lista:'carvaoegelo' },
+  { nome: 'Bomboniere', subCategoria: [], icone: 'cookie',lista:'bomboniere' },
+  { nome: 'Salgadinhos', subCategoria: [], icone: 'popcorn',lista:'snackssalgados' },
+  { nome: 'Tabacaria', subCategoria: [], icone: 'cigarette',lista:'tabacaria' },
+  { nome: 'Doces e chocolates', subCategoria: [], icone: 'candy',lista:'docesechocolate' },
+  { nome: 'Outros', subCategoria: [], icone: 'circle-plus',lista:'outros' },
+  { nome: 'Utensílios', subCategoria: [], icone: 'shapes',lista:'utensilios' }
+]
+
+    
+    listCateg.innerHTML='' 
+    
+      const dbListExist = JSON.parse(localStorage.getItem('estoqueDeProdutos'))||[]
+      
+      /* PAREI AQUI */
+      
+      // 1. Criamos um Set com as classes já tratadas para busca rápida
+const classeComItem = [...new Set(dbListExist.map(item =>
+    item.classe
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/\s/g, "")
+  ))]
+ 
+ let classeParaExibir =[]
+ 
+ classeComItem.forEach(fl=>{
+   
+ const comparados =  primeCateList.filter(ci=>ci.lista.toLowerCase() === fl.toLowerCase())
+  classeParaExibir.push(...comparados)
+
+ })
+ const itemTodos = primeCateList.filter(it=>it.lista ==='')
+ classeParaExibir.push(...itemTodos)
+ 
+//alert(JSON.stringify(classeParaExibir))
+
+ classeParaExibir.sort((a, b) => a.lista.localeCompare(b.lista));
+ 
+      
+      classeParaExibir.forEach(pc =>{
+      
+     const idAtual = pc.lista.toLowerCase().replace(/[\/]/g,"") 
+        
+       const categBox = document.createElement('div')
+       categBox.className='w-fit h-fit flex flex-wrap flex-col justify-center'
+      const categButton = document.createElement('button')
+      categButton.className = 'w-[70px] h-[40px]  bg-yellow-400 py-2 mb-0 mt-2 rounded-md relative justify-center flex flex-nowrap '
+      categButton.id = idAtual
+      
+            const categLabel=document.createElement('small')
+      
+      categLabel.className=`w-[65px]  line-clamp-1 font-black  text-gray-700 grid grid-rows-1  px-0 py-[2px] rounded-md  text-[10px] tracking-wider text-center`
+      
+      
+      categButton.addEventListener('click',()=>{
+        
+       
+        headerToolsList(pc.lista)
+        listarCat('',pc.lista)
+        
+      })
+      
+     if( idAtual.toLowerCase() ===  idAtivo.toLowerCase()){
+      
+      categButton.classList.remove('bg-yellow-400')
+      categButton.classList.add('bg-yellow-200')
+      
+     }else if(!idAtual  && idAtivo === 'Todos'){
+       
+       categButton.classList.remove('bg-yellow-400')
+      categButton.classList.add('bg-yellow-200')
+       
+     }
+     categLabel.innerHTML=pc.nome
+       categButton.innerHTML=`
+    
+       <div class="h-full flex items-center justify-center ">
+        <i data-lucide="${pc.icone}" class="w-6 h-6 text-gray-700"></i> 
+       </div>
+       `
+
+      listCateg.appendChild(categBox)
+       categBox.appendChild(categButton)
+       categBox.appendChild(categLabel)
+      })
+      
+      
+      lucide.createIcons();
+         }
+         headerToolsList('')
+        
+    </script>
+
+    </div>
+    
+  
+    <nav id="navCat" class="w-full overflow-x-auto flex flex-nowrap
+    mt-2 gap-2 py-2">
+    </nav>    
+  </div>
+
+
+ <!---------ebd header tools---------> 
+
+  
+  
+ <!---------------Login--------------> 
+ 
+    <section id="userLogin" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
+
+
+  <div class="mb-8">
+    <h1 class=" text-xl font-black text-gray-900 leading-tight">Bem vindo <span class="text-2xl text-red-500">Barê</span> - <span class="text-yellow-400">Pediu, Brindou!</span></h1>
+    <p class="text-gray-700 mt-2 text-sm">faça logo para pedir sua gelada em minutos.</p>
+  </div>
+
+  <form id="formLogin" onsubmit="loginDeUsuario(event,this.inputLogin.value, this.inputLoginSenha.value)" class="space-y-4">
+  
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Telefone / Whatsapp</label>
+      
+      <input required type="text" name="inputLogin" id="inputLogin" placeholder="(00) 00000-0000" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+    
+    <span class="w-full justify-center text-red-500 mt-2 text-sm font-black" id="msgLogin"></span>
+    
+          <input required type="password" name="inputLoginSenha" id="inputLoginSenha" placeholder="******" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        
+      <div class="pt-4">
+          <button id="" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+        Acessar
+      </button>
+    </div>
+   </form>
+</section>
+
+   <!------------CADASTRO------------->   
+        
+       <section id="userCadastro" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
+
+
+  <div class="mb-8">
+    <h1 class="text-2xl font-black text-gray-900 leading-tight">Primeira vez por aqui?</h1>
+    <p class="text-gray-700 mt-2 text-sm">Cadastre-se para pedir fazer em minutos.</p>
+  </div>
+
+  <form id="formCadastro" onsubmit="enviaCadastroUser(event,'cadastrar')" class="space-y-4">
+    
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
+      <input required type="text" id="inputNome" placeholder="Ex: João Silva" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">WhatsApp</label>
+      
+      <input required type="tel" id="inputTel" placeholder="(00) 00000-0000" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+    
+
+    <div class="pt-4">
+      <button id="btnEnviaCadUser" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+       Acessar Cardapio
+      </button>
+    </div>
+    </form>
+
+  </div>
+
+</section>
+
+ <!---------EDITAR USER-------------> 
+ 
+  <section id="editarUser" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
+
+
+  <div class="mb-8 flex">
+   
+     <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="navegacao('perfilUser')">
+        <i class="w-4 h-4" data-lucide="undo-2"></i>
+      </button>
+   
+    <h1 class="text-2xl font-black text-gray-900 leading-tight">Editar informações do perfil</h1>
+
+
+  </div>
+
+  <form id="formEditar" onsubmit="enviaCadastroUser(event,'editar')" class="space-y-4">
+    
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
+      <input required type="text" id="editNome" placeholder="Ex: João Silva" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">WhatsApp</label>
+      
+      <input required type="tel" id="editTel" placeholder="(00) 00000-0000" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    
+         
+    
+
+    <p class="text-[10px] text-gray-400 text-center px-4 py-2">
+      Ao atualizar, os dados anteriores serão perdidos
+    </p>
+
+    <div class="pt-4">
+      <button id="btnEditarCadUser" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+        Atualizar cadastro
+      </button>
+    </div>
+    </form>
+
+  </div>
+
+
+
+</section>
+
+  <!--------end EDITAR USER--------> 
+   
+    
+  <!----------PERFIL ----------->   
+  <section id="perfilUser" class="w-full">
+  
+  <div class="p-4 text-center grid grid-cols-1 place-items-center w-full">
+    
+   <div  class=" relative bg-yellow-400 w-[80px] h-[80px] rounded-full p-5 flex flex-center items-center justify-center font-bold text-4xl text-white mb-4" >
+     
+    <h1 id="pflLetra" class=" font-bold text-4xl text-white">
+      L
+    </h1>
+    
+     <button onclick="navegacao('editarUser')" class="p-2 bg-yellow-300 rounded-lg py-1 px-2 shrink-0 absolute bottom-0 right-0 border border-white">
+  <i class=" text-gray-700 w-4 h-4" data-lucide="pencil"></i>
+  </button>
+  
+      </div>
+   
+    <h2 id="pflNome" class="text-2xl font-bold tracking-tight">João da Silva
+    </h2>    
+
+       <p id="pflTel" class="text-slate-400 text-sm">(22) 99888-7766</p>
+        <!---  BOTÕES  --->
+        
+  <div class="w-full px-2 py-4 space-y-4">
+          
+ <div class=" bg-white rounded-md w-full flex justify-between  shrink-0 p-2 my-2">
+   
+
+
+<a href="/index-admin.html">
+  <button class=" bg-yellow-300 rounded-lg py-1 px-2 shrink-0 h-fit w-fit">
+  <i class="w-4 h-4 text-gray-700" data-lucide="user-key"></i>
+</button>
+</a>
+
+  <button class=" bg-yellow-300 rounded-lg py-1 px-2 shrink-0 h-fit w-fit">
+  <i class="w-4 h-4 text-gray-700" data-lucide="log-out"></i>
+</button>
+
+   </div>
+    
+
+    <div class="bg-white flex items-center justify-between space-x-3  p-3 rounded-xl">
+      
+     <i class="w-6 h-6" data-lucide="map-pin-house"></i>  
+      <div class=" text-left">
+        <p class=" text-xs text-slate-500 uppercase font-semibold">
+        Endereço de entrega 
+        </p>
+        <span id="spanEndereco" class="text-sm">
+          
+         Adicionar endereco -->
+          
+        </span>
+      </div>
+     
+       <button type="submit" onclick="navegacao('enderecoTemp')"  class="rounded-md w-8 h-6 bg-yellow-400 flex items-center justify-center">
+         <i class="w-4 h-4" data-lucide="pencil"></i>  
+      </button>
+  
+</div>
+
+    <div class="bg-white p-5 rounded-2xl shadown-sm">
+      <div class="flex justify-between items-end mb-2">
+        <div>
+          <span class="text-amber-500 text-xs font-bold uppercase tracking-wider">Fidelidade</span>
+          
+          <p  class="text-xl font-black"><span id="pflPontos"></span> <span class="text-sm font-normal text-gray-700">pts</span></p>
+        </div>
+        <div class="text-right">
+          <span class="text-[10px] text-slate-400">Faltam <span id="pflPontosRestantes">250</span> para o</span>
+          <p class="text-xs font-bold text-amber-400">🎁 VALE COPÃO</p>
+        </div>
+      </div>
+      
+      <div class="w-full bg-slate-700 rounded-full h-4 mb-2 overflow-hidden p-0.5">
+        <div id="pflBarraPontos" class="bg-yellow-400 h-full rounded-full  transition-all duration-500" style="width: 75%"></div>
+      </div>
+      
+      <p id="pflPremio" class="text-[10px] text-center text-slate-500 italic mt-3">
+        Ganhe 1 Vale Copão (Whisky ou Vodka) a cada 1000 pontos!
+      </p>
+      
+  <!------------------------------> 
+  
+ 
+
+
+    <div class="p-6">
+      <div class="grid grid-cols-5 gap-3">
+        
+        <div class="aspect-square flex items-center justify-center bg-yellow-400 rounded-xl shadow-lg transform scale-105">
+          <i data-lucide="check" class="text-white w-6 h-6 stroke-[3]"></i>
+        </div>
+        
+        <div class="aspect-square flex items-center justify-center bg-yellow-400 rounded-xl shadow-lg transform scale-105">
+          <i data-lucide="check" class="text-white w-6 h-6 stroke-[3]"></i>
+        </div>
+
+        <div class="aspect-square flex items-center justify-center bg-yellow-400 rounded-xl shadow-lg transform scale-105">
+          <i data-lucide="check" class="text-white w-6 h-6 stroke-[3]"></i>
+        </div>
+
+        <div class="aspect-square flex items-center justify-center bg-yellow-400 rounded-xl shadow-lg transform scale-105">
+          <i data-lucide="check" class="text-white w-6 h-6 stroke-[3]"></i>
+        </div>
+
+        <div class="aspect-square flex items-center justify-center border-2 border-dashed border-gray-200 rounded-xl text-gray-300 font-bold">5</div>
+        
+
+      </div>
+
+
+    </div>
+
+    </div>
+    
+  
+ 
+ 
+  </div>
+</div>
+</div>
+
+</section>
+
+
+ <!----------------VITRINE---------------> 
+ <section id="splash">
+   
+  
+     <div id="splash-pulse-container">
+        <div class="icone-wrapper">
+            <div class="pulso"></div>
+            <div class="icone">
+              <p><span class="text-yellow-400 font-black">V</span><span class="text-gray-700 font-black">ibe</span></p>
+              <small>DELIVERY</small></div>
+        </div>
+    </div>
+
+    
+
+ </section>
+ 
+
+ 
+  <!-------------------------------------> 
+  
+  
+  
+  <!-------------------------------------> 
+  <section id="cardapio" class=" ">
+   
+   
+  
+  
+        
+    <div id="cardapio-grid" class=" pb-[200px] ">
+        lista de produtos
+    </div>
+  
+  </section>
+  
+   <!-----------------------------------> 
+       <section id="vitrineProdutos"class=" w-full bg-none p-4 font-sans max-w-2xl  bg-gray-100">
+      </section>
+      
+  <!-----------HOMEpage-------------> 
+   
+   <div id="home" class="bg-gray-100 min-h-screen font-sans text-gray-900 pb-20">
+
+   <!-------BANNER COM FOTO--------> 
+
+  <div class="px-2 mt-2 hidden">
+    
+    <div class="relative h-40 bg-orange-500 rounded-3xl overflow-hidden shadow-md shadow-yellow-100/60">
+      
+      <div class="absolute z-150
+      bg-gradient-to-r from-black/80 to-transparent  p-6 flex flex-col justify-center z-10">
+        
+        <h2 id="barnnerTxt" class="text-white text-2xl font-black leading-tight">CHURRASCO NO<br><span class="text-yellow-400">FIM DE SEMANA?</span></h2>
+        <p id="barnnerSubTxt" class="text-gray-300 text-xs mt-1">subtexto</p>
+        
+        <button id="barnnerBtn" class="mt-3 bg-yellow-400 text-gray-900 text-[10px] font-black uppercase w-fit px-4 py-2 rounded-lg">Ver Ofertas</button>
+        
+      </div>
+      
+      <div id="slideBanner" class="w-full bg-gray-900 ">
+      
+
+      </div>
+     
+    </div>
+  </div>
+
+   
+   <!-------------EXIBER PRODUOS POR CATEGORIA----------------> 
+   
+   <section class="z-500" >
+    
+    <div class="px-4 py-6">
+        <h2 class="text-2xl font-black text-gray-700 uppercase tracking-tight flex">
+            Destaques e <span class="ml-2 text-yellow-500">promoções</span>
+                    <i class="rotate-12 ml-2" data-lucide="crown"class="mr-2"></i>
+        </h2>
+    </div>
+    
+    <div class="mb-8">
+        <div class="px-4 mb-3 flex justify-between items-end">
+            <h3 class="font-bold text-gray-700">Ofertas Imperdíveis</h3>
+            <span class="text-xs font-semibold text-yellow-600 uppercase">Arraste para o lado →</span>
+        </div>
+        
+        <div class="flex overflow-x-auto space-x-4 px-4 pb-4 scrollbar-hide">
+            <div class="min-w-[280px] bg-yellow-400 rounded-3xl p-4  flex relative overflow-hidden">
+                <div class=" w-2/3">
+                    <span class="bg-white text-yellow-600 text-[10px] font-bold px-2 py-1 rounded-full uppercase">Destaque</span>
+                    <h4 class="text-xl font-extrabold text-white mt-2 leading-tight">Heineken 600ml</h4>
+                    <p class="text-yellow-900 font-bold text-lg mt-1">R$ 12,90</p>
+                    <button class="mt-3 bg-white text-yellow-400 font-bold py-2 px-4 rounded-xl text-sm shadow-sm active:scale-95 transition">Adicionar</button>
+                </div>
+                <img src="/img/heineken.svg" alt="Produto" class="absolute -right-4 -bottom-4 w-32 h-40 object-contain rotate-12">
+            </div>
+            
+            <div class="min-w-[280px] bg-gray-900 rounded-3xl p-4 shadow-xl flex relative overflow-hidden">
+              
+                <div class=" w-2/3">
+                    <span class="bg-yellow-400 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">Promoção</span>
+                    <h4 class="text-xl font-extrabold text-white mt-2 leading-tight">Combo Gin + Tônica</h4>
+                    <p class="text-yellow-400 font-bold text-lg mt-1">R$ 89,90</p>
+                    <button class="mt-3 bg-yellow-400 text-white font-bold py-2 px-4 rounded-xl text-sm active:scale-95 transition">Aproveitar</button>
+                </div
+                <i data-lucide="star"class="text-yellow-500 w-20 h-20 rotate-12"></i>  
+               
+            </div>
+        </div>
+    </div>
+  
+        
+     
+                
+</section>
+    <!-------------mais pedidos--------->
+    <div class="mt-8">
+    <div class="px-4 flex items-center justify-between mb-4">
+       
+      <h2 class="text-2xl font-black text-gray-700 uppercase tracking-tight flex gap-2">
+         <i class="rotate-12 font-black" data-lucide="trophy" class="mr-2"></i>
+   <span class="text-yellow-500">+ pedidos</span>
+</h2>
+    </div>
+    
+    
+    <div id="boxTop10" class="w-full  flex flex-shrink-0 grid grid-cols-1 place-items-center">
+      
+    </div>
+    
+    <script type="text/javascript" charset="utf-8">
+    
+
+// 1. Recuperar e Filtrar os dados
+const dbGeral = getDados()
+const divtop10 = document.getElementById('boxTop10');
+
+// Filtramos apenas a categoria cerveja antes de processar as variações
+const apenasGeral = dbGeral.filter(x => x);
+
+let variacoesGeral = [];
+// 2. Criar lista de variações (Flattening)
+apenasGeral.forEach(produto => {
+  produto.embalagens.forEach(emb => {
+    variacoesGeral.push({
+      ...produto,
+      cod:emb.cod,
+      tipo: emb.tipo,
+      preco: emb.preco,
+      desconto:emb.desconto,
+      vendas: Number(emb.vendas) || 0
+    });
+  });
+});
+
+// 3. Ordenar e Selecionar Top 5
+variacoesGeral.sort((a, b) => b.vendas - a.vendas);
+const top10 = variacoesGeral.slice(0, 20);
+
+// 4. Limpar e Renderizar
+divtop10.innerHTML = '';
+
+top10.forEach(item => {
+  const card = document.createElement('div'); // Nome da variável simplificado
+  card.className = "w-full flex-none px-2 pb-4";
+  
+  // Formatando o preço para o padrão brasileiro
+  const precoFormatado = item.preco.replace(/[^0-9,.]/g,"").replace(",",".")
+  
+  const descontoFormatado = item.desconto.replace(/[^0-9,.]/g,"").replace(",",".")
+  
+   const precoFinal = precoFormatado - descontoFormatado
+   
+  
+const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
+
+const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
+
+   
+  card.innerHTML = `
+    <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative">
+    
+      <span class="${classeDesconto} bg-red-500 absolute top-0 right-0 px-1 rounded-b-md font-black text-white  ">
+        OFERTA
+      </span>
+      
+      <h4 class="text-lg font-bold text-blue-700 truncate">${item.nome}</h4>
+      <p class="text-[14px] font-black text-yellow-500 mb-2 italic">${item.tipo}</p>
+      <div class="flex items-center justify-between">
+      
+     
+        <span class="text-sm font-black tracking-wide flex flex-col">
+        
+         <span id="tr-${item.cod}"  class="${classeDesconto}  text-gray-400 ml-1 text-sm  line-through">De: ${precoFormatado}R$</span>
+        
+        <span class="text-lg ${precoDestaque}">Por: 
+        ${precoFinal.toFixed(2).replace(".",",")} R$
+      </span>
+       
+        </span>
+        
+        <button id="bt+${item.cod}" class="bg-yellow-400 text-gray-700 rounded-lg p-1 shadow-sm active:scale-90 transition" onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
+        <i class="W;6 H-6" data-lucide="shopping-basket"></i>
+        </button>
+      </div>
+    </div>
+  `;
+  divtop10.appendChild(card);
+});
+    
+    </script>
+    
+  </div>
+   </div>
+   <!---PAGINA mais pedidos--->
+   
+   <div id="pagePromocao" >
+      
+   <!-- SECTION PROMOÇÕES -->
+<div class="mt-8">
+  <div class="px-4 flex items-center justify-between mb-4">
+    <h2 class="text-2xl font-black text-gray-700 uppercase tracking-tight flex gap-2">
+      <i class="text-red-500 rotate-12" data-lucide="tag"></i>
+      <span class="text-red-600">Ofertas da Semana</span>
+    </h2>
+  </div>
+
+  <div id="boxPromocoes" class="w-full flex flex-shrink-0 grid grid-cols-1 place-items-center">
+    <!-- Renderizado via JS -->
+  </div>
+
+  <script type="text/javascript" charset="utf-8">
+    
+      
+      const db =  getDados()
+   const boxPromocoes= document.getElementById('boxPromocoes')
+      
+      db.forEach(pr=>{
+        
+    const  dbEmbalagens  = pr.embalagens.forEach(de=>{
+      
+       const descontoLimpo =de.desconto.replace(/[^0-9.,]/g,"")
+          .replace(",",".")
+     
+     const precoFormatado = de.preco.replace(/[^0-9,.]/g,"").replace(",",".")
+  
+   const precoFinal = precoFormatado - descontoLimpo
+     
+     
+        
+      if(descontoLimpo > 0.00){
+  
+  const spn = document.createElement('div')   
+  spn.className='w-full px-2'
+  
+  spn.innerHTML=`
+  
+      <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative">
+    
+      <span class=" bg-red-500 absolute top-0 right-0 px-1 rounded-b-md font-black text-white  ">
+        OFERTA
+      </span>
+      
+      <h4 class="text-lg text-red-500 font-bold text-gray-700 truncate">${pr.nome}</h4>
+      <p class="text-[14px] font-black text-yellow-00 mb-2 italic">${de.tipo}</p>
+      <div class="flex items-center justify-between">
+      
+     
+        <span class="text-sm font-black tracking-wide flex flex-col">
+        
+         <span id="tr-${de.cod}"  class="  text-gray-400 ml-1 text-sm  line-through">De: ${precoFormatado}R$</span>
+        
+        <span class="text-lg text-red-500 ">Por: 
+        ${precoFinal.toFixed(2).replace(".",",")} R$
+      </span>
+       
+        </span>
+        
+        <button id="bt+${de.cod}" class="bg-yellow-400 text-gray-700 rounded-lg p-1 shadow-sm active:scale-90 transition" onclick="openModal('${de.cod}','${pr.nome}','${de.tipo}','${precoFinal}')">
+        <i class="W;6 H-6" data-lucide="shopping-basket"></i>
+        </button>
+      </div>
+    </div>
+  
+  `
+  
+  boxPromocoes.appendChild(spn)     
+    //    alert(parseFloat(descontoLimpo).toFixed(2))
+      }
+    }) 
+  
+      })
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+  </script>
+</div>   
+      
+
+</div>
+   <!---END PROMOÇÃO--->
+   
+   
+  <section id="modalCarrinho" class="hidden">
+
+
+    <div class="bg-white w-full max-w-lg  overflow-hidden ">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+            <h2 class="text-xl font-black uppercase text-gray-700">Sua Lista</h2>
+           
+            <button class=" close text-2xl bg-yellow-400 rounded-md p-2 " onclick="navegacao('home')">
+                <i data-lucide="undo-2"></i>  
+            </button>
+        </div>
+        
+        <div  class="  p-4 max-h-[40vh] overflow-y-auto text-sm" id="itensCarrinho">
+            
+          itens do carrinho
+            
+        </div>
+
+
+        <div id="" class="p-6 bg-gray-50 space-y-4">
+            
+            <div class="flex justify-center items-center">
+            <textarea name="obsComlea" id=kbsComlea rows="3" cols="50" placeholder="Observações" class="border-sm border-gray-300 ring rounded-lg"></textarea>
+            </div>
+            
+            <div id="" class="">
+              <span class="">Entregar em:</span>
+              
+              <select name="" id="selectEndereco" class="w-full my-2 p-3 rounded-xl outline-none focus:border-red-600 transition">
+                <option value="" selected>endereco1</option>
+                <option value="">endereco2</option>
+                
+              </select>
+              
+              
+              <script>
+     function slcEnderecoModal(){      
+    const slcEndereco = document.getElementById('selectEndereco')
+    selectEndereco.innerHTML = ''
+  const userExist = JSON.parse(localStorage.getItem('userDados'))
+  
+  const optEndereco = document.createElement('option')
+    
+    if (userExist.rua) {
+    
+    optEndereco.selected = true
+    optEndereco.innerText = `${userExist.rua}, ${userExist.casa} - ${userExist.bairro}`
+    
+  } 
+  
+  slcEndereco.appendChild(optEndereco)
+  slcEndereco.add(new Option('Novo endereco','movoEndereco'))
+
+slcEndereco.addEventListener('change', (event) => {
+  if (event.target.value === "movoEndereco") {
+    // Redireciona para a sua página de cadastro
+    navegacao('enderecoTemp')
+    optEndereco.selected = true
+    // Ou, se for um modal:
+    // abrirModalCadastro();
+  }
+});
+     }
+     slcEnderecoModal()          
+                
+              </script>
+              
+              
+              
+            </div>
+            
+            
+            <div class="flex justify-between items-center">
+                <span class="font-bold text-gray-600 uppercase text-sm">Total:</span>
+                <span id="valorTotal" class="text-2xl font-black text-gray-900">R$ 8,50</span>
+            </div>
+            
+
+            <button onclick="enviarWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl font-black uppercase tracking-wide flex items-center justify-center gap-2 transition-all shadow-lg shadow-green-600/20">
+                Finalizar no WhatsApp
+            </button>
+        </div>
+    </div>
+
+</section>  
+
+ <!-------------------------------------> 
+ 
+ 
+ 
+</main>
+
+
+
+   <!-------------------------------------> 
+  <div id="loading" class=" hidden z-1000 fixed inset-0 mt-[50%] start-[50%] translate-x-[-50%] flex h-[300px] w-[300px] flex-col items-center justify-center rounded-3xl bg-white shadow-2xl shadow-gray-200/50 ">
+      
+     <div class="flex items-end gap-6 mb-8 h-20">
+                <div class="animate-beverage-bounce text-orange-500">
+                    <i data-lucide="cup-soda" class="w-12 h-12 stroke-[1.5]"></i>
+                </div>
+                
+                <div class="animate-beverage-bounce delay-100 text-yellow-400">
+                    <i data-lucide="beer" class="w-12 h-12 stroke-[1.5]"></i>
+                </div>
+                
+                <div class="animate-beverage-bounce delay-200 text-red-700">
+                    <i data-lucide="bottle-wine" class="w-12 h-12 stroke-[1.5]"></i>
+                </div>
+            </div>
+
+            <h3 id="textLoading" class="text-xl font-semibold text-gray-700" id="modal-title">
+                Carregando conteúdo 
+            </h3>
+          
+        
+  
+  </div>
+<footer class="ifLogged relative">
+  
+<!---NAVBAR BOTTOM--->
+
+ <nav class=" z-10 fixed bottom-0 w-full bg-white border-t border-gray-100 px-6 py-3 flex justify-between items-center shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
+    
+
+    <button id="btbHome" class="flex flex-col items-center text-gray-400 " onclick="navegacao('home'),ativabtnBottom('btbHome')">
+      <i  data-lucide="house" class="h-6 w-6"></i>
+      <span class="text-[10px] font-bold uppercase">Início</span>
+    </button>
+    
+        <button id="btbProm" class="flex flex-col items-center justify-center text-gray-400" onclick="navegacao('pagePromocao'),ativabtnBottom('btbProm')">
+      <i  data-lucide="ticket-percent" class="h-6 w-6 "></i>
+      <span class="text-[10px] font-bold uppercase">Promoção</span>
+    </button>
+    
+    <div class="relative">
+      <span  id="qtd-itens" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
+    <button id="btbCar" class="flex flex-col items-center text-gray-400" onclick="verCarrinho(),ativabtnBottom('btbCar')">
+      
+    <i  class="W;6 H-6" data-lucide="shopping-basket"></i>
+      <span class="text-[10px] font-bold uppercase">Meu Carrinho</span>
+    </button>
+    </div>
+    <button id="btbUser" class="flex flex-col items-center text-gray-400" onclick="verPerfil(),ativabtnBottom('btbUser')">
+      <i data-lucide="user" class="h-6 w-6"></i>
+      <span class="text-[10px] font-bold uppercase">Perfil</span>
+    </button>
+    
+    
+      <script>
+  function ativabtnBottom(id){
+  
+    const allsBtnNavBottom = ['btbHome','btbProm','btbCar','btbUser']
+    
+    allsBtnNavBottom.map(bb =>{
+      
+     document.getElementById(bb).classList.remove('text-yellow-400')
+    })
+    document.getElementById(id).classList.add('text-yellow-400')
+  }
+  ativabtnBottom('btbHome')
+  </script>
+    
+    
+  </nav>
+  
+  <!--modal endereço temporario---> 
+        
+        
+  <div id="enderecoTemp" class="bg-white w-full h-full p-4 flex flex-col gap-2 z-0">
+ <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="navegacao('perfilUser')">
+        <i class="w-4 h-4" data-lucide="undo-2"></i>
+      </button>
+   <div class="text-xl font-black uppercase  w-full text-center grid grid-cols-1 mb-2">Endereço
+   </div>
+  
+    
+        <!---ENDERECO ALTERNATIVO-->
+    
+    
+    <!------------->
+    
+      <form id="formEnderecoAlternativo" class="space-y-4" onsubmit="cadastrarEnderecoAlternativo(event)">
+
+    <div>
+            
+    <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Endereço</label>
+    
+      <input type="number"  id="inputCEPAlt" placeholder="CEP -busca automatica"
+      class=" hidden w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+      
+            <div class="flex gap-5 justify-between mt-5" >
+      <input id="inputRuaAlt" required type="text" placeholder="Nome da rua" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+            </div>
+      
+      <div class="flex gap-5 justify-between mt-4" >
+      <input id="inputCasaAlt" type="number" placeholder="000" required
+        class="w-[20%] bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        
+        
+      <input type="text" id="inputComplementoAlt" placeholder=" apt, altos, fundos, casa 2..." 
+        class="w-[70%] bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+       </div>
+       
+        <div class="my-4">
+    
+      <input required type="text" id="inputBairroAlt" placeholder="Nome do Bairro" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div class="pt-4">
+      <button id="btnEnviaCadUser" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl  transition-transform active:scale-95 uppercase tracking-wider">
+        cadastrar Endereço 
+      </button>
+    </div>
+    </form>
+
+  </div>
+
+
+    
+    
+  </div>
+
+
+ <!----script------>
+ <script>
+   
+   
+ </script>
+ <!----fim------>
+ 
+ 
+ 
+ 
+ 
+<!---MODAL ADICIONAR  PRODUTO--->
+ <div id="modalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center transition-opacity duration-300">
+  
+ 
+</div>
+<!----FIM--> 
+ 
+</footer>
+<script src="main.js" defer ></script>
+
+<script type="text/javascript" charset="utf-8">
+
+    lucide.createIcons();
+</script>
+
+</body>
+</html>
