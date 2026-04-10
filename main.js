@@ -1,8 +1,4 @@
 
-// 1. Definição da Base de Dados
-const dbProdutos =getDados()
-window.dbProdutos = dbProdutos
-
   const headerTop = document.getElementById('header');
   
   let lastScrollY = window.scrollY;
@@ -82,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //////////////////////////////////
 //////////////////////////////////
 function verificaLogin() {
-  navegacao('home')
+  navegacao('splash')
   
   const userExist = JSON.parse(localStorage.getItem('userDados')) || []
   if(!userExist){
@@ -532,10 +528,10 @@ function openBox(target, event) {
 }
 //////////////////////////////////
 //////////////////////////////////
-function listarCat(idAtivo,classe) {
+async function listarCat(idAtivo,classe) {
+let myDb = await getDados()
  
- 
- const dbClasse = dbProdutos.filter(db=>{ 
+ const dbClasse = myDb.filter(db=>{ 
   const prodClasse = db.classe.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[ ]/g,"")
   
   const slcClasse = classe === prodClasse || !classe
@@ -613,14 +609,14 @@ dbCategorias.forEach((item,index)=>{
   
 }
 ////////////////////////////////////////////////////////////////////////////////
-function listaProdutos(idCat, termo,lista){
+async function listaProdutos(idCat, termo,lista){
  
- 
+ const myDb = await getDados()
  
   const cardapioGrid = document.getElementById('cardapio-grid'); // Certifique-se que este ID existe no seu HTML
   if (!cardapioGrid) return;
   
-  const listaParaFiltrar = dbProdutos.filter(fl=>{
+  const listaParaFiltrar = myDb.filter(fl=>{
     
     const classeReplace = fl.classe.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[ ]/g,"")
 
@@ -697,7 +693,7 @@ function listaProdutos(idCat, termo,lista){
       
   const precoFormatado = emb.preco.replace(/[^0-9,.]/g,"").replace(",",".")
   
-  const descontoFormatado = emb.desconto.replace(/[^0-9,.]/g,"").replace(",",".")
+  const descontoFormatado = emb.desconto
   
    const precoFinal = precoFormatado - descontoFormatado
    
@@ -1236,3 +1232,4 @@ navigator.geolocation.getCurrentPosition(
 
 // No final do seu script principal
 lucide.createIcons();
+
