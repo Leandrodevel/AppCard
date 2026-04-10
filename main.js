@@ -914,12 +914,13 @@ function atualizarCarrinho() {
   totalElemento.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 async function enviarWhatsApp(observacao) {
-  const userDados = await userDados()
+  const userdados = await userDados()
+  const obsCarrinho= document.getElementById('obsCarrinho').value
   
 document.getElementById('loading').classList.remove('hidden')
 
   
-  const endereco = `${userDados.rua},${userDados.casa} - ${userDados.bairro}`
+  const endereco = `${userdados.rua},${userdados.casa} - ${userdados.bairro}`
   
   const numeroTelefone = "5522997263224"; // Substitua pelo seu número (com DDD)
   // Centralizando a formatação de moeda para evitar repetição
@@ -932,19 +933,20 @@ const numeroPedido = Date.now().toString().slice(-6); // Pega os últimos 6 díg
 
 let mensagem = `☝️Olá, Gostaria de Fazer um pedido.\n\n`;
 
-mensagem += `* Meu nome é : ${userDados.nome}\n\n`;
+mensagem += `* Meu nome é : ${userdados.nome}\n\n`;
 
  mensagem += `📋 *Pedido n° ${numeroPedido}*\n\n`;
 
-mensagem += `*Itens:*\n`;
+mensagem += `*Itens:*\n\n`;
+
 
 meuCarrinho.forEach(item => {
   // O emoji ➡️ e o formato "1x NOME" conforme a imagem
   mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n\n`;
   
   // Caso tenha observações ou opcionais (como os molhos da imagem)
-  if(observacao) {
-    mensagem += `   _OBS: ${observacao}_\n`;
+  if(observacao !== '') {
+    mensagem += `❕OBS: ${obsCarrinho}_\n\n`;
   }
 });
 // Detalhes de Delivery
