@@ -18,46 +18,21 @@
   });
   
   
-function atualizaPontos(newPontos){
-  const dataPontos = JSON.parse(localStorage.getItem('userDados'))
+async function atualizaPontos(newPontos){
+  const dataPontos = await userDados()
 
 const dbAtualizado = {...dataPontos,pontos:dataPontos.pontos+newPontos}
 
 //const dbAtualizado ={...dataBase, pontos:0}
 
-localStorage.setItem('userDados',JSON.stringify(dbAtualizado))
+const { data, error } = await _supabase
+      .from('users')
+      .insert(dbAtualizado)
+
 }
-atualizaPontos(1)
+//atualizaPontos(10)
 //////////////////////////////////
 //////////////////////////////////
-async function gerarHashSeguro(senhaPura) {
-  const encoder = new TextEncoder();
-  const senhaBuffer = encoder.encode(senhaPura);
-  // 1. Gerar um Salt aleatório (essencial para que cada hash seja único)
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  // 2. Importar a senha como uma chave base
-  const chaveBase = await crypto.subtle.importKey(
-    "raw", senhaBuffer, "PBKDF2", false, ["deriveBits", "deriveKey"]
-  );
-  // 3. Derivar o Hash usando 100.000 iterações (Padrão de segurança)
-  const hashBuffer = await crypto.subtle.deriveBits(
-    {
-      name: "PBKDF2",
-      salt: salt,
-      iterations: 100000,
-      hash: "SHA-256"
-    },
-    chaveBase,
-    256 // Tamanho do hash final em bits
-  );
-
-  // 4. Converter Salt e Hash para Hexadecimal para salvar no banco/storage
-  const saltHex = Array.from(salt).map(b => b.toString(16).padStart(2, '0')).join('');
-  const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-
-  return { saltHex, hashHex };
-}
-
 
 ///dados da aplicação/////////////////////////////
 const nomeApp = 'Vibe Delivery'
@@ -77,13 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 //////////////////////////////////
 //////////////////////////////////
-function verificaLogin() {
+async function verificaLogin() {
+  
   navegacao('splash')
   
-  const userExist = JSON.parse(localStorage.getItem('userDados')) || []
+  const userExist = await userDados()
   if(!userExist){
-    
-    
   }
   const ifLogged = document.querySelectorAll('.ifLogged')
   
@@ -126,31 +100,31 @@ navegacao('userCadastro')
 verificaLogin()
 //////////////////////////////////
 //////////////////////////////////
-function verPerfil() {
+async function verPerfil() {
+  
+ const dados = await userDados()
   
   navegacao('perfilUser')
   
-  
- const userDados = JSON.parse(localStorage.getItem('userDados'))||[]
- const primeiraLetra = userDados.nome[0]
+ const primeiraLetra = dados.nome[0]
  const meta = 500
  document.getElementById('pflLetra').innerText=primeiraLetra
-  document.getElementById('pflNome').innerText=userDados.nome
-  document.getElementById('pflTel').innerText=userDados.tel
-  document.getElementById('pflPontos').innerText=userDados.pontos%meta
-  document.getElementById('pflPontosRestantes').innerHTML= meta - userDados.pontos%meta
+  document.getElementById('pflNome').innerText=dados.nome
+  document.getElementById('pflTel').innerText=dados.tel
+  document.getElementById('pflPontos').innerText=dados.pontos%meta
+  document.getElementById('pflPontosRestantes').innerHTML= meta - dados.pontos%meta
   
-  const progressPontos = userDados.pontos%meta / meta * 100
+  const progressPontos = dados.pontos%meta / meta * 100
   
-  const cupons = Math.floor(userDados.pontos%meta)
+  const cupons = Math.floor(dados.pontos%meta)
   
   document.getElementById('pflBarraPontos').style.width= progressPontos+'%'
   
 ///  verifica se ja tem endereço alternativo
-const enderecoTemp = userDados.casa
+const enderecoTemp = dados.casa
 if(enderecoTemp){
   
-  document.getElementById('spanEndereco').innerText=`${userDados.rua}, ${userDados.casa} - ${userDados.bairro}`
+  document.getElementById('spanEndereco').innerText=`${dados.rua}, ${dados.casa} - ${dados.bairro}`
   
 
 }else{
@@ -204,7 +178,7 @@ function navegacao(open) {
       behavior: 'auto'
   })
       
-  const allSections=['splash','home','userCadastro','perfilUser','userLogin','cardapio','modalCarrinho','pagePromocao','vitrineProdutos','editarUser','enderecoTemp']
+  const allSections=['splash','home','userCadastro','perfilUser','cardapio','modalCarrinho','pagePromocao','vitrineProdutos','editarUser','enderecoTemp']
   
   
   if(open === 'userCadastro'|| open === 'perfilUser' || open==='editarUser' || open==='enderecoTemp' || open === 'modalCarrinho'){
@@ -278,9 +252,11 @@ if(metodo ==='cadastrar'){
   const userNome = document.getElementById('inputNome').value
 
   const userTel = document.getElementById('inputTel').value
+  
+  async function cadastrarUser() {
 
-  const usuarioCompleto = {
-    id: gerarID(),
+const usuarioCompleto = {
+  
     nome: userNome,
     tel: userTel,
     rua:'',
@@ -290,16 +266,17 @@ if(metodo ==='cadastrar'){
     logged: true,
     pontos:0
   }
-    
-      // Salvando no localStorage de forma limpa
-  localStorage.setItem('userDados', JSON.stringify(usuarioCompleto));
-  
-  window.location.reload()
+    localStorage.setItem('userDados',JSON.stringify(usuarioCompleto))
+  }
+  cadastrarUser()
+ window.location.reload()
     
 }else if(metodo ==='editar'){
+  
+  async function editarUser() {
     
-   const userdados = JSON.parse(localStorage.getItem('userDados'))
-     
+  const userdados = await userDados()
+  
   const editarNome = document.getElementById('editNome').value
   const editarTel = document.getElementById('editTel').value
   const editarId =userdados.id
@@ -318,16 +295,13 @@ if(metodo ==='cadastrar'){
     pontos: pontosAtual
   }
   
+  
   const confimacao = prompt('digite EDITAR') || ''
   
   if(confimacao.trim() ==='EDITAR'){
   
-  
-    
-  
-  
-      // Salvando no localStorage de forma limpa
-  localStorage.setItem('userDados', JSON.stringify(usuarioCompleto));
+  localStorage.setItem('userDados',JSON.stringify(usuarioCompleto))
+
   navegacao('perfilUser')
   
   window.location.reload()
@@ -335,15 +309,16 @@ if(metodo ==='cadastrar'){
   }else{
   alert('palavra incorreta')
 }
-}
-
+  }editarUser()
+    }
 }
 //////////////////////////////////
 ////////editar cadastro//////////
 ////////////////////.//////////////
-function editaCadastroUser() {
+async function editaCadastroUser() {
 
-  const userdados = JSON.parse(localStorage.getItem('userDados'))
+  const userdados = await userDados()
+  
    document.getElementById('editNome').value=userdados.nome
   document.getElementById('editTel').value=userdados.tel
   
@@ -499,8 +474,6 @@ statusDaLoja.innerHTML=`
 }
 
 statusLoja()
-
-        
 
 //////////////////////////////////
 //////////////////////////////////
@@ -940,11 +913,12 @@ function atualizarCarrinho() {
   
   totalElemento.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
-function enviarWhatsApp() {
+async function enviarWhatsApp(observacao) {
+  const userDados = await userDados()
   
 document.getElementById('loading').classList.remove('hidden')
 
-  const userDados =JSON.parse( localStorage.getItem('userDados')) || []
+  
   const endereco = `${userDados.rua},${userDados.casa} - ${userDados.bairro}`
   
   const numeroTelefone = "5522997263224"; // Substitua pelo seu número (com DDD)
@@ -956,9 +930,11 @@ const formatarMoeda = (valor) =>
 
 const numeroPedido = Date.now().toString().slice(-6); // Pega os últimos 6 dígitos do timestamp
 
-let mensagem = `📋 *Pedido n° ${numeroPedido}*\n\n`;
+let mensagem = `☝️Olá, Gostaria de Fazer um pedido.\n\n`;
 
-mensagem += `*Enviar para: ${userDados.nome}\n\n`;
+mensagem += `* Meu nome é : ${userDados.nome}\n\n`;
+
+ mensagem += `📋 *Pedido n° ${numeroPedido}*\n\n`;
 
 mensagem += `*Itens:*\n`;
 
@@ -967,28 +943,24 @@ meuCarrinho.forEach(item => {
   mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n\n`;
   
   // Caso tenha observações ou opcionais (como os molhos da imagem)
-  if(item.observacao) {
-    mensagem += `   _OBS: ${item.observacao}_\n`;
+  if(observacao) {
+    mensagem += `   _OBS: ${observacao}_\n`;
   }
 });
-
-// Seção de Pagamento e Entrega (ajuste conforme seus objetos de dados)
-//mensagem += `\n💳 *${userDados.pagamento || "Cartão"}*\n\n`;
-
 // Detalhes de Delivery
-const taxaEntrega = 3.00; // Exemplo fixo da imagem
-mensagem += `🛵 *Delivery* (taxa de: ${formatarMoeda(taxaEntrega)})\n`;
-mensagem += `🏠 ${endereco || "Endereço não informado"}\n`;
-mensagem += `(Estimativa: entre 20~60 minutos)\n\n`;
+  mensagem += `🏠 envie para: ${endereco || "Endereço não informado"}\n`;
+
+const taxaEntrega = 3.00  
 
 // Cálculo do Total
 const totalProdutos = meuCarrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
 
 const totalGeral = totalProdutos + taxaEntrega;
 
+mensagem += `Taxa de entrega: 3,00R$\n\n`;
+
 mensagem += `*Total: ${formatarMoeda(totalGeral)}*\n\n`;
 
-mensagem += `Obrigado pela preferência, se precisar de algo é só chamar! 😉`;
 
 /* Envio */
 const numeroLimpo = numeroTelefone.replace(/\D/g, '');
@@ -1066,105 +1038,21 @@ function verCarrinho(){
 
 }
 //////////////////////////////////
-//////////////////////////////////
-//////////////////////////////////
-//////////////////////////////////
-function spanInterativos(cod) {
-  
-  
-  
-  
-}
-//////////////////////////////////
-//////////////////////////////////
-//////////////////////////////////
-//////////////////////////////////
-//
-
-function enviarPushOferta(titulo, mensagem, idProduto) {
-  if (Notification.permission === "granted") {
-    const options = {
-      body: mensagem,
-      icon: 'caminho/para/seu/thumb-gelado.png', // O thumb que criamos
-      badge: 'caminho/para/seulogo-preto.png', // Ícone pequeno da barra de status
-      image: 'caminho/para/imagem-grande-promo.jpg', // Imagem que expande no Android
-      vibrate: [200, 100, 200], // Vibração "chamativa"
-      tag: 'promo-agora', // Evita duplicar notificações iguais
-      data: { id: idProduto } // Dados extras para o clique
-    };
-
-            } 
-            // 3. Se não, solicita permissão ao usuário
-            else if (Notification.permission !== "denied") {
-                Notification.requestPermission().then(permission => {
-                    if (permission === "granted") {
-                        criarNotificacao();
-                    } else {
-                        status.innerText = "Permissão negada";
-                    }
-                });
-            } else {
-                status.innerText = "Permissão bloqueada nas configurações";
-            }
-        }
-
-
-
-
-
-    const notification = new Notification(titulo, options);
-
-    // O que acontece quando o cliente clica na notificação?
-    notification.onclick = function(event) {
-      event.preventDefault();
-      window.focus();
-      
-      // Abre a promoção específica no seu APK
-      mostrarPromocao(this.data.id); 
-      
-      notification.close();
-    
-  
-}
-// Exemplo de uso: Disparar após 3 segundos para testar
-setTimeout(() => {
-  
-  enviarPushOferta(
-    "🍺 CERVEJA TRINCANDO!", 
-    "Spaten Lata por R$ 3,89? Só agora no Depósito!",
-    10
-  );
-}, 3000);
-
 document.getElementById('form-cadastro').addEventListener('submit', function(e) {
   e.preventDefault();
-  // Aqui você salvaria os dados no banco ou localStorage
+  // Aqui você salvaria os dados no banco
   document.getElementById('modal-cadastro').style.display = 'none';
   alert('Bem-vindo(a)!');
 });
 
 
-function solicitarPermissao() {
-  if (!("Notification" in window)) {
-    console.log("Este navegador não suporta notificações desktop");
-    return;
-  }
-
-  Notification.requestPermission().then(permission => {
-    if (permission === "granted") {
-      console.log("Permissão concedida!");
-    }
-  });
-}
 /*==========================================================================================================================================================*/
-
-
-function cadastrarEnderecoAlternativo(e){
+async function cadastrarEnderecoAlternativo(e){
   
+  const userDados = await userDados()
+   
   e.preventDefault(); // Impede a página de recarregar
   
-  const userDados = JSON.parse(localStorage.getItem('userDados'))
-   
     userDados.rua = document.getElementById('inputRuaAlt').value
 
     userDados.casa =   document.getElementById('inputCasaAlt').value
@@ -1175,61 +1063,16 @@ function cadastrarEnderecoAlternativo(e){
 
     userDados.complemento =  document.getElementById('inputComplementoAlt').value
 
-  localStorage.setItem('userDados',JSON.stringify(userDados))
+const { data, error } = await _supabase
+      .from('users')
+      .insert(userDados)
+
   alert('Endereço Cadastrado')
   navegacao('home')
   slcEnderecoModal()    
 }
 //////////////////////////////////
 //////////////////////////////////
-function obterEndereco(lat, lon) {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(dados => {
-            if (dados.address) {
-                const rua = dados.address.road || "Rua não encontrada";
-                const bairro = dados.address.suburb || dados.address.neighbourhood || "";
-                const cidade = dados.address.city || dados.address.town || "";
-
-                // Preenche o input da modal automaticamente
-                const nomeRua = `${rua}`;
-                const nomeBairro = `${bairro}`;
-                
-      const btnInsert = document.getElementById('insertLocation')
-      
-      btnInsert.addEventListener('click',()=>{
-  
-  document.getElementById('inputRua').value = nomeRua;
-                
-  document.getElementById('inputBairro').value = nomeBairro;
-
-})
-                
-                document.getElementById('status-localizacao').innerHTML = `${nomeRua}, ${nomeBairro} `;
-                
-                document.getElementById('status-localizacao').style.color = "#22c55e"; // Verde
-            }
-        })
-        .catch(erro => {
-            console.error("Erro na geocodificação:", erro);
-        });
-}
-
-
-// Quando o App abre, solicita a posição
-navigator.geolocation.getCurrentPosition(
-    (pos) => {
-        obterEndereco(pos.coords.latitude, pos.coords.longitude);
-    },
-    (erro) => {
-        document.getElementById('status-localizacao').innerText = "❌ GPS desativado.";
-        
-    }
-);
-
 
 // No final do seu script principal
 lucide.createIcons();
-

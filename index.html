@@ -12,21 +12,6 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-  <script type="text/javascript" charset="utf-8">
-  
- /*   function getDados() {
-  return JSON.parse(localStorage.getItem('estoqueDeProdutos')) || [];
-}*/
-function setDados(dados) {
-  localStorage.setItem('estoqueDeProdutos', JSON.stringify(dados));
-}
-    function getUser() {
-  return JSON.parse(localStorage.getItem('userDados')) || [];
-}
-function setUser(dados) {
-  localStorage.setItem('userDados', JSON.stringify(dados));
-}
-  </script>
 <script>
   // 1. Configurações de acesso
   const SUPABASE_URL = 'https://wyhqwprshbgwjlnxndhm.supabase.co'
@@ -64,6 +49,7 @@ function setUser(dados) {
   //enviarAoBanco()
   
   async function getDados() {
+    
   const { data, error } = await _supabase
     .from('estoque')
     .select('*'); // O asterisco traz todas as colunas
@@ -77,6 +63,13 @@ function setUser(dados) {
      
   }
 }
+
+
+async function userDados() {
+  
+  return JSON.parse(localStorage.getItem('userDados'))
+     
+  }
 /*async function inicializarApp() {
   const produtos = await getDados();
 alert(produtos)
@@ -260,38 +253,6 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
   
   
- <!---------------Login--------------> 
- 
-    <section id="userLogin" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
-
-
-  <div class="mb-8">
-    <h1 class=" text-xl font-black text-gray-900 leading-tight">Bem vindo <span class="text-2xl text-red-500">Barê</span> - <span class="text-yellow-400">Pediu, Brindou!</span></h1>
-    <p class="text-gray-700 mt-2 text-sm">faça logo para pedir sua gelada em minutos.</p>
-  </div>
-
-  <form id="formLogin" onsubmit="loginDeUsuario(event,this.inputLogin.value, this.inputLoginSenha.value)" class="space-y-4">
-  
-    <div>
-      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Telefone / Whatsapp</label>
-      
-      <input required type="text" name="inputLogin" id="inputLogin" placeholder="(00) 00000-0000" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
-    </div>
-    
-    <span class="w-full justify-center text-red-500 mt-2 text-sm font-black" id="msgLogin"></span>
-    
-          <input required type="password" name="inputLoginSenha" id="inputLoginSenha" placeholder="******" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
-        
-      <div class="pt-4">
-          <button id="" type="submit" 
-        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
-        Acessar
-      </button>
-    </div>
-   </form>
-</section>
 
    <!------------CADASTRO------------->   
         
@@ -449,7 +410,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
   
 </div>
 
-    <div class="bg-white p-5 rounded-2xl shadown-sm">
+    <div class="hidden bg-white p-5 rounded-2xl shadown-sm">
       <div class="flex justify-between items-end mb-2">
         <div>
           <span class="text-amber-500 text-xs font-bold uppercase tracking-wider">Fidelidade</span>
@@ -851,7 +812,7 @@ const db = await getDados();
             <div id="" class="">
               <span class="">Entregar em:</span>
               
-              <select name="" id="selectEndereco" class="w-full my-2 p-3 rounded-xl outline-none focus:border-red-600 transition">
+              <select required name="" id="selectEndereco" class="w-full my-2 p-3 rounded-xl outline-none focus:border-red-600 transition">
                 <option value="" selected>endereco1</option>
                 <option value="">endereco2</option>
                 
