@@ -662,6 +662,7 @@ const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
   divtop10.appendChild(card);
 });
     }listaTop20()
+    lucide.createIcons();
     </script>
     
   </div>
@@ -801,15 +802,21 @@ const db = await getDados();
   
   const optEndereco = document.createElement('option')
     
-    if (userExist.rua) {
-    
+    if (userExist.rua && userExist.rua !== '') {
+      
     optEndereco.selected = true
     optEndereco.innerText = `${userExist.rua}, ${userExist.casa} - ${userExist.bairro}`
+    slcEndereco.appendChild(optEndereco)
+    }else{
+    const optPlace = new Option('Selecione um endereco', '')
+     optPlace.selected = true
+     optPlace.disabled = true
+     slcEndereco.add(optPlace)
+    }
+  const optNovo = new Option('Novo endereco','movoEndereco')
+    slcEndereco.add(optNovo)
     
-  } 
-  
-  slcEndereco.appendChild(optEndereco)
-  slcEndereco.add(new Option('Novo endereco','movoEndereco'))
+    
 
 slcEndereco.addEventListener('change', (event) => {
   if (event.target.value === "movoEndereco") {

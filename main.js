@@ -38,11 +38,7 @@ const { data, error } = await _supabase
 const nomeApp = 'Vibe Delivery'
 const tituloApp = 'Pediu, Brindou!'
 const temaApp = [{}]
-const textCor = document.querySelectorAll('.bg-yellow-400');
 
-for (const item of textCor) {
-    item.classList.replace('bg-yellow-400', 'bg-red-400');
-}
   
 document.body.className=`bg-gray-100 text-gray-700 pb-24 font-sans`
 
@@ -841,14 +837,21 @@ function atualizarCarrinho() {
       
     container.innerHTML += `
 
-      <div class="flex justify-between items-center mb-2 pb-2 border-b border-dashed border-gray-500">
+      <div class="flex justify-between items-center mb-2 ">
               
-              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}','${item.qtd}')">
+              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center border border-yellow-400 border-md w-full p-1">
               
-                <span class="font-medium text-gray-700">
+                <div class=" font-medium text-gray-700 flex truncate items-center">
                 
-                <i class="w-4 h-4" data-lucide="pencil"></i>
-                ${item.qtd}x ${item.nome}- ${item.embalagem}<small class="text-[10px] text-gray-400"> ( ${item.preco} Un. )</small></span>
+                <i class="w-6 h-6 mr-0.5 text-yellow-400" data-lucide="square-arrow-right"></i>
+                
+                <span>
+                
+                ${item.qtd} X ${item.nome}
+                <small class="text-[10px] text-gray-700"> ( ${item.embalagem} - ${item.preco} Un. )</small></span>
+                
+                </div>
+                
                 <span class="font-bold">R$ ${(item.preco * item.qtd).toFixed(2)}</span>
                 
                 </button>
@@ -862,6 +865,7 @@ function atualizarCarrinho() {
   const total = meuCarrinho.reduce((acc, item) => acc + parseFloat((item.preco*item.qtd)) ,0);
   
   totalElemento.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  lucide.createIcons();
 }
 async function enviarWhatsApp(observacao) {
   const userdados = await userDados()
