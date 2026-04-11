@@ -660,7 +660,7 @@ divtop10.innerHTML = '';
   
 const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
 
-const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
+const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-md" : "";
 
 
 const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
@@ -688,7 +688,7 @@ const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
      
         <span class="text-sm font-black tracking-wide flex flex-col">
         
-         <span id="tr-${item.cod}"  class="${classeDesconto}  text-gray-400 ml-1 text-sm  line-through">De: ${precoFormatado}R$</span>
+         <span id="tr-${item.cod}"  class="${classeDesconto}  text-gray-400 ml-1 text-[10px]  line-through">De: ${precoFormatado}R$</span>
         
         <span class="text-md ${precoDestaque}">Por: 
         ${precoFinal.toFixed(2).replace(".",",")} R$
