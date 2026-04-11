@@ -1,3 +1,24 @@
+const produto = {
+    nome: "Cerveja Lata",
+    img: "noimage.gif"
+};
+
+async function verificarImagem(nomeArquivo) {
+    try {
+        const resposta = await fetch(`/img/${nomeArquivo}`, { method: 'HEAD' });
+        if (resposta.ok) {
+            console.log("A imagem existe!");
+        } else {
+            console.log("Imagem não encontrada.");
+        }
+    } catch (erro) {
+        console.error("Erro ao verificar arquivo:", erro);
+    }
+}
+
+verificarImagem(produto.img);
+
+
 
   const headerTop = document.getElementById('header');
   
