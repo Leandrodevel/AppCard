@@ -38,7 +38,12 @@ const { data, error } = await _supabase
 const nomeApp = 'Vibe Delivery'
 const tituloApp = 'Pediu, Brindou!'
 const temaApp = [{}]
-let meuCarrinho = []
+
+localStorage.setItem('carrinho',JSON.stringify(''))
+
+
+let meuCarrinho = JSON.parse(localStorage.getItem('carrinho')) || []
+//atualizarCarrinho()
 //////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -793,6 +798,7 @@ function confirmAdd(cod,nome,embalagem,preco) {
     
   meuCarrinho.push(produto)
   
+  localStorage.setItem('carrinho',JSON.stringify(meuCarrinho))
   }
  alert(`${currentQty} item(s) adicionado(s)!`);
 
