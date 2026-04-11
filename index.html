@@ -630,6 +630,22 @@ const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
 
 const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
 
+
+const fs = require('fs');
+const path = require('path');
+
+const dados = { img: "noimage.gif" };
+const caminhoPasta = path.join(__dirname, 'img');
+const caminhoCompleto = path.join(caminhoPasta, dados.img);
+
+if (fs.existsSync(caminhoCompleto)) {
+    console.log("Arquivo encontrado no diretório.");
+} else {
+    console.log("Arquivo não existe na pasta.");
+}
+
+
+
    
   card.innerHTML = `
     <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row">
@@ -638,12 +654,15 @@ const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
         OFERTA
       </span>
       
-          <img src="noimage.gif" alt="" class="w-16 h-16"/>
+          <img src="
+          /img/${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg" alt="${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}" class="w-16 h-16 mr-2"/>
           
       <div class=" w-full flex items-center">
         
         <div class=" w-full">
+        <button onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
       <h4 class="text-lg font-bold text-blue-700 truncate">${item.nome}</h4>
+      </button>
       <p class="text-[14px] font-black tema-text-base mb-2 italic">${item.tipo}</p>
       <div class="flex items-center justify-between">
       </div>
