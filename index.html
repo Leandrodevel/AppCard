@@ -729,7 +729,7 @@ lucide.createIcons();
           <h2 id="main-prod-nome" class="text-2xl font-bold text-gray-800">Monte seu Espetinho</h2>
           <p class="text-gray-500 text-sm mt-1">Escolha o sabor e os seus acompanhamentos favoritos.</p>
         </div>
-        <span class="text-xl font-black text-red-600">R$ <span id="main-prod-preco">15,90</span></span>
+        <span class="text-xl font-black text-red-600">R$ <span id="main-prod-preco">8,90</span></span>
       </div>
 
       <hr class="my-6 border-gray-100">
@@ -809,7 +809,7 @@ lucide.createIcons();
     localStorage.setItem('carrinho', JSON.stringify(carrinho));
 
     alert(`✅ Espetinho de ${sabor} adicionado com sucesso!`);
-    window.location.href = "index.html";  
+    navegacao('home')  
     // Opcional: Limpar campos após adicionar
     document.querySelectorAll('input[name="acompanhamento"]').forEach(el => el.checked = false);
     document.getElementById('obs-pedido').value = '';
