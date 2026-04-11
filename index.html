@@ -668,21 +668,21 @@ const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
  
    
   card.innerHTML = `
-    <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row">
+    <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row items-center">
     
       <span class="${classeDesconto} bg-red-500 absolute top-0 right-0 px-1 rounded-b-md font-black text-white  ">
         OFERTA
       </span>
       
-          <img src="${srcImagem}" alt="${srcImagem}" class="w-16 h-16 mr-2"/>
+          <img src="${srcImagem}" alt="${srcImagem}" class="w-20 h-20 mr-2"/>
           
       <div class=" w-full flex items-center">
         
         <div class=" w-full">
         <button onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
-      <h4 class="text-lg font-bold text-blue-700 truncate">${item.nome}</h4>
+      <h4 class="text-sm font-bold text-blue-700 truncate">${item.nome}</h4>
       </button>
-      <p class="text-[14px] font-black tema-text-base mb-2 italic">${item.tipo}</p>
+      <p class="text-[12px] font-black tema-text-base mb-2 italic">${item.tipo}</p>
       <div class="flex items-center justify-between">
       </div>
      
@@ -690,7 +690,7 @@ const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
         
          <span id="tr-${item.cod}"  class="${classeDesconto}  text-gray-400 ml-1 text-sm  line-through">De: ${precoFormatado}R$</span>
         
-        <span class="text-lg ${precoDestaque}">Por: 
+        <span class="text-md ${precoDestaque}">Por: 
         ${precoFinal.toFixed(2).replace(".",",")} R$
       </span>
        
