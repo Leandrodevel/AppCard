@@ -9,7 +9,7 @@ async function verificarImagem(nomeArquivo) {
         if (resposta.ok) {
             console.log("A imagem existe!");
         } else {
-            console.log("Imagem não encontrada.");
+            alert("Imagem não encontrada.");
         }
     } catch (erro) {
         console.error("Erro ao verificar arquivo:", erro);
