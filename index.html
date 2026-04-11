@@ -78,20 +78,6 @@ alert(produtos)
 inicializarApp()*/
 
 
-async function verificarImagem(nomeArquivo) {
-    try {
-        const resposta = await fetch(`/img/${nomeArquivo}`, { method: 'HEAD' });
-        if (resposta.ok) {
-          
-       return nomeArquivo
-       
-        } else {
-      return 'noimage.gif'
-        }
-    } catch (erro) {
-        console.error("Erro ao verificar arquivo:", erro);
-    }
-}
 
 </script>
 
@@ -596,13 +582,20 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     
     <script type="text/javascript" charset="utf-8">
     
-         
-    async function listaTop20() {
+    // Função auxiliar para validar se a imagem existe
+async function validarCaminhoImagem(nomeArquivo) {
+  const caminho = `./img/${nomeArquivo}`;
+  try {
+    const response = await fetch(caminho, { method: 'HEAD' });
+    // Se retornar 200-299, a imagem existe
+    return response.ok ? caminho : './img/noimage.gif';
+  } catch {
+    return './img/noimage.gif'; // Se der erro de rede, usa a padrão
+  }
+}
+async function listaTop20() {
  
 const dbGeral = await getDados();
-
-const image = await verificarImagem()
-
 
 
 const divtop10 = document.getElementById('boxTop10');
@@ -632,7 +625,13 @@ const top10 = variacoesGeral.slice(0, 20);
 // 4. Limpar e Renderizar
 divtop10.innerHTML = '';
 
-top10.forEach(item => {
+ // Usamos for...of para poder usar o 'await' dentro do loop corretamente
+  for (const item of top10) {
+    const nomeImagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`;
+    
+    // ✅ Agora esperamos a verificação de cada imagem individualmente
+    const srcImagem = await validarCaminhoImagem(nomeImagem);
+
   const card = document.createElement('div'); // Nome da variável simplificado
   card.className = "w-full flex-none px-2 pb-4";
   
@@ -651,7 +650,7 @@ const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
 
 const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
 
-verificarImagem(imagem)
+ 
    
   card.innerHTML = `
     <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row">
@@ -660,8 +659,7 @@ verificarImagem(imagem)
         OFERTA
       </span>
       
-          <img src="
-          /img/${image}" alt="${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}" class="w-16 h-16 mr-2"/>
+          <img src="${srcImagem}" alt="${srcImagem}" class="w-16 h-16 mr-2"/>
           
       <div class=" w-full flex items-center">
         
@@ -690,9 +688,10 @@ verificarImagem(imagem)
     </div>
   `;
   divtop10.appendChild(card);
-});
+  
+};
+lucide.createIcons();
     }listaTop20()
-    lucide.createIcons();
     </script>
     
   </div>
