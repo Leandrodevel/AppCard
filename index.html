@@ -795,11 +795,11 @@ lucide.createIcons();
     const acompanhamentos = Array.from(document.querySelectorAll('input[name="acompanhamento"]:checked')).map(el => el.value);
 
     const item = {
-      cod: Date.now(),
+      cod: String(Date.now()),
       nome: `Espetinho de ${sabor}`,
-      embalagem: '1 unidade',
+      embalagem: '1 un.',
       acompanhamentos: acompanhamentos,
-      observacao: obs,
+      observacao: obs ,
       preco: preco,
       qtd:1
     };

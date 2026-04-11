@@ -867,13 +867,14 @@ function atualizarCarrinho() {
   
   // Limpa a lista antes de renderizar
   container.innerHTML = "";
-
+let comAcomp ='hidden'
   // 1. Renderiza os Itens
   meuCarrinho.forEach(item => {
       
+      if(item.acompanhamentos){comAcomp = ''}
     container.innerHTML += `
 
-      <div class="flex justify-between items-center mb-2 ">
+      <div class="flex justify-between items-center mb-2 flex-nowrap">
               
               <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center border-2 border-yellow-400 border-md w-full p-1">
               
@@ -881,10 +882,22 @@ function atualizarCarrinho() {
                 
                 <i class="w-6 h-6 mr-0.5 text-yellow-400" data-lucide="square-arrow-right"></i>
                 
+                <div class="flex flex-col">
                 <span>
-                
                 ${item.qtd} X ${item.nome}
                 <small class="text-[10px] text-gray-700"> ( ${item.embalagem} - ${item.preco} Un. )</small></span>
+        
+          <div class="${comAcomp} w-ful text-orange-400 text-[12px] border-b">
+         Ac: ${item.acompanhamentos}
+          
+          </div>
+          <div class="${comAcomp} w-ful text-green-400 text-[12px]">
+         Obs: ${item.observacao}
+          
+          </div>
+                
+                </div>
+                
                 
                 </div>
                 
