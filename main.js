@@ -674,12 +674,14 @@ let unitPrice
 function openModal(cod,nome, embalagem, preco,curQtd){
   
  let currentQtd = meuCarrinho.find(mi=>mi.cod===cod)
- 
+  let btnDel
  if(!currentQtd){ 
    currentQty = 1
+   btnDel = 'hidden'
  }else {
  currentQty = currentQtd.qtd 
  
+ btnDel=''
  }
  
   
@@ -714,7 +716,14 @@ document.getElementById('modalOverlay').innerHTML=''
         <div class="text-3xl font-black text-gray-900" id="modalProdPreco">${preco}</div>
       </div>
       
+      <button class="border border-red-500 rounded-md p-2 ${btnDel}" id="deleteItem" onclick="removerItem('${cod}')">
+      <i data-lucide="trash" class="w-6 h-6  text-red-500 "></i>
+      </button>
+      
+      
       <div class="flex items-center bg-gray-100 rounded-2xl p-1 border border-gray-200">
+      
+  
         <!-- ÍCONE: MINUS (MENOS) -->
         <button onclick="updateQty(-1)" class="w-10 h-10 flex items-center justify-center bg-white rounded-xl shadow-sm active:scale-90 transition-transform">
           <i data-lucide="minus" class="w-5 h-5 text-orange-600 stroke-[3px]"></i>
@@ -734,8 +743,7 @@ document.getElementById('modalOverlay').innerHTML=''
       <div class="flex items-center gap-2">
         <span id="totalPrice" class="bg-orange-600 px-3 py-1 rounded-lg text-sm">R$ 9,90</span>
         <!-- ÍCONE: SHOPPING-CART (OPCIONAL) -->
-        <i data-lucide="shopping-cart" class="w-4 h-4 text-white"></i>
-      </div>
+    </div>
     </button>
 </div>
 `
@@ -775,13 +783,41 @@ function updateQty(val) {
   if (currentQty + val >= 1) {
     currentQty += val;
     updateDisplay();
-  }
+  } 
+    
 }
 function updateDisplay() {
  document.getElementById('qtyDisplay').innerText = currentQty;
   const total = (currentQty * unitPrice).toFixed(2).replace('.', ',');
   document.getElementById('totalPrice').innerText = `R$ ${total}`;
 }
+function removerItem(cod) {
+  const resposta = confirm("Deseja remover este item?");
+
+  if (resposta) {
+    // Atualiza a variável global com o novo array filtrado
+    meuCarrinho = meuCarrinho.filter(item => item.cod !== cod);
+ 
+    localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
+      
+    // Feedback visual (opcional)
+    alert("Item removido com sucesso!");
+ 
+  let totItens = document.getElementById('qtd-itens')
+
+let totalCarrinho = meuCarrinho.reduce((acc, p) => {
+  return acc + p.qtd;
+}, 0); // O '0' é o valor inicia
+if(totalCarrinho ===0) navegacao('home')
+  totItens.innerText= totalCarrinho
+ 
+   atualizarCarrinho()
+    closeModal()
+
+  }
+  
+}
+
 function confirmAdd(cod,nome,embalagem,preco) {
   // Aqui você integraria com sua lógica de carrinho/comanda
 
@@ -839,7 +875,7 @@ function atualizarCarrinho() {
 
       <div class="flex justify-between items-center mb-2 ">
               
-              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center border border-yellow-400 border-md w-full p-1">
+              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center border-2 border-yellow-400 border-md w-full p-1">
               
                 <div class=" font-medium text-gray-700 flex truncate items-center">
                 
@@ -863,6 +899,8 @@ function atualizarCarrinho() {
 
   // 2. O "Reduce" em ação para o total
   const total = meuCarrinho.reduce((acc, item) => acc + parseFloat((item.preco*item.qtd)) ,0);
+  
+  
   
   totalElemento.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   lucide.createIcons();
@@ -933,7 +971,7 @@ function carrinhoFloat(id){
 const span = document.getElementById(`num-${id}`);
   
   const contaItens = meuCarrinho.filter(cont => cont.id === id).length
-    
+     
     
     if (contaItens < 1) {
   // Se chegar a zero, troca os botões na interface
@@ -951,7 +989,8 @@ let totItens = document.getElementById('qtd-itens')
     let  totalCarrinho= document.getElementById('total-carrinho') 
        
        totItens.innerText= meuCarrinho.length
-
+    
+    
       
      const totalGeral = meuCarrinho.reduce((acumulador, p) => {
     return acumulador + p.preco;
