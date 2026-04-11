@@ -631,20 +631,6 @@ const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
 const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
 
 
-const fs = require('fs');
-const path = require('path');
-
-const dados = { img: "noimage.gif" };
-const caminhoPasta = path.join(__dirname, 'img');
-const caminhoCompleto = path.join(caminhoPasta, dados.img);
-
-if (fs.existsSync(caminhoCompleto)) {
-    console.log("Arquivo encontrado no diretório.");
-} else {
-    console.log("Arquivo não existe na pasta.");
-}
-
-
 
    
   card.innerHTML = `
