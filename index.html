@@ -632,16 +632,21 @@ const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
 
    
   card.innerHTML = `
-    <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden">
+    <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row">
     
       <span class="${classeDesconto} bg-red-500 absolute top-0 right-0 px-1 rounded-b-md font-black text-white  ">
         OFERTA
       </span>
       
+          <img src="noimage.gif" alt="" class="w-16 h-16"/>
+          
+      <div class=" w-full flex items-center">
+        
+        <div class=" w-full">
       <h4 class="text-lg font-bold text-blue-700 truncate">${item.nome}</h4>
       <p class="text-[14px] font-black tema-text-base mb-2 italic">${item.tipo}</p>
       <div class="flex items-center justify-between">
-      
+      </div>
      
         <span class="text-sm font-black tracking-wide flex flex-col">
         
@@ -652,7 +657,7 @@ const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
       </span>
        
         </span>
-        
+        </div>
         <button id="bt+${item.cod}" class="bg-yellow-400 text-gray-700 rounded-lg p-1 shadow-sm active:scale-90 transition" onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
         <i class="W;6 H-6" data-lucide="shopping-basket"></i>
         </button>
