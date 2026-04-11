@@ -40,7 +40,7 @@ const tituloApp = 'Pediu, Brindou!'
 const temaApp = [{}]
 
   
-document.body.className=`bg-gray-100 text-gray-700 pb-24 font-sans`
+
 
 localStorage.setItem('carrinho',JSON.stringify(''))
 
