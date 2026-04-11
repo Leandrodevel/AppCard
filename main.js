@@ -38,6 +38,13 @@ const { data, error } = await _supabase
 const nomeApp = 'Vibe Delivery'
 const tituloApp = 'Pediu, Brindou!'
 const temaApp = [{}]
+const textCor = document.querySelectorAll('.bg-yellow-400');
+
+for (const item of textCor) {
+    item.classList.replace('bg-yellow-400', 'bg-red-400');
+}
+  
+document.body.className=`bg-gray-100 text-gray-700 pb-24 font-sans`
 
 localStorage.setItem('carrinho',JSON.stringify(''))
 
@@ -617,13 +624,13 @@ async function listaProdutos(idCat, termo,lista){
     prodEmb.innerHTML= `
     
     
-  <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative">
+  <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative mb-2">
     
       <span class="${classeDesconto} bg-red-500 absolute top-0 right-0 px-1 rounded-b-md font-black text-white  ">
         OFERTA
       </span>
       
-      <p class="text-[16px] font-black text-yellow-00 mb-2 italic text-yellow-500  ">${emb.tipo}</p>
+      <p class="text-[16px] font-black text-yellow-00 mb-2 italic text-yellow-400  ">${emb.tipo}</p>
       <div class="flex items-center justify-between">
       
      
@@ -665,19 +672,24 @@ async function listaProdutos(idCat, termo,lista){
   lucide.createIcons();
 }
 //////////////////////////////////////////////////////////////////////////////
-let currentQty 
+let currentQty =1
 let unitPrice 
 
 function openModal(cod,nome, embalagem, preco,curQtd){
   
-  if(!curQtd) curQtd =1
-  currentQty = curQtd
-
-
-  preco = preco.replace(/[^0-9,.]/g, "")
+ let currentQtd = meuCarrinho.find(mi=>mi.cod===cod)
+ 
+ if(!currentQtd){ 
+   currentQty = 1
+ }else {
+ currentQty = currentQtd.qtd 
+ 
+ }
+ 
   
+  preco = preco.replace(/[^0-9,.]/g, "")
   unitPrice = preco.replace(",",".");
-  currentQty = 1;
+  
   
 document.getElementById('modalOverlay').innerHTML=''
     // Atualiza os dados no modal
@@ -792,7 +804,7 @@ function confirmAdd(cod,nome,embalagem,preco) {
   if(repetido){
   
     
-    repetido.qtd = repetido.qtd += Number(currentQty)
+    repetido.qtd = repetido.qtd = Number(currentQty)
     
   }else{
     

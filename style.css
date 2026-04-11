@@ -90,3 +90,19 @@
                 opacity: 0;
             }
         }
+        
+.tema-cores{
+    
+    background:red;
+    
+}
+.tema-bg-claro{
+    background: #EEFF2F;
+}
+.tema-text-base{
+    
+    color:red;
+}
+.tema-text-sec{
+    color:#bbb;
+}
