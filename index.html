@@ -785,31 +785,47 @@ lucide.createIcons();
   // Inicializa ícones
   lucide.createIcons();
 
-  function adicionarEspetinho() {
+  function adicionarEspetinho(){
+    
     const sabor = document.getElementById('sabor-espetinho').value;
     const preco = parseFloat(document.getElementById('main-prod-preco').innerText.replace(',', '.'));
     const obs = document.getElementById('obs-pedido').value;
     
     // Pega todos os acompanhamentos marcados
-    const acompanhamentos = Array.from(document.querySelectorAll('input[name="acompanhamento"]:checked'))
-                                 .map(el => el.value);
+    const acompanhamentos = Array.from(document.querySelectorAll('input[name="acompanhamento"]:checked')).map(el => el.value);
 
     const item = {
       cod: Date.now(),
-      tipo: `Espetinho de ${sabor}`,
+      nome: `Espetinho de ${sabor}`,
+      embalagem: '1 unidade',
       acompanhamentos: acompanhamentos,
       observacao: obs,
       preco: preco,
-      total: preco
+      qtd:1
     };
 
     // Salva no LocalStorage
-    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-    carrinho.push(item);
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-
+    
+    meuCarrinho.push(item);
+    localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
+  
     alert(`✅ Espetinho de ${sabor} adicionado com sucesso!`);
+
+    atualizarCarrinho()
     navegacao('home')  
+    
+    let totItens = document.getElementById('qtd-itens')  
+
+    let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
+    return acumulador + p.qtd;
+}, 0); // O '0' é o valor inicial da soma
+
+      
+       totItens.innerText= totalCarrinho
+
+    
+    
+    
     // Opcional: Limpar campos após adicionar
     document.querySelectorAll('input[name="acompanhamento"]').forEach(el => el.checked = false);
     document.getElementById('obs-pedido').value = '';
