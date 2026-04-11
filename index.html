@@ -378,13 +378,13 @@ const classeComItem = [...new Set(dbListExist.map(item =>
    
 
 
-<a href="/index-admin.html">
+<a href="/index-admin.html hidden">
   <button class=" bg-yellow-300 rounded-lg py-1 px-2 shrink-0 h-fit w-fit">
   <i class="w-4 h-4 text-gray-700" data-lucide="user-key"></i>
 </button>
 </a>
 
-  <button class=" bg-yellow-300 rounded-lg py-1 px-2 shrink-0 h-fit w-fit" onclick="enviarAoBanco()">
+  <button class=" bg-yellow-300 rounded-lg py-1 px-2 shrink-0 h-fit w-fit" onclick="logout()">
   <i class="w-4 h-4 text-gray-700" data-lucide="log-out"></i>
 </button>
 
@@ -518,31 +518,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
    
    <div id="home" class="bg-gray-100 min-h-screen font-sans text-gray-900 pb-20">
 
-   <!-------BANNER COM FOTO--------> 
 
-  <div class="px-2 mt-2 hidden">
-    
-    <div class="relative h-40 bg-orange-500 rounded-3xl overflow-hidden shadow-md shadow-yellow-100/60">
-      
-      <div class="absolute z-150
-      bg-gradient-to-r from-black/80 to-transparent  p-6 flex flex-col justify-center z-10">
-        
-        <h2 id="barnnerTxt" class="text-white text-2xl font-black leading-tight">CHURRASCO NO<br><span class="text-yellow-400">FIM DE SEMANA?</span></h2>
-        <p id="barnnerSubTxt" class="text-gray-300 text-xs mt-1">subtexto</p>
-        
-        <button id="barnnerBtn" class="mt-3 bg-yellow-400 text-gray-900 text-[10px] font-black uppercase w-fit px-4 py-2 rounded-lg">Ver Ofertas</button>
-        
-      </div>
-      
-      <div id="slideBanner" class="w-full bg-gray-900 ">
-      
-
-      </div>
-     
-    </div>
-  </div>
-
-   
    <!-------------EXIBER PRODUOS POR CATEGORIA----------------> 
    
    <section class="z-500" >

@@ -98,6 +98,15 @@ navegacao('userCadastro')
   
 }
 verificaLogin()
+
+async function logout() {
+
+const user = await userDados()
+
+  user.logged = false
+
+ localStorage.setItem('userDados',JSON.stringify(user))
+}
 //////////////////////////////////
 //////////////////////////////////
 async function verPerfil() {
@@ -234,8 +243,8 @@ function loading(txt) {
 }
 //////////////////////////////////
 ////////////////////.//////////////
-function enviaCadastroUser(e,metodo) {
-
+async function enviaCadastroUser(e,metodo) {
+const usuario = await userDados()
   e.preventDefault()
   
   
@@ -253,10 +262,20 @@ if(metodo ==='cadastrar'){
 
   const userTel = document.getElementById('inputTel').value
   
+  
+  
+if (usuario){
+
+usuario.logged = true
+
+ localStorage.setItem('userDados',JSON.stringify(usuario))
+  window.location.reload()
+  
+}else{
   async function cadastrarUser() {
 
 const usuarioCompleto = {
-  
+    id:gerarID(),
     nome: userNome,
     tel: userTel,
     rua:'',
@@ -269,6 +288,8 @@ const usuarioCompleto = {
     localStorage.setItem('userDados',JSON.stringify(usuarioCompleto))
   }
   cadastrarUser()
+}
+  
  window.location.reload()
     
 }else if(metodo ==='editar'){
@@ -339,95 +360,6 @@ let marqueeText=`<div class="animate-ticker">
 }
 faixaAmarela()
 //////////////////////////////////
-//////////////////////////////////
-function bannerSlide() {
-  const boxSlide = document.getElementById('slideBanner');
-  if (!boxSlide) return;
-
-  // 1. Defina aqui os caminhos de todas as suas imagens
-  const caminhos = [
-    '/img/img1.jpg',
-    '/img/img2.jpg',
-    '/img/img3.jpg',
-    '/img/img4.jpg'
-  ];
-  const barnnerTxt = [
-    'CHURRASCO NO<br><span class="text-yellow-400">FIM DE SEMANA?</span>'
-    
-    ,'COPÃO<br><span class="text-blue-400">CAPRICHADO!</span>'
-    
-    ,' TORCEDOR<br><span class="text-yellow-400">NOTA 10</span>'
-    
-    ,'CHURRASCO NO<br><span class="text-yellow-400">FIM DE SEMANA?</span>'
-  ]
-  const barnnerSubTxt = [
-    'Carvão e gelo em dobro no combo!',
-    'Dose dupla na Vodka',
-    'Dia de jogo pede uma gelada',
-    'Veja nossa area de promoções '
-  ]
-const goTo=[
-  'churrasco',
-  'copaPromocao',
-  'CervejaTrincando',
-  'superPromocoes'
-]
-
-  // 2. Criamos um array vazio para guardarmos os elementos HTML <img>
-  const imagensHTML = [];
-
-  caminhos.forEach((src, i) => {
-
-    const img = document.createElement('img');
-    img.src = src;
-    // 'absolute' faz as imagens ficarem uma em cima da outra
-    img.className = 'w-full h-full object-cover transition-opacity duration-1000 ease-in-out absolute top-0 left-0';
-    
-    // Deixa apenas a primeira imagem visível (index 0)
-    if (i !== 0) {
-      img.classList.add('opacity-0');
-    }
-
-    boxSlide.appendChild(img);
-    imagensHTML.push(img); // Guarda a referência no array
-  });
-
-  let indexAtual = 0;
-
-
-document.getElementById('barnnerTxt').innerHTML = barnnerTxt[indexAtual]
-
-document.getElementById('barnnerBtn').onclick = () => alert('promocao do barnner')
-
-document.getElementById('barnnerSubTxt').innerText = barnnerSubTxt[indexAtual]
-
-
-  function trocar() {
-    
-    
-    // Esconde a imagem que está aparecendo agora
-    imagensHTML[indexAtual].classList.add('opacity-0');
-
-    // Calcula o próximo índice. 
-    // O operador '%' (módulo) faz o número voltar para 0 quando chega no fim da lista.
-    indexAtual = (indexAtual + 1) % imagensHTML.length;
-
-document.getElementById('barnnerTxt').innerHTML = barnnerTxt[indexAtual]
-    
-    document.getElementById('barnnerBtn').onclick = () => alert('promocao do barnner')
-
-    document.getElementById('barnnerSubTxt').innerText = barnnerSubTxt[indexAtual]
-    
-
-
-    // Mostra a próxima imagem
-    imagensHTML[indexAtual].classList.remove('opacity-0');
-  }
-
-  // Troca a cada 3 segundos
-  setInterval(trocar, 5000);
-}
-bannerSlide();
 //////////////////////////////////
 const instrucao =`
 ​"Olá! Seja muito bem-vindo(a) à Tricker! 🚀
