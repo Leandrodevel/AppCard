@@ -195,7 +195,7 @@ function navegacao(open) {
       behavior: 'auto'
   })
       
-  const allSections=['splash','home','userCadastro','perfilUser','cardapio','modalCarrinho','pagePromocao','editarUser','enderecoTemp']
+  const allSections=['splash','home','userCadastro','perfilUser','cardapio','modalCarrinho','pagePromocao','editarUser','enderecoTemp','montarEspetinho']
   
   
   if(open === 'userCadastro'|| open === 'perfilUser' || open==='editarUser' || open==='enderecoTemp' || open === 'modalCarrinho'){

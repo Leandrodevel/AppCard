@@ -110,3 +110,9 @@ body{
     padding-bottom: 100px;
     
 }
+.bg-image{
+background-image: url(./img/img1.jpg);  
+background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; /* Faz a imagem ocupar todo o espaço */
+}
