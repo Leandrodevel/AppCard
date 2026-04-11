@@ -7,7 +7,7 @@ async function verificarImagem(nomeArquivo) {
     try {
         const resposta = await fetch(`/img/${nomeArquivo}`, { method: 'HEAD' });
         if (resposta.ok) {
-            console.log("A imagem existe!");
+            alert("A imagem existe!");
         } else {
             alert("Imagem não encontrada.");
         }
