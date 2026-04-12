@@ -106,13 +106,31 @@
 .tema-text-sec{
     color:#bbb;
 }
-body{
-    padding-bottom: 100px;
-    
-}
 .bg-image{
 background-image: url(./img/img1.jpg);  
 background-repeat: no-repeat;
   background-position: center;
   background-size: cover; /* Faz a imagem ocupar todo o espaço */
+}
+#app {
+  /* Define a largura máxima típica de um tablet (iPad Pro/Surface) */
+  
+  
+  /* Centraliza a div horizontalmente */
+  margin: 0 auto;
+  
+  /* Garante que o fundo preencha pelo menos a altura da tela */
+  
+  
+  /* Opcional: Adiciona uma sombra para dar efeito de 'app' flutuando */
+  /* Evita que o conteúdo cole nas bordas em telas menores que 1024px */
+  
+  box-sizing: border-box;
+}
+
+body {
+    max-width: 420px; 
+  /* Cor de fundo para a área 'fora' do app (opcional) */
+
+  padding-bottom: 100px;
 }
