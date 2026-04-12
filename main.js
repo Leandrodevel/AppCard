@@ -440,122 +440,90 @@ function openBox(target, event) {
 }
 //////////////////////////////////
 //////////////////////////////////
-async function listarCat(idAtivo,classe) {
-let myDb = await getDados()
- 
- const dbClasse = myDb.filter(db=>{ 
-  const prodClasse = db.classe.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[ ]/g,"")
-  
-  const slcClasse = classe === prodClasse || !classe
-  
-    return slcClasse 
- })
-  
+async function listarCat(idAtivo, classe) {
+  let myDb = await getDados();
 
-  const dbCategorias =[...new Set(
-dbClasse.map(bl => bl.categoria))]
+  const dbClasse = myDb.filter(db => {
+    const prodClasse = db.classe.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[ ]/g, "");
+    const slcClasse = classe === prodClasse || !classe;
+    return slcClasse;
+  });
 
-const navCat = document.getElementById('navCat');
-// 1. Limpa o menu uma única vez
-navCat.innerHTML = '';
+  const dbCategorias = [...new Set(dbClasse.map(bl => bl.categoria))];
+  dbCategorias.sort((a, b) => a.localeCompare(b));
 
-const divTodos = document.createElement('button')
-divTodos.className='shadow-sm shadow-gray-500/30 bg-yellow-400 font-bold text-sm px-3 py-1 rounded-lg whitespace-nowrap text-gray-700'
-divTodos.innerText='Todos'
-divTodos.id='todos'
-navCat.appendChild(divTodos)
+  const navCat = document.getElementById('navCat');
+  navCat.innerHTML = '';
 
-          /*mecher aqui*/
+  // --- Botão "Todos" ---
+  const divTodos = document.createElement('button');
+  divTodos.className = 'shadow-sm shadow-gray-500/30 bg-yellow-400 font-bold text-sm px-3 py-1 rounded-lg whitespace-nowrap text-gray-700';
+  divTodos.innerText = 'Todos';
+  divTodos.id = 'todos';
+
   divTodos.addEventListener('click', () => {
-      listarCat('',classe);
-      navegacao('cardapio')
-      listaProdutos('', '',classe);
-    });
-    
-  if(!idAtivo) {
-      divTodos.classList.add('bg-white');
-      divTodos.classList.remove('bg-yellow-400');
-      
-  
-    }
-    
- dbCategorias.sort((a, b) => a.localeCompare(b));
-  
-dbCategorias.forEach((item,index)=>{
-  
-  const idBotao='btCat'+index
-  
-    
-    // 2. Cria o elemento de forma mais "limpa"
+    listarCat('', classe);
+    navegacao('cardapio');
+    listaProdutos('', '', classe);
+  });
+
+  if (!idAtivo) {
+    divTodos.classList.replace('bg-yellow-400', 'bg-white');
+  }
+
+  navCat.appendChild(divTodos);
+
+  // --- Loop com for...of ---
+  // Usamos .entries() para ter acesso ao índice, similar ao forEach
+  for (const [index, item] of dbCategorias.entries()) {
+    const idBotao = 'btCat' + index;
+
     const btn = document.createElement('button');
-    
     btn.id = idBotao;
     btn.innerText = item;
-    btn.className='shadow-sm shadow-gray-500/30 bg-yellow-400 font-bold text-sm px-3 py-1 rounded-lg whitespace-nowrap text-gray-700'
-    
-    // 3. Aplica a classe 'active' se for o ID selecionado
+    btn.className = 'shadow-sm shadow-gray-500/30 bg-yellow-400 font-bold text-sm px-3 py-1 rounded-lg whitespace-nowrap text-gray-700';
+
+    // Aplica destaque se estiver ativo
     if (idBotao === idAtivo) {
-      btn.classList.remove('bg-yellow-400');
-      btn.classList.add('bg-white');
-      
-    q
+      btn.classList.replace('bg-yellow-400', 'bg-white');
     }
-  
-    // 4. Evento de clique
+
     btn.addEventListener('click', () => {
-      // Chama a função novamente para atualizar o estado visual (o 'active') 
-    
-      listarCat(idBotao,classe);
-      // Filtra os produtos (supondo que sua função aceite o ID da categoria)
-      navegacao('cardapio')
-      listaProdutos(item, '',classe);
-         
+      listarCat(idBotao, classe);
+      navegacao('cardapio');
+      listaProdutos(item, '', classe);
     });
 
-    // 5. Adiciona ao container sem apagar os outros
     navCat.appendChild(btn);
-    
-  });
-  
-  navegacao('cardapio')
-  
-}
-////////////////////////////////////////////////////////////////////////////////
-async function listaProdutos(idCat, termo,lista){
- 
- const myDb = await getDados()
- 
-  const cardapioGrid = document.getElementById('cardapio-grid'); // Certifique-se que este ID existe no seu HTML
-  if (!cardapioGrid) return;
-  
-  const listaParaFiltrar = myDb.filter(fl=>{
-    
-    const classeReplace = fl.classe.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[ ]/g,"")
+  }
 
-  const listaTratada = classeReplace === lista || !lista 
-  
-  return listaTratada
-    
-  }) 
-  // 2. Interface: Gerencia botões de visualização
-  
-  // 3. Filtros (Categoria e Termo)
+  navegacao('cardapio');
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+async function listaProdutos(idCat, termo, lista) {
+  const myDb = await getDados();
+
+  const cardapioGrid = document.getElementById('cardapio-grid');
+  if (!cardapioGrid) return;
+
+  const listaParaFiltrar = myDb.filter(fl => {
+    const classeReplace = fl.classe.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[ ]/g, "");
+    const listaTratada = classeReplace === lista || !lista;
+    return listaTratada;
+  });
+
   const termoBusca = termo.toLowerCase().trim();
-  
+
   const produtosFiltrados = listaParaFiltrar.filter(prod => {
-    
     const correspondeCat = (idCat === '' || prod.categoria.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase() === idCat.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase());
-     
-     
     const correspondeNome = prod.nome.toLowerCase().includes(termoBusca);
-    
     return correspondeCat && correspondeNome;
   });
 
-  // 4. Validação de Lista Vazia
   if (produtosFiltrados.length === 0) {
-    cardapioGrid.innerHTML = 
-    `
+    cardapioGrid.innerHTML = `
       <div class="col-span-2 flex flex-col items-center justify-center py-10 text-gray-400">
         <i data-lucide="frown" class="w-10 h-10 mb-2"></i>
         <span class="font-bold">Nenhum item encontrado</span>
@@ -563,119 +531,96 @@ async function listaProdutos(idCat, termo,lista){
     lucide.createIcons();
     return;
   }
-  
 
-  
-  // 5. Renderização
   cardapioGrid.innerHTML = '';
-  
- produtosFiltrados.sort((a, b) => a.nome.localeCompare(b.nome));
+  produtosFiltrados.sort((a, b) => a.nome.localeCompare(b.nome));
 
-  produtosFiltrados.forEach(prod => {
-    
+  // --- Primeiro Loop: Produtos ---
+  for (const prod of produtosFiltrados) {
     const prodCard = document.createElement('div');
-    
     prodCard.className = 'w-full grid grid-cols-1 px-2';
-    
     prodCard.innerHTML = `
-   <div class="bg-gray-50 py-4 mt-2 px-2 border-b border-gray-100 grid grid-cols-1 transition-colors rounded-lg relative">
-
-  <div class="flex-grow pr-4 ">
-  
-   <h3 class=" font-black text-gray-700 uppercase tracking-tight flex">
-   
-      <span class=" text-md text-blue-500 ml-2">${prod.nome.trim()}</span>
-    
-   <i class="w-4 h-4 text-green-500 translate-y-[5px]" data-lucide="corner-right-down"></i>
-   </h3>
-    </div>
-    
-    <div id="listProdEmb${prod.id}"></div>
-    
-    
-    </div>`;
-    
-    cardapioGrid.appendChild(prodCard);
- 
-   const listProdEmb = document.getElementById(`listProdEmb${prod.id}`)
-   
-    listProdEmb.innerHTML=''
-    
-    prod.embalagens.forEach(emb => {
-      
-  const precoFormatado = emb.preco.replace(/[^0-9,.]/g,"").replace(",",".")
-  
-  const descontoFormatado = emb.desconto
-  
-   const precoFinal = precoFormatado - descontoFormatado
-   
-   const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
-
-  const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
-
-   
-  const prodEmb = document.createElement('div')
-  
-    prodEmb.innerHTML= `
-<div class="bg-white border border-gray-100 rounded-2xl p-2 shadow-sm relative overflow-hidden flex flex-row items-center hover:bg-gray-50 transition-colors mb-2">
-    
-    <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase">
-        OFERTA
-    </span>
-      
-    <div class="flex-shrink-0 w-16 h-16 bg-gray-50 rounded-lg overflow-hidden mr-3">
-     
-    </div>
-          
-    <div class="flex-grow flex items-center justify-between min-w-0">
-        
-        <div class="flex flex-col min-w-0 -space-y-0.5"> <h4 class="text-[10px] font-bold text-gray-500 truncate leading-tight uppercase tracking-tighter">
-                ${prod.nome}
-            </h4>
-            <button onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
-            <p class="text-[16px] font-black text-gray-900 leading-tight uppercase">
-                ${emb.tipo}
-            </p></button>
-
-            <div class="flex flex-col pt-1">
-                <span id="tr-${emb.cod}" class="${classeDesconto} text-gray-400 text-[10px] line-through font-bold leading-none">
-                    De: R$ ${precoFormatado}
-                </span>
-                <span class="text-[18px] font-black ${precoDestaque} text-red-600 leading-none">
-                    <span class="text-xs font-bold">R$</span> ${precoFinal.toFixed(2).replace(".", ",")}
-                </span>
-            </div>
+      <div class="bg-gray-50 py-4 mt-2 px-2 border-b border-gray-100 grid grid-cols-1 transition-colors rounded-lg relative">
+        <div class="flex-grow pr-4 ">
+          <h3 class=" font-black text-gray-700 uppercase tracking-tight flex">
+            <span class=" text-md text-blue-500 ml-2">${prod.nome.trim()}</span>
+            <i class="w-4 h-4 text-green-500 translate-y-[5px]" data-lucide="corner-right-down"></i>
+          </h3>
         </div>
+        <div id="listProdEmb${prod.id}"></div>
+      </div>`;
 
-        <button id="bt+${emb.cod}" 
-                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-lg p-2.5 shadow-sm active:scale-95 transition-all flex-shrink-0 ml-2" 
-                onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
-            <i class="w-5 h-5" data-lucide="shopping-basket"></i>
-        </button>
-    </div>
-</div>
+    cardapioGrid.appendChild(prodCard);
 
-    `
-  
-  listProdEmb.appendChild(prodEmb)
+    const listProdEmb = document.getElementById(`listProdEmb${prod.id}`);
+    listProdEmb.innerHTML = '';
 
-})
-    
-    
-    
-    // 6. Persistência Visual: Verifica se o item já está no carrinho
-    const qtdNoCarrinho = meuCarrinho.filter(item => item.id === prod.id).length;
-    
-    if (qtdNoCarrinho >= 1) {
-      document.getElementById(`btn-${prod.id}`).classList.add('hidden');
-      const seletor = document.getElementById(`seletor-${prod.id}`);
-      seletor.classList.remove('hidden');
-      document.getElementById(`num-${prod.id}`).innerText = qtdNoCarrinho;
+    // --- Segundo Loop: Embalagens (Nested for...of) ---
+    for (const emb of prod.embalagens) {
+      const precoFormatado = emb.preco.replace(/[^0-9,.]/g, "").replace(",", ".");
+      const descontoFormatado = emb.desconto;
+      const precoFinal = precoFormatado - descontoFormatado;
+      
+      const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
+      const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
+
+      const prodEmb = document.createElement('div');
+      prodEmb.innerHTML = `
+        <div class="bg-white border border-gray-100 rounded-2xl p-2 shadow-sm relative overflow-hidden flex flex-row items-center hover:bg-gray-50 transition-colors mb-2">
+            <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase">
+                OFERTA
+            </span>
+            <div class="flex-shrink-0 w-16 h-16 bg-gray-50 rounded-lg overflow-hidden mr-3"></div>
+            <div class="flex-grow flex items-center justify-between min-w-0">
+                <div class="flex flex-col min-w-0 -space-y-0.5"> 
+                    <h4 class="text-[10px] font-bold text-gray-500 truncate leading-tight uppercase tracking-tighter">
+                        ${prod.nome}
+                    </h4>
+                    <button onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
+                        <p class="text-[16px] font-black text-gray-900 leading-tight uppercase">
+                            ${emb.tipo}
+                        </p>
+                    </button>
+                    <div class="flex flex-col pt-1">
+                        <span id="tr-${emb.cod}" class="${classeDesconto} text-gray-400 text-[10px] line-through font-bold leading-none">
+                            De: R$ ${precoFormatado}
+                        </span>
+                        <span class="text-[18px] font-black ${precoDestaque} text-red-600 leading-none">
+                            <span class="text-xs font-bold">R$</span> ${precoFinal.toFixed(2).replace(".", ",")}
+                        </span>
+                    </div>
+                </div>
+                <button id="bt+${emb.cod}" 
+                        class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-lg p-2.5 shadow-sm active:scale-95 transition-all flex-shrink-0 ml-2" 
+                        onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
+                    <i class="w-5 h-5" data-lucide="shopping-basket"></i>
+                </button>
+            </div>
+        </div>`;
+      
+      listProdEmb.appendChild(prodEmb);
     }
-  });
-  
+
+    // 6. Persistência Visual
+    const qtdNoCarrinho = meuCarrinho.filter(item => item.id === prod.id).length;
+    if (qtdNoCarrinho >= 1) {
+      // Pequeno ajuste preventivo aqui: verifique se os elementos existem antes de alterar
+      const btnProd = document.getElementById(`btn-${prod.id}`);
+      const seletorProd = document.getElementById(`seletor-${prod.id}`);
+      
+      if (btnProd) btnProd.classList.add('hidden');
+      if (seletorProd) {
+        seletorProd.classList.remove('hidden');
+        const numProd = document.getElementById(`num-${prod.id}`);
+        if (numProd) numProd.innerText = qtdNoCarrinho;
+      }
+    }
+  }
+
   lucide.createIcons();
 }
+
+
 //////////////////////////////////////////////////////////////////////////////
 let currentQty =1
 let unitPrice 
