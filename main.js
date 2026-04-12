@@ -622,6 +622,11 @@ async function listaProdutos(idCat, termo, lista) {
 
 
 //////////////////////////////////////////////////////////////////////////////
+function toggleModalVazio() {
+    const modal = document.getElementById('modalVazio');
+    modal.classList.toggle('hidden');
+}
+
 let currentQty =1
 let unitPrice 
 
@@ -978,7 +983,7 @@ function verCarrinho(){
     
     if(meuCarrinho.length === 0){
         
-        alert('Carrinho Vazio 🥲')
+        toggleModalVazio()
         
     }else{
     

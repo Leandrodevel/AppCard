@@ -1086,7 +1086,27 @@ slcEndereco.addEventListener('change', (event) => {
  <div id="modalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center transition-opacity duration-300">
 </div>
 <!----FIM--> 
- 
+ <div id="modalVazio" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    
+    <div class="bg-white rounded-3xl p-8 shadow-2xl relative w-full max-w-sm text-center transform transition-all">
+        
+        <div class="flex justify-center mb-6">
+            <div class="bg-yellow-50 p-6 rounded-full">
+                <i data-lucide="shopping-basket" class="w-16 h-16 text-yellow-500 opacity-50"></i>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-black text-gray-800 mb-2">Seu carrinho está vazio</h2>
+        <p class="text-gray-500 mb-8">Parece que você ainda não escolheu suas delícias. Que tal dar uma olhada no cardápio?</p>
+
+        <button onclick="toggleModalVazio()" 
+                class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all uppercase tracking-wider text-sm">
+            Voltar ao Cardápio
+        </button>
+    </div>
+</div>
+
   
 <footer class="ifLogged relative">
   
