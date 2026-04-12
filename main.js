@@ -65,12 +65,14 @@ async function verificaLogin() {
   
   const userExist = await userDados()
   if(!userExist){
+    
   }
   const ifLogged = document.querySelectorAll('.ifLogged')
   
   if(userExist){
     
-    
+  
+
     if(userExist.logged){
 
     ifLogged.forEach((item, index) => {
@@ -84,7 +86,11 @@ async function verificaLogin() {
 
    navegacao('home')
     }else{
-      
+      const userNome = document.getElementById('inputNome')
+  const userTel = document.getElementById('inputTel')
+  
+    userNome.value = userExist.nome
+    userTel.value = userExist.tel
     
       ifLogged.forEach((item, index) => {
     item.classList.add('hidden')
@@ -107,12 +113,14 @@ navegacao('userCadastro')
 verificaLogin()
 
 async function logout() {
+const confirma = confirm('deseja sair ?')
 
+if(confirma){
 const user = await userDados()
-
   user.logged = false
-
  localStorage.setItem('userDados',JSON.stringify(user))
+   window.location.reload()
+}
 }
 //////////////////////////////////
 //////////////////////////////////
@@ -250,26 +258,22 @@ function loading(txt) {
 }
 //////////////////////////////////
 ////////////////////.//////////////
+
+
 async function enviaCadastroUser(e,metodo) {
 const usuario = await userDados()
   e.preventDefault()
-  
-  
+
+const userNome = document.getElementById('inputNome')
+const userTel = document.getElementById('inputTel')
+
   const gerarID = () => {
     const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
     const data = Date.now();
     return letras + data;
 };
 
-  
-  
 if(metodo ==='cadastrar'){
-  
-  const userNome = document.getElementById('inputNome').value
-
-  const userTel = document.getElementById('inputTel').value
-  
-  
   
 if (usuario){
 
@@ -283,8 +287,8 @@ usuario.logged = true
 
 const usuarioCompleto = {
     id:gerarID(),
-    nome: userNome,
-    tel: userTel,
+    nome: userNome.value,
+    tel: userTel.value,
     rua:'',
     casa:'',
     bairro:'',
