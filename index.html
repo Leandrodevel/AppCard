@@ -9,7 +9,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
 <script>
@@ -201,8 +200,6 @@ const classeComItem = [...new Set(dbListExist.map(item =>
       
       
       categButton.addEventListener('click',()=>{
-        
-       
         headerToolsList(pc.lista)
         listarCat('',pc.lista)
        listaProdutos('','',pc.lista) 
@@ -1217,6 +1214,11 @@ slcEndereco.addEventListener('change', (event) => {
     document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
 });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log("Service Worker Registrado!"));
+}
 </script>
 
 </body>
