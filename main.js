@@ -3,7 +3,7 @@
   
   let lastScrollY = window.scrollY;
 
-  window.addEventListener('scroll', () => {
+window.addEventListener('scroll', () => {
     const currentScrollY = window.scrollY
 
     if (currentScrollY > lastScrollY && currentScrollY > 100) {
@@ -48,7 +48,6 @@ localStorage.setItem('carrinho',JSON.stringify(''))
 let meuCarrinho = JSON.parse(localStorage.getItem('carrinho')) || []
 //atualizarCarrinho()
 //////////////////////////////////
-
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     
@@ -467,7 +466,7 @@ divTodos.id='todos'
 navCat.appendChild(divTodos)
 
           /*mecher aqui*/
-divTodos.addEventListener('click', () => {
+  divTodos.addEventListener('click', () => {
       listarCat('',classe);
       navegacao('cardapio')
       listaProdutos('', '',classe);
@@ -499,7 +498,7 @@ dbCategorias.forEach((item,index)=>{
       btn.classList.remove('bg-yellow-400');
       btn.classList.add('bg-white');
       
-    
+    q
     }
   
     // 4. Evento de clique
@@ -618,32 +617,40 @@ async function listaProdutos(idCat, termo,lista){
   const prodEmb = document.createElement('div')
   
     prodEmb.innerHTML= `
+<div class="bg-white border border-gray-100 rounded-2xl p-2 shadow-sm relative overflow-hidden flex flex-row items-center hover:bg-gray-50 transition-colors mb-2">
     
-    
-<div class="bg-white border border-gray-100 rounded-3xl p-4 shadow-sm hover:shadow-md transition-shadow relative mb-3 group">
-    
-    <span class="${classeDesconto} bg-red-600 absolute -top-1 right-4 px-3 py-1 rounded-full font-bold text-[10px] tracking-widest text-white uppercase shadow-sm">
-        Oferta
+    <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase">
+        OFERTA
     </span>
-    
-    <p class="text-md font-bold uppercase tracking-wider text-red-500/80 mb-1">${emb.tipo}</p>
-    
-    <div class="flex items-end justify-between">
+      
+    <div class="flex-shrink-0 w-16 h-16 bg-gray-50 rounded-lg overflow-hidden mr-3">
+     
+    </div>
+          
+    <div class="flex-grow flex items-center justify-between min-w-0">
         
-        <div class="flex flex-col">
-            <span id="tr-${emb.cod}" class="${classeDesconto} text-gray-400 text-xs line-through decoration-red-400/50">
-                De: R$ ${precoFormatado.replace(".",",")}
-            </span>
-            
-            <span class="text-xl font-black text-gray-800 tracking-tight ${precoDestaque}">
-                <span class="text-sm font-medium">R$</span> ${precoFinal.toFixed(2).replace(".",",")}
-            </span>
+        <div class="flex flex-col min-w-0 -space-y-0.5"> <h4 class="text-[10px] font-bold text-gray-500 truncate leading-tight uppercase tracking-tighter">
+                ${prod.nome}
+            </h4>
+            <button onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
+            <p class="text-[16px] font-black text-gray-900 leading-tight uppercase">
+                ${emb.tipo}
+            </p></button>
+
+            <div class="flex flex-col pt-1">
+                <span id="tr-${emb.cod}" class="${classeDesconto} text-gray-400 text-[10px] line-through font-bold leading-none">
+                    De: R$ ${precoFormatado}
+                </span>
+                <span class="text-[18px] font-black ${precoDestaque} text-red-600 leading-none">
+                    <span class="text-xs font-bold">R$</span> ${precoFinal.toFixed(2).replace(".", ",")}
+                </span>
+            </div>
         </div>
-        
+
         <button id="bt+${emb.cod}" 
-                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-950 rounded-2xl p-3 shadow-sm active:scale-95 transition-all group-hover:rotate-2" 
+                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-lg p-2.5 shadow-sm active:scale-95 transition-all flex-shrink-0 ml-2" 
                 onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
-            <i class="w-6 h-6" data-lucide="shopping-basket"></i>
+            <i class="w-5 h-5" data-lucide="shopping-basket"></i>
         </button>
     </div>
 </div>
