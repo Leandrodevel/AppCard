@@ -18,19 +18,18 @@ window.addEventListener('scroll', () => {
   });
   
   
-async function atualizaPontos(newPontos){
+async function atualizaPontos(compratotal){
+  
   const dataPontos = await userDados()
+
+  const pontos = compratotal * 0.735
+  const newPontos = Math.floor(pontos * 10)/10
 
 const dbAtualizado = {...dataPontos,pontos:dataPontos.pontos+newPontos}
 
-//const dbAtualizado ={...dataBase, pontos:0}
-
-const { data, error } = await _supabase
-      .from('users')
-      .insert(dbAtualizado)
-
+ dbAtualizado ={...dataBase, pontos:0}
 }
-//atualizaPontos(10)
+
 //////////////////////////////////
 //////////////////////////////////
 
@@ -882,7 +881,16 @@ let comAcomp ='hidden'
   lucide.createIcons();
 }
 async function enviarWhatsApp(observacao) {
-  const userdados = await userDados()
+const userdados = await userDados()
+    const modal = document.getElementById('modalProcessando');
+    modal.classList.remove('hidden');
+    // Garante que os ícones do Lucide carreguem dentro do modal
+    lucide.createIcons();
+    
+    
+setTimeout(() => {
+
+  
   const obsCarrinho= document.getElementById('obsCarrinho').value
   
 document.getElementById('loading').classList.remove('hidden')
@@ -909,6 +917,9 @@ mensagem += `*Itens:*\n\n`;
 
 
 meuCarrinho.forEach(item => {
+  
+  
+  
   // O emoji ➡️ e o formato "1x NOME" conforme a imagem
   mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n\n`;
   
@@ -925,6 +936,8 @@ const taxaEntrega = 3.00
 // Cálculo do Total
 const totalProdutos = meuCarrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
 
+atualizaPontos(totalProdutos)
+
 const totalGeral = totalProdutos + taxaEntrega;
 
 mensagem += `Taxa de entrega: 3,00R$\n\n`;
@@ -939,6 +952,8 @@ const url = `https://wa.me/${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
 window.open(url, '_blank');
 
   window.location.reload()
+  
+},1500)
 }
 //////////////////////////////////
 //////////////////////////////////
