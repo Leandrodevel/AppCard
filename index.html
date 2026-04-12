@@ -189,8 +189,9 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
  classeParaExibir.sort((a, b) => a.lista.localeCompare(b.lista));
  
-      
-      classeParaExibir.forEach(pc =>{
+ 
+ 
+      for(const pc of classeParaExibir){
       
      const idAtual = pc.lista.toLowerCase().replace(/[\/]/g,"") 
         
@@ -233,7 +234,8 @@ const classeComItem = [...new Set(dbListExist.map(item =>
       listCateg.appendChild(categBox)
        categBox.appendChild(categButton)
        categBox.appendChild(categLabel)
-      })
+    
+      }
       
       
       lucide.createIcons();
