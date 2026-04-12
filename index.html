@@ -668,39 +668,47 @@ const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
  
    
   card.innerHTML = `
-    <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row items-center">
+<div class="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row items-center hover:bg-gray-50 transition-colors mb-2">
     
-      <span class="${classeDesconto} bg-red-500 absolute top-0 right-0 px-1 rounded-b-md font-black text-white  ">
+    <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase tracking-tighter">
         OFERTA
-      </span>
+    </span>
       
-          <img src="${srcImagem}" alt="${srcImagem}" class="w-20 h-20 mr-2"/>
-          
-      <div class=" w-full flex items-center">
-        
-        <div class=" w-full">
-        <button onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
-      <h4 class="text-sm font-bold text-blue-700 truncate">${item.nome}</h4>
-      </button>
-      <p class="text-[12px] font-black tema-text-base mb-2 italic">${item.tipo}</p>
-      <div class="flex items-center justify-between">
-      </div>
-     
-        <span class="text-sm font-black tracking-wide flex flex-col">
-        
-         <span id="tr-${item.cod}"  class="${classeDesconto}  text-gray-400 ml-1 text-[10px]  line-through">De: ${precoFormatado}R$</span>
-        
-        <span class="text-md ${precoDestaque}">Por: 
-        ${precoFinal.toFixed(2).replace(".",",")} R$
-      </span>
-       
-        </span>
-        </div>
-        <button id="bt+${item.cod}" class="bg-yellow-400 text-gray-700 rounded-lg p-1 shadow-sm active:scale-90 transition" onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
-        <i class="W;6 H-6" data-lucide="shopping-basket"></i>
-        </button>
-      </div>
+    <div class="flex-shrink-0 w-20 h-20 bg-gray-50 rounded-xl overflow-hidden mr-3">
+        <img src="${srcImagem}" alt="${item.nome}" class="w-full h-full object-contain mix-blend-multiply"/>
     </div>
+          
+    <div class="flex-grow flex items-center justify-between min-w-0">
+        
+        <div class="flex flex-col min-w-0 mr-2">
+            <button class="text-left focus:outline-none" onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
+                <h4 class="text-[15px] font-bold text-gray-800 truncate leading-tight mb-0.5">
+                    ${item.nome}
+                </h4>
+            </button>
+            
+            <p class="text-[11px] font-semibold text-gray-400 italic mb-1 uppercase tracking-tight">
+                ${item.tipo}
+            </p>
+
+            <div class="flex flex-col leading-none">
+                <span id="tr-${item.cod}" class="${classeDesconto} text-gray-400 text-[10px] line-through mb-0.5">
+                    De: R$ ${precoFormatado}
+                </span>
+                <span class="text-[16px] font-black ${precoDestaque} text-red-600">
+                    <span class="text-xs font-bold">R$</span> ${precoFinal.toFixed(2).replace(".",",")}
+                </span>
+            </div>
+        </div>
+
+        <button id="bt+${item.cod}" 
+                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl p-3 shadow-sm active:scale-95 transition-all flex-shrink-0" 
+                onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
+            <i class="w-5 h-5" data-lucide="shopping-basket"></i>
+        </button>
+    </div>
+</div>
+
   `;
   divtop10.appendChild(card);
   
@@ -845,7 +853,7 @@ lucide.createIcons();
    <!-- SECTION PROMOÇÕES -->
 <div class="mt-8">
   <div class="px-4 flex items-center justify-between mb-4">
-    <h2 class="text-2xl font-black text-gray-700 uppercase tracking-tight flex gap-2">
+    <h2 class="text-xl font-black text-gray-700 uppercase tracking-tight flex gap-2">
       <i class="text-red-500 rotate-12" data-lucide="tag"></i>
       <span class="text-red-600">Ofertas da Semana</span>
     </h2>
@@ -884,32 +892,40 @@ const db = await getDados();
   
   spn.innerHTML=`
   
-      <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden mb-2">
+   <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm relative overflow-hidden mb-3 hover:border-yellow-200 transition-colors group">
     
-      <span class=" bg-red-500 absolute top-0 right-0 px-1 rounded-b-md font-black text-white  ">
+    <span class="bg-red-500 absolute top-0 right-0 px-3 py-0.5 rounded-bl-xl font-black text-[10px] text-white tracking-tighter uppercase shadow-sm">
         OFERTA
-      </span>
-      
-      <h4 class="text-lg text-red-500 font-bold text-gray-700 truncate">${pr.nome}</h4>
-      <p class="text-[14px] font-black text-yellow-00 mb-2 italic">${de.tipo}</p>
-      <div class="flex items-center justify-between">
-      
-     
-        <span class="text-sm font-black tracking-wide flex flex-col">
+    </span>
+
+    <button class="text-left w-full mb-1 focus:outline-none" onclick="openModal('${de.cod}','${pr.nome}','${de.tipo}','${precoFinal.toFixed(2)}')">
+        <h4 class="text-base font-bold text-gray-800 truncate group-hover:text-red-500 transition-colors">
+            ${pr.nome}
+        </h4>
+    </button>
+
+    <p class="text-[14px] font-medium text-gray-600 italic mb-3">${de.tipo}</p>
+
+    <div class="flex items-end justify-between">
+        <div class="flex flex-col leading-tight">
+            <span id="tr-${de.cod}" class="text-gray-400 text-[11px] line-through decoration-red-300">
+                De: R$ ${precoFormatado}
+            </span>
+            
+            <span class="text-xl font-black text-red-600 flex items-center gap-0.5">
+                <span class="text-xs font-bold">R$</span>
+                ${precoFinal.toFixed(2).replace(".",",")}
+            </span>
+        </div>
         
-         <span id="tr-${de.cod}"  class="  text-gray-400 ml-1 text-sm  line-through">De: ${precoFormatado}R$</span>
-        
-        <span class="text-lg text-red-500 ">Por: 
-        ${precoFinal.toFixed(2).replace(".",",")} R$
-      </span>
-       
-        </span>
-        
-        <button id="bt+${de.cod}" class="bg-yellow-400 text-gray-700 rounded-lg p-1 shadow-sm active:scale-90 transition" onclick="openModal('${de.cod}','${pr.nome}','${de.tipo}','${precoFinal}')">
-        <i class="W;6 H-6" data-lucide="shopping-basket"></i>
+        <button id="bt+${de.cod}" 
+                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl p-2.5 shadow-sm active:scale-90 transition-all" 
+                onclick="openModal('${de.cod}','${pr.nome}','${de.tipo}','${precoFinal.toFixed(2)}')">
+            <i class="w-5 h-5" data-lucide="shopping-basket"></i>
         </button>
-      </div>
     </div>
+</div>
+
   
   `
   

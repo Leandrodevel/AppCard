@@ -585,7 +585,7 @@ async function listaProdutos(idCat, termo,lista){
   
    <h3 class=" font-black text-gray-700 uppercase tracking-tight flex">
    
-      <span class=" text-lg text-blue-500 ml-2">${prod.nome.trim()}</span>
+      <span class=" text-md text-blue-500 ml-2">${prod.nome.trim()}</span>
     
    <i class="w-4 h-4 text-green-500 translate-y-[5px]" data-lucide="corner-right-down"></i>
    </h3>
@@ -620,32 +620,34 @@ async function listaProdutos(idCat, termo,lista){
     prodEmb.innerHTML= `
     
     
-  <div class=" bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative mb-2">
+<div class="bg-white border border-gray-100 rounded-3xl p-4 shadow-sm hover:shadow-md transition-shadow relative mb-3 group">
     
-      <span class="${classeDesconto} bg-red-500 absolute top-0 right-0 px-1 rounded-b-md font-black text-white  ">
-        OFERTA
-      </span>
-      
-      <p class="text-[16px] font-black text-yellow-00 mb-2 italic text-yellow-400  ">${emb.tipo}</p>
-      <div class="flex items-center justify-between">
-      
-     
-        <span class="text-sm font-black tracking-wide flex flex-col">
+    <span class="${classeDesconto} bg-red-600 absolute -top-1 right-4 px-3 py-1 rounded-full font-bold text-[10px] tracking-widest text-white uppercase shadow-sm">
+        Oferta
+    </span>
+    
+    <p class="text-md font-bold uppercase tracking-wider text-red-500/80 mb-1">${emb.tipo}</p>
+    
+    <div class="flex items-end justify-between">
         
-         <span id="tr-${emb.cod}"  class="${classeDesconto}  text-gray-400 ml-1 text-sm  line-through">De:${precoFormatado.replace(".",",")} R$</span>
+        <div class="flex flex-col">
+            <span id="tr-${emb.cod}" class="${classeDesconto} text-gray-400 text-xs line-through decoration-red-400/50">
+                De: R$ ${precoFormatado.replace(".",",")}
+            </span>
+            
+            <span class="text-xl font-black text-gray-800 tracking-tight ${precoDestaque}">
+                <span class="text-sm font-medium">R$</span> ${precoFinal.toFixed(2).replace(".",",")}
+            </span>
+        </div>
         
-        <span class="text-lg ${precoDestaque}">Por: 
-        ${precoFinal.toFixed(2)} R$
-      </span>
-       
-        </span>
-        
-        <button id="bt+${emb.cod}" class="bg-yellow-400 text-gray-700 rounded-lg p-1 shadow-sm active:scale-90 transition" onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
-        <i class="W-6 H-6" data-lucide="shopping-basket"></i>
+        <button id="bt+${emb.cod}" 
+                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-950 rounded-2xl p-3 shadow-sm active:scale-95 transition-all group-hover:rotate-2" 
+                onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
+            <i class="w-6 h-6" data-lucide="shopping-basket"></i>
         </button>
-      </div>
-    </div>    
-    
+    </div>
+</div>
+
     `
   
   listProdEmb.appendChild(prodEmb)
