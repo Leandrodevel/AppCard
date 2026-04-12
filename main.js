@@ -1090,4 +1090,44 @@ localStorage.setItem('userDados',JSON.stringify(userdados))
 //////////////////////////////////
 
 // No final do seu script principal
+
+let servicoInstalacao; // Variável para guardar o evento
+const botaoInstalar = document.getElementById('btnInstalar');
+
+// 1. Escuta o evento 'beforeinstallprompt'
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Impede que o navegador mostre o banner automático muito rápido
+  e.preventDefault();
+  
+  // Guarda o evento para ser usado depois
+  servicoInstalacao = e;
+  
+  // Agora que sabemos que o app é instalável, mostramos o botão
+  botaoInstalar.style.display = 'block';
+});
+
+// 2. Lógica do clique no botão
+botaoInstalar.addEventListener('click', async () => {
+  if (!servicoInstalacao) return;
+
+  // Mostra a caixa de diálogo de instalação do navegador
+  servicoInstalacao.prompt();
+
+  // Verifica se o usuário aceitou ou recusou a instalação
+  const { outcome } = await servicoInstalacao.userChoice;
+  console.log(`Usuário escolheu: ${outcome}`);
+
+  // Limpa a variável, pois o evento só pode ser usado uma vez
+  servicoInstalacao = null;
+
+  // Esconde o botão novamente
+  botaoInstalar.style.display = 'none';
+});
+
+// 3. (Opcional) Esconde o botão se o app já for instalado
+window.addEventListener('appinstalled', () => {
+  console.log('App instalado com sucesso!');
+  botaoInstalar.style.display = 'none';
+});
+
 lucide.createIcons();

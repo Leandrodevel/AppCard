@@ -93,7 +93,9 @@ inicializarApp()*/
           Rua das Cervejarias, 123
            </span>
       </div>
-           
+         
+ 
+  
          <div class="flex flex-row gap-2 items-center" id="statusOnline"></div>
     
     </div>
@@ -1066,6 +1068,20 @@ slcEndereco.addEventListener('change', (event) => {
         
   
   </div>
+  
+  
+  <button id="btnInstalar" class="p-2 rounded-lg bg-orange-500 font-medium text-white fixed left-1/2 -translate-x-1/2 bottom-[200px] shadow-lg flex items-center gap-2" style="display: none;">
+   <i data-lucide="download" class="w-4 h-4"></i>  
+   <span class="text-[10px]">Instalar Aplicativo</span>
+</button>
+
+  
+<!---MODAL ADICIONAR  PRODUTO--->
+ <div id="modalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center transition-opacity duration-300">
+</div>
+<!----FIM--> 
+ 
+  
 <footer class="ifLogged relative">
   
 <!---NAVBAR BOTTOM--->
@@ -1159,6 +1175,8 @@ slcEndereco.addEventListener('change', (event) => {
         class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
     </div>
 
+
+
     <div class="pt-4">
       <button id="btnEnviaCadUser" type="submit" 
         class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl  transition-transform active:scale-95 uppercase tracking-wider">
@@ -1176,9 +1194,7 @@ slcEndereco.addEventListener('change', (event) => {
 
 
 
- 
- 
- <footer class=" py-8 px-4 bg-white text-zinc-900  text-center rounded-lg mx-2">
+ <div class=" py-8 px-4 bg-white text-zinc-900  text-center rounded-lg mx-2">
 
   <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
     
@@ -1196,15 +1212,11 @@ slcEndereco.addEventListener('change', (event) => {
     </div>
 
   </div>
-</footer> 
- 
- 
-<!---MODAL ADICIONAR  PRODUTO--->
- <div id="modalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center transition-opacity duration-300">
   
+
+</div> 
  
-</div>
-<!----FIM--> 
+
  
 </footer>
 <script src="main.js" defer ></script>
