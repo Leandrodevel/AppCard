@@ -880,8 +880,10 @@ let comAcomp ='hidden'
   totalElemento.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   lucide.createIcons();
 }
-async function enviarWhatsApp(observacao) {
+async function enviarWhatsApp() {
+
 const userdados = await userDados()
+
     const modal = document.getElementById('modalProcessando');
     modal.classList.remove('hidden');
     // Garante que os ícones do Lucide carreguem dentro do modal
@@ -918,14 +920,14 @@ mensagem += `*Itens:*\n\n`;
 
 meuCarrinho.forEach(item => {
   
-  
-  
   // O emoji ➡️ e o formato "1x NOME" conforme a imagem
-  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n\n`;
+  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n (${item.observacao})\n\n`;
+  
   
   // Caso tenha observações ou opcionais (como os molhos da imagem)
-  if(observacao !== '') {
-    mensagem += `❕OBS: ${obsCarrinho}_\n\n`;
+  if(obsCarrinho !== '') {
+mensagem+=`---------------------\n`
+    mensagem += `❕OBS: ${obsCarrinho}\n\n`;
   }
 });
 // Detalhes de Delivery
