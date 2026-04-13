@@ -540,13 +540,16 @@ async function listaProdutos(idCat, termo, lista) {
 
   // --- Primeiro Loop: Produtos ---
   for (const prod of produtosFiltrados) {
+  
+  const nomeEscapado = prod.nome.replace(/'/g, "");
+const marcaEscapada = prod.marca.replace(/'/g, "\\'");
     const prodCard = document.createElement('div');
     prodCard.className = 'w-full grid grid-cols-1 px-2';
     prodCard.innerHTML = `
       <div class="bg-gray-50 py-4 mt-2 px-2 border-b border-gray-100 grid grid-cols-1 transition-colors rounded-lg relative">
         <div class="flex-grow pr-4 ">
           <h3 class=" font-black text-gray-700 uppercase tracking-tight flex">
-            <span class=" text-md text-blue-500 ml-2">${prod.nome.trim()}</span>
+            <span class=" text-md text-blue-500 ml-2">${nomeEscapado.trim()}</span>
             <i class="w-4 h-4 text-green-500 translate-y-[5px]" data-lucide="corner-right-down"></i>
           </h3>
         </div>
@@ -566,7 +569,10 @@ async function listaProdutos(idCat, termo, lista) {
       
       const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
       const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
-
+      
+      
+ 
+      
       const prodEmb = document.createElement('div');
       prodEmb.innerHTML = `
         <div class="bg-white border border-gray-100 rounded-2xl p-2 shadow-sm relative overflow-hidden flex flex-row items-center hover:bg-gray-50 transition-colors mb-2">
@@ -577,11 +583,11 @@ async function listaProdutos(idCat, termo, lista) {
             <div class="flex-grow flex items-center justify-between min-w-0">
                 <div class="flex flex-col min-w-0 -space-y-0.5"> 
                     <h4 class="text-[10px] font-bold text-gray-500 truncate leading-tight uppercase tracking-tighter">
-                        ${prod.nome}
+                        ${nomeEscapado}
                     </h4>
-                    <button onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
+                    <button onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')">
                         <p class="text-[16px] font-black text-gray-900 leading-tight uppercase">
-                            ${emb.tipo}
+                            ${String(emb.tipo)}
                         </p>
                     </button>
                     <div class="flex flex-col pt-1">
@@ -595,7 +601,7 @@ async function listaProdutos(idCat, termo, lista) {
                 </div>
                 <button id="bt+${emb.cod}" 
                         class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-lg p-2.5 shadow-sm active:scale-95 transition-all flex-shrink-0 ml-2" 
-                        onclick="openModal('${emb.cod}','${prod.nome}','${emb.tipo}','${precoFinal.toFixed(2)}')">
+                        onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')">
                     <i class="w-5 h-5" data-lucide="shopping-basket"></i>
                 </button>
             </div>

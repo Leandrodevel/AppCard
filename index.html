@@ -176,12 +176,11 @@ const classeComItem = [...new Set(dbListExist.map(item =>
  
  let classeParaExibir =[]
  
- classeComItem.forEach(fl=>{
-   
+  for(const fl of classeComItem){
  const comparados =  primeCateList.filter(ci=>ci.lista.toLowerCase() === fl.toLowerCase())
   classeParaExibir.push(...comparados)
-
- })
+ }
+ 
  const itemTodos = primeCateList.filter(it=>it.lista ==='')
  classeParaExibir.push(...itemTodos)
  
@@ -191,7 +190,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
  
  
  
-      for(const pc of classeParaExibir){
+   for(const pc of classeParaExibir){
       
      const idAtual = pc.lista.toLowerCase().replace(/[\/]/g,"") 
         
@@ -393,7 +392,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
       </button>
     </div>
 
-    <div class="w-full bg-gray-900 rounded-[2.5rem] p-6 shadow-2xl relative overflow-hidden mb-10">
+    <div class=" hidden w-full bg-gray-900 rounded-[2.5rem] p-6 shadow-2xl relative overflow-hidden mb-10">
       <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-400 opacity-10 rounded-full"></div>
       
       <div class="flex justify-between items-start mb-6 relative z-10">
@@ -626,6 +625,8 @@ const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-md" : "";
 
 const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
 
+const nomeEscapado = item.nome.replace(/'/g, "");
+const marcaEscapada = item.marca.replace(/'/g, "\\'");
  
    
   card.innerHTML = `
@@ -636,15 +637,15 @@ const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
     </span>
       
     <div class="flex-shrink-0 w-20 h-20 bg-gray-50 rounded-xl overflow-hidden mr-3">
-        <img src="${srcImagem}" alt="${item.nome}" class="w-full h-full object-contain mix-blend-multiply"/>
+        <img src="${srcImagem}" alt="${nomeEscapado}" class="w-full h-full object-contain mix-blend-multiply"/>
     </div>
           
     <div class="flex-grow flex items-center justify-between min-w-0">
         
         <div class="flex flex-col min-w-0 mr-2">
-            <button class="text-left focus:outline-none" onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
+            <button class="text-left focus:outline-none" onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFinal.toFixed(2)}')">
                 <h4 class="text-[15px] font-bold text-gray-800 truncate leading-tight mb-0.5">
-                    ${item.nome}
+                    ${nomeEscapado}
                 </h4>
             </button>
             
@@ -664,7 +665,7 @@ const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
 
         <button id="bt+${item.cod}" 
                 class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl p-3 shadow-sm active:scale-95 transition-all flex-shrink-0" 
-                onclick="openModal('${item.cod}','${item.nome}','${item.tipo}','${precoFinal.toFixed(2)}')">
+                onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFinal.toFixed(2)}')">
             <i class="w-5 h-5" data-lucide="shopping-basket"></i>
         </button>
     </div>
@@ -840,9 +841,9 @@ const db = await getDados();
       
    const boxPromocoes= document.getElementById('boxPromocoes')
       
-      db.forEach(pr=>{
+      for(const pr of db){
         
-    const  dbEmbalagens  = pr.embalagens.forEach(de=>{
+     for(const de of pr.embalagens){
       
        const descontoLimpo =de.desconto
      
@@ -899,12 +900,12 @@ const db = await getDados();
   boxPromocoes.appendChild(spn)     
     //    alert(parseFloat(descontoLimpo).toFixed(2))
       }
-    }) 
+    }
   
-      })
+      }
       if (typeof lucide !== 'undefined') lucide.createIcons();
     }
-    listaProm()
+    
   </script>
 </div>   
       
@@ -982,7 +983,7 @@ slcEndereco.addEventListener('change', (event) => {
   }
 });
      }
-     slcEnderecoModal()          
+    slcEnderecoModal()          
                 
               </script>
               
@@ -1243,8 +1244,7 @@ slcEndereco.addEventListener('change', (event) => {
 <script src="main.js" defer ></script>
 
 <script type="text/javascript" charset="utf-8">
-
-    document.addEventListener('DOMContentLoaded', () => {
+   document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
 });
 
