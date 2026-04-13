@@ -812,7 +812,10 @@ function confirmAdd(cod,nome,embalagem,preco) {
   
   localStorage.setItem('carrinho',JSON.stringify(meuCarrinho))
   }
- alert(`${currentQty} item(s) adicionado(s)!`);
+  
+  modalAdicionado(cod,nome,embalagem,preco)
+
+// alert(`${currentQty} item(s) adicionado(s)!`);
 
 
     let totItens = document.getElementById('qtd-itens')  
@@ -927,7 +930,7 @@ mensagem += `*Itens:*\n\n`;
 meuCarrinho.forEach(item => {
   
   // O emoji ➡️ e o formato "1x NOME" conforme a imagem
-  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n (${item.observacao || 'padrão'})\n\n`;
+  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n (${item.observacao || '-'})\n\n`;
   
   
   // Caso tenha observações ou opcionais (como os molhos da imagem)
@@ -1041,6 +1044,35 @@ document.getElementById('form-cadastro').addEventListener('submit', function(e) 
 
 
 /*==========================================================================================================================================================*/
+function modalAdicionado(cod, nome, tipo, preco) {
+    const modal = document.getElementById('modalAdicionado');
+   
+  const displayMsg = document.getElementById('msg-produto');
+
+    // Insere o nome do produto no parágrafo
+    displayMsg.innerHTML = `O item <span class="text-yellow-600 font-bold">"${nome}"</span> foi colocado no seu carrinho.`;
+
+    // Exibe o modal
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function fecharModalAdicionado() {
+    const modal = document.getElementById('modalAdicionado');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+
+// Fecha se clicar fora do card branco
+window.addEventListener('click', (e) => {
+    const modal = document.getElementById('modalAdicionado');
+    if (e.target === modal) fecharModalAdicionado();
+});
+
+
+
+
+
 async function cadastrarEnderecoAlternativo(e){
   
   const userdados = await userDados()
