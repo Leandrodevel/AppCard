@@ -922,6 +922,76 @@ slcEndereco.addEventListener('change', (event) => {
               
             </div>
             
+        <!-------------------------------------> 
+        
+            <script src="https://cdn.tailwindcss.com"></script>
+<div class="space-y-4">
+  <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Forma de Pagamento</h3>
+  
+  <div class="flex flex-row gap-2 overflow-x-auto pb-2 no-scrollbar">
+    
+    <label class="flex-1 min-w-[100px] cursor-pointer">
+      <input type="radio" name="pay_method" value="pix" class="peer hidden" checked onchange="toggleTroco(false)">
+      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
+        <span class="text-xs font-bold text-gray-800">PIX</span>
+      </div>
+    </label>
+
+    <label class="flex-1 min-w-[100px] cursor-pointer">
+      <input type="radio" name="pay_method" value="card" class="peer hidden" onchange="toggleTroco(false)">
+      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
+        <span class="text-xs font-bold text-gray-800">CARTÃO</span>
+      </div>
+    </label>
+
+    <label class="flex-1 min-w-[100px] cursor-pointer">
+      <input type="radio" name="pay_method" value="money" class="peer hidden" onchange="toggleTroco(true)">
+      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
+        <span class="text-xs font-bold text-gray-800">DINHEIRO</span>
+      </div>
+    </label>
+    
+  </div>
+
+  <div id="campo-troco" class="hidden animate-in fade-in slide-in-from-top-2 duration-300">
+    <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-xl">
+      <p class="text-sm font-medium text-yellow-800 mb-2">Precisa de troco?</p>
+      <div class="flex items-center gap-2">
+        <span class="text-gray-500 font-bold">R$</span>
+        <input type="number" step="0.01" placeholder="Ex: 100,00" 
+               class="w-full bg-white border border-yellow-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-gray-800 font-medium">
+      </div>
+      <p class="text-[10px] text-yellow-700 mt-2 italic">* O entregador levará o troco para este valor.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleTroco(show) {
+    const divTroco = document.getElementById('campo-troco');
+    if (show) {
+      divTroco.classList.remove('hidden');
+    } else {
+      divTroco.classList.add('hidden');
+    }
+  }
+</script>
+
+<style>
+  /* Esconde a barra de rolagem mas mantém a funcionalidade */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+        
+        <!------------------------------------->      
+            
+            
             
             <div class="flex justify-between items-center">
                 <span class="font-bold text-gray-600 uppercase text-sm">Total:</span>
