@@ -927,7 +927,7 @@ mensagem += `*Itens:*\n\n`;
 meuCarrinho.forEach(item => {
   
   // O emoji ➡️ e o formato "1x NOME" conforme a imagem
-  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n (${item.observacao})\n\n`;
+  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n (${item.observacao || 'padrão'})\n\n`;
   
   
   // Caso tenha observações ou opcionais (como os molhos da imagem)
@@ -959,9 +959,9 @@ const url = `https://wa.me/${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
 
 window.open(url, '_blank');
 
-  window.location.reload()
+window.location.reload()
   
-},2500)
+},4000)
 }
 //////////////////////////////////
 //////////////////////////////////
