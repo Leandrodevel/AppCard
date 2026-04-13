@@ -118,10 +118,12 @@ background-repeat: no-repeat;
   
   /* Centraliza a div horizontalmente */
   margin: 0 auto;
-  
+  position: relative;
+  padding-bottom: 80px;
+  max-width: 640px;
+  min-width: 360px;
+  box-sizing: border-box;
   /* Garante que o fundo preencha pelo menos a altura da tela */
-  
-  
   /* Opcional: Adiciona uma sombra para dar efeito de 'app' flutuando */
   /* Evita que o conteúdo cole nas bordas em telas menores que 1024px */
   
@@ -129,8 +131,5 @@ background-repeat: no-repeat;
 }
 
 body {
-    max-width: 420px; 
-  /* Cor de fundo para a área 'fora' do app (opcional) */
-
-  padding-bottom: 100px;
+margin: 0 auto;
 }
