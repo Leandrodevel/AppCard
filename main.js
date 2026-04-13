@@ -987,14 +987,12 @@ mensagem += `*Itens:*\n\n`;
 meuCarrinho.forEach(item => {
   
   // O emoji ➡️ e o formato "1x NOME" conforme a imagem
-  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${item.preco}\n (${item.observacao || '-'})\n\n`;
+  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} \n vlr - ${formatarMoeda(item.preco)}R$  (${item.observacao || '-'})\n\n`;
   
   
   // Caso tenha observações ou opcionais (como os molhos da imagem)
-  if(obsCarrinho !== '') {
-mensagem+=`---------------------\n`
-    mensagem += `❕OBS: ${obsCarrinho}\n\n`;
-  }
+    mensagem += `❕OBS: ${obsCarrinho || 'Sem detalhes adicionais'}\n\n`;
+  
 });
 // Detalhes de Delivery
   mensagem += `🏠 envie para: ${endereco || "Endereço não informado"}\n`;

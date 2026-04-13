@@ -112,13 +112,13 @@ background-repeat: no-repeat;
   background-position: center;
   background-size: cover; /* Faz a imagem ocupar todo o espaço */
 }
-#app {
+#app{
   /* Define a largura máxima típica de um tablet (iPad Pro/Surface) */
   
   
   /* Centraliza a div horizontalmente */
   margin: 0 auto;
-  position: relative;
+  
   padding-bottom: 80px;
   max-width: 640px;
   min-width: 360px;
@@ -132,4 +132,5 @@ background-repeat: no-repeat;
 
 body {
 margin: 0 auto;
+padding-bottom: 80px;
 }

@@ -10,7 +10,8 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
 <script>
 //teste de github
   // 1. Configurações de acesso
@@ -76,12 +77,31 @@ alert(produtos)
 }
 inicializarApp()*/
 
+const mp = new MercadoPago('YOUR_PUBLIC_KEY', {
+  locale: 'pt-BR'
+});
 
+async function handleCheckout() {
+  // 1. Chama sua API interna para criar a preferência e obter o ID
+  const response = await fetch('/api/create-preference', { method: 'POST' });
+  const { preferenceId } = await response.json();
+
+  // 2. Abre o checkout
+  mp.checkout({
+    preference: {
+      id: preferenceId
+    },
+    autoOpen: true, // Abre o modal do MP automaticamente
+  });
+}
 </script>
 
 </head>
 <body class="bg-gray-100 font-sans">
-  
+
+
+    
+ 
   <header id="header" class="transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2  bg-gray-900">
 
             
@@ -115,8 +135,8 @@ inicializarApp()*/
     
   </header>
 
-<main class=" p-1 py-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-  
+<main class=" p-1 py-2 grid grid-cols-1">
+    
   
   <div id="headerTools">
      <!----------menu superior----------> 
@@ -1062,7 +1082,77 @@ slcEndereco.addEventListener('change', (event) => {
     </div>
 </div>
 
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
   
+  <div class="bg-white w-full max-w-md rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl animate-in slide-in-from-bottom duration-300">
+    
+    <div class="p-4 border-b flex justify-between items-center">
+      <h2 class="text-lg font-bold text-gray-800">Finalizar Pedido</h2>
+      <button class="text-gray-400 hover:text-gray-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="p-4 space-y-6">
+      
+      <div class="space-y-2">
+        <div class="flex justify-between text-gray-600">
+          <span>Subtotal</span>
+          <span>R$ 85,90</span>
+        </div>
+        <div class="flex justify-between text-gray-600">
+          <span>Taxa de entrega</span>
+          <span class="text-green-600 font-medium">Grátis</span>
+        </div>
+        <div class="flex justify-between text-xl font-bold text-gray-900 pt-2 border-t">
+          <span>Total</span>
+          <span>R$ 85,90</span>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Forma de Pagamento</h3>
+        <div class="space-y-3">
+          
+          <label class="flex items-center p-3 border rounded-xl cursor-pointer hover:bg-gray-50 border-blue-500 bg-blue-50">
+            <input type="radio" name="payment" class="h-4 w-4 text-blue-600" checked>
+            <div class="ml-3 flex items-center flex-1">
+              <span class="font-medium text-gray-800">Pix</span>
+              <span class="ml-auto text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">Rápido</span>
+            </div>
+          </label>
+
+          <label class="flex items-center p-3 border rounded-xl cursor-pointer hover:bg-gray-50 border-gray-200">
+            <input type="radio" name="payment" class="h-4 w-4 text-blue-600">
+            <div class="ml-3 flex items-center flex-1">
+              <span class="font-medium text-gray-800">Cartão de Crédito</span>
+            </div>
+          </label>
+
+          <label class="flex items-center p-3 border rounded-xl cursor-pointer hover:bg-gray-50 border-gray-200">
+            <input type="radio" name="payment" class="h-4 w-4 text-blue-600">
+            <div class="ml-3 flex items-center flex-1">
+              <span class="font-medium text-gray-800">Dinheiro</span>
+            </div>
+          </label>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 bg-gray-50 border-t">
+      <button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition-colors shadow-lg active:scale-95">
+        Confirmar e Pagar
+      </button>
+      <p class="text-center text-xs text-gray-400 mt-3">
+        Ambiente 100% Seguro
+      </p>
+    </div>
+
+  </div>
+</div>
 <footer class="ifLogged relative">
   
 <!---NAVBAR BOTTOM--->
@@ -1207,6 +1297,6 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log("Service Worker Registrado!"));
 }
 </script>
-
+ 
 </body>
 </html>
