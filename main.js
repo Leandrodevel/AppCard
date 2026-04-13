@@ -17,19 +17,6 @@ window.addEventListener('scroll', () => {
     lastScrollY = currentScrollY;
   });
   
-  
-async function atualizaPontos(compratotal){
-  
-  const dataPontos = await userDados()
-
-  const pontos = compratotal * 0.735
-  const newPontos = Math.floor(pontos * 10)/10
-
-const dbAtualizado = {...dataPontos,pontos:dataPontos.pontos+newPontos}
-
- dbAtualizado ={...dataBase, pontos:0}
-}
-
 //////////////////////////////////
 //////////////////////////////////
 
@@ -630,7 +617,77 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
 }
 
 
-//////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////
+async function listaProm() {
+const db = await getDados();
+         
+   const boxPromocoes= document.getElementById('boxPromocoes')
+      
+      for(const pr of db){
+        
+     for(const de of pr.embalagens){
+      
+       const descontoLimpo =de.desconto
+     
+     const precoFormatado = de.preco.replace(/[^0-9,.]/g,"").replace(",",".")
+  
+   const precoFinal = precoFormatado - descontoLimpo
+     
+     
+        
+      if(descontoLimpo > 0.00){
+  
+  const spn = document.createElement('div')   
+  spn.className='w-full px-2'
+  
+  spn.innerHTML=`
+  
+   <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm relative overflow-hidden mb-3 hover:border-yellow-200 transition-colors group">
+    
+    <span class="bg-red-500 absolute top-0 right-0 px-3 py-0.5 rounded-bl-xl font-black text-[10px] text-white tracking-tighter uppercase shadow-sm">
+        OFERTA
+    </span>
+
+    <button class="text-left w-full mb-1 focus:outline-none" onclick="openModal('${de.cod}','${pr.nome}','${de.tipo}','${precoFinal.toFixed(2)}')">
+        <h4 class="text-base font-bold text-gray-800 truncate group-hover:text-red-500 transition-colors">
+            ${pr.nome}
+        </h4>
+    </button>
+
+    <p class="text-[14px] font-medium text-gray-600 italic mb-3">${de.tipo}</p>
+
+    <div class="flex items-end justify-between">
+        <div class="flex flex-col leading-tight">
+            <span id="tr-${de.cod}" class="text-gray-400 text-[11px] line-through decoration-red-300">
+                De: R$ ${precoFormatado}
+            </span>
+            
+            <span class="text-xl font-black text-red-600 flex items-center gap-0.5">
+                <span class="text-xs font-bold">R$</span>
+                ${precoFinal.toFixed(2).replace(".",",")}
+            </span>
+        </div>
+        
+        <button id="bt+${de.cod}" 
+                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl p-2.5 shadow-sm active:scale-90 transition-all" 
+                onclick="openModal('${de.cod}','${pr.nome}','${de.tipo}','${precoFinal.toFixed(2)}')">
+            <i class="w-5 h-5" data-lucide="shopping-basket"></i>
+        </button>
+    </div>
+</div>
+
+  
+  `
+  
+  boxPromocoes.appendChild(spn)     
+    //    alert(parseFloat(descontoLimpo).toFixed(2))
+      }
+    }
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+      
+      }
+/////////////////////////////////////
 function toggleModalVazio() {
     const modal = document.getElementById('modalVazio');
     modal.classList.toggle('hidden');
@@ -947,7 +1004,7 @@ const taxaEntrega = 3.00
 // Cálculo do Total
 const totalProdutos = meuCarrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
 
-atualizaPontos(totalProdutos)
+
 
 const totalGeral = totalProdutos + taxaEntrega;
 
