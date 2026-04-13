@@ -1123,11 +1123,6 @@ window.addEventListener('click', (e) => {
     const modal = document.getElementById('modalAdicionado');
     if (e.target === modal) fecharModalAdicionado();
 });
-
-
-
-
-
 async function cadastrarEnderecoAlternativo(e){
   
   const userdados = await userDados()
