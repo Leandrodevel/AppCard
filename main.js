@@ -899,41 +899,39 @@ let comAcomp ='hidden'
   // 1. Renderiza os Itens
   meuCarrinho.forEach(item => {
       
-      if(item.acompanhamentos){comAcomp = ''}
+      if(item.acompanhamentos){comAcomp = ''}else{comAcomp='hidden'}
+      
     container.innerHTML += `
 
-      <div class="flex justify-between items-center mb-2 flex-nowrap">
+    
               
-              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center border-2 border-yellow-400 border-md w-full p-1">
-              
-                <div class=" font-medium text-gray-700 flex truncate items-center">
+              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center border-2 border-yellow-400 border-md w-full p-1 mb-1 border-l-[5px] rounded-md">
                 
-                <i class="w-6 h-6 mr-0.5 text-yellow-400" data-lucide="square-arrow-right"></i>
+                <div class=" justify-left flex text-left flex-col">
                 
-                <div class="flex flex-col">
-                <span>
-                ${item.qtd} X ${item.nome}
-                <small class="text-[10px] text-gray-700"> ( ${item.embalagem} - ${item.preco} Un. )</small></span>
-        
-          <div class="${comAcomp} w-ful text-orange-400 text-[12px] border-b">
+                <div class="grid grid-cols-1">
+              <span>
+              ${item.qtd} X ${item.nome}
+              </span>
+              <small class="text-[10px] text-gray-700">
+              ( ${item.embalagem} - ${item.preco} Un. )</small>
+                </div>
+  
+        <div class="grid grid-cols-1">
+          <span class="${comAcomp} w-ful text-orange-400 text-[12px] border-b">
          Ac: ${item.acompanhamentos}
-          
-          </div>
-          <div class="${comAcomp} w-ful text-green-400 text-[12px]">
+          </span>
+          <span class="${comAcomp} w-ful text-blue-400 text-[12px]">
          Obs: ${item.observacao}
-          
-          </div>
-                
+          </span>
+            </div>
                 </div>
-                
-                
-                </div>
-                
+              
                 <span class="font-bold">R$ ${(item.preco * item.qtd).toFixed(2)}</span>
                 
                 </button>
                 
-            </div>
+            
       
     `;
   });
@@ -946,9 +944,20 @@ let comAcomp ='hidden'
   totalElemento.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   lucide.createIcons();
 }
+
 async function enviarWhatsApp() {
 
 const userdados = await userDados()
+
+// Busca o input que está selecionado (checked)
+  const meioDePagamento = document.querySelector('input[name="pay_method"]:checked');
+
+  if (meioDePagamento) {
+  
+  } else {
+    
+  }
+
 
     const modal = document.getElementById('modalProcessando');
     modal.classList.remove('hidden');
@@ -961,7 +970,6 @@ setTimeout(() => {
   
   const obsCarrinho= document.getElementById('obsCarrinho').value
   
-document.getElementById('loading').classList.remove('hidden')
 
   
   const endereco = `${userdados.rua},${userdados.casa} - ${userdados.bairro}`
@@ -987,28 +995,42 @@ mensagem += `*Itens:*\n\n`;
 meuCarrinho.forEach(item => {
   
   // O emoji ➡️ e o formato "1x NOME" conforme a imagem
-  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} \n vlr - ${formatarMoeda(item.preco)}R$  (${item.observacao || '-'})\n\n`;
+  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${formatarMoeda(item.preco)}R$\n`;
   
-  
-  // Caso tenha observações ou opcionais (como os molhos da imagem)
-    mensagem += `❕OBS: ${obsCarrinho || 'Sem detalhes adicionais'}\n\n`;
+  if(item.observacao){
+    
+ mensagem += `(${item.observacao})\n`;
+  }else{}
   
 });
+
+// Caso tenha observações ou opcionais (como os molhos da imagem)
+mensagem += `\n❕OBS: ${obsCarrinho || ''}\n\n`;
+  
 // Detalhes de Delivery
   mensagem += `🏠 envie para: ${endereco || "Endereço não informado"}\n`;
 
-const taxaEntrega = 3.00  
+//const taxaEntrega = 3.00  
 
 // Cálculo do Total
 const totalProdutos = meuCarrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
 
 
 
-const totalGeral = totalProdutos + taxaEntrega;
+const totalGeral = totalProdutos;
 
-mensagem += `Taxa de entrega: 3,00R$\n\n`;
+//mensagem += `Taxa de entrega: 3,00R$\n\n`;
 
-mensagem += `*Total: ${formatarMoeda(totalGeral)}*\n\n`;
+mensagem += `*Total: ${formatarMoeda(totalGeral)}*\n`;
+
+mensagem += `*forma de Pagamento: ${meioDePagamento.value}*\n\n`;
+
+if(meioDePagamento.value ==='DINHEIRO'){
+
+const inputTroco= parseFloat(document.getElementById('inputTroco').value).toFixed(2)
+
+  mensagem += `*Troco para :${formatarMoeda(inputTroco)}*\n\n`;
+}
 
 
 /* Envio */
@@ -1017,7 +1039,10 @@ const url = `https://wa.me/${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
 
 window.open(url, '_blank');
 
-window.location.reload()
+//window.location.reload()
+    localStorage.setItem('carrinho', JSON.stringify(''));
+    modal.classList.add('hidden');
+      atualizarCarrinho()
   
 },4000)
 }

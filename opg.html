@@ -1,63 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efeito Fade-out Suave na Imagem</title>
     <script src="https://cdn.tailwindcss.com"></script>
-<div class="space-y-4">
-  <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Forma de Pagamento</h3>
-  
-  <div class="flex flex-row gap-2 overflow-x-auto pb-2 no-scrollbar">
-    
-    <label class="flex-1 min-w-[100px] cursor-pointer">
-      <input type="radio" name="pay_method" value="pix" class="peer hidden" checked onchange="toggleTroco(false)">
-      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
-        <span class="text-xs font-bold text-gray-800">PIX</span>
-      </div>
-    </label>
+    <style>
+        /* ESTA É A PARTE CHAVE PARA O EFEITO QUE VOCÊ QUER */
+        .super-fade-b-mask {
+            /* linear-gradient(to bottom, ...): Degradê de cima para baixo.
+               
+               - black 30%: A imagem começa 100% visível (preto na máscara significa visibilidade).
+                 Ela continua totalmente visível até 30% da altura da div.
+               
+               - transparent 90%: A imagem começa a ficar transparente suavemente a partir dos 30% 
+                 e atinge a transparência total (0% visibilidade) quando chega em 90% da altura da div.
+               
+               Isso cria uma zona de transição longa e suave (de 30% a 90%).
+            */
+            -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+            mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
 
-    <label class="flex-1 min-w-[100px] cursor-pointer">
-      <input type="radio" name="pay_method" value="card" class="peer hidden" onchange="toggleTroco(false)">
-      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
-        <span class="text-xs font-bold text-gray-800">CARTÃO</span>
-      </div>
-    </label>
+    <div class="relative w-full h-[70vh] bg-black overflow-hidden">
+        
+        <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?q=80&w=1920" 
+             alt="Hambúrguer artesanal Banzzero" 
+             class="absolute inset-0 w-full h-full object-cover object-center super-fade-b-mask">
+        
+        <div class="absolute inset-0 bg-black opacity-30"></div>
 
-    <label class="flex-1 min-w-[100px] cursor-pointer">
-      <input type="radio" name="pay_method" value="money" class="peer hidden" onchange="toggleTroco(true)">
-      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
-        <span class="text-xs font-bold text-gray-800">DINHEIRO</span>
-      </div>
-    </label>
-    
-  </div>
-
-  <div id="campo-troco" class="hidden animate-in fade-in slide-in-from-top-2 duration-300">
-    <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-xl">
-      <p class="text-sm font-medium text-yellow-800 mb-2">Precisa de troco?</p>
-      <div class="flex items-center gap-2">
-        <span class="text-gray-500 font-bold">R$</span>
-        <input type="number" step="0.01" placeholder="Ex: 100,00" 
-               class="w-full bg-white border border-yellow-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-gray-800 font-medium">
-      </div>
-      <p class="text-[10px] text-yellow-700 mt-2 italic">* O entregador levará o troco para este valor.</p>
+        <div class="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center text-white">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-4 drop-shadow-lg text-amber-400">
+                Banzzero
+            </h1>
+            <p class="text-xl md:text-2xl max-w-xl text-gray-100 mb-8 drop-shadow-md">
+                O hambúrguer que você respeita. Sabor autêntico, ingredientes selecionados.
+            </p>
+        </div>
     </div>
-  </div>
-</div>
 
-<script>
-  function toggleTroco(show) {
-    const divTroco = document.getElementById('campo-troco');
-    if (show) {
-      divTroco.classList.remove('hidden');
-    } else {
-      divTroco.classList.add('hidden');
-    }
-  }
-</script>
+    <main class="max-w-7xl mx-auto px-6 py-16 md:py-24 ">
+        <h2 class="text-4xl font-extrabold text-gray-900 mb-12 tracking-tight">Os Mais Pedidos</h2>
+        
+        <div class="flex overflow-x-auto space-x-4 px-4 pb-4 scrollbar-hide">
+            
+            <div class="min-w-[320px] max-w-[320px] bg-white p-8 rounded-3xl shadow-sm border hover:shadow-lg transition-shadow">
+                <div class="aspect-square bg-gray-100 rounded-2xl mb-6"></div>
+                <h3 class="text-xl font-bold mb-2">Banzzero Clássico</h3>
+                <p class="text-gray-600 text-sm mb-4">Pão brioche, blend artesanal 180g, queijo cheddar, alface, tomate e maionese da casa.</p>
+                <span class="text-2xl font-black text-gray-950">R$ 38,90</span>
+            </div>
+           
+        </div>
+    </main>
 
-<style>
-  /* Esconde a barra de rolagem mas mantém a funcionalidade */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
+</body>
+</html>
