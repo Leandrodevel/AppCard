@@ -839,6 +839,7 @@ const msgRemov = document.getElementById('msg-produto-removido')
 
   msgRemov.innerText=`Remover ${itemSel[0].nome.toUpperCase()} do seu carrinho.`
 }
+
 function confirmaRemover(cod) {
 const codInput = document.getElementById('remInputCod').value
   meuCarrinho = meuCarrinho.filter(item => item.cod !== codInput);
@@ -964,13 +965,6 @@ const userdados = await userDados()
 // Busca o input que está selecionado (checked)
   const meioDePagamento = document.querySelector('input[name="pay_method"]:checked');
 
-  if (meioDePagamento) {
-  
-  } else {
-    
-  }
-
-
     const modal = document.getElementById('modalProcessando');
     modal.classList.remove('hidden');
     // Garante que os ícones do Lucide carreguem dentro do modal
@@ -983,7 +977,6 @@ setTimeout(() => {
   const obsCarrinho= document.getElementById('obsCarrinho').value
   
 
-  
   const endereco = `${userdados.rua},${userdados.casa} - ${userdados.bairro}`
   
   const numeroTelefone = "5522997263224"; // Substitua pelo seu número (com DDD)
@@ -1002,7 +995,6 @@ mensagem += `* Meu nome é : ${userdados.nome}\n\n`;
  mensagem += `📋 *Pedido n° ${numeroPedido}*\n\n`;
 
 mensagem += `*Itens:*\n\n`;
-
 
 meuCarrinho.forEach(item => {
   
@@ -1050,16 +1042,36 @@ const inputTroco= parseFloat(document.getElementById('inputTroco').value).toFixe
 /* Envio */
 const numeroLimpo = numeroTelefone.replace(/\D/g, '');
 const url = `https://wa.me/${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
-
+    
+    
+    
+    
+   let meuPedido= [{numero:numeroPedido, pedido:[]}]
+    
+    meuPedido[0].pedido.push(...meuCarrinho)
+    
+    alert(JSON.stringify(meuPedido))
+ //   let meusPedidos = []
+  //  meusPedidos.push(pedido)
+  
+  localStorage.setItem('meuHistorico', JSON.stringify(meuPedido));
+  
     meuCarrinho = []
     localStorage.setItem('carrinho', JSON.stringify(''));
 
  //   modal.classList.add('hidden');
     
-    atualizarCarrinho()
-    window.open(url, '_blank');
-   // window.location.reload()
-    
+    atualizaContador()
+
+    navegacao('home')
+  //  window.open(url, '_blank');
+
+setTimeout(()=>{
+   //  window.location.reload()
+    modal.classList.add('hidden');
+
+   //  enviarWhatsApp()
+},3000)    
   
 },1000)
 }

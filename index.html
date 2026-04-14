@@ -197,7 +197,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
        const categBox = document.createElement('div')
        categBox.className='w-fit h-fit flex flex-wrap flex-col justify-center'
       const categButton = document.createElement('button')
-      categButton.className = 'w-[70px] h-[40px]  bg-yellow-400 py-2 mb-0 mt-2 rounded-md relative justify-center flex flex-nowrap '
+      categButton.className = 'w-[70px] h-[60px]  bg-white border border-gray-200 py-2 mb-0 mt-2 rounded-md relative justify-center flex flex-nowrap '
       categButton.id = idAtual
       
             const categLabel=document.createElement('small')
@@ -1152,7 +1152,7 @@ slcEndereco.addEventListener('change', (event) => {
             </p>
 
             <div class="space-y-3">
-                <button onclick="fecharModalRemover(),confirmaRemover()" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 rounded-2xl transition-all active:scale-95 shadow-lg shadow-gray-200">
+                <button onclick="fecharModalRemover(),confirmaRemover()" class="w-full bg-red-500 text-white font-bold py-4 rounded-2xl transition-all active:scale-95 shadow-lg shadow-gray-200">
                     Ok, remover
                 </button>
                 
