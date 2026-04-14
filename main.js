@@ -1,4 +1,7 @@
 
+const formatMoeda = (valor) => 
+  valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
   const headerTop = document.getElementById('header');
   
   let lastScrollY = window.scrollY;
@@ -28,11 +31,20 @@ const temaApp = [{}]
   
 
 
-localStorage.setItem('carrinho',JSON.stringify(''))
-
-
+//localStorage.setItem('carrinho',JSON.stringify(''))
 let meuCarrinho = JSON.parse(localStorage.getItem('carrinho')) || []
-//atualizarCarrinho()
+
+function atualizaContador() {
+  atualizarCarrinho()
+  let totItens = document.getElementById('qtd-itens')  
+
+    let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
+    return acumulador + p.qtd;
+}, 0); 
+// O '0' é o valor inicial da soma
+    totItens.innerText = totalCarrinho
+}    
+    atualizaContador()
 //////////////////////////////////
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
@@ -738,7 +750,7 @@ document.getElementById('modalOverlay').innerHTML=''
     <div class="flex items-center justify-between mb-8">
       <div>
         <span class="text-xs font-bold text-orange-500 uppercase tracking-widest">Preço Unitário</span>
-        <div class="text-3xl font-black text-gray-900" id="modalProdPreco">${preco}</div>
+        <div class="text-3xl font-black text-gray-900" id="modalProdPreco">${preco.replace(".",",")}</div>
       </div>
       
       <button class="border border-red-500 rounded-md p-2 ${btnDel}" id="deleteItem" onclick="removerItem('${cod}')">
@@ -817,32 +829,31 @@ function updateDisplay() {
   document.getElementById('totalPrice').innerText = `R$ ${total}`;
 }
 function removerItem(cod) {
-  const resposta = confirm("Deseja remover este item?");
+  
+document.getElementById('modalRemover').classList.remove('hidden')
+document.getElementById('remInputCod').value= cod
 
-  if (resposta) {
-    // Atualiza a variável global com o novo array filtrado
-    meuCarrinho = meuCarrinho.filter(item => item.cod !== cod);
- 
-    localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
-      
-    // Feedback visual (opcional)
-    alert("Item removido com sucesso!");
- 
-  let totItens = document.getElementById('qtd-itens')
+itemSel = meuCarrinho.filter(item => item.cod === cod);
+  
+const msgRemov = document.getElementById('msg-produto-removido')
 
-let totalCarrinho = meuCarrinho.reduce((acc, p) => {
-  return acc + p.qtd;
-}, 0); // O '0' é o valor inicia
-if(totalCarrinho ===0) navegacao('home')
-  totItens.innerText= totalCarrinho
- 
-   atualizarCarrinho()
-    closeModal()
+  msgRemov.innerText=`Remover ${itemSel[0].nome.toUpperCase()} do seu carrinho.`
+}
+function confirmaRemover(cod) {
+const codInput = document.getElementById('remInputCod').value
+  meuCarrinho = meuCarrinho.filter(item => item.cod !== codInput);
+  localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
+  atualizaContador()
+  verCarrinho()
+  closeModal()
 
-  }
+}
+function fecharModalRemover() {
+  
+document.getElementById('modalRemover').classList.add('hidden')
+  
   
 }
-
 function confirmAdd(cod,nome,embalagem,preco) {
   // Aqui você integraria com sua lógica de carrinho/comanda
 
@@ -873,9 +884,12 @@ function confirmAdd(cod,nome,embalagem,preco) {
   modalAdicionado(cod,nome,embalagem,preco)
 
 // alert(`${currentQty} item(s) adicionado(s)!`);
-
-
-    let totItens = document.getElementById('qtd-itens')  
+  atualizaContador()
+  closeModal();
+}
+function atualizaContadorCar() {
+  
+  let totItens = document.getElementById('qtd-itens')  
 
     let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
     return acumulador + p.qtd;
@@ -884,8 +898,6 @@ function confirmAdd(cod,nome,embalagem,preco) {
       
        totItens.innerText= totalCarrinho
 
-atualizarCarrinho()
-  closeModal();
 }
 function atualizarCarrinho() {
    
@@ -914,7 +926,7 @@ let comAcomp ='hidden'
               ${item.qtd} X ${item.nome}
               </span>
               <small class="text-[10px] text-gray-700">
-              ( ${item.embalagem} - ${item.preco} Un. )</small>
+              ( ${item.embalagem} - ${formatMoeda(item.preco  ).replace(".",",")} Un. )</small>
                 </div>
   
         <div class="grid grid-cols-1">
@@ -927,7 +939,7 @@ let comAcomp ='hidden'
             </div>
                 </div>
               
-                <span class="font-bold">R$ ${(item.preco * item.qtd).toFixed(2)}</span>
+                <span class="font-bold">R$ ${(item.preco * item.qtd).toFixed(2).replace(".",",")}</span>
                 
                 </button>
                 
@@ -996,19 +1008,21 @@ meuCarrinho.forEach(item => {
   
   // O emoji ➡️ e o formato "1x NOME" conforme a imagem
   mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${formatarMoeda(item.preco)}R$\n`;
-  
+
+  if(item.acompanhamentos){
+   mensagem+= `com (${item.acompanhamentos})\n`
+  }else{}
   if(item.observacao){
-    
  mensagem += `(${item.observacao})\n`;
   }else{}
-  
+ mensagem += ` \n`
+ 
 });
-
 // Caso tenha observações ou opcionais (como os molhos da imagem)
 mensagem += `\n❕OBS: ${obsCarrinho || ''}\n\n`;
   
 // Detalhes de Delivery
-  mensagem += `🏠 envie para: ${endereco || "Endereço não informado"}\n`;
+  mensagem += `🏠 envie para: ${endereco || "Endereço não informado"}\n\n`;
 
 //const taxaEntrega = 3.00  
 
@@ -1037,55 +1051,17 @@ const inputTroco= parseFloat(document.getElementById('inputTroco').value).toFixe
 const numeroLimpo = numeroTelefone.replace(/\D/g, '');
 const url = `https://wa.me/${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
 
-window.open(url, '_blank');
-
-//window.location.reload()
+    meuCarrinho = []
     localStorage.setItem('carrinho', JSON.stringify(''));
-    modal.classList.add('hidden');
-      atualizarCarrinho()
+
+ //   modal.classList.add('hidden');
+    
+    atualizarCarrinho()
+    window.open(url, '_blank');
+   // window.location.reload()
+    
   
-},4000)
-}
-//////////////////////////////////
-//////////////////////////////////
-function carrinhoFloat(id){
-
-const span = document.getElementById(`num-${id}`);
-  
-  const contaItens = meuCarrinho.filter(cont => cont.id === id).length
-     
-    
-    if (contaItens < 1) {
-  // Se chegar a zero, troca os botões na interface
-  document.getElementById(`seletor-${id}`).classList.add('hidden');
-  document.getElementById(`btn-${id}`).classList.remove('hidden');
-  qtd = 1; // Reseta o contador visual para a próxima vez
-}
-    
-    
-    span.innerText = contaItens;
-
-   
-let totItens = document.getElementById('qtd-itens')  
-
-    let  totalCarrinho= document.getElementById('total-carrinho') 
-       
-       totItens.innerText= meuCarrinho.length
-    
-    
-      
-     const totalGeral = meuCarrinho.reduce((acumulador, p) => {
-    return acumulador + p.preco;
-}, 0); // O '0' é o valor inicial da soma
-
-     const totalFormatado = totalGeral.toLocaleString('pt-BR', {
-  style: 'currency',
-  currency: 'BRL'
-});
-     
-     totalCarrinho.innerText = totalFormatado
-   
-   
+},1000)
 }
 //////////////////////////////////
 //////////////////////////////////

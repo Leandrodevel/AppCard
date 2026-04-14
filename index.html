@@ -706,7 +706,7 @@ lucide.createIcons();
 
       <div class="mb-6">
         <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">1. Escolha o Sabor</label>
-        <select id="sabor-espetinho" class="w-full bg-gray-50 border border-gray-200 p-4 rounded-2xl outline-none focus:border-red-500 transition-all text-gray-700 font-medium appearance-none">
+        <select required id="sabor-espetinho" class="w-full bg-gray-50 border border-gray-200 p-4 rounded-2xl outline-none focus:border-red-500 transition-all text-gray-700 font-medium appearance-none">
           <option value="Carne (Alcatra)">Carne (Alcatra)</option>
           <option value="Frango com Bacon">Frango com Bacon</option>
           <option value="Coração">Coração</option>
@@ -784,11 +784,12 @@ lucide.createIcons();
     
     meuCarrinho.push(item);
     localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
-  
-    alert(`✅ Espetinho de ${sabor} adicionado com sucesso!`);
 
-    atualizarCarrinho()
-    navegacao('home')  
+    
+      modalAdicionado(item.cod,item.nome,'',item.preco)
+      
+     atualizarCarrinho()
+    
     
     let totItens = document.getElementById('qtd-itens')  
 
@@ -1134,6 +1135,34 @@ slcEndereco.addEventListener('change', (event) => {
     </div>
 </div>
 
+<div id="modalRemover" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <input type="hidden" name="" id="remInputCod" />
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-red-500">
+        
+        <div class="p-8 text-center">
+            <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-red-50 mb-6">
+                <svg class="h-10 w-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </div>
+
+            <h3 class="text-2xl font-black text-gray-800 mb-2">Confirmar</h3>
+            <p id="msg-produto-removido" class="text-gray-600 mb-8 px-4 font-medium">
+                O item será retirado do seu carrinho.
+            </p>
+
+            <div class="space-y-3">
+                <button onclick="fecharModalRemover(),confirmaRemover()" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 rounded-2xl transition-all active:scale-95 shadow-lg shadow-gray-200">
+                    Ok, remover
+                </button>
+                
+                <button onclick="verCarrinho(), fecharModalRemover()" class="w-full bg-white text-gray-500 font-bold py-3 hover:text-red-500 transition-colors">
+                    voltar para carrinho
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <footer class="ifLogged relative">
   
