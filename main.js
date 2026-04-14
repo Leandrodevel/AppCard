@@ -1044,9 +1044,11 @@ const numeroLimpo = numeroTelefone.replace(/\D/g, '');
 const url = `https://wa.me/${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
     
     
+    const hoje = new Date();
+// Data e hora: DD/MM/AAAA, HH:MM:SS
+let dataHora =hoje.toLocaleString('pt-BR')
     
-    
-   let meuPedido= [{numero:numeroPedido, pedido:[]}]
+   let meuPedido= [{numero:numeroPedido, pedido:[],data:dataHora}]
     
     meuPedido[0].pedido.push(...meuCarrinho)
     
