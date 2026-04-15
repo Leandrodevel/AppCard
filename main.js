@@ -650,43 +650,41 @@ const db = await getDados();
       if(descontoLimpo > 0.00){
   
   const spn = document.createElement('div')   
-  spn.className='w-full px-2'
+  spn.className='w-full flex justify-center relative'
   
   spn.innerHTML=`
   
-   <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm relative overflow-hidden mb-3 hover:border-yellow-200 transition-colors group">
-    
-    <span class="bg-red-500 absolute top-0 right-0 px-3 py-0.5 rounded-bl-xl font-black text-[10px] text-white tracking-tighter uppercase shadow-sm">
-        OFERTA
+
+        <span class="bg-red-500 absolute top-0 right-0 px-3 py-0.5 rounded-xl font-black text-[14px] text-white tracking-tighter uppercase shadow-sm ">
+        OFERTA IMPERDÍVEL!
     </span>
+    
+  <div class="min-w-[320px] max-w-[320px] bg-white p-8 rounded-3xl shadow-sm border hover:shadow-lg transition-shadow ">
+  
 
-    <button class="text-left w-full mb-1 focus:outline-none" onclick="openModal('${de.cod}','${pr.nome}','${de.tipo}','${precoFinal.toFixed(2)}')">
-        <h4 class="text-base font-bold text-gray-800 truncate group-hover:text-red-500 transition-colors">
-            ${pr.nome}
-        </h4>
-    </button>
-
-    <p class="text-[14px] font-medium text-gray-600 italic mb-3">${de.tipo}</p>
-
-    <div class="flex items-end justify-between">
-        <div class="flex flex-col leading-tight">
-            <span id="tr-${de.cod}" class="text-gray-400 text-[11px] line-through decoration-red-300">
+  
+                <div class="aspect-square bg-zinc-900 rounded-2xl mb-6"></div>
+                
+                <h3 class="text-2xl font-bold text-red-500 mb-2">${pr.nome} </h3>
+                <p class="text-gray-700 text-lg italic  mb-4">${de.tipo}</p>
+                  
+                <div class="grid grid-cols-2">
+                <div class="grid grid-cols-1">
+                            <span id="tr-${de.cod}" class="text-gray-400 text-[16px] line-through decoration-red-300">
                 De: R$ ${precoFormatado}
             </span>
-            
-            <span class="text-xl font-black text-red-600 flex items-center gap-0.5">
-                <span class="text-xs font-bold">R$</span>
-                ${precoFinal.toFixed(2).replace(".",",")}
-            </span>
-        </div>
-        
-        <button id="bt+${de.cod}" 
-                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl p-2.5 shadow-sm active:scale-90 transition-all" 
+                <span class="text-4xl font-black text-red-500">${precoFinal.toFixed(2).replace(".",",")}</span>
+                </div>
+
+            <button id="bt+${de.cod}" 
+                class="bg-yellow-400 text-gray-700 rounded-xl p-2.5  flex items-center gap-2 font-black justify-center" 
                 onclick="openModal('${de.cod}','${pr.nome}','${de.tipo}','${precoFinal.toFixed(2)}')">
-            <i class="w-5 h-5" data-lucide="shopping-basket"></i>
+             ADICIONAR
         </button>
-    </div>
-</div>
+
+            </div>
+            </div>
+           
 
   
   `
@@ -1052,11 +1050,15 @@ let dataHora =hoje.toLocaleString('pt-BR')
     
     meuPedido[0].pedido.push(...meuCarrinho)
     
-    alert(JSON.stringify(meuPedido))
+    const historico = JSON.parse(localStorage.getItem('meuHistorico')) || []
+    
+    let meuHistorico = historico.push(...meuPedido)
+   // meuHistorico.push(...meuPedido)
  //   let meusPedidos = []
   //  meusPedidos.push(pedido)
+  alert(historico.map(x=>x.numero).join(`\n`))
   
-  localStorage.setItem('meuHistorico', JSON.stringify(meuPedido));
+  localStorage.setItem('meuHistorico', JSON.stringify(historico));
   
     meuCarrinho = []
     localStorage.setItem('carrinho', JSON.stringify(''));
