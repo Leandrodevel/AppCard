@@ -1056,7 +1056,6 @@ let dataHora =hoje.toLocaleString('pt-BR')
    // meuHistorico.push(...meuPedido)
  //   let meusPedidos = []
   //  meusPedidos.push(pedido)
-  alert(historico.map(x=>x.numero).join(`\n`))
   
   localStorage.setItem('meuHistorico', JSON.stringify(historico));
   
