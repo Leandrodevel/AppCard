@@ -653,6 +653,8 @@ const db = await getDados();
      
      const precoFormatado = de.preco.replace(/[^0-9,.]/g,"").replace(",",".")
   
+    const nomeEscapado = pr.nome.replace(/'/g, "");
+
    const precoFinal = precoFormatado - descontoLimpo
      
      
@@ -675,7 +677,7 @@ const db = await getDados();
   
                 <div class="aspect-square bg-zinc-900 rounded-2xl mb-6"></div>
                 
-                <h3 class="text-2xl font-bold text-red-500 mb-2">${pr.nome} </h3>
+                <h3 class="text-2xl font-bold text-red-500 mb-2">${nomeEscapado} </h3>
                 <p class="text-gray-700 text-lg italic  mb-4">${de.tipo}</p>
                   
                 <div class="grid grid-cols-2">
@@ -688,7 +690,7 @@ const db = await getDados();
 
             <button id="bt+${de.cod}" 
                 class="bg-yellow-400 text-gray-700 rounded-xl p-2.5  flex items-center gap-2 font-black justify-center" 
-                onclick="openModal('${de.cod}','${pr.nome}','${de.tipo}','${precoFinal.toFixed(2)}')">
+                onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
              ADICIONAR
         </button>
 
