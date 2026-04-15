@@ -121,6 +121,16 @@ const user = await userDados()
 }
 }
 //////////////////////////////////
+async function atualizaPontos(total){
+  const dataPontos = await userDados()
+const newPontos= total * 0.
+const dbAtualizado = {...dataPontos,pontos:dataPontos.pontos+newPontos}
+
+//const dbAtualizado ={...dataBase, pontos:0}
+localStorage.setItem('userDados',JSON.stringify(dbAtualizado))
+
+}
+
 //////////////////////////////////
 async function verPerfil() {
   
