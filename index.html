@@ -26,17 +26,17 @@
   async function enviarAoBanco() {
     const estoqueDeProdutos = [
       {
-        id_comercial: '0004',
-        classe: 'bomboniere',
-        categoria: 'amendoins',
-        marca: 'Fini',
-        nome: '  Bala Fini',
+        id_comercial: '0009',
+        classe:'carvaoegelo',
+        categoria: 'Carvao',
+        marca: 'Labareda',
+        nome: 'Carvao Vegetal Labareda',
         embalagens: [
-          { cod: 'B005', tipo: 'pct 70gr', preco: '3,50R$', estoque: 100, vendas: 0, desconto: 0.5, ativo: true, destaque: false }
+          { cod: 'B017', tipo: 'saco 5kg', preco: '8,50R$', estoque:60, vendas: 0, desconto: 0, ativo: true, destaque: false }
         ]
       }
     ];
-
+ 
     const { data, error } = await _supabase
       .from('estoque')
       .insert(estoqueDeProdutos)
@@ -47,9 +47,9 @@
       console.log('Sucesso:', data)
     }
   }
-  //enviarAoBanco()
   
-  async function getDados() {
+  
+  async function getDadosDb() {
     
   const { data, error } = await _supabase
     .from('estoque')
@@ -63,8 +63,21 @@
     // Para acessar a primeira embalagem do primeiro produto:
      
   }
+  
+}
+async function salvaDbLocal(){
+  const db = await getDadosDb() || []
+
+localStorage.setItem('estoqueDeProdutos',JSON.stringify(db))
 }
 
+salvaDbLocal()
+
+
+async function getDados(){
+  
+return JSON.parse(localStorage.getItem('estoqueDeProdutos')) || []
+}
 
 async function userDados() {
   
@@ -409,7 +422,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
 
 
-    <button class="aspect-square bg-yellow-400 hover:bg-yellow-500 transition-all rounded-xl flex flex-col items-center justify-center p-2 text-yellow-950 group">
+    <button class="aspect-square bg-yellow-400 hover:bg-yellow-500 transition-all rounded-xl flex flex-col items-center justify-center p-2 text-yellow-950 group" onclick="enviarAoBanco()">
       <i data-lucide="settings" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
       <span class="text-[10px] font-bold uppercase tracking-tighter">Ajustes</span>
     </button>
