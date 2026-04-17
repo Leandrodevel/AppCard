@@ -9,8 +9,106 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
-  
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
+<script>
+//teste de github
+  // 1. Configurações de acesso
+  const SUPABASE_URL = 'https://wyhqwprshbgwjlnxndhm.supabase.co'
+  
+  const SUPABASE_KEY ='sb_publishable_avVe0cMnriaF8Ogt42Z7Xg_PTD5pdnZ'
+
+  // 2. Inicializa o cliente
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+  // Exemplo de função para salvar seus dados (Opção 2 - JSONB)
+  async function criaProduto(produto) {
+    const { data, error } = await _supabase
+      .from('estoque')
+      .insert(produto)
+
+    if (error) {
+      console.error('Erro:', error.message)
+    } else {
+      console.log('Sucesso:', data)
+    }
+    renderizarAdmin();
+  }
+  async function novaEmbalagem(eqId,dados) {
+    const { data, error } = await _supabase
+      .from('estoque')
+      .update({embalagens:dados})
+      .eq('id',eqId)
+    if (error) {
+      console.error('Erro:', error.message)
+    } else {
+      console.log('Sucesso:', data)
+    }
+    renderizarAdmin();
+  }
+  
+  async function atualizaDadosEmbalagens(eqId,dados) {
+    const { data, error } = await _supabase
+      .from('estoque')
+      .update({embalagens:dados})
+      .eq('id',eqId);
+      
+    if (error) {
+      console.error('Erro:', error.message)
+    } else {
+      console.log('Sucesso:', data)
+    }
+    renderizarAdmin();
+  }
+  async function apagaProduto(eqId) {
+  // Adicionamos .select() para que o 'data' contenha o item deletado
+  const { data, error } = await _supabase
+    .from('estoque')
+    .delete()
+    .eq('id', eqId)
+    .select(); 
+
+  if (error) {
+    console.error('Erro ao deletar:', error.message);
+    alert('Não foi possível excluir o produto.');
+  } else {
+    console.log('Produto deletado com sucesso:', data);
+    // Só renderiza novamente se a exclusão foi confirmada
+    renderizarAdmin();
+  }
+}
+
+  async function obterDados() {
+    
+  const { data, error } = await _supabase
+    .from('estoque')
+    .select('*'); // O asterisco traz todas as colunas
+
+  if (error) {
+    console.error('Erro ao ler dados:', error.message);
+  } else {
+    
+    return data || []
+    // Para acessar a primeira embalagem do primeiro produto:
+     
+  }
+  
+}
+
+async function userDados() {
+  
+  return JSON.parse(localStorage.getItem('userDados'))
+     
+  }
+/*async function inicializarApp() {
+  const produtos = await getDados();
+alert(produtos)
+}
+inicializarApp()*/
+
+
+</script>
 </head>
 <body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
   
@@ -152,16 +250,16 @@ cadClasse.addEventListener('change', () => {
 
 
     
-  // Função para pegar os dados limpos
-function obterDados() {
-    return JSON.parse(localStorage.getItem('estoqueDeProdutos')) || [];
-}
+
 
 // Função para salvar os dados atualizados
-function salvarDados(dados) {
+/*function salvarDados(dados) {
     localStorage.setItem('estoqueDeProdutos', JSON.stringify(dados));
     renderizarAdmin();
-}
+}*/
+async function variacao(){
+    const dbVariacoes = await obterDados()
+
 const cadMarca =   document.getElementById('cadMarca')
 const cadNome =   document.getElementById('cadNome')
 const keyVariacao = document.getElementById('keyVariacao')
@@ -170,8 +268,7 @@ const keyVariacao = document.getElementById('keyVariacao')
     optkeyVariacao.disabled=true
     optkeyVariacao.selected=true
 
-const dbVariacoes = obterDados()
-
+    
     dbVariacoes.forEach(dv=>{
     keyVariacao.add(new Option(dv.nome,dv.id))
     })
@@ -187,7 +284,7 @@ const dbVariacoes = obterDados()
     cadCategoria.disabled=true  
     cadClasse.disabled=true
     
-  const  variacaoEscolida = dbVariacoes.filter(ve=>ve.id === keyVariacao.value
+  const variacaoEscolida = dbVariacoes.filter(ve=>ve.id === keyVariacao.value
   )
   alert(JSON.stringify(variacaoEscolida))
     cadCategoria.add(new Option(variacaoEscolida[0].categoria,variacaoEscolida[0].categoria))
@@ -197,9 +294,11 @@ const dbVariacoes = obterDados()
     cadNome.value = variacaoEscolida[0].nome
     });
 
-
-function renderizarAdmin() {
-    const produtos = obterDados();
+}
+variacao()
+async function renderizarAdmin() {
+    const produtos = await obterDados();
+    
     const termoBusca = document.getElementById('inputBusca').value.toLowerCase();
     const container = document.getElementById('listaAdmin');
     
@@ -216,7 +315,7 @@ function renderizarAdmin() {
     });
     listaProcessada.forEach(item => {
         const pOriginal = parseFloat(item.emb.preco.replace(",", "."));
-        const pDesconto = parseFloat(item.emb.desconto.replace(",", "."));
+        const pDesconto = parseFloat(item.emb.desconto  );
         const pFinal = pOriginal - pDesconto;
         const estaAtivo = item.emb.ativo !== false;
 
@@ -248,7 +347,7 @@ function renderizarAdmin() {
                     <span class="font-black text-lg text-gray-700">R$ ${pFinal.toFixed(2).replace(".", ",")}</span>
                 </div>
 
-                <button onclick="editarPreco(${item.indexProd}, ${item.indexEmb}, 'desconto')" class="flex items-center justify-center gap-1 bg-red-50 text-red-600 p-2 rounded-xl text-xs font-black hover:bg-red-100 transition">
+                <button onclick="editarDesconto(${item.indexProd}, ${item.indexEmb})" class="flex items-center justify-center gap-1 bg-red-50 text-red-600 p-2 rounded-xl text-xs font-black hover:bg-red-100 transition">
                    🏷️ DESC.
                 </button>
                 
@@ -271,76 +370,106 @@ function renderizarAdmin() {
 
 // --- FUNÇÕES DE CONTROLE ---
 
-function toggleAtivo(idxProd, idxEmb) {
-    let dados = obterDados();
-    dados[idxProd].embalagens[idxEmb].ativo = !dados[idxProd].embalagens[idxEmb].ativo;
-    salvarDados(dados);
+async function toggleAtivo(idxProd, idxEmb) {
+    let dados =await obterDados();
+    
+    dados[idxProd].embalagens[idxEmb].ativo = !dados[idxProd].embalagens[idxEmb].ativo 
+    
+      const novoDado =[dados[idxProd].embalagens[idxEmb]]
+   
+//  alert(JSON.stringify(novoDado))
+ atualizaDadosEmbalagens(dados[idxProd].id,novoDado);
 }
 
-function toggleDestaque(idxProd, idxEmb) {
-    let dados = obterDados();
+async function toggleDestaque(idxProd, idxEmb) {
+    
+    let dados = await obterDados();
+    
     dados[idxProd].embalagens[idxEmb].destaque = !dados[idxProd].embalagens[idxEmb].destaque;
-    salvarDados(dados);
+    
+    const novoDado =[dados[idxProd].embalagens[idxEmb]]
+    
+    atualizaDadosEmbalagens(dados[idxProd].id, novoDado);
+
 }
 
-function editarPreco(idxProd, idxEmb, tipo) {
-    let dados = obterDados();
-    const msg = tipo === 'desconto' ? "Valor do desconto (ex: 2.50):" : "Adicionar quanto ao estoque?";
-    const valor = prompt(msg);
+async function editarDesconto(idxProd, idxEmb) {
+    let dados = await obterDados();
+    
+    const msg =  "Valor do desconto (ex: 2.50):"
+    const valor = prompt(msg).replace(",",".");
     
     if (valor !== null) {
-        if (tipo === 'desconto') {
-            dados[idxProd].embalagens[idxEmb].desconto = valor.replace(".", ",");
-        } else {
-            let atual = parseInt(dados[idxProd].embalagens[idxEmb].vendas || 0);
-            dados[idxProd].embalagens[idxEmb].vendas = atual + parseInt(valor);
-        }
-        salvarDados(dados);
+    
+     dados[idxProd].embalagens[idxEmb].desconto = valor
+        
+      const novoDado =[dados[idxProd].embalagens[idxEmb]]
+      
+      atualizaDadosEmbalagens(dados[idxProd].id, novoDado);
     }
 }
 
-function excluirItem(idxProd, idxEmb) {
-    if (confirm("Tem certeza que deseja apagar esta variação?")) {
-        let dados = obterDados();
-        dados[idxProd].embalagens.splice(idxEmb, 1);
+async function excluirItem(idxProd, idxEmb) {
+    let dados =await obterDados();
+    
+    const slRemove = dados[idxProd].embalagens[idxEmb]
+    
+    const separaSel = dados[idxProd]. embalagens.filter(sl=> sl.cod !== slRemove.cod)
+    
+    if(separaSel.length===0){
         
-        // Se o produto não tiver mais embalagens, remove o produto pai também
-        if (dados[idxProd].embalagens.length === 0) {
-            dados.splice(idxProd, 1);
-        }
-        salvarDados(dados);
+      if (confirm("Nao a mais variações   deseja apagar o produto?")) {
+          
+        apagaProduto(dados[idxProd].id)
     }
+    }else if(separaSel.length > 0){
+        
+  //alert(JSON.stringify(separaSel)) 
+  if (confirm("Tem certeza que deseja apagar esta variação?")) {
+        
+  const novoDado = separaSel
+  
+        atualizaDadosEmbalagens(dados[idxProd].id, novoDado);
+
+    }
+    }
+
+    
 }
 
 // Inicializar
 renderizarAdmin();
 
   
-  
-  
-  
   // --- FUNÇÕES DO MODAL ---
 function abrirModalCadastro() {
     document.getElementById('modalCadastro').classList.remove('hidden');
 }
 
-function fecharModalCadastro() {
+async function fecharModalCadastro() {
+      
+    // 2. Obter banco
+    let dados = await obterDados()
+    // 3. Objeto da Embalagem seguindo seu padrão
     document.getElementById('modalCadastro').classList.add('hidden');
     document.getElementById('formCadastro').reset();
 }
+
 
 // --- LÓGICA DE SALVAMENTO ---
 const gerarID = () => {
     const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
     const data = Date.now();
     return letras + data;
-};
-
-
+}
 
 document.getElementById('formCadastro').addEventListener('submit', function(e) {
     e.preventDefault();
     
+    async function cadprod(){
+    let dados = await obterDados()
+    
+    alert('subit o formCadastro')
     
     // 1. Capturar todos os valores
     const idProd = keyVariacao.value ? keyVariacao.value : gerarID()
@@ -355,18 +484,14 @@ document.getElementById('formCadastro').addEventListener('submit', function(e) {
     const preco = document.getElementById('cadPreco').value;
     const estoque = parseInt(document.getElementById('cadEstoque').value);
     const vendas = parseInt(document.getElementById('cadVendas').value);
-    
-    // 2. Obter banco
-    let dados = JSON.parse(localStorage.getItem('estoqueDeProdutos')) || [];
-    
-    // 3. Objeto da Embalagem seguindo seu padrão
+  
     const novaEmbalagem = {
         cod: cod,
         tipo: tipo,
-        preco: preco.includes('R$') ? preco : `${preco}R$`,
+        preco: preco.replace(",","."),
         estoque: estoque,
         vendas: vendas,
-        desconto: "0,00",
+        desconto: "0.00",
         ativo: true,
         destaque: false
     };
@@ -375,28 +500,32 @@ document.getElementById('formCadastro').addEventListener('submit', function(e) {
     const indexExistente = dados.findIndex(p => p.id === idProd || p.nome === nome);
     
     if (indexExistente !== -1) {
+        alert('nova embalagens')
         // Se já existe, apenas adicionamos a nova embalagem ao array
-        dados[indexExistente].embalagens.push(novaEmbalagem);
-    } else {
+        novaEmbalagem(indexExistente,novaEmbalagem)
+    } else { alert ('novo prod')
         // Se não existe, cria o objeto completo
         const novoProduto = {
-            id: idProd,
+            id_comercial: idProd,
             classe: classe,
             categoria: categoria,
             marca: marca,
             nome: nome,
-            embalagens: [novaEmbalagem]
+            embalagens: [novaEmbalagem],
+            
         };
-        dados.push(novoProduto);
+        criaProduto(novoProduto)
     }
     
     // 5. Salvar e resetar
-    localStorage.setItem('estoqueDeProdutos', JSON.stringify(dados));
+   // localStorage.setItem('estoqueDeProdutos', JSON.stringify(dados));
+   
     
     alert("Produto/Variação salva com sucesso!");
     fecharModalCadastro();
     if (typeof renderizarAdmin === "function") renderizarAdmin();
-});
+}cadprod() });
+
 
 
 

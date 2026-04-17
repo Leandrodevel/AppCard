@@ -572,10 +572,25 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
 
     // --- Segundo Loop: Embalagens (Nested for...of) ---
     for (const emb of prod.embalagens) {
-      const precoFormatado = emb.preco.replace(/[^0-9,.]/g, "").replace(",", ".");
-      const descontoFormatado = emb.desconto;
-      const precoFinal = precoFormatado - descontoFormatado;
+   
+  
+  
+  
       
+    
+
+    const precoFormatado = parseFloat(emb.preco.replace(",","."))
+  
+   const descontoFormatado = parseFloat(emb.desconto)
+  
+   let precoFinal = parseFloat(precoFormatado - descontoFormatado)
+   
+   precoFinal = precoFinal.toFixed(2).replace(".",",")
+   
+  
+  
+  
+  
       const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
       const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-xl" : "";
       
@@ -594,7 +609,7 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
                     <h4 class="text-[10px] font-bold text-gray-500 truncate leading-tight uppercase tracking-tighter">
                         ${nomeEscapado}
                     </h4>
-                    <button onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')">
+                    <button onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal}')">
                         <p class="text-[16px] font-black text-gray-900 leading-tight uppercase">
                             ${String(emb.tipo)}
                         </p>
@@ -604,13 +619,13 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
                             De: R$ ${precoFormatado}
                         </span>
                         <span class="text-[18px] font-black ${precoDestaque} text-red-600 leading-none">
-                            <span class="text-xs font-bold">R$</span> ${precoFinal.toFixed(2).replace(".", ",")}
+                            <span class="text-xs font-bold">R$</span> ${precoFinal}
                         </span>
                     </div>
                 </div>
                 <button id="bt+${emb.cod}" 
                         class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-lg p-2.5 shadow-sm active:scale-95 transition-all flex-shrink-0 ml-2" 
-                        onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')">
+                        onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal}')">
                     <i class="w-5 h-5" data-lucide="shopping-basket"></i>
                 </button>
             </div>
@@ -649,17 +664,27 @@ const db = await getDados();
         
      for(const de of pr.embalagens){
       
-       const descontoLimpo =de.desconto
+  
+  
      
-     const precoFormatado = de.preco.replace(/[^0-9,.]/g,"").replace(",",".")
+
+
+  
+    const precoFormatado = parseFloat(de.preco.replace(",","."))
+  
+   const descontoLimpo = parseFloat(de.desconto)
+  
+   let precoFinal = parseFloat(precoFormatado - descontoLimpo)
+   
+   precoFinal = precoFinal.toFixed(2).replace(".",",")
+   
+  
+  
   
     const nomeEscapado = pr.nome.replace(/'/g, "");
 
-   const precoFinal = precoFormatado - descontoLimpo
-     
-     
         
-      if(descontoLimpo > 0.00){
+      if(de.desconto > 0.00){
   
   const spn = document.createElement('div')   
   spn.className='w-full flex justify-center relative'
@@ -685,12 +710,12 @@ const db = await getDados();
                             <span id="tr-${de.cod}" class="text-gray-400 text-[16px] line-through decoration-red-300">
                 De: R$ ${precoFormatado}
             </span>
-                <span class="text-4xl font-black text-red-500">${precoFinal.toFixed(2).replace(".",",")}</span>
+                <span class="text-4xl font-black text-red-500">${precoFinal}</span>
                 </div>
 
             <button id="bt+${de.cod}" 
                 class="bg-yellow-400 text-gray-700 rounded-xl p-2.5  flex items-center gap-2 font-black justify-center" 
-                onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
+                onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal}')">
              ADICIONAR
         </button>
 
@@ -731,10 +756,15 @@ function openModal(cod,nome, embalagem, preco,curQtd){
  btnDel=''
  }
  
+  const precoFloat = parseFloat(preco)
   
-  preco = preco.replace(/[^0-9,.]/g, "")
-  unitPrice = preco.replace(",",".");
+  precoFinal = precoFloat.toFixed(2).replace(".",",")
+    
   
+  
+  unitPrice = preco;
+  
+
   
 document.getElementById('modalOverlay').innerHTML=''
     // Atualiza os dados no modal
@@ -760,7 +790,7 @@ document.getElementById('modalOverlay').innerHTML=''
     <div class="flex items-center justify-between mb-8">
       <div>
         <span class="text-xs font-bold text-orange-500 uppercase tracking-widest">Preço Unitário</span>
-        <div class="text-3xl font-black text-gray-900" id="modalProdPreco">${preco.replace(".",",")}</div>
+        <div class="text-3xl font-black text-gray-900" id="modalProdPreco">${precoFinal}</div>
       </div>
       
       <button class="border border-red-500 rounded-md p-2 ${btnDel}" id="deleteItem" onclick="removerItem('${cod}')">
@@ -923,7 +953,20 @@ let comAcomp ='hidden'
   meuCarrinho.forEach(item => {
       
       if(item.acompanhamentos){comAcomp = ''}else{comAcomp='hidden'}
-      
+  
+  
+    // Formatando o preço para o padrão brasileiro
+
+
+  
+   let precoFinal = parseFloat(item.preco).toFixed(2)
+   
+  let precoXquantidade = (item.qtd* item.preco).toFixed(2)
+   
+  precoXquantidade = precoXquantidade.replace(".",",")
+   
+  precoFinal = precoFinal.replace(".",",")
+       
     container.innerHTML += `
 
     
@@ -937,7 +980,7 @@ let comAcomp ='hidden'
               ${item.qtd} X ${item.nome}
               </span>
               <small class="text-[10px] text-gray-700">
-              ( ${item.embalagem} - ${formatMoeda(item.preco  ).replace(".",",")} Un. )</small>
+              ( ${item.embalagem} - ${precoFinal} Un. )</small>
                 </div>
   
         <div class="grid grid-cols-1">
@@ -950,7 +993,7 @@ let comAcomp ='hidden'
             </div>
                 </div>
               
-                <span class="font-bold">R$ ${(item.preco * item.qtd).toFixed(2).replace(".",",")}</span>
+                <span class="font-bold">R$ ${precoXquantidade}</span>
                 
                 </button>
                 

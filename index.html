@@ -49,7 +49,7 @@
   }
   
   
-  async function getDadosDb() {
+  async function getDados() {
     
   const { data, error } = await _supabase
     .from('estoque')
@@ -67,14 +67,14 @@
 }
 async function salvaDbLocal(){
   const db = await getDadosDb() || []
-
+alert(JSON.stringify(db))
 localStorage.setItem('estoqueDeProdutos',JSON.stringify(db))
 }
 
-salvaDbLocal()
+//salvaDbLocal()
 
 
-async function getDados(){
+async function getDadoslc(){
   
 return JSON.parse(localStorage.getItem('estoqueDeProdutos')) || []
 }
@@ -86,7 +86,6 @@ async function userDados() {
   }
 /*async function inicializarApp() {
   const produtos = await getDados();
-alert(produtos)
 }
 inicializarApp()*/
 
@@ -166,7 +165,7 @@ const dbListExist = await getDados();
   { nome: 'Bomboniere', subCategoria: [], icone: 'cookie',lista:'bomboniere' },
   { nome: 'Salgadinhos', subCategoria: [], icone: 'popcorn',lista:'snackssalgados' },
   { nome: 'Tabacaria', subCategoria: [], icone: 'cigarette',lista:'tabacaria' },
-  { nome: 'Doces e chocolates', subCategoria: [], icone: 'candy',lista:'docesechocolate' },
+  { nome: 'Doces e chocolates', subCategoria: [], icone: 'candy',lista:'docesechocolates' },
   { nome: 'Outros', subCategoria: [], icone: 'circle-plus',lista:'outros' },
   { nome: 'Utensílios', subCategoria: [], icone: 'shapes',lista:'utensilios' }
 ]
@@ -197,7 +196,6 @@ const classeComItem = [...new Set(dbListExist.map(item =>
  const itemTodos = primeCateList.filter(it=>it.lista ==='')
  classeParaExibir.push(...itemTodos)
  
-//alert(JSON.stringify(classeParaExibir))
 
  classeParaExibir.sort((a, b) => a.lista.localeCompare(b.lista));
  
@@ -663,11 +661,13 @@ divtop10.innerHTML = '';
   card.className = "w-full flex-none px-2 pb-4";
   
   // Formatando o preço para o padrão brasileiro
-  const precoFormatado = item.preco.replace(/[^0-9,.]/g,"").replace(",",".")
+  const precoFormatado = parseFloat(item.preco.replace(",","."))
   
-  const descontoFormatado = item.desconto
+  const descontoFormatado = parseFloat(item.desconto)
   
-   const precoFinal = precoFormatado - descontoFormatado
+   let precoFinal = parseFloat(precoFormatado - descontoFormatado)
+   
+   precoFinal = precoFinal.toFixed(2).replace(".",",")
    
   
 const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
@@ -695,7 +695,7 @@ const marcaEscapada = item.marca.replace(/'/g, "\\'");
     <div class="flex-grow flex items-center justify-between min-w-0">
         
         <div class="flex flex-col min-w-0 mr-2">
-            <button class="text-left focus:outline-none" onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFinal.toFixed(2)}')">
+            <button class="text-left focus:outline-none" onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFormatado}')">
                 <h4 class="text-[15px] font-bold text-gray-800 truncate leading-tight mb-0.5">
                     ${nomeEscapado}
                 </h4>
@@ -710,14 +710,14 @@ const marcaEscapada = item.marca.replace(/'/g, "\\'");
                     De: R$ ${precoFormatado}
                 </span>
                 <span class="text-[16px] font-black ${precoDestaque} text-red-600">
-                    <span class="text-xs font-bold">R$</span> ${precoFinal.toFixed(2).replace(".",",")}
+                    <span class="text-xs font-bold">R$</span> ${precoFinal}
                 </span>
             </div>
         </div>
 
         <button id="bt+${item.cod}" 
                 class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl p-3 shadow-sm active:scale-95 transition-all flex-shrink-0" 
-                onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFinal.toFixed(2)}')">
+                onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFormatado}')">
             <i class="w-5 h-5" data-lucide="shopping-basket"></i>
         </button>
     </div>
