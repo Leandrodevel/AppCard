@@ -96,35 +96,23 @@ inicializarApp()*/
 </head>
 <body class="bg-gray-100 font-sans">
 
-
-    
+<div id="app">
  
   <header id="header" class="transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2  bg-gray-900">
 
             
     <div class="flex items-center justify-between mb-4">
-      
       <div class="flex gap-2 flex-row items-center">
         <span class=" capitalize text-sm font-bold tema-text-base tracking-wider">Olá </span>
         <span class="flex items-center text-sm font-bold text-gray-200"  id="btnViewEndereco">
           Rua das Cervejarias, 123
            </span>
       </div>
-         
- 
-  
          <div class="flex flex-row gap-2 items-center" id="statusOnline"></div>
-    
-    </div>
-     
-       
      </div>
-    <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class="relative group">
+
+    <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class=" group">
       <input id="search-bar" name="searchBar" list="listBusca" type="search" placeholder="O que vamos beber hoje?" class="w-full  border-none rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-yellow-400 transition-all">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-4 top-3 group-focus-within:tema-text-base" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
     </form>
    <datalist id="listBusca">
    
@@ -306,7 +294,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     </div>
     </form>
 
-  </div>
+
 
 </section>
 
@@ -357,7 +345,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     </div>
     </form>
 
-  </div>
+
 </section>
 
   <!--------end EDITAR USER--------> 
@@ -1345,7 +1333,7 @@ slcEndereco.addEventListener('change', (event) => {
   </div>
   
 
-</div> 
+
  
 </main>
 
@@ -1362,6 +1350,6 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log("Service Worker Registrado!"));
 }
 </script>
- 
+ </div>
 </body>
 </html>
