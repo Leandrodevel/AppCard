@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a1a">
+    <title> Cardápio Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+   <!--<link rel="manifest" href="manifest.json">---> 
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+
+
+//teste de github
+  // 1. Configurações de acesso
+  const SUPABASE_URL = 'https://wyhqwprshbgwjlnxndhm.supabase.co'
+  
+  const SUPABASE_KEY ='sb_publishable_avVe0cMnriaF8Ogt42Z7Xg_PTD5pdnZ'
+
+  // 2. Inicializa o cliente
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+  // Exemplo de função para salvar seus dados (Opção 2 - JSONB)
+  async function enviarAoBanco() {
+    const estoqueDeProdutos = [
+      {
+        id_comercial: '0009',
+        classe:'carvaoegelo',
+        categoria: 'Carvao',
+        marca: 'Labareda',
+        nome: 'Carvao Vegetal Labareda',
+        embalagens: [
+          { cod: 'B017', tipo: 'saco 5kg', preco: '8,50R$', estoque:60, vendas: 0, desconto: 0, ativo: true, destaque: false }
+        ]
+      }
+    ];
+ 
+    const { data, error } = await _supabase
+      .from('estoque')
+      .insert(estoqueDeProdutos)
+
+    if (error) {
+      console.error('Erro:', error.message)
+    } else {
+      console.log('Sucesso:', data)
+    }
+  }
+  
+  async function getDadosDb() {
+    
+  const { data, error } = await _supabase
+    .from('estoque')
+    .select('*'); // O asterisco traz todas as colunas
+
+  if (error) {
+    console.error('Erro ao ler dados:', error.message);
+  } else {
+    
+    return data || []
+    // Para acessar a primeira embalagem do primeiro produto:
+     
+  }
+  
+}
+async function salvaDbLocal(){
+  const db = await getDadosDb() || []
+localStorage.setItem('estoqueDeProdutos',JSON.stringify(db))
+}
+
+salvaDbLocal()
+
+async function getDados(){
+  
+return JSON.parse(localStorage.getItem('estoqueDeProdutos')) || []
+}
+
+async function userDados() {
+  
+  return JSON.parse(localStorage.getItem('userDados'))   
+
+  }
+
+
+
+
+</script>
+
+</head>
+<body class="font-sans bg bg-gray-100">
+
+<div id="app" class="bg-gray-50">
+ 
+  <header id="header" class="transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2  bg-gray-900">
+
+            
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex gap-2 flex-row items-center">
+        <span class=" capitalize text-sm font-bold tema-text-base tracking-wider">Olá </span>
+        <span class="flex items-center text-sm font-bold text-gray-200 capitalize"  id="btnViewEndereco">
+          Usuario
+           </span>
+      </div>
+         <div class="flex flex-row gap-2 items-center" id="statusOnline"></div>
+     </div>
+
+    <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class=" group">
+      <input id="search-bar" name="searchBar" list="listBusca" type="search" placeholder="O que vamos beber hoje?" class="w-full  border-none rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-yellow-400 transition-all">
+    </form>
+   <datalist id="listBusca">
+   
+   </datalist>
+    
+  </header>
+
+<main class=" p-1 py-2 grid grid-cols-1">
+    
+  
+  <div id="headerTools">
+     <!----------menu superior----------> 
+      
+    <div class="w-full px-2">
+    <div id="faixaTicker" class=" w-full px-2 py-2  overflow-x-auto font-bold bg-white text-red-400 rounded-lg">
+    </div>
+    </div>
+
+ 
+    <div id="listCateg" class="w-full flex flex-nowrap justify-around gap-1.5 overflow-x-auto relative ">
+       
+         <script type="text/javascript" charset="utf-8">
+         
+    async function listaCateg() {
+ 
+const dbListExist = await getDados();
+         
+   function headerToolsList(idAtivo){
+         
+    const listCateg = document.getElementById('listCateg')
+   
+   
+    const primeCateList =[
+  { nome: 'Todos', icone: 'arrow-down-a-z',lista:'' },
+  { nome: 'Bebidas', icone: 'bottle-wine',lista:'bebidas' },
+  { nome: 'Petiscos', icone: 'hand-platter',lista:'petiscos' },
+  { nome: 'Churrasco', subCategoria: 'churrasco', icone: 'beef',lista:'conveniencia' },
+  { nome: 'Carvão/gelo', subCategoria: [], icone: 'brick-wall-fire',lista:'carvaoegelo' },
+  { nome: 'Bomboniere', subCategoria: [], icone: 'cookie',lista:'bomboniere' },
+  { nome: 'Salgadinhos', subCategoria: [], icone: 'popcorn',lista:'snackssalgados' },
+  { nome: 'Tabacaria', subCategoria: [], icone: 'cigarette',lista:'tabacaria' },
+  { nome: 'Doces e chocolates', subCategoria: [], icone: 'candy',lista:'docesechocolates' },
+  { nome: 'Outros', subCategoria: [], icone: 'circle-plus',lista:'outros' },
+  { nome: 'Utensílios', subCategoria: [], icone: 'shapes',lista:'utensilios' }
+]
+
+    
+    listCateg.innerHTML='' 
+    
+      
+      
+      /* PAREI AQUI */
+      
+      // 1. Criamos um Set com as classes já tratadas para busca rápida
+const classeComItem = [...new Set(dbListExist.map(item =>
+    item.classe
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/\s/g, "")
+  ))]
+ 
+ let classeParaExibir =[]
+ 
+  for(const fl of classeComItem){
+ const comparados =  primeCateList.filter(ci=>ci.lista.toLowerCase() === fl.toLowerCase())
+  classeParaExibir.push(...comparados)
+ }
+ 
+ const itemTodos = primeCateList.filter(it=>it.lista ==='')
+ classeParaExibir.push(...itemTodos)
+ 
+
+ classeParaExibir.sort((a, b) => a.lista.localeCompare(b.lista));
+ 
+ 
+ 
+   for(const pc of classeParaExibir){
+      
+     const idAtual = pc.lista.toLowerCase().replace(/[\/]/g,"") 
+        
+       const categBox = document.createElement('div')
+       categBox.className='w-fit h-fit flex flex-wrap flex-col justify-center'
+      const categButton = document.createElement('button')
+      categButton.className = 'w-[70px] h-[60px]  bg-white border border-gray-200 py-2 mb-0 mt-2 rounded-md relative justify-center flex flex-nowrap '
+      categButton.id = idAtual
+      
+            const categLabel=document.createElement('small')
+      
+      categLabel.className=`w-[65px]  line-clamp-1 font-black  text-gray-700 grid grid-rows-1  px-0 py-[2px] rounded-md  text-[10px] tracking-wider text-center`
+      
+      
+      categButton.addEventListener('click',()=>{
+        headerToolsList(pc.lista)
+        listarCat('',pc.lista)
+       listaProdutos('','',pc.lista) 
+      })
+      
+     if( idAtual.toLowerCase() ===  idAtivo.toLowerCase()){
+      
+      categButton.classList.remove('bg-yellow-400')
+      categButton.classList.add('bg-yellow-300')
+      
+     }else if(!idAtual  && idAtivo === 'Todos'){
+       
+       categButton.classList.remove('bg-yellow-400')
+      categButton.classList.add('bg-yellow-200')
+       
+     }
+     categLabel.innerHTML=pc.nome
+       categButton.innerHTML=`
+    
+       <div class="h-full flex items-center justify-center ">
+        <i data-lucide="${pc.icone}" class="w-6 h-6 text-gray-700"></i> 
+       </div>
+       `
+
+      listCateg.appendChild(categBox)
+       categBox.appendChild(categButton)
+       categBox.appendChild(categLabel)
+    
+      }
+      
+      
+      lucide.createIcons();
+         }
+         headerToolsList('')
+        
+    }
+    listaCateg()
+    </script>
+
+    </div>
+    
+  
+    <nav id="navCat" class="w-full overflow-x-auto flex flex-nowrap
+    mt-2 gap-2 py-2">
+    </nav>    
+  </div>
+
+<section id="perfilUser" class="w-full mx-auto bg-gray-50 min-h-screen">
+  
+  <div class="flex justify-between items-center p-4">
+    <a href="/index-admin.html" class="hidden" id="adminBtn">
+      <button class="p-2 bg-white shadow-sm rounded-xl text-gray-700 active:scale-95 transition-all">
+        <i class="w-5 h-5" data-lucide="user-key"></i>
+      </button>
+    </a>
+  
+
+  </div>
+
+  <div class="px-6 text-center flex flex-col items-center">
+    
+    <div class="relative mb-4">
+      <div class="w-24 h-24 bg-gradient-to-tr from-yellow-400 to-yellow-300 rounded-full p-1 shadow-xl shadow-yellow-200 flex items-center justify-center border-4 border-white">
+        <h1 id="pflLetra" class="font-black text-4xl text-white drop-shadow-md capitalize">L</h1>
+      </div>
+      <button onclick="navegacao('editarUser')" class="absolute bottom-0 right-0 p-2 bg-gray-900 text-white rounded-full border-2 border-white shadow-lg hover:bg-gray-800 transition-colors">
+        <i class="w-3 h-3" data-lucide="pencil"></i>
+      </button>
+    </div>
+
+    <h2 id="pflNome" class="text-2xl font-black text-gray-800 tracking-tight capitalize">João da Silva</h2>    
+    <p id="pflTel" class="text-gray-400 text-sm font-medium mb-8">(22) 99888-7766</p>
+
+    <div class="w-full bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4 mb-6 text-left">
+      <div class="bg-yellow-100 p-3 rounded-xl text-yellow-600">
+        <i class="w-6 h-6" data-lucide="map-pin"></i>
+      </div>
+      <div class="flex-grow overflow-hidden">
+        <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Endereço de entrega</p>
+        <p id="spanEndereco" class="text-sm text-gray-700 font-semibold truncate">Toque para adicionar endereço</p>
+      </div>
+      <button onclick="navegacao('enderecoTemp')" class="p-2 bg-gray-50 text-gray-400 rounded-lg hover:bg-yellow-400 hover:text-white transition-all">
+        <i class="w-4 h-4" data-lucide="chevron-right"></i>
+      </button>
+    </div>
+
+<div class="w-full  bg-white p-6 rounded-2xl  mx-auto flex justify-around ">
+  
+  <div class="grid grid-cols-4 gap-3 max-w-sm">
+    
+    <button onclick="navegacaoUser('historico')" class="aspect-square bg-yellow-400 hover:bg-yellow-500 transition-all rounded-xl flex flex-col items-center justify-center p-2 text-yellow-950 group">
+      <i data-lucide="history" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tighter">Histórico</span>
+    </button>
+
+    <button class="aspect-square bg-yellow-400 hover:bg-yellow-500 transition-all rounded-xl flex flex-col items-center justify-center p-2 text-yellow-950 group" onclick="">
+      <i data-lucide="settings" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tighter">Ajustes</span>
+    </button>
+
+    <button onclick="navegacaoUser('ajuda')" class="aspect-square bg-yellow-400 hover:bg-yellow-500 transition-all rounded-xl flex flex-col items-center justify-center p-2 text-yellow-950 group">
+      <i data-lucide="help-circle" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tighter">Ajuda</span>
+    </button>
+
+    <button onclick="logout()" class="aspect-square bg-yellow-400 hover:bg-red-500 hover:text-white transition-all rounded-xl flex flex-col items-center justify-center p-2 text-yellow-950 group">
+      <i data-lucide="log-out" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tighter">Sair</span>
+    </button>
+
+  </div>
+</div>
+<!-- NAVEGACAO MENU USUARIO-->
+  <div id="navagacaoUser" class="w-full">
+    
+    <!--historico-->
+
+ <div id="historico" class="flex flex-col w-full items-center gap-3 mb-8 mt-4 ">
+        <h2 class="text-2xl font-black text-gray-800">Meus Pedidos</h2>
+  <div id="containerHistorico" class="space-y-6 w-full"></div>
+    </div>
+   
+ <div id="ajuda" class="flex flex-col w-full items-center gap-3 mb-8 mt-4 ">
+  <div id="containerAjuda" class="space-y-6 w-full"></div>
+    </div>
+  </div>
+   
+ <!------------------
+  <div class="w-full bg-white rounded-[2.5rem] p-6 shadow-xl relative overflow-hidden mb-10 border border-gray-100 mt-2">
+    <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-400 opacity-20 rounded-full"></div>
+    
+    <div class="flex justify-between items-start mb-6 relative z-10">
+      
+      <div class="text-left">
+        <span class="text-yellow-600 text-[10px] font-black uppercase tracking-[0.2em]">Fidelidade</span>
+        <p class="text-gray-900 text-3xl font-black"><span id="pflPontos">750</span> <span class="text-xs font-light text-gray-400">pts</span></p>
+      </div>
+
+      <div class="bg-yellow-400 px-3 py-1 rounded-full shadow-md shadow-yellow-400/30">
+        <p class="text-[9px] font-extrabold text-gray-900 uppercase">🎁 Vale Copão</p>
+      </div>
+
+    </div>
+
+    <div class="relative w-full bg-gray-100 rounded-full h-3 mb-4 p-0.5 overflow-hidden border border-gray-200">
+      <div id="pflBarraPontos" class="bg-yellow-400 h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(250,204,21,0.4)]" style="width: 75%"></div>
+    </div>
+    
+    <div class="flex justify-between text-[10px] font-bold uppercase tracking-tighter text-gray-400 px-1">
+      <span>0 pts</span>
+      <span class="text-yellow-600">Faltam <span id="pflPontosRestantes">250</span> pts</span>
+      <span>1000</span>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-gray-100">
+      <div class="grid grid-cols-5 gap-3">
+      
+        <div class="aspect-square bg-yellow-400 rounded-xl flex items-center justify-center shadow-md shadow-yellow-400/20">
+          <i data-lucide="check" class="text-gray-900 w-5 h-5 stroke-[3]"></i>
+        </div>
+     
+        <div class="aspect-square bg-yellow-400 rounded-xl flex items-center justify-center shadow-md shadow-yellow-400/20">
+          <i data-lucide="check" class="text-gray-900 w-5 h-5 stroke-[3]"></i>
+        </div>
+       
+        <div class="aspect-square bg-yellow-400 rounded-xl flex items-center justify-center shadow-md shadow-yellow-400/20">
+          <i data-lucide="check" class="text-gray-900 w-5 h-5 stroke-[3]"></i>
+        </div>
+       
+        <div class="aspect-square border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-300 font-black text-sm">
+          4</div>
+        <div class="aspect-square border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-300 font-black text-sm">
+          5</div>
+      </div>
+
+      <p class="text-[9px] text-gray-400 mt-4 italic">Complete 10 pedidos para resgatar seu prêmio!</p>
+    
+    </div>
+</div>------------------->
+ 
+</section>
+  <section id="editarUser" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
+
+
+  <div class="mb-8 flex">
+   
+     <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="navegacao('perfilUser')">
+        <i class="w-4 h-4" data-lucide="undo-2"></i>
+      </button>
+   
+    <h1 class="text-2xl font-black text-gray-900 leading-tight">Editar informações do perfil</h1>
+
+
+  </div>
+
+  <form id="formEditar" onsubmit="editarUser(event.defaultPrevented(),'editar')" class="space-y-4">
+    
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
+      <input required type="text" id="editNome" placeholder="Ex: João Silva" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">WhatsApp</label>
+      
+      <input required type="tel" id="editTel" placeholder="(00) 00000-0000" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <p class="text-[10px] text-gray-400 text-center px-4 py-2">
+      Ao atualizar, os dados anteriores serão perdidos
+    </p>
+
+    <div class="pt-4">
+      <button id="btnEditarCadUser" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+        Atualizar cadastro
+      </button>
+    </div>
+    </form>
+
+
+</section>
+<section id="cardapio">
+    <div id="cardapio-grid" class=" pb-[200px] ">
+    </div>
+  </section>
+<section id="home" class=" min-h-screen font-sans text-gray-900 pb-20">
+   <div class="z-500" >
+     <!-----------DESTAQUES E PROMOCOES-------------> 
+    <div class="px-4 py-6">
+        <h2 class="text-xl font-black text-gray-700 uppercase tracking-tight flex">
+            Destaques e <span class="ml-2 tema-text-base">promoções</span>
+              <i class="rotate-12 ml-2" data-lucide="crown"class="mr-2"></i>
+        </h2>
+    </div>
+
+   <div class="mb-8">
+    <div class="px-4 mb-3 flex justify-between items-end">
+        <h3 class="font-bold text-gray-700">Ofertas Imperdíveis</h3>
+        <span class="text-xs font-semibold text-yellow-600 uppercase animate-pulse">Arraste para o lado →</span>
+    </div>
+        
+    <div class="flex overflow-x-auto space-x-4 px-4 pb-4 scrollbar-hide">
+
+         <!-----------ESPETINHO-------------> 
+        <div class="min-w-[280px] bg-red-500 rounded-3xl p-5 flex relative overflow-hidden group shadow-lg"
+             style="background-image: url('./img/img1.jpg'); 
+                    background-size: 150%; 
+                    background-position: 100% center; 
+                    background-repeat: no-repeat;">
+            
+              <div class="absolute inset-0 bg-gradient-to-r from-zinc-900/90  to-transparent"></div>
+
+        <div class="relative z-10 w-2/3">
+          <span class="bg-white text-yellow-600 text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-sm">Destaque</span>
+              <h4 class="text-2xl font-extrabold text-white mt-2 leading-tight drop-shadow-md">
+                <p class="text-yellow-400 font-black font-bolder ">
+                  ESPETINHOS</p>
+                 COM JANTINHA</h4>
+                <p class="text-white font-bold text-xl mt-1">
+                  apenas 8,90 R$</p>
+                  <button class="mt-4 bg-yellow-400 text-zinc-900 font-bold py-2.5 px-5 rounded-xl text-sm shadow-md hover:bg-yellow-50 transition-colors" onclick="navegacao('montarEspetinho')">
+                    Pedir agora
+                  </button>
+            </div>
+        </div>
+                 <!-----------COMBO GIN-------------> 
+
+        <div class="min-w-[280px] bg-gray-900 rounded-3xl p-5 flex relative overflow-hidden group shadow-xl transition-transform duration-300 active:scale-95">
+            
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-yellow-400/20 rounded-full blur-2xl group-hover:bg-yellow-400/30 transition-all"></div>
+
+            <div class="relative z-10 w-2/3">
+                <span class="bg-yellow-400 text-gray-900 text-[10px] font-bold px-2 py-1 rounded-full uppercase">Promoção</span>
+                <h4 class="text-2xl font-extrabold text-white mt-2 leading-tight">Combo Gin + Tônica</h4>
+                <p class="text-yellow-400 font-bold text-xl mt-1">R$ 89,90</p>
+                <button class="mt-4 bg-yellow-400 text-gray-900 font-bold py-2.5 px-5 rounded-xl text-sm shadow-lg hover:bg-yellow-300 transition-colors">
+                    Aproveitar
+                </button>
+            </div>
+
+            <div class="absolute right-2 bottom-4 opacity-30 group-hover:opacity-100 group-hover:-rotate-12 transition-all duration-500">
+                 <i data-lucide="star" class="text-yellow-400 w-24 h-24"></i>
+            </div>
+        </div>
+
+    </div>
+</div>                
+</div>
+
+   <!-------END----DESTAQUES E PROMOCOES-------------> 
+
+    <!-------------mais pedidos--------->
+    <div class="mt-8">
+    <div class="px-4 flex items-center justify-between mb-4">
+       
+      <h2 class="text-xl font-black text-gray-700 uppercase tracking-tight flex gap-2">
+         <i class="rotate-12 font-black" data-lucide="trophy" class="mr-2"></i>
+   <span class="tema-text-base">+ pedidos</span>
+      </h2>
+    </div>
+    
+    
+    <div id="boxTop10" class="w-full  flex flex-shrink-0 grid grid-cols-1 place-items-center">
+      
+    </div>
+    
+    <script type="text/javascript" charset="utf-8">
+    
+ 
+    </script>
+    
+  </div>
+</section>
+<section id="montarEspetinho">
+<div class="bg-gray-900 min-h-screen p-4 pb-12 font-sans">
+  <section class="max-w-md mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+    <div class="relative">
+      <img src="./img/img1.jpg" alt="Espetinho" class="w-full h-56 object-cover">
+      <span class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">BRASA VIVA</span>
+    </div>
+
+    <div class="p-6">
+      <div class="flex justify-between items-start">
+        <div>
+          <h2 id="main-prod-nome" class="text-2xl font-bold text-gray-800">Monte seu Espetinho</h2>
+          <p class="text-gray-500 text-sm mt-1">Escolha o sabor e os seus acompanhamentos favoritos.</p>
+        </div>
+        <span class="text-xl font-black text-red-600">R$ <span id="main-prod-preco">8,90</span></span>
+      </div>
+
+      <hr class="my-6 border-gray-100">
+
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">1. Escolha o Sabor</label>
+        <select required id="sabor-espetinho" class="w-full bg-gray-50 border border-gray-200 p-4 rounded-2xl outline-none focus:border-red-500 transition-all text-gray-700 font-medium appearance-none">
+          <option value="Carne (Alcatra)">Carne (Alcatra)</option>
+          <option value="Frango com Bacon">Frango com Bacon</option>
+          <option value="Coração">Coração</option>
+          <option value="Queijo Coalho">Queijo Coalho</option>
+          <option value="Pão de Alho">Pão de Alho</option>
+          <option value="Misto">Misto (Carne e Linguiça)</option>
+        </select>
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">2. Acompanhamentos (Grátis)</label>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-transparent has-[:checked]:border-red-200 has-[:checked]:bg-red-50">
+            <input type="checkbox" name="acompanhamento" value="Vinagrete" class="w-5 h-5 accent-red-500 rounded">
+            <span class="text-sm font-medium text-gray-700">Vinagrete</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-transparent has-[:checked]:border-red-200 has-[:checked]:bg-red-50">
+            <input type="checkbox" name="acompanhamento" value="Farofa" class="w-5 h-5 accent-red-500 rounded">
+            <span class="text-sm font-medium text-gray-700">Farofa</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-transparent has-[:checked]:border-red-200 has-[:checked]:bg-red-50">
+            <input type="checkbox" name="acompanhamento" value="Feijão Tropeiro" class="w-5 h-5 accent-red-500 rounded">
+            <span class="text-sm font-medium text-gray-700">Feijão Tropeiro</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-transparent has-[:checked]:border-red-200 has-[:checked]:bg-red-50">
+            <input type="checkbox" name="acompanhamento" value="Salpicão" class="w-5 h-5 accent-red-500 rounded">
+            <span class="text-sm font-medium text-gray-700">Salpicão</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">3. Alguma observação?</label>
+        <textarea id="obs-pedido" rows="3" placeholder="Ex: Tirar a gordura, ponto bem passado..." class="w-full bg-gray-50 border border-gray-200 p-4 rounded-2xl outline-none focus:border-red-500 transition-all text-sm"></textarea>
+      </div>
+
+      <button onclick="adicionarEspetinho()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-5 rounded-2xl flex items-center justify-center gap-3 shadow-lg shadow-red-200 transition-all active:scale-95">
+        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+        Adicionar ao Pedido
+      </button>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Inicializa ícones
+  lucide.createIcons();
+
+  function adicionarEspetinho(){
+    
+    const gerarID = () => {
+    const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
+    const data = Date.now();
+    return letras + data;
+};
+
+    const sabor = document.getElementById('sabor-espetinho').value;
+    const preco = parseFloat(document.getElementById('main-prod-preco').innerText.replace(',', '.'));
+    const obs = document.getElementById('obs-pedido').value;
+    
+    // Pega todos os acompanhamentos marcados
+    const acompanhamentos = Array.from(document.querySelectorAll('input[name="acompanhamento"]:checked')).map(el => el.value);
+
+    const item = {
+      cod: gerarID(),
+      nome: `Espetinho de ${sabor}`,
+      embalagem: '1 un.',
+      acompanhamentos: acompanhamentos,
+      observacao: obs,
+      preco: preco,
+      qtd:1
+    };
+
+    // Salva no LocalStorage
+    
+    meuCarrinho.push(item);
+    localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
+
+    
+      modalAdicionado(item.cod,item.nome,'',item.preco)
+      
+     atualizaContador()
+    
+    
+    let totItens = document.getElementById('qtd-itens')  
+
+    let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
+    return acumulador + p.qtd;
+}, 0); // O '0' é o valor inicial da soma
+
+      
+       totItens.innerText= totalCarrinho
+
+    
+    
+    
+    // Opcional: Limpar campos após adicionar
+    document.querySelectorAll('input[name="acompanhamento"]').forEach(el => el.checked = false);
+    document.getElementById('obs-pedido').value = '';
+  }
+</script>
+
+   </section>
+<section id="pagePromocao" >
+      
+   <!-- SECTION PROMOÇÕES -->
+<div class="mt-8">
+ <div class="px-4 mb-3 flex justify-between items-end">
+        <h2 class="font-bold text-gray-700 flex gap-2 text-2xl">
+     <i data-lucide="tag"></i> 
+          PROMOÇÕES</h2>
+    </div>
+
+
+  <div id="boxPromocoes" class="w-full flex flex-col space-y-2 px-4 pb-4 ">
+    
+    <!-- Renderizado via JS -->
+  </div>
+
+  <script type="text/javascript" charset="utf-8">
+    
+               
+    
+      
+    
+  </script>
+</div>   
+      
+
+</section>
+  <section id="pageCarrinho" class="  grid place-items-center ">
+
+
+    <div class="bg-white w-full  overflow-hidden ">
+        <div class="p-6 flex justify-between items-center">
+            <h2 class="text-xl font-black uppercase text-gray-700">Sua Lista</h2>
+           
+            <button class=" close text-2xl bg-yellow-400 rounded-md p-2 " onclick="navegacao('home')">
+                <i data-lucide="undo-2"></i>  
+            </button>
+        </div>
+        
+        <div  class="  p-4 max-h-[40vh] overflow-y-auto text-sm" id="itensCarrinho">
+            
+          
+            
+        </div>
+
+
+        <div id="" class="p-6 bg-gray-50 space-y-4">
+            
+            <div class="flex justify-center items-center">
+            <textarea name="obsCarrinho" id="obsCarrinho" rows="3" cols="50" placeholder="Observações" class="border-sm border-gray-300 ring rounded-lg"></textarea>
+            </div>
+            
+            <div id="" class="">
+              <span class="">Entregar em:</span>
+              
+              <select required name="" id="selectEndereco" class="w-full my-2 p-3 rounded-xl outline-none focus:border-red-600 transition">
+                <option value="" selected>endereco1</option>
+                
+              </select>
+              
+              
+              <script>
+     function slcEnderecoModal(){      
+    const slcEndereco = document.getElementById('selectEndereco')
+    selectEndereco.innerHTML = ''
+  const userExist = JSON.parse(localStorage.getItem('userDados'))
+  
+  const optEndereco = document.createElement('option')
+    
+    if (userExist.rua && userExist.rua !== '') {
+      
+    optEndereco.selected = true
+    optEndereco.innerText = `${userExist.rua}, ${userExist.casa} - ${userExist.bairro}`
+    slcEndereco.appendChild(optEndereco)
+    }else{
+    const optPlace = new Option('Selecione um endereco', '')
+     optPlace.selected = true
+     optPlace.disabled = true
+     slcEndereco.add(optPlace)
+    }
+  const optNovo = new Option('Novo endereco','movoEndereco')
+    slcEndereco.add(optNovo)
+    
+    
+
+slcEndereco.addEventListener('change', (event) => {
+  if (event.target.value === "movoEndereco") {
+    // Redireciona para a sua página de cadastro
+    navegacao('enderecoTemp')
+    optEndereco.selected = true
+    // Ou, se for um modal:
+    // abrirModalCadastro();
+  }
+});
+     }
+    slcEnderecoModal()          
+                
+              </script>
+              
+              
+              
+            </div>
+            
+        <!-------------------------------------> 
+        
+<div class="space-y-4">
+  <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Forma de Pagamento</h3>
+  
+  <div class="flex flex-row gap-2 overflow-x-auto pb-2 no-scrollbar">
+    
+    <label class="flex-1 min-w-[100px] cursor-pointer">
+      <input type="radio" name="pay_method" value="pix" class="peer hidden" checked onchange="toggleTroco(false)">
+      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
+        <span class="text-xs font-bold text-gray-800">PIX</span>
+      </div>
+    </label>
+
+    <label class="flex-1 min-w-[100px] cursor-pointer">
+      <input type="radio" name="pay_method" value="CARTÃO" class="peer hidden" onchange="toggleTroco(false)">
+      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
+        <span class="text-xs font-bold text-gray-800">CARTÃO</span>
+      </div>
+    </label>
+
+    <label class="flex-1 min-w-[100px] cursor-pointer">
+      <input type="radio" name="pay_method" value="DINHEIRO" class="peer hidden" onchange="toggleTroco(true)">
+      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
+        <span class="text-xs font-bold text-gray-800">DINHEIRO</span>
+      </div>
+    </label>
+    
+  </div>
+
+  <div id="campo-troco" class="hidden animate-in fade-in slide-in-from-top-2 duration-300">
+    <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-xl">
+      <p class="text-sm font-medium text-yellow-800 mb-2">Precisa de troco?</p>
+      <div class="flex items-center gap-2">
+        <span class="text-gray-500 font-bold">R$</span>
+        <input id="inputTroco" type="number" step="0.01" placeholder="Ex: 100,00" 
+               class="w-full bg-white border border-yellow-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none text-gray-800 font-medium">
+      </div>
+      <p class="text-[10px] text-yellow-700 mt-2 italic">* O entregador levará o troco para este valor.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleTroco(show) {
+    const divTroco = document.getElementById('campo-troco');
+    if (show) {
+      divTroco.classList.remove('hidden');
+    } else {
+      divTroco.classList.add('hidden');
+    }
+  }
+</script>
+
+<style>
+  /* Esconde a barra de rolagem mas mantém a funcionalidade */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+        
+        <!------------------------------------->      
+            
+            
+            
+            <div class="flex justify-between items-center">
+                <span class="font-bold text-gray-600 uppercase text-sm">Total:</span>
+                <span id="valorTotal" class="text-2xl font-black text-gray-900">R$ 8,50</span>
+            </div>
+            
+
+            <button onclick="enviarWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl font-black uppercase tracking-wide flex items-center justify-center gap-2 transition-all shadow-lg shadow-green-600/20">
+                Finalizar no WhatsApp
+            </button>
+        </div>
+    </div>
+
+</section>  
+  <button id="btnInstalar" class="p-2 rounded-lg bg-orange-500 font-medium text-white fixed left-1/2 -translate-x-1/2 bottom-[80px] shadow-lg flex items-center gap-2 z-10" style="display: none;">
+   <i data-lucide="download" class="w-4 h-4"></i>  
+   <span class="text-[10px]">Instalar Aplicativo</span>
+</button>
+<!---MODAL ADICIONAR  PRODUTO--->
+ <div id="modalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center transition-opacity duration-300">
+</div>
+<!----FIM--> 
+ <div id="modalVazio" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    
+    <div class="bg-white rounded-3xl p-8 shadow-2xl relative w-full max-w-sm text-center transform transition-all">
+        
+        <div class="flex justify-center mb-6">
+            <div class="bg-yellow-50 p-6 rounded-full">
+                <i data-lucide="shopping-basket" class="w-16 h-16 text-yellow-500 opacity-50"></i>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-black text-gray-800 mb-2">Seu carrinho está vazio</h2>
+        <p class="text-gray-500 mb-8">Parece que você ainda não escolheu suas delícias. Que tal dar uma olhada no cardápio?</p>
+
+        <button onclick="toggleModalVazio(),navegacao('home')" 
+                class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all uppercase tracking-wider text-sm">
+            Voltar ao Cardápio
+        </button>
+    </div>
+</div>
+<div id="modalProcessando" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-md"></div>
+    
+    <div class="bg-white rounded-[2.5rem] p-8 shadow-2xl relative w-full max-w-sm text-center transform animate-in zoom-in duration-300">
+        
+        <div class="flex justify-center mb-6 relative">
+            <div class="w-24 h-24 rounded-full border-4 border-gray-100"></div>
+            <div class="absolute top-0 w-24 h-24 rounded-full border-4 border-t-yellow-400 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+            
+            <div class="absolute top-0 flex items-center justify-center w-24 h-24">
+                <i data-lucide="shopping-bag" class="w-10 h-10 text-yellow-500 animate-bounce"></i>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-black text-gray-800 mb-2">Processando...</h2>
+        <p class="text-gray-500 text-sm mb-6">
+            Estamos enviando seu pedido para. <br>
+            <span class="font-bold text-gray-700">Não feche esta tela.confirme o envio no whatsapp</span>
+        </p>
+
+        <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden mb-2">
+            <div class="bg-yellow-400 h-full w-1/2 rounded-full animate-[progress_3s_ease-in-out_infinite]"></div>
+        </div>
+        <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Conectando ao servidor</span>
+    </div>
+</div>
+<style>
+@keyframes progress {
+    0% { width: 0%; margin-left: 0%; }
+    50% { width: 70%; margin-left: 15%; }
+    100% { width: 0%; margin-left: 100%; }
+}
+</style>
+<div id="modalAdicionado" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-yellow-400">
+        
+        <div class="p-8 text-center">
+            <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-yellow-50 mb-6">
+                <svg class="h-10 w-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <h3 class="text-2xl font-black text-gray-800 mb-2"> Adicionado.</h3>
+            <p id="msg-produto" class="text-gray-600 mb-8 px-4 font-medium">
+                </p>
+
+            <div class="space-y-3">
+                <button onclick="verCarrinho(),fecharModalAdicionado()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 rounded-2xl transition-all active:scale-95 shadow-lg shadow-yellow-200">
+                    Finalizar Pedido
+                </button>
+                
+                <button onclick="fecharModalAdicionado()" class="w-full bg-white text-gray-500 font-bold py-3 hover:text-gray-700 transition-colors">
+                    Continuar comprando
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalConfirmarRepetir" class="hidden fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+    
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-yellow-400 transform transition-all">
+        
+        <div class="p-8 text-center">
+            <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-yellow-50 mb-6">
+                <svg class="h-10 w-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+            </div>
+
+            <h3 class="text-2xl font-black text-gray-800 mb-2">Repetir Pedido?</h3>
+            <p class="text-gray-600 mb-8 px-4 font-medium">
+                Deseja adicionar todos os itens deste pedido ao seu carrinho atual?
+            </p>
+
+            <div class="space-y-3">
+                <button id="btnConfirmarRepetir" class="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-4 rounded-2xl transition-all active:scale-95 shadow-lg shadow-yellow-200 uppercase tracking-wide text-sm">
+                    Sim, Adicionar
+                </button>
+                
+                <button onclick="fecharModalConfirmar()" class="w-full bg-white text-gray-400 font-bold py-3 hover:text-gray-600 transition-colors uppercase tracking-wide text-xs">
+                    Agora não
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalRemover" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <input type="hidden" name="" id="remInputCod" />
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-red-500">
+        
+        <div class="p-8 text-center">
+            <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-red-50 mb-6">
+                <svg class="h-10 w-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </div>
+
+            <h3 class="text-2xl font-black text-gray-800 mb-2">Confirmar</h3>
+            <p id="msg-produto-removido" class="text-gray-600 mb-8 px-4 font-medium">
+                O item será retirado do seu carrinho.
+            </p>
+
+            <div class="space-y-3">
+                <button onclick="fecharModalRemover(),confirmaRemover()" class="w-full bg-red-500 text-white font-bold py-4 rounded-2xl transition-all active:scale-95 shadow-lg shadow-gray-200">
+                    Ok, remover
+                </button>
+                
+                <button onclick="verCarrinho(), fecharModalRemover()" class="w-full bg-white text-gray-500 font-bold py-3 hover:text-red-500 transition-colors">
+                    voltar para carrinho
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+
+<footer class="ifLogged relative">
+  
+<!---NAVBAR BOTTOM--->
+
+ <nav id="navBottom" class=" z-10 fixed bottom-0 w-full bg-white border-t border-gray-100 px-6 py-3 flex justify-between items-center shadow-[0_-5px_15px_rgba(0,0,0,0.05)]
+ max-w-[640px] min-w-[360px]">
+    
+
+    <button id="btbHome" class="flex flex-col items-center text-gray-400 " onclick="navegacao('home'),ativabtnBottom('btbHome')">
+      <i  data-lucide="house" class="h-6 w-6"></i>
+      <span class="text-[10px] font-bold uppercase">Início</span>
+    </button>
+    
+        <button id="btbProm" class="flex flex-col items-center justify-center text-gray-400" onclick="navegacao('pagePromocao'),listaProm(),ativabtnBottom('btbProm')">
+      <i  data-lucide="ticket-percent" class="h-6 w-6 "></i>
+      <span class="text-[10px] font-bold uppercase">Promoção</span>
+    </button>
+    
+    <div class="relative">
+      <span  id="qtd-itens" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
+    <button id="btbCar" class="flex flex-col items-center text-gray-400" onclick="verCarrinho(),ativabtnBottom('btbCar')">
+      
+    <i  class="W;6 H-6" data-lucide="shopping-basket"></i>
+      <span class="text-[10px] font-bold uppercase">Meu Carrinho</span>
+    </button>
+    </div>
+    <button id="btbUser" class="flex flex-col items-center text-gray-400" onclick="verPerfil(),ativabtnBottom('btbUser')">
+      <i data-lucide="user" class="h-6 w-6"></i>
+      <span class="text-[10px] font-bold uppercase">Perfil</span>
+    </button>
+    
+    
+      <script>
+  function ativabtnBottom(id){
+  
+    const allsBtnNavBottom = ['btbHome','btbProm','btbCar','btbUser']
+    
+    allsBtnNavBottom.map(bb =>{
+     document.getElementById(bb).classList.remove('text-yellow-400')
+     
+    })
+    document.getElementById(id).classList.add('text-yellow-400')
+  }
+  ativabtnBottom('btbHome')
+  </script>
+    
+    
+  </nav>
+  
+  <!--modal endereço temporario---> 
+        
+        
+  <div id="enderecoTemp" class="bg-white w-full h-full p-4 flex flex-col gap-2 z-0">
+ <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="navegacao('perfilUser')">
+        <i class="w-4 h-4" data-lucide="undo-2"></i>
+      </button>
+   <div class="text-xl font-black uppercase  w-full text-center grid grid-cols-1 mb-2">Endereço
+   </div>
+  
+    
+        <!---ENDERECO ALTERNATIVO-->
+    
+    
+    <!------------->
+    
+      <form id="formEnderecoAlternativo" class="space-y-4" onsubmit="cadastrarEnderecoAlternativo(event)">
+
+    <div>
+            
+    <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Endereço</label>
+    
+      <input type="number"  id="inputCEPAlt" placeholder="CEP -busca automatica"
+      class=" hidden w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+      
+            <div class="flex gap-5 justify-between mt-5" >
+      <input id="inputRuaAlt" required type="text" placeholder="Nome da rua" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+            </div>
+      
+      <div class="flex gap-5 justify-between mt-4" >
+      <input id="inputCasaAlt" type="number" placeholder="000" required
+        class="w-[20%] bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        
+        
+      <input type="text" id="inputComplementoAlt" placeholder=" apt, altos, fundos, casa 2..." 
+        class="w-[70%] bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+       </div>
+       
+        <div class="my-4">
+    
+      <input required type="text" id="inputBairroAlt" placeholder="Nome do Bairro" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+
+
+    <div class="pt-4">
+      <button id="btnEnviaCadUser" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl  transition-transform active:scale-95 uppercase tracking-wider">
+        cadastrar Endereço 
+      </button>
+    </div>
+    </form>
+  </div>
+
+
+
+ <div class=" py-8 px-4 bg-white text-zinc-900  text-center rounded-lg mx-2">
+
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    
+    <div class="w-full text-sm  tracking-wide">
+      &copy; 2026 Leandro Peçanha Luiz. Todos os direitos reservados.
+    </div>
+
+    <div class="flex flex-col items-center md:items-end gap-2">
+      <p class="text-yellow-500 font-medium text-sm">
+        Tem um comércio e quer digitalizar suas vendas?
+      </p>
+      <a href="#" class="inline-flex items-center px-4 py-2  text-zinc-900 text-xs font-bold uppercase tracking-widest rounded-md bg-yellow-400 transition-colors duration-200">
+        Seja um parceiro
+      </a>
+    </div>
+
+  </div>
+  
+
+
+</footer>
+<script src="main.js" defer ></script>
+
+<script type="text/javascript" charset="utf-8">
+   document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+});
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log("Service Worker Registrado!"));
+}
+</script>
+ </div>
+</body>
+</html>

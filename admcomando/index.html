@@ -96,24 +96,86 @@
   
 }
 
-async function userDados() {
-  
-  return JSON.parse(localStorage.getItem('userDados'))
-     
-  }
-/*async function inicializarApp() {
-  const produtos = await getDados();
-alert(produtos)
-}
-inicializarApp()*/
-
-
 </script>
 </head>
 <body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
   
-  
-  
+<section id="cadastroReal" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
+
+  <div class="mb-8">
+    <h1 class="text-2xl font-black text-gray-900 leading-tight">Crie sua conta</h1>
+    <p class="text-gray-700 mt-2 text-sm">Preencha os dados abaixo para salvar seus pedidos e favoritos.</p>
+  </div>
+
+  <form id="formCadastroAuth" onsubmit="handleSignUp(event)" class="space-y-4">
+    
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
+      <input required type="text" id="cadNome" placeholder="Seu nome" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">E-mail</label>
+      <input required type="email" id="cadEmail" placeholder="seu@email.com" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Senha (mín. 6 caracteres)</label>
+      <input required type="password" id="cadSenha" placeholder="••••••" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div class="pt-4">
+      <button id="btnCadastrar" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+        Criar Minha Conta
+      </button>
+    </div>
+    
+    <p class="text-center text-xs text-gray-500 mt-4">
+      Já tem uma conta? <a href="login.html" class="text-yellow-600 font-bold underline">Faça login</a>
+    </p>
+  </form>
+
+</section>
+
+<section id="loginUser" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
+
+  <div class="mb-8">
+    <h1 class="text-2xl font-black text-gray-900 leading-tight">Bem-vindo de volta!</h1>
+    <p class="text-gray-700 mt-2 text-sm">Acesse sua conta para continuar seus pedidos.</p>
+  </div>
+
+  <form id="formLogin" onsubmit="handleLogin(event)" class="space-y-4">
+    
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">E-mail</label>
+      <input required type="email" id="loginEmail" placeholder="seu@email.com" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Senha</label>
+      <input required type="password" id="loginSenha" placeholder="••••••" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div class="pt-4">
+      <button id="btnLogin" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+        Entrar no Cardápio
+      </button>
+    </div>
+    
+    <p class="text-center text-xs text-gray-500 mt-4">
+      Ainda não tem conta? <a href="cadastro.html" class="text-yellow-600 font-bold underline">Cadastre-se aqui</a>
+    </p>
+  </form>
+
+</section>
+
   <div class="min-h-screen bg-gray-50 p-4 font-sans text-gray-800">
   
   <div class="max-w-4xl mx-auto mb-6">

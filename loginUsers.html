@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title> Cardápio Digital - login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+    <script>  
+        async function userDados() {
+  
+  return JSON.parse(localStorage.getItem('userDados'))
+     
+  }
+    </script>
+</head>
+<body>
+    
+    <section id="cadastroUser" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
+
+
+  <div class="mb-8">
+    <h1 class="text-2xl font-black text-gray-900 leading-tight">Bom te ver  por aqui!</h1>
+    <p class="text-gray-700 mt-2 text-sm">Preencha os dados para acessar nosso cardápio.</p>
+  </div>
+
+  <form id="formCadastro" onsubmit="enviaCadastroUser(event,'cadastrar')" class="space-y-4">
+    
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
+      <input required type="text" id="inputNome" placeholder="Ex: João Silva" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">WhatsApp</label>
+      
+      <input required type="tel" id="inputTel" placeholder="(00) 00000-0000" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+    
+
+    <div class="pt-4">
+      <button id="btnEnviaCadUser" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+       Acessar Cardapio
+      </button>
+    </div>
+    </form>
+
+
+
+</section>
+
+ 
+   
+<!-------------------------------------> 
+
+<section id="avisoRedirecionamento" class=" bg-white min-h-[70vh] flex flex-col items-center justify-center p-6 font-sans max-w-md mx-auto">
+  
+  <div class="mb-6 relative">
+    <div class="absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-20 animate-pulse"></div>
+    <div class="relative bg-yellow-400 p-5 rounded-full ">
+     <i data-lucide="refresh-cw" class="h-10 w-10 text-yellow-900 animate-spin"></i>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <h1 class="text-2xl font-black text-gray-900 leading-tight">Tudo pronto!</h1>
+    <p class="text-gray-600 mt-3 text-sm leading-relaxed">
+      Estamos preparando o nosso cardápio para você. <br>
+      <span class="font-bold text-gray-900">Você será redirecionado em instantes...</span>
+    </p>
+  </div>
+
+  <div class="mt-10 w-full">
+    <button onclick="window.location.href='index.html'" 
+      class="w-full border-2 border-gray-100 text-gray-400 font-bold py-3 rounded-2xl hover:bg-gray-50 transition-all text-xs uppercase tracking-widest">
+      Clique aqui se não for redirecionado
+    </button>
+  </div>
+
+</section>
+
+<script src="config/mainUser.js"></script>
+</body>
+</html>

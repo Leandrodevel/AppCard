@@ -1,208 +1,27 @@
+document.addEventListener('DOMContentLoaded', async () => {
+    const user = await verificarLogin();
 
-const formatMoeda = (valor) => 
-  valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    if (user) {
+        // Se estiver logado, mostramos o corpo da página
+        document.body.classList.add('auth-ok');
+        
+        // Exemplo: Saudar o usuário no console ou interface
+        console.log(`Sessão ativa para: ${user.nome || 'Usuário'}`);
+    }
+});
+async function verificarLogin() {
 
-  const headerTop = document.getElementById('header');
-  
-  let lastScrollY = window.scrollY;
-
-window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY
-
-    if (currentScrollY > lastScrollY && currentScrollY > 100) {
-      // Rolando para baixo - Esconde o header
-      headerTop.classList.add('-translate-y-full');
-    } else {
-      // Rolando para cima - Mostra o header
-      headerTop.classList.remove('-translate-y-full');
+    const dados = await userDados();
+    
+    // Verifica se os dados existem E se o campo logged é verdadeiro
+    if (!dados || dados.logged !== true) {
+        console.warn("Acesso negado: Usuário não está logado.");
+        window.location.replace('index.html'); // .replace é melhor que .href pois remove a página atual do histórico (o usuário não consegue "voltar" para a página protegida)
+        return false;
     }
 
-    lastScrollY = currentScrollY;
-  });
-  
-//////////////////////////////////
-//////////////////////////////////
-
-///dados da aplicação/////////////////////////////
-const nomeApp = 'Vibe Delivery'
-const tituloApp = 'Pediu, Brindou!'
-const temaApp = [{}]
-
-  
-
-
-//localStorage.setItem('carrinho',JSON.stringify(''))
-let meuCarrinho = JSON.parse(localStorage.getItem('carrinho')) || []
-
-function atualizaContador() {
-  atualizarCarrinho()
-  let totItens = document.getElementById('qtd-itens')  
-
-    let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
-    return acumulador + p.qtd;
-}, 0); 
-// O '0' é o valor inicial da soma
-    totItens.innerText = totalCarrinho
-}    
-    atualizaContador()
-//////////////////////////////////
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    
-    const splash = document.getElementById('splash-pulse-container');
-    splash.style.transition = 'opacity 0.5s ease';
-    splash.style.opacity = '0';
-    setTimeout(() => splash.remove(), 500);
-  }, 3000); // 3 segundos é suficiente
-});
-//////////////////////////////////
-//////////////////////////////////
-async function verificaLogin() {
-  
-  navegacao('splash')
-  
-  const userExist = await userDados()
-  if(!userExist){
-    
-  }
-  const ifLogged = document.querySelectorAll('.ifLogged')
-  
-  if(userExist){
-    
-  
-
-    if(userExist.logged){
-
-    ifLogged.forEach((item, index) => {
-   item.classList.remove('hidden') 
-});
-    
-  const headerViewEndereco= document.getElementById('btnViewEndereco')
-
-  const nomeUser= userExist.nome.split(" ") || []
-  headerViewEndereco.innerHTML=nomeUser[0]
-
-   navegacao('home')
-    }else{
-      const userNome = document.getElementById('inputNome')
-  const userTel = document.getElementById('inputTel')
-  
-    userNome.value = userExist.nome
-    userTel.value = userExist.tel
-    
-      ifLogged.forEach((item, index) => {
-    item.classList.add('hidden')
-});
-navegacao('userCadastro')
-      return
-    }
-    
-  }else {
-    
-    navegacao('userCadastro')
-    
-    ifLogged.forEach((item, index) => {
-    item.classList.add('hidden')
-});
-    
-  }
-  
+    return dados;
 }
-verificaLogin()
-
-async function logout() {
-const confirma = confirm('deseja sair ?')
-
-if(confirma){
-const user = await userDados()
-  user.logged = false
- localStorage.setItem('userDados',JSON.stringify(user))
-   window.location.reload()
-}
-}
-//////////////////////////////////
-async function atualizaPontos(total){
-  const dataPontos = await userDados()
-const newPontos= total * 0.
-const dbAtualizado = {...dataPontos,pontos:dataPontos.pontos+newPontos}
-
-//const dbAtualizado ={...dataBase, pontos:0}
-localStorage.setItem('userDados',JSON.stringify(dbAtualizado))
-
-}
-
-//////////////////////////////////
-async function verPerfil() {
-  
- const dados = await userDados()
-  
-  navegacao('perfilUser')
-  
- const primeiraLetra = dados.nome[0]
- const meta = 500
- document.getElementById('pflLetra').innerText=primeiraLetra
-  document.getElementById('pflNome').innerText=dados.nome
-  document.getElementById('pflTel').innerText=dados.tel
-  document.getElementById('pflPontos').innerText=dados.pontos%meta
-  document.getElementById('pflPontosRestantes').innerHTML= meta - dados.pontos%meta
-  
-  const progressPontos = dados.pontos%meta / meta * 100
-  
-  const cupons = Math.floor(dados.pontos%meta)
-  
-  document.getElementById('pflBarraPontos').style.width= progressPontos+'%'
-  
-///  verifica se ja tem endereço alternativo
-const enderecoTemp = dados.casa
-if(enderecoTemp){
-  
-  document.getElementById('spanEndereco').innerText=`${dados.rua}, ${dados.casa} - ${dados.bairro}`
-  
-
-}else{
-document.getElementById('spanEndereco').innerText='Cadastre um endereço'
-}
-lucide.createIcons();  
-}
-//////////////////////////////////
-//////////////////////////////////
-
-//////////////////////////////////
-const barraDeBusca = document.getElementById('search-bar')
-barraDeBusca.addEventListener('input', ()=>{
-  
-   // listaProdutos('',barraDeBusca.value,'')
-    
-    const buscaSugestao = dbProdutos.filter(sb=> sb.nome.toLowerCase().includes(barraDeBusca.value.toLowerCase())) || []
-    
-    const listaBusca = document.getElementById('listBusca')
-   
-   listaBusca.innerHTML =''
-   
-   buscaSugestao.forEach(bs=>{
-     
-     const optList = document.createElement('option')
-     optList.className='bg-white'
-     optList.innerText = bs.nome
-     
-     listaBusca.appendChild(optList)
-     
-     
-   }) 
-    
-    
-})
-
-function buscaProduto(termo) {
-  
-  const headerTools = document.querySelector('headerTools')
-  
-  
-listaProdutos('',termo,'')
-navegacao('cardapio')
-}
-//////////////////////////////////
-//////////////////////////////////
 function navegacao(open) {
   
   window.scrollTo({
@@ -210,42 +29,30 @@ function navegacao(open) {
       behavior: 'auto'
   })
       
-  const allSections=['splash','home','userCadastro','perfilUser','cardapio','modalCarrinho','pagePromocao','editarUser','enderecoTemp','montarEspetinho']
+  const allSections=['home','cardapio','pageCarrinho','pagePromocao','montarEspetinho','perfilUser','editarUser','enderecoTemp']
   
-  
-  if(open === 'userCadastro'|| open === 'perfilUser' || open==='editarUser' || open==='enderecoTemp' || open === 'modalCarrinho'){
-    
+  if( open === 'perfilUser'){
+
     const header = document.querySelector('header')
     header.classList.add('hidden')
-   
+
   }else{
     
-   
     document.querySelector('header').classList.remove('hidden')
   }
-  if(open==='editarUser'){
-    
-    
-    editaCadastroUser()
-    
-    
-  }
-  
-  if(open ==='cardapio'){
+ 
+  if(open !=='cardapio'){
     
     document.getElementById('navCat').classList.remove('hidden')
-  }else{
-    document.getElementById('navCat').classList.add('hidden')
   }
-  if(open === 'home' || open === 'cardapio'){
+  if(open === 'home'|| open === 'cardapio'){
     
         document.getElementById('headerTools').classList.remove('hidden')
   } else {
     document.getElementById('headerTools').classList.add('hidden')
 
   }
-  const outras = ['userLogin','loginAdm','home','openSearch','openCategoria','openProduto']
-  
+
   allSections.forEach(s =>{
     
     document.getElementById(s).classList.add('hidden')
@@ -253,67 +60,8 @@ function navegacao(open) {
   })
   document.getElementById(open).classList.remove('hidden')
 }
-//////////////////////////////////
-//////////////////////////////////
-function loading(txt) {
-  
-  document.getElementById('loading').classList.remove('hidden')
-  document.getElementById('textLoading').innerText= txt
-  setInterval(()=>{
-    
-    document.getElementById('loading').classList.add('hidden')
-  },1000)
-}
-//////////////////////////////////
-////////////////////.//////////////
-
-
-async function enviaCadastroUser(e,metodo) {
-const usuario = await userDados()
-  e.preventDefault()
-
-const userNome = document.getElementById('inputNome')
-const userTel = document.getElementById('inputTel')
-
-  const gerarID = () => {
-    const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
-    const data = Date.now();
-    return letras + data;
-};
-
-if(metodo ==='cadastrar'){
-  
-if (usuario){
-
-usuario.logged = true
-
- localStorage.setItem('userDados',JSON.stringify(usuario))
-  window.location.reload()
-  
-}else{
-  async function cadastrarUser() {
-
-const usuarioCompleto = {
-    id:gerarID(),
-    nome: userNome.value,
-    tel: userTel.value,
-    rua:'',
-    casa:'',
-    bairro:'',
-    complemento:'',
-    logged: true,
-    pontos:0
-  }
-    localStorage.setItem('userDados',JSON.stringify(usuarioCompleto))
-  }
-  cadastrarUser()
-}
-  
- window.location.reload()
-    
-}else if(metodo ==='editar'){
-  
-  async function editarUser() {
+navegacao('home')
+ async function editarUser() {
     
   const userdados = await userDados()
   
@@ -348,26 +96,96 @@ const usuarioCompleto = {
   
   }else{
   alert('palavra incorreta')
+} 
 }
-  }editarUser()
+async function exibeDadosHeader(){
+const meusDados = await userDados()
+const headerViewEndereco= document.getElementById('btnViewEndereco')
+ headerViewEndereco.innerHTML=meusDados.nome
+}
+exibeDadosHeader()
+const formatMoeda = (valor) => 
+valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+const headerTop = document.getElementById('header');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY
+
+    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      // Rolando para baixo - Esconde o header
+      headerTop.classList.add('-translate-y-full');
+    } else {
+      // Rolando para cima - Mostra o header
+      headerTop.classList.remove('-translate-y-full');
     }
-}
-//////////////////////////////////
-////////editar cadastro//////////
-////////////////////.//////////////
-async function editaCadastroUser() {
 
-  const userdados = await userDados()
+    lastScrollY = currentScrollY;
+  });
   
-   document.getElementById('editNome').value=userdados.nome
-  document.getElementById('editTel').value=userdados.tel
-  
+let meuCarrinho = JSON.parse(localStorage.getItem('carrinho')) || []
+function atualizaContador() {
+ 
+  meuCarrinho = JSON.parse(localStorage.getItem('carrinho')) || []
 
+  let totItens = document.getElementById('qtd-itens')  
+  let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
+    return acumulador + p.qtd;
+}, 0); 
+// O '0' é o valor inicial da soma
+    totItens.innerText = totalCarrinho
+      atualizarCarrinho()
+}    
+    atualizaContador()
+async function atualizaPontos(total){
+  const dataPontos = await userDados()
+const newPontos= total * 0.
+const dbAtualizado = {...dataPontos,pontos:dataPontos.pontos+newPontos}
+//const dbAtualizado ={...dataBase, pontos:0}
+localStorage.setItem('userDados',JSON.stringify(dbAtualizado))
 }
-//////////////////////////////////
-//////////////////////////////////
-//////////////////////////////////
+async function logout() {
+const confirma = confirm('deseja sair ?')
 
+if(confirma){
+const user = await userDados()
+  user.logged = false
+ localStorage.setItem('userDados',JSON.stringify(user))
+   window.location.href = "index.html";
+}
+}
+
+const barraDeBusca = document.getElementById('search-bar')
+barraDeBusca.addEventListener('input', ()=>{
+  
+   // listaProdutos('',barraDeBusca.value,'')
+    
+    const buscaSugestao = dbProdutos.filter(sb=> sb.nome.toLowerCase().includes(barraDeBusca.value.toLowerCase())) || []
+    
+    const listaBusca = document.getElementById('listBusca')
+   
+   listaBusca.innerHTML =''
+   
+   buscaSugestao.forEach(bs=>{
+     
+     const optList = document.createElement('option')
+     optList.className='bg-white'
+     optList.innerText = bs.nome
+     
+     listaBusca.appendChild(optList)
+       
+   })    
+})
+
+function buscaProduto(termo) {
+  
+  const headerTools = document.querySelector('headerTools')
+  
+  
+listaProdutos('',termo,'')
+navegacao('cardapio')
+}
 function faixaAmarela(){
 const marquee = document.getElementById('faixaTicker')
 let marqueeText=`<div class="animate-ticker">
@@ -378,8 +196,6 @@ let marqueeText=`<div class="animate-ticker">
  marquee.innerHTML = marqueeText;
 }
 faixaAmarela()
-//////////////////////////////////
-//////////////////////////////////
 const instrucao =`
 ​"Olá! Seja muito bem-vindo(a) à Tricker! 🚀
 ​Ficamos muito felizes em ter você aqui. Para facilitar seu pedido, nosso cardápio funciona de forma automática e prática:
@@ -389,7 +205,6 @@ const instrucao =`
 ​Envio: Clique em enviar e sua lista pronta será enviada diretamente para o nosso WhatsApp!
 ​Depois disso, é só aguardar nossa confirmação. Bom apetite! ✨"
 `
-//////////////////////////////////
 function statusLoja() {
   // Tab to edit
 
@@ -423,11 +238,7 @@ statusDaLoja.innerHTML=`
 }
 
 }
-
 statusLoja()
-
-//////////////////////////////////
-//////////////////////////////////
 function openBox(target, event) {
   // 1. Impede que o clique no botão chegue ao 'window' imediatamente
   event.stopPropagation();
@@ -450,8 +261,6 @@ function openBox(target, event) {
   // 5. Adiciona o evento ao window
   window.addEventListener('click', fecharAoClicarFora);
 }
-//////////////////////////////////
-//////////////////////////////////
 async function listarCat(idAtivo, classe) {
   let myDb = await getDados();
 
@@ -511,9 +320,6 @@ async function listarCat(idAtivo, classe) {
 
   navegacao('cardapio');
 }
-
-////////////////////////////////////////////////////////////////////////////////
-
 async function listaProdutos(idCat, termo, lista) {
   const myDb = await getDados();
 
@@ -574,21 +380,14 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
     for (const emb of prod.embalagens) {
    
   
-  
-  
-      
-    
-
     const precoFormatado = parseFloat(emb.preco.replace(",","."))
   
    const descontoFormatado = parseFloat(emb.desconto)
   
    let precoFinal = parseFloat(precoFormatado - descontoFormatado)
    
-   precoFinal = precoFinal.toFixed(2).replace(".",",")
+   precoFinalFormatado = precoFinal.toFixed(2).replace(".",",")
    
-  
-  
   
   
       const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
@@ -609,7 +408,7 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
                     <h4 class="text-[10px] font-bold text-gray-500 truncate leading-tight uppercase tracking-tighter">
                         ${nomeEscapado}
                     </h4>
-                    <button onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal}')">
+                    <button onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')" class="text-left focus:outline-none">
                         <p class="text-[16px] font-black text-gray-900 leading-tight uppercase">
                             ${String(emb.tipo)}
                         </p>
@@ -619,19 +418,34 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
                             De: R$ ${precoFormatado}
                         </span>
                         <span class="text-[18px] font-black ${precoDestaque} text-red-600 leading-none">
-                            <span class="text-xs font-bold">R$</span> ${precoFinal}
+                            <span class="text-xs font-bold">R$</span> ${precoFinalFormatado}
                         </span>
                     </div>
                 </div>
                 <button id="bt+${emb.cod}" 
-                        class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-lg p-2.5 shadow-sm active:scale-95 transition-all flex-shrink-0 ml-2" 
-                        onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal}')">
+                        class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-lg p-2.5 shadow-sm active:scale-95 transition-all flex-shrink-0 ml-2 relative" 
+                        onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')"">
+
+                         <span  id="qtdItemBtn-${emb.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
+
                     <i class="w-5 h-5" data-lucide="shopping-basket"></i>
                 </button>
             </div>
         </div>`;
       
       listProdEmb.appendChild(prodEmb);
+      
+const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === emb.cod) || {qtd:0};
+    let quantos = quantosNoCarrinho.qtd || 0
+    const dotQtd = document.getElementById(`qtdItemBtn-${emb.cod}`)
+    
+  if(quantos >= 1){
+    dotQtd.classList.remove('hidden')
+     dotQtd.innerHTML = quantosNoCarrinho.qtd
+  }else if(quantos === 0){
+
+    dotQtd.classList.add('hidden')
+  }
     }
 
     // 6. Persistência Visual
@@ -652,97 +466,271 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
 
   lucide.createIcons();
 }
-
-
-/////////////////////////////////////////
 async function listaProm() {
 const db = await getDados();
          
    const boxPromocoes= document.getElementById('boxPromocoes')
-      
+
+    const spn = document.createElement('div')   
+    spn.className='w-full flex justify-center relative '
+
+  
+    const listaFiltrada = db.filter(produto => {
+  // Verificamos se o produto tem ao menos uma embalagem que atenda ao critério
+  return produto.embalagens.some(emb => {
+    // Extrai apenas os números da string (ex: "300gr" vira 300)
+    return emb.desconto > 0.00;
+  });
+});
+
+  if(listaFiltrada.length === 0){
+
+        spn.innerHTML=`
+<div id="promocoesVazias" class="w-full max-w-2xl mx-auto my-12 p-12 bg-white rounded-[3rem] border-2 border-dashed border-yellow-100 flex flex-col items-center text-center">
+    
+    <div class="bg-yellow-50 p-8 rounded-full mb-6 animate-bounce-slow">
+        <i data-lucide="tag" class="w-20 h-20 text-yellow-500 opacity-40"></i>
+    </div>
+
+    <h2 class="text-3xl font-black text-gray-800 mb-3">Nenhuma promoção agora</h2>
+    <p class="text-gray-500 max-w-sm mb-10 text-lg">
+        Estamos preparando novas ofertas irresistíveis. Que tal conferir o cardápio principal enquanto espera?
+    </p>
+
+    <button onclick="navegacao('home')" 
+            class="group flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black px-10 py-5 rounded-2xl shadow-xl shadow-yellow-200 active:scale-95 transition-all uppercase tracking-widest text-sm">
+        Ver Cardápio Completo
+        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+    </button>
+</div>
+        `
+        boxPromocoes.appendChild(spn)  
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+  }else if(listaFiltrada.length >= 1){
+
       for(const pr of db){
-        
      for(const de of pr.embalagens){
-      
-  
-  
-     
-
-
-  
+    
     const precoFormatado = parseFloat(de.preco.replace(",","."))
   
    const descontoLimpo = parseFloat(de.desconto)
   
    let precoFinal = parseFloat(precoFormatado - descontoLimpo)
    
-   precoFinal = precoFinal.toFixed(2).replace(".",",")
-   
-  
-  
+   precoFinalFormatado = precoFinal.toFixed(2).replace(".",",")
   
     const nomeEscapado = pr.nome.replace(/'/g, "");
 
         
       if(de.desconto > 0.00){
   
-  const spn = document.createElement('div')   
-  spn.className='w-full flex justify-center relative'
+ 
   
   spn.innerHTML=`
   
 
-        <span class="bg-red-500 absolute top-0 right-0 px-3 py-0.5 rounded-xl font-black text-[14px] text-white tracking-tighter uppercase shadow-sm ">
+        <span class="bg-red-500 absolute top-0 right-0 px-2 py-0.5 rounded-xl font-black text-[14px] text-white tracking-tighter uppercase shadow-sm ">
         OFERTA IMPERDÍVEL!
     </span>
     
-  <div class="min-w-[320px] max-w-[320px] bg-white p-8 rounded-3xl shadow-sm border hover:shadow-lg transition-shadow ">
+  <div class="w-full bg-white p-8 rounded-3xl shadow-sm border hover:shadow-lg transition-shadow ">
   
 
   
-                <div class="aspect-square bg-zinc-900 rounded-2xl mb-6"></div>
+                 <button id="bt+${de.cod}" 
                 
+                onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
                 <h3 class="text-2xl font-bold text-red-500 mb-2">${nomeEscapado} </h3>
+                 </button>
+
                 <p class="text-gray-700 text-lg italic  mb-4">${de.tipo}</p>
                   
                 <div class="grid grid-cols-2">
                 <div class="grid grid-cols-1">
                             <span id="tr-${de.cod}" class="text-gray-400 text-[16px] line-through decoration-red-300">
-                De: R$ ${precoFormatado}
+                De: R$ ${precoFormatado.toFixed(2).replace(".",",")}
             </span>
-                <span class="text-4xl font-black text-red-500">${precoFinal}</span>
+                <span class="text-4xl font-black text-red-500">${precoFinalFormatado}</span>
                 </div>
 
             <button id="bt+${de.cod}" 
-                class="bg-yellow-400 text-gray-700 rounded-xl p-2.5  flex items-center gap-2 font-black justify-center" 
-                onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal}')">
+                class="relative bg-yellow-400 text-gray-700 rounded-xl p-2.5  flex items-center gap-2 font-black justify-center" 
+                onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
              ADICIONAR
+
+              <span  id="qtdItemBtn-${de.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full z-10">0</span>
         </button>
 
             </div>
             </div>
-           
-
   
   `
-  
-  boxPromocoes.appendChild(spn)     
-    //    alert(parseFloat(descontoLimpo).toFixed(2))
+   boxPromocoes.appendChild(spn)  
+
+        
+const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === de.cod) || {qtd:0};
+    let quantos = quantosNoCarrinho.qtd || 0
+    const dotQtd = document.getElementById(`qtdItemBtn-${de.cod}`)
+    
+  if(quantos >= 1){
+    dotQtd.classList.remove('hidden')
+     dotQtd.innerHTML = quantosNoCarrinho.qtd
+  }else if(quantos === 0){
+
+    dotQtd.classList.add('hidden')
+  }
+
       }
+ 
     }
+  }
   if (typeof lucide !== 'undefined') lucide.createIcons();
       }
       
-      }
-/////////////////////////////////////
+      } 
+async function validarCaminhoImagem(nomeArquivo) {
+  const caminho = `./img/${nomeArquivo}`;
+  try {
+    const response = await fetch(caminho, { method: 'HEAD' });
+    // Se retornar 200-299, a imagem existe
+    return response.ok ? caminho : './img/noimage.gif';
+  } catch {
+    return './img/noimage.gif'; // Se der erro de rede, usa a padrão
+  }
+}
+async function listaTop20() {
+ 
+const dbGeral = await getDados();
+
+const divtop10 = document.getElementById('boxTop10');
+
+// Filtramos apenas a categoria cerveja antes de processar as variações
+const apenasGeral = dbGeral.filter(x => x);
+
+
+let variacoesGeral = [];
+// 2. Criar lista de variações (Flattening)
+apenasGeral.forEach(produto => {
+  produto.embalagens.forEach(emb => {
+    variacoesGeral.push({
+      ...produto,
+      cod:emb.cod,
+      tipo: emb.tipo,
+      preco: emb.preco,
+      desconto:emb.desconto,
+      vendas: Number(emb.vendas) || 0
+    });
+  });
+});
+
+// 3. Ordenar e Selecionar Top 5
+variacoesGeral.sort((a, b) => b.vendas - a.vendas);
+const top10 = variacoesGeral.slice(0, 20);
+
+// 4. Limpar e Renderizar
+divtop10.innerHTML = '';
+
+ // Usamos for...of para poder usar o 'await' dentro do loop corretamente
+  for (const item of top10) {
+
+    const nomeImagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`;
+    
+    // ✅ Agora esperamos a verificação de cada imagem individualmente
+    const srcImagem = await validarCaminhoImagem(nomeImagem);
+
+  const card = document.createElement('div'); // Nome da variável simplificado
+  card.className = "w-full flex-none px-2 pb-4";
+  
+  // Formatando o preço para o padrão brasileiro
+  const precoFormatado = parseFloat(item.preco.replace(",","."))
+  
+  const descontoFormatado = parseFloat(item.desconto)
+  
+   let precoFinal = parseFloat(precoFormatado - descontoFormatado);
+
+  precoFinalFormatado = precoFinal.toFixed(2).replace(".",",")
+
+  
+const classeDesconto = descontoFormatado > 0.00 ? "" : "hidden";
+
+const precoDestaque = descontoFormatado > 0.00 ? "text-red-500 text-md" : "";
+
+
+const imagem = `${item.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`
+
+const nomeEscapado = item.nome.replace(/'/g, "");
+const marcaEscapada = item.marca.replace(/'/g, "\\'");
+ 
+   
+  card.innerHTML = `
+<div class="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row items-center hover:bg-gray-50 transition-colors mb-2">
+    
+    <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase tracking-tighter">
+        OFERTA
+    </span>
+      
+    <div class="flex-shrink-0 w-20 h-20 bg-gray-50 rounded-xl overflow-hidden mr-3">
+        <img src="${srcImagem}" alt="${nomeEscapado}" class="w-full h-full object-contain mix-blend-multiply"/>
+    </div>
+          
+    <div class="flex-grow flex items-center justify-between min-w-0">
+        
+        <div class="flex flex-col min-w-0 mr-2">
+            <button class="text-left focus:outline-none" onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFinal.toFixed(2)}')">
+                <h4 class="text-[15px] font-bold text-gray-800 truncate leading-tight mb-0.5">
+                    ${nomeEscapado}
+                </h4>
+            </button>
+            
+            <p class="text-[11px] font-semibold text-gray-400 italic mb-1 uppercase tracking-tight">
+                ${item.tipo}
+            </p>
+
+            <div class="flex flex-col leading-none">
+                <span id="tr-${item.cod}" class="${classeDesconto} text-gray-400 text-[10px] line-through mb-0.5">
+                    De: R$ ${precoFormatado.toFixed(2).replace(".",",")}
+                </span>
+                <span class="text-[16px] font-black ${precoDestaque} text-red-600">
+                    <span class="text-xs font-bold">R$</span> ${precoFinalFormatado}
+                </span>
+            </div>
+        </div>
+
+        <button id="bt+${item.cod}" 
+                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl p-3 shadow-sm active:scale-95 transition-all flex-shrink-0 relative" 
+                onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFinal.toFixed(2)}')">
+
+                      <span  id="qtdItemBtn-${item.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
+
+            <i class="w-5 h-5" data-lucide="shopping-basket"></i>
+        </button>
+    </div>
+</div>
+
+  `;
+  divtop10.appendChild(card);
+  
+const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === item.cod) || {qtd:0};
+    let quantos = quantosNoCarrinho.qtd || 0
+    const dotQtd = document.getElementById(`qtdItemBtn-${item.cod}`)
+    
+  if(quantos >= 1){
+    dotQtd.classList.remove('hidden')
+     dotQtd.innerHTML = quantosNoCarrinho.qtd
+  }else if(quantos === 0){
+
+    dotQtd.classList.add('hidden')
+  }
+};
+lucide.createIcons();
+    }listaTop20()
 function toggleModalVazio() {
     const modal = document.getElementById('modalVazio');
     modal.classList.toggle('hidden');
 }
-
 let currentQty =1
 let unitPrice 
-
 function openModal(cod,nome, embalagem, preco,curQtd){
   
  let currentQtd = meuCarrinho.find(mi=>mi.cod===cod)
@@ -844,7 +832,6 @@ document.getElementById('modalOverlay').innerHTML=''
   }, 5);
   
 }
-
 function closeModal() {
   const overlay = document.getElementById('modalOverlay');
   const box = document.getElementById('modalBox');
@@ -879,7 +866,6 @@ const msgRemov = document.getElementById('msg-produto-removido')
 
   msgRemov.innerText=`Remover ${itemSel[0].nome.toUpperCase()} do seu carrinho.`
 }
-
 function confirmaRemover(cod) {
 const codInput = document.getElementById('remInputCod').value
   meuCarrinho = meuCarrinho.filter(item => item.cod !== codInput);
@@ -896,8 +882,6 @@ document.getElementById('modalRemover').classList.add('hidden')
   
 }
 function confirmAdd(cod,nome,embalagem,preco) {
-  // Aqui você integraria com sua lógica de carrinho/comanda
-
 
   const produto = {
         cod: cod,
@@ -911,34 +895,18 @@ function confirmAdd(cod,nome,embalagem,preco) {
   const repetido = meuCarrinho.find(x=>x.cod === cod)
   
   if(repetido){
-  
     
-    repetido.qtd = repetido.qtd = Number(currentQty)
+    repetido.qtd = Number(currentQty)
     
   }else{
-    
+   
   meuCarrinho.push(produto)
-  
-  localStorage.setItem('carrinho',JSON.stringify(meuCarrinho))
   }
-  
+  localStorage.setItem('carrinho',JSON.stringify(meuCarrinho))
   modalAdicionado(cod,nome,embalagem,preco)
 
-// alert(`${currentQty} item(s) adicionado(s)!`);
   atualizaContador()
   closeModal();
-}
-function atualizaContadorCar() {
-  
-  let totItens = document.getElementById('qtd-itens')  
-
-    let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
-    return acumulador + p.qtd;
-}, 0); // O '0' é o valor inicial da soma
-
-      
-       totItens.innerText= totalCarrinho
-
 }
 function atualizarCarrinho() {
    
@@ -1010,7 +978,6 @@ let comAcomp ='hidden'
   totalElemento.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   lucide.createIcons();
 }
-
 async function enviarWhatsApp() {
 
 const userdados = await userDados()
@@ -1133,8 +1100,6 @@ setTimeout(()=>{
   
 },1000)
 }
-//////////////////////////////////
-//////////////////////////////////
 function verCarrinho(){
     
     if(meuCarrinho.length === 0){
@@ -1145,7 +1110,7 @@ function verCarrinho(){
     
     const navBarCat = document.getElementById('navCat')
   
-  navegacao('modalCarrinho')
+  navegacao('pageCarrinho')
   
     const span = document.getElementsByClassName("close")[0];
 
@@ -1160,16 +1125,233 @@ function verCarrinho(){
 
 
 }
-//////////////////////////////////
+async function verPerfil() {
+ const dados = await userDados()
+  
+  navegacao('perfilUser')
+  navegacaoUser('historico')
+
+ const primeiraLetra = dados.nome[0]
+ const meta = 500
+ document.getElementById('pflLetra').innerText=primeiraLetra
+  document.getElementById('pflNome').innerText=dados.nome
+  document.getElementById('pflTel').innerText=dados.tel
+  document.getElementById('pflPontos').innerText=dados.pontos%meta
+  document.getElementById('pflPontosRestantes').innerHTML= meta - dados.pontos%meta
+  
+  const progressPontos = dados.pontos%meta / meta * 100
+  
+  const cupons = Math.floor(dados.pontos%meta)
+  
+  document.getElementById('pflBarraPontos').style.width= progressPontos+'%'
+  
+///  verifica se ja tem endereço alternativo
+const enderecoTemp = dados.casa
+if(enderecoTemp){
+  
+  document.getElementById('spanEndereco').innerText=`${dados.rua}, ${dados.casa} - ${dados.bairro}`
+  
+
+}else{
+document.getElementById('spanEndereco').innerText='Cadastre um endereço'
+}
+lucide.createIcons();  
+}
+function navegacaoUser(open){
+const abas = ['historico','ajuda']  
+
+  abas.forEach(s =>{
+    
+    document.getElementById(s).classList.add('hidden')
+    
+  })
+  document.getElementById(open).classList.remove('hidden')
+
+  switch(open){
+    case 'historico':
+      carregarHistorico()
+    break; 
+    case 'ajuda':
+    carregarAjuda()
+    break;
+    case 'configuracoes':
+      // carregarConfig()
+    break;
+
+}
+}
+function carregarAjuda() {
+
+document.getElementById('containerAjuda').innerHTML = `
+
+    
+    <div class="mb-10 text-center md:text-left">
+        <h2 class="text-2xl font-black text-gray-800">Canais de Atendimento</h2>
+        <p class="text-gray-500">Escolha como prefere falar conosco.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        
+        <div class="bg-white p-8 rounded-[2.5rem] border border-green-100 shadow-sm flex flex-col items-center text-center">
+            <div class="bg-green-50 p-5 rounded-3xl mb-4">
+                <i data-lucide="message-circle-more" class="w-10 h-10 text-green-500"></i>
+            </div>
+            <h3 class="font-black text-gray-800 text-xl mb-1">WhatsApp</h3>
+            <p class="text-green-600 font-bold text-sm mb-3">Suporte em Tempo Real</p>
+            <p class="text-gray-500 text-sm leading-relaxed">
+                (22) 99999-9999<br>
+                Segunda a Domingo, das 11h às 23h
+            </p>
+        </div>
+
+       
+
+    <div class="bg-gray-50 rounded-[2.5rem] p-8 flex flex-col md:flex-row gap-8 justify-around items-center">
+        
+        <div class="flex flex-col items-center gap-2">
+            <i data-lucide="mail" class="w-5 h-5 text-yellow-500"></i>
+            <span class="text-xs font-black text-gray-400 uppercase tracking-tighter">E-mail Corporativo</span>
+            <span class="font-bold text-gray-700">contato@suamarca.com.br</span>
+        </div>
+
+        <div class="hidden md:block w-px h-12 bg-gray-200"></div>
+
+        <div class="flex flex-col items-center gap-2">
+            <i data-lucide="phone" class="w-5 h-5 text-yellow-500"></i>
+            <span class="text-xs font-black text-gray-400 uppercase tracking-tighter">Central de Voz</span>
+            <span class="font-bold text-gray-700">0800 123 4567</span>
+        </div>
+    </div>
+`
+lucide.createIcons();
+}
+function carregarHistorico() {
+
+    // Simulando a busca no localStorage (ajuste o nome da chave se necessário)
+    const historicoCompleto = JSON.parse(localStorage.getItem('meuHistorico')) || [];
+    const container = document.getElementById('containerHistorico');
+
+    if (historicoCompleto.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-400 py-10">Nenhum pedido encontrado.</p>';
+        return;
+    }
+
+    container.innerHTML = historicoCompleto.map(item => {
+        // Calcula o total do pedido (soma de preço * qtd de todos os itens no array 'pedido')
+        const totalPedido = item.pedido.reduce((acc, p) => acc + (parseFloat(p.preco) * p.qtd), 0);
+
+        return `
+        <div class="w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="bg-gray-50 px-6 py-3 flex justify-between items-center border-b border-gray-100">
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Pedido #${item.numero}</span>
+                <span class="text-xs text-gray-500">${item.data}</span>
+            </div>
+
+            <div class="p-6">
+                ${item.pedido.map(p => `
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-sm">${p.nome}</h3>
+                            <p class="text-xs text-gray-400">${p.embalagem} | Qtd: ${p.qtd}</p>
+                        </div>
+                        <span class="font-semibold text-gray-700">R$ ${parseFloat(p.preco).toFixed(2)}</span>
+                    </div>
+                `).join('')}
+                
+                <hr class="my-4 border-dashed border-gray-200">
+
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-[10px] text-gray-400 uppercase font-black">Total Pago</p>
+                        <p class="text-xl font-black text-yellow-600">R$ ${totalPedido.toFixed(2)}</p>
+                    </div>
+
+                    <button onclick="abrirModalConfirmacao('${item.numero}')" 
+        class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-4 py-2 rounded-xl text-sm      font-bold transition-colors flex items-center gap-2">
+                  <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                 Repetir Pedido
+                    </button>
+                 
+                </div>
+            </div>
+        </div>
+        `;
+    }).join('');
+
+    // Atualiza os ícones do Lucide
+    lucide.createIcons();
+}
+function repetirPedido(numeroPedido) {
+    
+    // 1. Pegar o histórico e o carrinho atual (Síncrono, sem await)
+    const historico = JSON.parse(localStorage.getItem('meuHistorico')) || [];
+    let meuCarrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+    // 2. Encontrar o pedido específico no histórico
+    // Importante: garantir que a comparação seja do mesmo tipo (String ou Number)
+    const pedidoEncontrado = historico.find(p => String(p.numero) === String(numeroPedido));
+
+    if (pedidoEncontrado) {
+        // 3. Percorrer os itens do pedido encontrado
+        pedidoEncontrado.pedido.forEach(itemHistorico => {
+            
+            const jaNoCarrinho = meuCarrinho.find(x => x.cod === itemHistorico.cod);
+
+            if (jaNoCarrinho) {
+                // Soma a quantidade existente com a do histórico
+                jaNoCarrinho.qtd += Number(itemHistorico.qtd);
+            } else {
+                // Cria o objeto para o carrinho
+                const novoProduto = {
+                    cod: itemHistorico.cod,
+                    nome: itemHistorico.nome,
+                    embalagem: itemHistorico.embalagem,
+                    // Garante que o preço seja tratado como string para o replace
+                    preco: String(itemHistorico.preco).replace(/[^0-9,.]/g, ""),
+                    qtd: Number(itemHistorico.qtd)
+                };
+                meuCarrinho.push(novoProduto);
+            }
+        });
+
+        // 4. Salvar no localStorage
+        localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
+
+        // 5. Atualizar Interface
+        if (meuCarrinho.length >= 1) {
+      
+            if (typeof atualizaContador === "function") atualizaContador();
+            if (typeof verCarrinho === "function") verCarrinho();
+            
+        }
+    } else {
+        console.error("Pedido não encontrado no histórico:", numeroPedido);
+    }
+}
+function abrirModalConfirmacao(numeroPedido) {
+    const modal = document.getElementById('modalConfirmarRepetir');
+    const btnConfirmar = document.getElementById('btnConfirmarRepetir');
+    
+    // Mostra o modal
+    modal.classList.remove('hidden');
+
+    // Quando clicar no botão "Sim", executa a lógica e fecha o modal
+    btnConfirmar.onclick = function() {
+        repetirPedido(numeroPedido);
+        fecharModalConfirmar();
+    };
+}
+function fecharModalConfirmar() {
+    document.getElementById('modalConfirmarRepetir').classList.add('hidden');
+}
+
+
 document.getElementById('form-cadastro').addEventListener('submit', function(e) {
   e.preventDefault();
   // Aqui você salvaria os dados no banco
   document.getElementById('modal-cadastro').style.display = 'none';
   alert('Bem-vindo(a)!');
 });
-
-
-/*==========================================================================================================================================================*/
 function modalAdicionado(cod, nome, tipo, preco) {
     const modal = document.getElementById('modalAdicionado');
    
@@ -1182,13 +1364,11 @@ function modalAdicionado(cod, nome, tipo, preco) {
     modal.classList.remove('hidden');
     modal.classList.add('flex');
 }
-
 function fecharModalAdicionado() {
     const modal = document.getElementById('modalAdicionado');
     modal.classList.add('hidden');
     modal.classList.remove('flex');
 }
-
 // Fecha se clicar fora do card branco
 window.addEventListener('click', (e) => {
     const modal = document.getElementById('modalAdicionado');
@@ -1216,10 +1396,6 @@ localStorage.setItem('userDados',JSON.stringify(userdados))
   navegacao('home')
   slcEnderecoModal()    
 }
-//////////////////////////////////
-//////////////////////////////////
-
-// No final do seu script principal
 
 let servicoInstalacao; // Variável para guardar o evento
 const botaoInstalar = document.getElementById('btnInstalar');

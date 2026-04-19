@@ -132,7 +132,7 @@ background-repeat: no-repeat;
 
 body {
 margin: 0 auto;
-opacity: 0; transition: opacity 0.3s;
+opacity: 0; transition: opacity 0.15s;
 }
 body.auth-ok { opacity: 1; }
 @keyframes bounce-slow {
