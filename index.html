@@ -100,16 +100,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const splash = document.getElementById('splash-pulse-container');
     splash.style.transition = 'opacity 0.5s ease';
     splash.style.opacity = '0';
+    
+    
     setTimeout(() =>{ 
     splash.remove()
-    
     window.location.href = "loginUsers.html";
-
-
-
-
-    }, 500);
-  }, 3000); // 3 segundos é suficiente
+    }, 300);
+    
+    
+  }, 1000); // 3 segundos é suficiente
 });
 
 

@@ -27,18 +27,16 @@ async function verificarLogin() {
 
 let historicoPages = []
 let ultimoIndex='home'
+let paginaAtual
+
 
 function navegacao(open) {
- curPage = open
- //historico de paginas para voltar
- if (historicoPages.length >= 2) {
-  historicoPages = [historicoPages[1]]
-  historicoPages.push(open)
-} else if (historicoPages.length <= 2) {
-  historicoPages.push(open)
-}
-ultimoIndex = historicoPages[0]
- //fim
+  
+  if(paginaAtual){
+    historicoPages.push(paginaAtual)
+  }
+  paginaAtual = open
+
   window.scrollTo({
       top: 0,
       behavior: 'auto'
@@ -92,9 +90,12 @@ ultimoIndex = historicoPages[0]
 }
 navegacao('home')
 function voltarPage() {
-  navegacao(ultimoIndex)
-  
-}
+  //historico de paginas para voltar
+  if ( historicoPages.length > 0) {
+   const paginaAnterior = historicoPages.pop()
+  paginaAtual = paginaAnterior 
+  navegacao(paginaAnterior)
+}}
  async function editarUser() {
     
   const userdados = await userDados()
@@ -908,6 +909,7 @@ const codInput = document.getElementById('remInputCod').value
   localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
   atualizaContador()
   verCarrinho()
+  voltarPage()
   closeModal()
 
 }
@@ -1405,7 +1407,7 @@ function fecharModalAdicionado() {
     const modal = document.getElementById('modalAdicionado');
     modal.classList.add('hidden');
     modal.classList.remove('flex');
-    voltarPage()
+    
 }
 // Fecha se clicar fora do card branco
 window.addEventListener('click', (e) => {
