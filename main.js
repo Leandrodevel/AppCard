@@ -22,14 +22,44 @@ async function verificarLogin() {
 
     return dados;
 }
+
+
+
+let historicoPages = []
+let ultimoIndex='home'
+
 function navegacao(open) {
-  
+ curPage = open
+ //historico de paginas para voltar
+ if (historicoPages.length >= 2) {
+  historicoPages = [historicoPages[1]]
+  historicoPages.push(open)
+} else if (historicoPages.length <= 2) {
+  historicoPages.push(open)
+}
+ultimoIndex = historicoPages[0]
+ //fim
   window.scrollTo({
       top: 0,
       behavior: 'auto'
   })
       
   const allSections=['home','cardapio','pageCarrinho','pagePromocao','montarEspetinho','perfilUser','editarUser','enderecoTemp']
+  
+  switch (open) {
+    case 'home':
+      listaTop20()
+      break;
+    case 'cardapioGrid':
+      listaProdutos()
+      break;
+    case 'pagePromocao':
+      listaProm()
+      break;
+    
+    default:
+      // Tab to edit
+  }
   
   if( open === 'perfilUser'){
 
@@ -61,6 +91,10 @@ function navegacao(open) {
   document.getElementById(open).classList.remove('hidden')
 }
 navegacao('home')
+function voltarPage() {
+  navegacao(ultimoIndex)
+  
+}
  async function editarUser() {
     
   const userdados = await userDados()
@@ -138,6 +172,7 @@ function atualizaContador() {
       atualizarCarrinho()
 }    
     atualizaContador()
+    
 async function atualizaPontos(total){
   const dataPontos = await userDados()
 const newPontos= total * 0.
@@ -559,7 +594,7 @@ const db = await getDados();
                 onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
              ADICIONAR
 
-              <span  id="qtdItemBtn-${de.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full z-10">0</span>
+              <span  id="qtdItemBtn2-${de.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full z-10">0</span>
         </button>
 
             </div>
@@ -571,7 +606,7 @@ const db = await getDados();
         
 const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === de.cod) || {qtd:0};
     let quantos = quantosNoCarrinho.qtd || 0
-    const dotQtd = document.getElementById(`qtdItemBtn-${de.cod}`)
+    const dotQtd = document.getElementById(`qtdItemBtn2-${de.cod}`)
     
   if(quantos >= 1){
     dotQtd.classList.remove('hidden')
@@ -701,7 +736,7 @@ const marcaEscapada = item.marca.replace(/'/g, "\\'");
                 class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl p-3 shadow-sm active:scale-95 transition-all flex-shrink-0 relative" 
                 onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFinal.toFixed(2)}')">
 
-                      <span  id="qtdItemBtn-${item.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
+                      <span  id="qtdItemBtn1-${item.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
 
             <i class="w-5 h-5" data-lucide="shopping-basket"></i>
         </button>
@@ -713,7 +748,8 @@ const marcaEscapada = item.marca.replace(/'/g, "\\'");
   
 const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === item.cod) || {qtd:0};
     let quantos = quantosNoCarrinho.qtd || 0
-    const dotQtd = document.getElementById(`qtdItemBtn-${item.cod}`)
+    
+    const dotQtd = document.getElementById(`qtdItemBtn1-${item.cod}`)
     
   if(quantos >= 1){
     dotQtd.classList.remove('hidden')
@@ -724,7 +760,7 @@ const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === item.cod) || {qtd:0};
   }
 };
 lucide.createIcons();
-    }listaTop20()
+    }
 function toggleModalVazio() {
     const modal = document.getElementById('modalVazio');
     modal.classList.toggle('hidden');

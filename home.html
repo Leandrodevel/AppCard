@@ -389,7 +389,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
   <div class="mb-8 flex">
    
-     <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="navegacao('perfilUser')">
+     <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="voltarPage()">
         <i class="w-4 h-4" data-lucide="undo-2"></i>
       </button>
    
@@ -678,7 +678,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
         <div class="p-6 flex justify-between items-center">
             <h2 class="text-xl font-black uppercase text-gray-700">Sua Lista</h2>
            
-            <button class=" close text-2xl bg-yellow-400 rounded-md p-2 " onclick="navegacao('home')">
+            <button class=" close text-2xl bg-yellow-400 rounded-md p-2 " onclick="voltarPage()">
                 <i data-lucide="undo-2"></i>  
             </button>
         </div>
@@ -1029,7 +1029,7 @@ slcEndereco.addEventListener('change', (event) => {
         
         
   <div id="enderecoTemp" class="bg-white w-full h-full p-4 flex flex-col gap-2 z-0">
- <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="navegacao('perfilUser')">
+ <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="voltarPage()">
         <i class="w-4 h-4" data-lucide="undo-2"></i>
       </button>
    <div class="text-xl font-black uppercase  w-full text-center grid grid-cols-1 mb-2">Endereço
