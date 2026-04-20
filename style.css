@@ -123,12 +123,15 @@ background-repeat: no-repeat;
   max-width: 640px;
   min-width: 360px;
   box-sizing: border-box;
+ 
+  
   /* Garante que o fundo preencha pelo menos a altura da tela */
   /* Opcional: Adiciona uma sombra para dar efeito de 'app' flutuando */
   /* Evita que o conteúdo cole nas bordas em telas menores que 1024px */
   
  
 }
+
 
 body {
 margin: 0 auto;

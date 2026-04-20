@@ -1379,6 +1379,7 @@ function abrirModalConfirmacao(numeroPedido) {
 }
 function fecharModalConfirmar() {
     document.getElementById('modalConfirmarRepetir').classList.add('hidden');
+    voltarPage()
 }
 
 
@@ -1404,6 +1405,7 @@ function fecharModalAdicionado() {
     const modal = document.getElementById('modalAdicionado');
     modal.classList.add('hidden');
     modal.classList.remove('flex');
+    voltarPage()
 }
 // Fecha se clicar fora do card branco
 window.addEventListener('click', (e) => {
