@@ -101,17 +101,17 @@ async function userDados() {
 
 <div id="app" >
  
-  <header id="header" class="transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2 bg-zinc-900 relative mb-1">
+  <header id="header" class=" ring transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2 bg-zinc-900 relative mb-1">
 <img 
     src="./img/bgHeader.jpg" 
     alt="Background" 
     class="absolute inset-0 w-full h-full object-cover object-bottom"
   />
-  <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-transparent z-10"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-transparent z-10"></div>
             
     <div class="flex items-center justify-between mb-4 z-30 relative">
       <div class="flex gap-2 flex-row items-center">
-        <span class=" capitalize text-sm font-bold tema-text-base tracking-wider">Olá </span>
+        <span class=" capitalize text-sm font-bold text-yellow-400 tracking-wider">Olá </span>
         <span class="flex items-center text-sm font-bold text-gray-200 capitalize"  id="btnViewEndereco">
           Usuario
            </span>
@@ -131,7 +131,7 @@ async function userDados() {
   </span>
 </div>
 </div>
-    <div id="serach" class="hidden">
+    <div id="search" class="absolute">
           <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class=" group">
       <input id="search-bar" name="searchBar" list="listBusca" type="search" placeholder="O que vamos beber hoje?" class="w-full  border-none rounded-2xl py-3 pl-6 pr-4 text-sm ring-1 ring-yellow-400 transition-all">
     </form>

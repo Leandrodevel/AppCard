@@ -193,8 +193,9 @@ const user = await userDados()
 }
 
 const barraDeBusca = document.getElementById('search-bar')
+
 barraDeBusca.addEventListener('input', ()=>{
-  
+  const dbProdutos = JSON.parse(localStorage.getItem('estoqueDeProdutos'))
    // listaProdutos('',barraDeBusca.value,'')
     
     const buscaSugestao = dbProdutos.filter(sb=> sb.nome.toLowerCase().includes(barraDeBusca.value.toLowerCase())) || []
