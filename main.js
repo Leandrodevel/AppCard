@@ -506,22 +506,19 @@ async function listaProm() {
 const db = await getDados();
          
    const boxPromocoes= document.getElementById('boxPromocoes')
-
-    const spn = document.createElement('div')   
-    spn.className='w-full flex justify-center relative '
-
-  
+    
+    boxPromocoes.innerHTML=''
+    
     const listaFiltrada = db.filter(produto => {
-  // Verificamos se o produto tem ao menos uma embalagem que atenda ao critério
   return produto.embalagens.some(emb => {
-    // Extrai apenas os números da string (ex: "300gr" vira 300)
-    return emb.desconto > 0.00;
+    return emb.desconto > 0;
   });
 });
 
-  if(listaFiltrada.length === 0){
-
-        spn.innerHTML=`
+ if(listaFiltrada.length === 0){
+   const semPromocao = document.createElement('div')
+  semPromocao.className = 'w-full flex justify-center relative '
+        semPromocao.innerHTML=`
 <div id="promocoesVazias" class="w-full max-w-2xl mx-auto my-12 p-12 bg-white rounded-[3rem] border-2 border-dashed border-yellow-100 flex flex-col items-center text-center">
     
     <div class="bg-yellow-50 p-8 rounded-full mb-6 animate-bounce-slow">
@@ -540,12 +537,14 @@ const db = await getDados();
     </button>
 </div>
         `
-        boxPromocoes.appendChild(spn)  
+        
+        boxPromocoes.appendChild(semPromocao)  
+        
         if (typeof lucide !== 'undefined') lucide.createIcons();
 
-  }else if(listaFiltrada.length >= 1){
+  }else if(listaFiltrada.length > 0){
 
-      for(const pr of db){
+      for(const pr of listaFiltrada){
      for(const de of pr.embalagens){
     
     const precoFormatado = parseFloat(de.preco.replace(",","."))
@@ -558,12 +557,9 @@ const db = await getDados();
   
     const nomeEscapado = pr.nome.replace(/'/g, "");
 
-        
-      if(de.desconto > 0.00){
-  
- 
-  
-  spn.innerHTML=`
+  const promocao = document.createElement('div')
+  promocao.className = 'w-full flex justify-center relative '  
+  promocao.innerHTML=`
   
 
         <span class="bg-red-500 absolute top-0 right-0 px-2 py-0.5 rounded-xl font-black text-[14px] text-white tracking-tighter uppercase shadow-sm ">
@@ -602,7 +598,7 @@ const db = await getDados();
             </div>
   
   `
-   boxPromocoes.appendChild(spn)  
+   boxPromocoes.appendChild(promocao)  
 
         
 const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === de.cod) || {qtd:0};
@@ -624,7 +620,7 @@ const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === de.cod) || {qtd:0};
   if (typeof lucide !== 'undefined') lucide.createIcons();
       }
       
-      } 
+      
 async function validarCaminhoImagem(nomeArquivo) {
   const caminho = `./img/${nomeArquivo}`;
   try {
@@ -635,6 +631,7 @@ async function validarCaminhoImagem(nomeArquivo) {
     return './img/noimage.gif'; // Se der erro de rede, usa a padrão
   }
 }
+
 async function listaTop20() {
  
 const dbGeral = await getDados();
@@ -908,7 +905,6 @@ const codInput = document.getElementById('remInputCod').value
   meuCarrinho = meuCarrinho.filter(item => item.cod !== codInput);
   localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
   atualizaContador()
-  verCarrinho()
   voltarPage()
   closeModal()
 
@@ -1407,7 +1403,6 @@ function fecharModalAdicionado() {
     const modal = document.getElementById('modalAdicionado');
     modal.classList.add('hidden');
     modal.classList.remove('flex');
-    
 }
 // Fecha se clicar fora do card branco
 window.addEventListener('click', (e) => {
