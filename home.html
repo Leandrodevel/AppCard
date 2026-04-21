@@ -912,7 +912,7 @@ slcEndereco.addEventListener('change', (event) => {
                     Finalizar Pedido
                 </button>
                 
-                <button onclick="fecharModalAdicionado()" class="w-full bg-white text-gray-500 font-bold py-3 hover:text-gray-700 transition-colors">
+                <button onclick="fecharModalAdicionado(),navegacao(paginaAtual)" class="w-full bg-white text-gray-500 font-bold py-3 hover:text-gray-700 transition-colors">
                     Continuar comprando
                 </button>
             </div>
@@ -968,7 +968,7 @@ slcEndereco.addEventListener('change', (event) => {
                     Ok, remover
                 </button>
                 
-                <button onclick="verCarrinho(), fecharModalRemover()" class="w-full bg-white text-gray-500 font-bold py-3 hover:text-red-500 transition-colors">
+                <button onclick="navegacao(paginaAtual), fecharModalRemover()" class="w-full bg-white text-gray-500 font-bold py-3 hover:text-red-500 transition-colors">
                     voltar para carrinho
                 </button>
             </div>
