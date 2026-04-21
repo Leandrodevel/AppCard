@@ -906,7 +906,7 @@ const codInput = document.getElementById('remInputCod').value
   meuCarrinho = meuCarrinho.filter(item => item.cod !== codInput);
   localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
   atualizaContador()
-  verCarrinho()
+  navegacao(paginaAtual)
   closeModal()
 
 }
