@@ -10,6 +10,12 @@
    <!--<link rel="manifest" href="manifest.json">---> 
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Mogra&family=Pacifico&display&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 
 <script>
@@ -95,10 +101,15 @@ async function userDados() {
 
 <div id="app" >
  
-  <header id="header" class="transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2 bg-zinc-900 relative ">
-
+  <header id="header" class="transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2 bg-zinc-900 relative mb-1">
+<img 
+    src="./img/bgHeader.jpg" 
+    alt="Background" 
+    class="absolute inset-0 w-full h-full object-cover object-bottom"
+  />
+  <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-transparent z-10"></div>
             
-    <div class="flex items-center justify-between mb-4">
+    <div class="flex items-center justify-between mb-4 z-30 relative">
       <div class="flex gap-2 flex-row items-center">
         <span class=" capitalize text-sm font-bold tema-text-base tracking-wider">Olá </span>
         <span class="flex items-center text-sm font-bold text-gray-200 capitalize"  id="btnViewEndereco">
@@ -108,14 +119,25 @@ async function userDados() {
          <div class="flex flex-row gap-2 items-center" id="statusOnline"></div>
      </div>
      
-<div class="fixed w-full  left-0 px-2 py-1 translate-y-[-30%]">
-    <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class=" group">
+<div id="bannerLoja" class=" relative z-20 w-full  left-0 px-2 py-1 translate-y-[-20%] ">
+<div class="bg-zinc-900/85 h-[70px] ring-2 ring-yellow-400 rounded-2xl flex items-center justify-evenly " >
+
+ <!-- <span class="square bg-gray-700 w-[60px] h-[60px] rounded-lg">
+  </span>--->
+  
+  <span class="text-center">
+    <h2 class="text-yellow-400 uppercase font-bold text-3xl mogra-regular"> Boteco sem Limite</h2>
+  <small class="text-xs text-white">mercado de bebidas</small>
+  </span>
+</div>
+</div>
+    <div id="serach" class="hidden">
+          <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class=" group">
       <input id="search-bar" name="searchBar" list="listBusca" type="search" placeholder="O que vamos beber hoje?" class="w-full  border-none rounded-2xl py-3 pl-6 pr-4 text-sm ring-1 ring-yellow-400 transition-all">
     </form>
-   <datalist id="listBusca">
-   </datalist>
-</div>
-    
+    <datalist id="listBusca">
+    </datalist>
+    </div>
   </header>
 
 <main class=" p-1 py-2 grid grid-cols-1">

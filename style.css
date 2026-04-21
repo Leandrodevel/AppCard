@@ -145,3 +145,13 @@ body.auth-ok { opacity: 1; }
 .animate-bounce-slow {
   animation: bounce-slow 3s ease-in-out infinite;
 }
+.mogra-regular {
+  font-family: "Mogra", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.pacifico-regular {
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
