@@ -1,0 +1,43 @@
+.tema-amarelo-branco { --bg-cor: #ffffff; --el-cor: #ffcc00; --txt-cor: #1a1a1a; }
+.tema-laranja-branco { --bg-cor: #ffffff; --el-cor: #ff6600; --txt-cor: #1a1a1a; }
+.tema-vermelho-branco { --bg-cor: #ffffff; --el-cor: #dc3545; --txt-cor: #1a1a1a; }
+.tema-verde-branco   { --bg-cor: #ffffff; --el-cor: #28a745; --txt-cor: #1a1a1a; }
+.tema-azul-branco    { --bg-cor: #ffffff; --el-cor: #007bff; --txt-cor: #1a1a1a; }
+.tema-acai-branco    { --bg-cor: #ffffff; --el-cor: #4b0082; --txt-cor: #1a1a1a; }
+
+/* Temas Escuros (Fundo Preto) */
+.tema-amarelo-preto  { --bg-cor: #0f0f0f; --el-cor: #ffcc00; --txt-cor: #ffffff;--bg-cor-2:#282828  }
+.tema-laranja-preto  { --bg-cor: #0f0f0f; --el-cor: #ff6600; --txt-cor: #ffffff; --bg-cor-2:#282828 }
+.tema-vermelho-preto { --bg-cor: #0f0f0f; --el-cor: #dc3545; --txt-cor: #ffffff; --bg-cor-2:#282828 }
+.tema-verde-preto    { --bg-cor: #0f0f0f; --el-cor: #28a745; --txt-cor: #ffffff; --bg-cor-2:#282828 }
+.tema-azul-preto     { --bg-cor: #0f0f0f; --el-cor: #007bff; --txt-cor: #ffffff; --bg-cor-2:#282828 }
+.tema-acai-preto     { --bg-cor: #0f0f0f; --el-cor: #4b0082; --txt-cor: #ffffff;--bg-cor-2:#282828  }
+  
+.app {
+    background-color: var(--bg-cor);
+    color: var(--txt-cor);
+    transition: background 0.3s ease; /* Efeito suave ao trocar */
+}
+textarea,input,select{
+    background: var(--bg-cor-2);
+}
+.temaBotoes {
+    background-color: var(--el-cor);
+    color: #fff; 
+}
+.TemaElementos{
+    
+}
+.temaTextos{
+ color: #F1F1F1  
+}
+.temaTitulos{
+    color: var(--el-cor);
+}
+
+.temaCards {
+    background-color: var(--bg-cor-2);
+}
+/*
+Para o Roxo (Açaí), se o fundo for branco, a cor #4b0082 (Indigo) ou #3d0130 (Açaí profundo)
+*/

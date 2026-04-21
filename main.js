@@ -379,7 +379,7 @@ async function listaProdutos(idCat, termo, lista) {
 
   if (produtosFiltrados.length === 0) {
     cardapioGrid.innerHTML = `
-      <div class="col-span-2 flex flex-col items-center justify-center py-10 text-gray-400">
+      <div class="col-span-2 flex flex-col items-center justify-center py-10 temaTexto">
         <i data-lucide="frown" class="w-10 h-10 mb-2"></i>
         <span class="font-bold">Nenhum item encontrado</span>
       </div>`;
@@ -398,10 +398,10 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
     const prodCard = document.createElement('div');
     prodCard.className = 'w-full grid grid-cols-1 px-2';
     prodCard.innerHTML = `
-      <div class="bg-gray-50 py-4 mt-2 px-2 border-b border-gray-100 grid grid-cols-1 transition-colors rounded-lg relative">
+      <div class=" py-4 mt-2 px-2 grid grid-cols-1 transition-colors rounded-lg relative">
         <div class="flex-grow pr-4 ">
           <h3 class=" font-black text-gray-700 uppercase tracking-tight flex">
-            <span class=" text-md text-blue-500 ml-2">${nomeEscapado.trim()}</span>
+            <span class=" text-md temaTitulos ml-2">${nomeEscapado.trim()}</span>
             <i class="w-4 h-4 text-green-500 translate-y-[5px]" data-lucide="corner-right-down"></i>
           </h3>
         </div>
@@ -435,18 +435,18 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
       
       const prodEmb = document.createElement('div');
       prodEmb.innerHTML = `
-        <div class="bg-white border border-gray-100 rounded-2xl p-2 shadow-sm relative overflow-hidden flex flex-row items-center hover:bg-gray-50 transition-colors mb-2">
+        <div class="temaCards rounded-2xl p-2 shadow-sm relative overflow-hidden flex flex-row items-center mb-2">
             <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase">
                 OFERTA
             </span>
             <div class="flex-shrink-0 w-16 h-16 bg-gray-50 rounded-lg overflow-hidden mr-3"></div>
             <div class="flex-grow flex items-center justify-between min-w-0">
                 <div class="flex flex-col min-w-0 -space-y-0.5"> 
-                    <h4 class="text-[10px] font-bold text-gray-500 truncate leading-tight uppercase tracking-tighter">
+                    <h4 class="text-[10px] font-bold temaTextos truncate leading-tight uppercase tracking-tighter">
                         ${nomeEscapado}
                     </h4>
-                    <button onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')" class="text-left focus:outline-none">
-                        <p class="text-[16px] font-black text-gray-900 leading-tight uppercase">
+                    <button onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')" class="text-left">
+                        <p class="text-[16px] font-black temaTextos leading-tight uppercase">
                             ${String(emb.tipo)}
                         </p>
                     </button>
@@ -460,7 +460,7 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
                     </div>
                 </div>
                 <button id="bt+${emb.cod}" 
-                        class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-lg p-2.5 shadow-sm active:scale-95 transition-all flex-shrink-0 ml-2 relative" 
+                        class="temaBotoes rounded-lg p-2.5 shadow-sm active:scale-95 transition-all flex-shrink-0 ml-2 relative" 
                         onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')"">
 
                          <span  id="qtdItemBtn-${emb.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
@@ -698,7 +698,7 @@ const marcaEscapada = item.marca.replace(/'/g, "\\'");
  
    
   card.innerHTML = `
-<div class="bg-white border border-gray-100 rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row items-center hover:bg-gray-50 transition-colors mb-2">
+<div class=" temaCards rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row items-center mb-2">
     
     <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase tracking-tighter">
         OFERTA
@@ -712,12 +712,12 @@ const marcaEscapada = item.marca.replace(/'/g, "\\'");
         
         <div class="flex flex-col min-w-0 mr-2">
             <button class="text-left focus:outline-none" onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFinal.toFixed(2)}')">
-                <h4 class="text-[15px] font-bold text-gray-800 truncate leading-tight mb-0.5">
+                <h2 class="temaTitulos text-[15px] font-bold truncate leading-tight mb-0.5">
                     ${nomeEscapado}
-                </h4>
+                </h2>
             </button>
             
-            <p class="text-[11px] font-semibold text-gray-400 italic mb-1 uppercase tracking-tight">
+            <p class="temaTextos text-[11px] font-semibold text-gray-400 italic mb-1 uppercase tracking-tight">
                 ${item.tipo}
             </p>
 
@@ -732,7 +732,7 @@ const marcaEscapada = item.marca.replace(/'/g, "\\'");
         </div>
 
         <button id="bt+${item.cod}" 
-                class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 rounded-xl p-3 shadow-sm active:scale-95 transition-all flex-shrink-0 relative" 
+                class=" temaBotoes  rounded-xl p-3 shadow-sm active:scale-95 transition-all flex-shrink-0 relative" 
                 onclick="openModal('${item.cod}','${nomeEscapado}','${item.tipo}','${precoFinal.toFixed(2)}')">
 
                       <span  id="qtdItemBtn1-${item.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>

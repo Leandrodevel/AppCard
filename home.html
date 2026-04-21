@@ -9,7 +9,10 @@
     <script src="https://unpkg.com/lucide@latest"></script>
    <!--<link rel="manifest" href="manifest.json">---> 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="temas.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="configTemas.js" defer ></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -97,11 +100,11 @@ async function userDados() {
 </script>
 
 </head>
-<body class="font-sans bg bg-gray-100">
+<body >
 
-<div id="app" >
+<div id="app" class="app">
  
-  <header id="header" class=" ring transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2 bg-zinc-900 relative mb-1">
+  <header id="header" class=" transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2 bg-zinc-900 relative mb-1">
 <img 
     src="./img/bgHeader.jpg" 
     alt="Background" 
@@ -140,8 +143,7 @@ async function userDados() {
     </div>
   </header>
 
-<main class=" p-1 py-2 grid grid-cols-1">
-    
+<main class=" px-1 py-2 grid grid-cols-1">
   
   <div id="headerTools">
      <!----------menu superior----------> 
@@ -217,12 +219,12 @@ const classeComItem = [...new Set(dbListExist.map(item =>
        const categBox = document.createElement('div')
        categBox.className='w-fit h-fit flex flex-wrap flex-col justify-center'
       const categButton = document.createElement('button')
-      categButton.className = 'w-[70px] h-[60px]  bg-white border border-gray-200 py-2 mb-0 mt-2 rounded-md relative justify-center flex flex-nowrap '
+      categButton.className = 'w-[70px] h-[60px]  temaBotoes  py-2 mb-0 mt-2 rounded-md relative justify-center flex flex-nowrap '
       categButton.id = idAtual
       
             const categLabel=document.createElement('small')
       
-      categLabel.className=`w-[65px]  line-clamp-1 font-black  text-gray-00 grid grid-rows-1  px-0 py-[2px] rounded-md  text-[10px] tracking-wider text-center`
+      categLabel.className=`w-[65px]  line-clamp-1 font-black  text-gray-100 grid grid-rows-1  px-0 py-[2px] rounded-md  text-[10px] tracking-wider text-center`
       
       
       categButton.addEventListener('click',()=>{
@@ -233,7 +235,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
       
      if( idAtual.toLowerCase() ===  idAtivo.toLowerCase()){
       
-      categButton.classList.remove('bg-yellow-400')
+      categButton.classList.remove('bg-yellow-100')
       categButton.classList.add('bg-yellow-300')
       
      }else if(!idAtual  && idAtivo === 'Todos'){
@@ -457,16 +459,16 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 <section id="home" class=" min-h-screen font-sans text-gray-900 pb-20">
    <div class="z-500" >
      <!-----------DESTAQUES E PROMOCOES-------------> 
-    <div class="px-4 py-6">
-        <h2 class="text-xl font-black text-gray-700 uppercase tracking-tight flex">
-            Destaques e <span class="ml-2 tema-text-base">promoções</span>
+    <div class="px-4">
+        <h2 class="text-xl font-black temaTitulos uppercase tracking-tight flex">
+            Destaques  <span class="ml-2 tema-text-base">e Promoções</span>
               <i class="rotate-12 ml-2" data-lucide="crown"class="mr-2"></i>
         </h2>
     </div>
 
    <div class="mb-8">
     <div class="px-4 mb-3 flex justify-between items-end">
-        <h3 class="font-bold text-gray-700">Ofertas Imperdíveis</h3>
+        <h3 class="font-bold temaTextos">Ofertas Imperdíveis</h3>
         <span class="text-xs font-semibold text-yellow-600 uppercase animate-pulse">Arraste para o lado →</span>
     </div>
         
@@ -697,7 +699,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
   <section id="pageCarrinho" class="  grid place-items-center ">
 
 
-    <div class="bg-white w-full  overflow-hidden ">
+    <div class=" w-full  overflow-hidden ">
         <div class="p-6 flex justify-between items-center">
             <h2 class="text-xl font-black uppercase text-gray-700">Sua Lista</h2>
            
@@ -713,7 +715,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
         </div>
 
 
-        <div id="" class="p-6 bg-gray-50 space-y-4">
+        <div id="" class="p-6 space-y-4">
             
             <div class="flex justify-center items-center">
             <textarea name="obsCarrinho" id="obsCarrinho" rows="3" cols="50" placeholder="Observações" class="border-sm border-gray-300 ring rounded-lg"></textarea>
@@ -864,7 +866,7 @@ slcEndereco.addEventListener('change', (event) => {
  <div id="modalVazio" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
     
-    <div class="bg-white rounded-3xl p-8 shadow-2xl relative w-full max-w-sm text-center transform transition-all">
+    <div class="temaCards rounded-3xl p-8 shadow-2xl relative w-full max-w-sm text-center transform transition-all">
         
         <div class="flex justify-center mb-6">
             <div class="bg-yellow-50 p-6 rounded-full">
@@ -884,7 +886,7 @@ slcEndereco.addEventListener('change', (event) => {
 <div id="modalProcessando" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-md"></div>
     
-    <div class="bg-white rounded-[2.5rem] p-8 shadow-2xl relative w-full max-w-sm text-center transform animate-in zoom-in duration-300">
+    <div class="temaCards rounded-[2.5rem] p-8 shadow-2xl relative w-full max-w-sm text-center transform animate-in zoom-in duration-300">
         
         <div class="flex justify-center mb-6 relative">
             <div class="w-24 h-24 rounded-full border-4 border-gray-100"></div>
@@ -916,7 +918,7 @@ slcEndereco.addEventListener('change', (event) => {
 </style>
 <div id="modalAdicionado" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
     
-    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-yellow-400">
+    <div class="temaCards rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-yellow-400">
         
         <div class="p-8 text-center">
             <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-yellow-50 mb-6">
@@ -943,7 +945,7 @@ slcEndereco.addEventListener('change', (event) => {
 </div>
 <div id="modalConfirmarRepetir" class="hidden fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm">
     
-    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-yellow-400 transform transition-all">
+    <div class="temaCards rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-yellow-400 transform transition-all">
         
         <div class="p-8 text-center">
             <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-yellow-50 mb-6">
@@ -971,7 +973,7 @@ slcEndereco.addEventListener('change', (event) => {
 </div>
 <div id="modalRemover" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
     <input type="hidden" name="" id="remInputCod" />
-    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-red-500">
+    <div class="temaCards rounded-3xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden border-t-8 border-red-500">
         
         <div class="p-8 text-center">
             <div class="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-red-50 mb-6">
@@ -1003,32 +1005,32 @@ slcEndereco.addEventListener('change', (event) => {
   
 <!---NAVBAR BOTTOM--->
 
- <nav id="navBottom" class=" z-10 fixed bottom-0 w-full bg-white border-t border-gray-100 px-6 py-3 flex justify-between items-center shadow-[0_-5px_15px_rgba(0,0,0,0.05)]
+ <nav id="navBottom" class="temaCards z-10 fixed bottom-0 w-full px-6 py-3 flex justify-between items-center shadow-[0_-5px_15px_rgba(0,0,0,0.05)]
  max-w-[640px] min-w-[360px]">
     
 
-    <button id="btbHome" class="flex flex-col items-center text-gray-400 " onclick="navegacao('home'),ativabtnBottom('btbHome')">
+    <button id="btbHome" class="flex flex-col items-center temaTextos " onclick="navegacao('home'),ativabtnBottom('btbHome')">
       <i  data-lucide="house" class="h-6 w-6"></i>
       <span class="text-[10px] font-bold uppercase">Início</span>
     </button>
     
-        <button id="btbProm" class="flex flex-col items-center justify-center text-gray-400" onclick="navegacao('pagePromocao'),ativabtnBottom('btbProm')">
+        <button id="btbProm" class="flex flex-col items-center justify-center temaTextos" onclick="navegacao('pagePromocao'),ativabtnBottom('btbProm')">
       <i  data-lucide="ticket-percent" class="h-6 w-6 "></i>
       <span class="text-[10px] font-bold uppercase">Promoção</span>
     </button>
-            <button id="btbSearch" class="flex flex-col items-center justify-center text-gray-400" onclick=ativabtnBottom('btbSearch')">
+            <button id="btbSearch" class="flex flex-col items-center justify-center temaTextos" onclick="ativabtnBottom('btbSearch')">
       <i  data-lucide="search" class="h-6 w-6 "></i>
       <span class="text-[10px] font-bold uppercase">Promoção</span>
     </button>
     <div class="relative">
       <span  id="qtd-itens" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
-    <button id="btbCar" class="flex flex-col items-center text-gray-400" onclick="verCarrinho(),ativabtnBottom('btbCar')">
+    <button id="btbCar" class="flex flex-col items-center temaTextos" onclick="verCarrinho(),ativabtnBottom('btbCar')">
       
     <i  class="W;6 H-6" data-lucide="shopping-basket"></i>
       <span class="text-[10px] font-bold uppercase">Meu Carrinho</span>
     </button>
     </div>
-    <button id="btbUser" class="flex flex-col items-center text-gray-400" onclick="verPerfil(),ativabtnBottom('btbUser')">
+    <button id="btbUser" class="flex flex-col items-center temaTextos" onclick="verPerfil(),ativabtnBottom('btbUser')">
       <i data-lucide="user" class="h-6 w-6"></i>
       <span class="text-[10px] font-bold uppercase">Perfil</span>
     </button>
