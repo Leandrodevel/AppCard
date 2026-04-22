@@ -54,7 +54,9 @@ function navegacao(open) {
     case 'pagePromocao':
       listaProm()
       break;
-    
+    case 'enderecoTemp':
+      preencheEndereco()
+      break;
     default:
       // Tab to edit
   }
@@ -972,7 +974,7 @@ let comAcomp ='hidden'
 
     
               
-              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center border-2 border-yellow-400 border-md w-full p-1 mb-1 border-l-[5px] rounded-md">
+              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center w-full p-1 mb-1 border-l-[5px] rounded-md">
                 
                 <div class=" justify-left flex text-left flex-col">
                 
@@ -980,7 +982,7 @@ let comAcomp ='hidden'
               <span>
               ${item.qtd} X ${item.nome}
               </span>
-              <small class="text-[10px] text-gray-700">
+              <small class="text-[10px] temaTextos2 italic">
               ( ${item.embalagem} - ${precoFinal} Un. )</small>
                 </div>
   
@@ -1159,8 +1161,8 @@ function verCarrinho(){
 
 }
 async function verPerfil() {
- const dados = await userDados()
-  
+ const dados = await userDados() 
+
   navegacao('perfilUser')
   navegacaoUser('historico')
 
@@ -1169,19 +1171,9 @@ async function verPerfil() {
  document.getElementById('pflLetra').innerText=primeiraLetra
   document.getElementById('pflNome').innerText=dados.nome
   document.getElementById('pflTel').innerText=dados.tel
-  document.getElementById('pflPontos').innerText=dados.pontos%meta
-  document.getElementById('pflPontosRestantes').innerHTML= meta - dados.pontos%meta
   
-  const progressPontos = dados.pontos%meta / meta * 100
-  
-  const cupons = Math.floor(dados.pontos%meta)
-  
-  document.getElementById('pflBarraPontos').style.width= progressPontos+'%'
-  
-///  verifica se ja tem endereço alternativo
 const enderecoTemp = dados.casa
 if(enderecoTemp){
-  
   document.getElementById('spanEndereco').innerText=`${dados.rua}, ${dados.casa} - ${dados.bairro}`
   
 
@@ -1219,19 +1211,19 @@ document.getElementById('containerAjuda').innerHTML = `
 
     
     <div class="mb-10 text-center md:text-left">
-        <h2 class="text-2xl font-black text-gray-800">Canais de Atendimento</h2>
-        <p class="text-gray-500">Escolha como prefere falar conosco.</p>
+        <h2 class="text-2xl font-black temaTextos">Canais de Atendimento</h2>
+        <p class="temaTextos2">Escolha como prefere falar conosco.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         
-        <div class="bg-white p-8 rounded-[2.5rem] border border-green-100 shadow-sm flex flex-col items-center text-center">
-            <div class="bg-green-50 p-5 rounded-3xl mb-4">
+        <div class="temaCards p-8 rounded-[2.5rem] shadow-sm flex flex-col items-center text-center">
+            <div class="temaCards2 p-5 rounded-3xl mb-4">
                 <i data-lucide="message-circle-more" class="w-10 h-10 text-green-500"></i>
             </div>
-            <h3 class="font-black text-gray-800 text-xl mb-1">WhatsApp</h3>
-            <p class="text-green-600 font-bold text-sm mb-3">Suporte em Tempo Real</p>
-            <p class="text-gray-500 text-sm leading-relaxed">
+            <h3 class="font-black temaTitulos text-xl mb-1">WhatsApp</h3>
+            <p class="temaTextos2 font-bold text-sm mb-3">Suporte em Tempo Real</p>
+            <p class="temaTextos2 text-sm leading-relaxed">
                 (22) 99999-9999<br>
                 Segunda a Domingo, das 11h às 23h
             </p>
@@ -1239,20 +1231,20 @@ document.getElementById('containerAjuda').innerHTML = `
 
        
 
-    <div class="bg-gray-50 rounded-[2.5rem] p-8 flex flex-col md:flex-row gap-8 justify-around items-center">
+    <div class="temaCards rounded-[2.5rem] p-8 flex flex-col md:flex-row gap-8 justify-around items-center">
         
         <div class="flex flex-col items-center gap-2">
             <i data-lucide="mail" class="w-5 h-5 text-yellow-500"></i>
-            <span class="text-xs font-black text-gray-400 uppercase tracking-tighter">E-mail Corporativo</span>
-            <span class="font-bold text-gray-700">contato@suamarca.com.br</span>
+            <span class="text-xs font-black temaTextos2 uppercase tracking-tighter">E-mail Corporativo</span>
+            <span class="font-bold temaTextos2">contato@suamarca.com.br</span>
         </div>
 
         <div class="hidden md:block w-px h-12 bg-gray-200"></div>
 
         <div class="flex flex-col items-center gap-2">
             <i data-lucide="phone" class="w-5 h-5 text-yellow-500"></i>
-            <span class="text-xs font-black text-gray-400 uppercase tracking-tighter">Central de Voz</span>
-            <span class="font-bold text-gray-700">0800 123 4567</span>
+            <span class="text-xs font-black temaTextos2 uppercase tracking-tighter">Central de Voz</span>
+            <span class="font-bold temaTextos2">0800 123 4567</span>
         </div>
     </div>
 `
@@ -1265,7 +1257,7 @@ function carregarHistorico() {
     const container = document.getElementById('containerHistorico');
 
     if (historicoCompleto.length === 0) {
-        container.innerHTML = '<p class="text-center text-gray-400 py-10">Nenhum pedido encontrado.</p>';
+        container.innerHTML = '<p class="text-center temaTextos py-10">Nenhum pedido encontrado.</p>';
         return;
     }
 
@@ -1274,9 +1266,9 @@ function carregarHistorico() {
         const totalPedido = item.pedido.reduce((acc, p) => acc + (parseFloat(p.preco) * p.qtd), 0);
 
         return `
-        <div class="w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="bg-gray-50 px-6 py-3 flex justify-between items-center border-b border-gray-100">
-                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Pedido #${item.numero}</span>
+        <div class="w-full temaCards rounded-2xl  overflow-hidden">
+            <div class=" px-6 py-3 flex justify-between items-center border-b temaBordas">
+                <span class="text-xs font-bold temaTitulos uppercase tracking-widest">Pedido #${item.numero}</span>
                 <span class="text-xs text-gray-500">${item.data}</span>
             </div>
 
@@ -1284,14 +1276,14 @@ function carregarHistorico() {
                 ${item.pedido.map(p => `
                     <div class="flex justify-between items-center mb-2">
                         <div>
-                            <h3 class="font-bold text-gray-800 text-sm">${p.nome}</h3>
-                            <p class="text-xs text-gray-400">${p.embalagem} | Qtd: ${p.qtd}</p>
+                            <h3 class="font-bold temaTextos text-sm">${p.nome}</h3>
+                            <p class="text-xs temaTextos2">${p.embalagem} | Qtd: ${p.qtd}</p>
                         </div>
-                        <span class="font-semibold text-gray-700">R$ ${parseFloat(p.preco).toFixed(2)}</span>
+                        <span class="font-semibold temaTitulos">R$ ${parseFloat(p.preco).toFixed(2)}</span>
                     </div>
                 `).join('')}
                 
-                <hr class="my-4 border-dashed border-gray-200">
+                <hr class="my-4 border-dashed temaBordas">
 
                 <div class="flex justify-between items-center">
                     <div>
@@ -1408,11 +1400,17 @@ window.addEventListener('click', (e) => {
     const modal = document.getElementById('modalAdicionado');
     if (e.target === modal) fecharModalAdicionado();
 });
+async function preencheEndereco() {
+ const dados = await userDados()
+  document.getElementById('inputRuaAlt').value = dados.rua || ''
+  document.getElementById('inputCasaAlt').value = dados.casa || ''
+  document.getElementById('inputBairroAlt').value = dados.bairro || ''
+  document.getElementById('inputCEPAlt').value = dados.cep || ''
+  document.getElementById('inputComplementoAlt').value = dados.complemento || ''
+}
 async function cadastrarEnderecoAlternativo(e){
-  
   const userdados = await userDados()
-   
-  e.preventDefault(); // Impede a página de recarregar
+   e.preventDefault(); // Impede a página de recarregar
   
     userdados.rua = document.getElementById('inputRuaAlt').value
 

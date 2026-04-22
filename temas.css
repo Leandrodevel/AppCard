@@ -1,18 +1,161 @@
-.tema-amarelo-branco { --bg-cor:#F6F6F6; --el-cor: #ffcc00;--el-cor-hover:#fadd69; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#777;}
-.tema-laranja-branco { --bg-cor: #fcfcfc; --el-cor:#ECECEC #ff6600;--el-cor-hover:#fca063;  --txt-cor: #1a1a1a;--bg-cor-2: #fff ;--txt-cor-2:#777; }
-.tema-vermelho-branco { --bg-cor: #fcfcfc; --el-cor: #dc3545;--el-cor-hover:#e4717c; --txt-cor: #1a1a1a;--bg-cor-2: #fff ; --txt-cor-2:#777;}
-.tema-verde-branco   { --bg-cor: #fcfcfc; --el-cor: #28a745;--el-cor-hover:#51c46c; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#777; }
-.tema-azul-branco    { --bg-cor: #fcfcfc; --el-cor: #007bff;--el-cor-hover:#3395ff;  --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#777; }
-.tema-acai-branco    { --bg-cor: #fcfcfc; --el-cor: #4b0082;--el-cor-hover:#975cc2; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#777; }
+/* TEMA AMARELO: Destaque em Laranja Queimado (Sofisticado) */
+.tema-amarelo-branco { 
+    --bg-cor: #F6F6F6; 
+    --cor: #FFD700;
+    --cor-destaque: #E67E22; 
+    --cor-hover: #fadd69; 
+    --txt-cor: #1a1a1a; 
+    --txt-btn: #4f4f4f; 
+    --bg-cor-2: #fff;
+    --txt-cor-2: #919191;
+    --txt-cor-3: #757575;
+}
 
-/* Temas Escuros (Fundo Preto) */
-.tema-amarelo-preto  { --bg-cor: #0f0f0f;--el-cor-hover:#fadd69; --el-cor: #ffcc00; --txt-cor: #ffffff;--bg-cor-2: #282828 ;--txt-cor-2:#f2f2f2; }
-.tema-laranja-preto  { --bg-cor: #0f0f0f;--el-cor-hover:#fca063; --el-cor: #ff6600; --txt-cor: #ffffff; --bg-cor-2: #282828;--txt-cor-2:#f2f2f2; }
-.tema-vermelho-preto { --bg-cor: #0f0f0f;--el-cor-hover:#e4717c; --el-cor: #dc3545; --txt-cor: #ffffff; --bg-cor-2: #282828;--txt-cor-2:#f2f2f2; }
-.tema-verde-preto    { --bg-cor: #0f0f0f;--el-cor-hover:#51c46c; --el-cor: #28a745; --txt-cor: #ffffff; --bg-cor-2: #282828;--txt-cor-2:#f2f2f2; }
-.tema-azul-preto     { --bg-cor: #0f0f0f;--el-cor-hover:#3395ff; --el-cor: #007bff; --txt-cor: #ffffff; --bg-cor-2: #282828;--txt-cor-2:#f2f2f2; }
-.tema-acai-preto     { --bg-cor: #0f0f0f;--el-cor-hover:#975cc2; --el-cor: #742ba8; --txt-cor: #ffffff;--bg-cor-2:#282828;--txt-cor-2:#f2f2f2;  }
-  
+/* TEMA LARANJA: Destaque em Vermelho Coral (Energético) */
+.tema-laranja-branco { 
+    --bg-cor: #fcfcfc; 
+    --cor: #ffa227;
+    --cor-destaque: #E63946; 
+    --cor-hover: #fca063;  
+    --txt-cor: #1a1a1a;
+    --txt-btn: #4f4f4f;
+    --bg-cor-2: #fff;
+    --txt-cor-2: #777;
+    --txt-cor-3: #b2b2b2; 
+}
+
+/* TEMA VERMELHO: Destaque em Roxo Profundo (Moderno) */
+.tema-vermelho-branco { 
+    --bg-cor: #fcfcfc; 
+    --cor: #E63946;
+    --cor-destaque: #6D28D9; 
+    --cor-hover: #e4717c; 
+    --txt-cor: #1a1a1a;
+    --txt-btn: #f2f2f2;
+    --bg-cor-2: #fff; 
+    --txt-cor-2: #777;
+    --txt-cor-3: #b2b2b2;
+}
+
+/* TEMA VERDE: Destaque em Azul Petróleo (Elegante) */
+.tema-verde-branco { 
+    --bg-cor: #fcfcfc; 
+    --cor: #2ECC71;
+    --cor-destaque: #2471A3; 
+    --cor-hover: #51c46c; 
+    --txt-cor: #1a1a1a; 
+    --txt-btn: #4a4a4a;
+    --bg-cor-2: #fff;
+    --txt-cor-2: #777;
+    --txt-cor-3: #b2b2b2; 
+}
+
+/* TEMA AZUL: Destaque em Ciano/Turquesa (Tecnológico) */
+.tema-azul-branco { 
+    --bg-cor: #fcfcfc; 
+    --cor: #3160e0;
+    --cor-destaque: #0b778a; 
+    --cor-hover: #3395ff;  
+    --txt-cor: #1a1a1a; 
+    --txt-btn: #f2f2f2;
+    --bg-cor-2: #fff;
+    --txt-cor-2: #777;
+    --txt-cor-3: #b2b2b2; 
+}
+
+/* TEMA AÇAÍ: Destaque em Rosa Magenta (Vibrante) */
+.tema-acai-branco { 
+    --bg-cor: #fcfcfc; 
+    --cor: #6b14aa;
+    --cor-destaque: #D81B60; 
+    --cor-hover: #975cc2; 
+    --txt-cor: #1a1a1a;
+    --txt-btn: #f2f2f2; 
+    --bg-cor-2: #fff;
+    --txt-cor-2: #777;
+    --txt-cor-3: #b2b2b2; 
+}
+
+/* TEMA AMARELO ESCURO */
+.tema-amarelo-escuro { 
+    --bg-cor: #121212; 
+    --cor: #FFD700;
+    --cor-destaque: #BB86FC; /* Roxo suave (estilo Material Design) */
+    --cor-hover: #fadd69; 
+    --txt-cor: #f5f5f5;
+    --txt-btn: #2e2e2e; 
+    --bg-cor-2: #302f2f;
+    --bg-cor-3: #504f4f;
+    --txt-cor-2: #a0a0a0;
+    --txt-cor-3: #4b4a4a;
+     --border-cor: #5a5a5a;
+}
+
+/* TEMA LARANJA ESCURO */
+.tema-laranja-escuro { 
+    --bg-cor: #121212; 
+    --cor: #FF8C00;
+    --cor-destaque: #03DAC6; /* Turquesa para um ar moderno/tech */
+    --cor-hover: #fca063;  
+    --txt-cor: #f5f5f5;
+    --txt-btn: #1a1a1a;
+    --bg-cor-2: #1e1e1e;
+    --txt-cor-2: #a0a0a0;
+    --txt-cor-3: #444; 
+}
+
+/* TEMA VERMELHO ESCURO */
+.tema-vermelho-escuro { 
+    --bg-cor: #121212; 
+    --cor: #FF4D4D; /* Vermelho levemente mais claro para brilhar no escuro */
+    --cor-destaque: #FFB74D; /* Laranja pastel para detalhes */
+    --cor-hover: #ff7878; 
+    --txt-cor: #f5f5f5;
+    --txt-btn: #1a1a1a;
+    --bg-cor-2: #1e1e1e; 
+    --txt-cor-2: #a0a0a0;
+    --txt-cor-3: #444;
+}
+
+/* TEMA VERDE ESCURO */
+.tema-verde-escuro { 
+    --bg-cor: #121212; 
+    --cor: #2ECC71;
+    --cor-destaque: #F06292; /* Rosa/Pêssego para detalhes vibrantes */
+    --cor-hover: #51c46c; 
+    --txt-cor: #f5f5f5; 
+    --txt-btn: #1a1a1a;
+    --bg-cor-2: #1e1e1e;
+    --txt-cor-2: #a0a0a0;
+    --txt-cor-3: #444; 
+}
+
+/* TEMA AZUL ESCURO */
+.tema-azul-escuro { 
+    --bg-cor: #121212; 
+    --cor: #3B82F6; /* Azul mais vivo */
+    --cor-destaque: #FCD34D; /* Amarelo ouro para detalhes */
+    --cor-hover: #60a5fa;  
+    --txt-cor: #f5f5f5; 
+    --txt-btn: #1a1a1a;
+    --bg-cor-2: #1e1e1e;
+    --txt-cor-2: #a0a0a0;
+    --txt-cor-3: #444; 
+   
+}
+
+/* TEMA AÇAÍ ESCURO */
+.tema-acai-escuro { 
+    --bg-cor: #0f0a14; /* Roxo quase preto */
+    --cor: #975cc2; /* Roxo mais claro para leitura */
+    --cor-destaque: #00FFD1; /* Verde neon/menta (combinação clássica de açaí) */
+    --cor-hover: #b388eb; 
+    --txt-cor: #f5f5f5;
+    --txt-btn: #1a1a1a; 
+    --bg-cor-2: #1c1425;
+    --txt-cor-2: #b2b2b2;
+    --txt-cor-3: #444; 
+}
 .app {
     background-color: var(--bg-cor);
     color: var(--txt-cor);
@@ -22,25 +165,39 @@ textarea,input,select{
     background: var(--bg-cor-2);
 }
 .temaBotoes {
-    background-color: var(--el-cor);
-    color: var(--txt-cor); 
+    background-color: var(--cor);
+    color: var(--txt-btn); 
 }
+
 .temaBotoesHover {
     background-color: #fff;
-    color: var(--el-cor);
+    color: var(--cor);
 }
-.TemaElementos{
-    
+
+.textoCor{
+    color: var(--cor);
 }
 .temaTextos{
- color: var(--txt-cor-2) 
+ color: var(--txt-cor) 
+}
+.temaTextos2{
+    color: var(--txt-cor-2);
+}
+.temaTextos3{
+    color: var(--txt-cor-3);
 }
 .temaTitulos{
-    color: var(--el-cor);
+    color: var(--cor-destaque);
 }
 
 .temaCards {
     background-color: var(--bg-cor-2);
+}
+.temaCards2 {
+    background-color: var(--bg-cor-3);
+}
+.temaBordas {
+    border-color: var(--border-cor);
 }
 /*
 Para o Roxo (Açaí), se o fundo for branco, a cor #4b0082 (Indigo) ou #3d0130 (Açaí profundo)

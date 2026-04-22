@@ -130,7 +130,7 @@ async function userDados() {
   </span>--->
   
   <span class="text-center">
-    <h2 class="temaTitulos uppercase  font-bold text-3xl mogra-regular shadow-lg shadow-black"> Boteco sem Limite</h2>
+    <h2 class="textoCor uppercase  font-bold text-3xl mogra-regular shadow-lg shadow-black"> Boteco sem Limite</h2>
   <small class="text-xs text-white">mercado de bebidas</small>
   </span>
 </div>
@@ -291,7 +291,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
   <div class="px-6 text-center flex flex-col items-center">
     
     <div class="relative mb-4">
-      <div class="w-24 h-24 temaBotoes rounded-full p-1 flex items-center justify-center border-4 border-white">
+      <div class="w-24 h-24 temaBotoes rounded-full p-1 flex items-center justify-center ">
         <h1 id="pflLetra" class="font-black text-4xl text-white drop-shadow-md capitalize">L</h1>
       </div>
       <button onclick="navegacao('editarUser')" class="absolute bottom-0 right-0 p-2 temaCards  rounded-full border-2 border-white ">
@@ -688,9 +688,9 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
     <div class=" w-full  overflow-hidden ">
         <div class="p-6 flex justify-between items-center">
-            <h2 class="text-xl font-black uppercase text-gray-700">Sua Lista</h2>
+            <h2 class="text-xl font-black uppercase temaTitulos">Sua Lista</h2>
            
-            <button class=" close text-2xl bg-yellow-400 rounded-md p-2 " onclick="voltarPage()">
+            <button class=" close text-2xl temaBotoes rounded-md p-2 " onclick="voltarPage()">
                 <i data-lucide="undo-2"></i>  
             </button>
         </div>
@@ -718,10 +718,11 @@ const classeComItem = [...new Set(dbListExist.map(item =>
               
               
               <script>
-     function slcEnderecoModal(){      
+    async function slcEnderecoModal(){    
+      const userExist = await userDados()
     const slcEndereco = document.getElementById('selectEndereco')
     selectEndereco.innerHTML = ''
-  const userExist = JSON.parse(localStorage.getItem('userDados'))
+  
   
   const optEndereco = document.createElement('option')
     
@@ -762,28 +763,28 @@ slcEndereco.addEventListener('change', (event) => {
         <!-------------------------------------> 
         
 <div class="space-y-4">
-  <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Forma de Pagamento</h3>
+  <h3 class="text-sm font-semibold temaTextos2 uppercase tracking-wider">Forma de Pagamento</h3>
   
   <div class="flex flex-row gap-2 overflow-x-auto pb-2 no-scrollbar">
     
     <label class="flex-1 min-w-[100px] cursor-pointer">
       <input type="radio" name="pay_method" value="pix" class="peer hidden" checked onchange="toggleTroco(false)">
-      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
-        <span class="text-xs font-bold text-gray-800">PIX</span>
+      <div class="flex flex-col items-center justify-center p-3  rounded-xl temaBotoes  transition-all  peer-checked:bg-gray-300 peer-checked:text-gray-700">
+        <span class="text-xs font-bold ">PIX</span>
       </div>
     </label>
 
     <label class="flex-1 min-w-[100px] cursor-pointer">
       <input type="radio" name="pay_method" value="CARTÃO" class="peer hidden" onchange="toggleTroco(false)">
-      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
-        <span class="text-xs font-bold text-gray-800">CARTÃO</span>
+      <div class="flex flex-col items-center justify-center p-3  rounded-xl temaBotoes transition-all peer-checked:bg-gray-300 peer-checked:text-gray-700">
+        <span class="text-xs font-bold ">CARTÃO</span>
       </div>
     </label>
 
     <label class="flex-1 min-w-[100px] cursor-pointer">
       <input type="radio" name="pay_method" value="DINHEIRO" class="peer hidden" onchange="toggleTroco(true)">
-      <div class="flex flex-col items-center justify-center p-3 border-2 rounded-xl transition-all peer-checked:border-blue-600 peer-checked:bg-blue-50 hover:bg-gray-50">
-        <span class="text-xs font-bold text-gray-800">DINHEIRO</span>
+      <div class="flex flex-col items-center justify-center p-3  rounded-xl temaBotoes transition-all peer-checked:bg-gray-300 peer-checked:text-gray-700">
+        <span class="text-xs font-bold ">DINHEIRO</span>
       </div>
     </label>
     
@@ -830,8 +831,8 @@ slcEndereco.addEventListener('change', (event) => {
             
             
             <div class="flex justify-between items-center">
-                <span class="font-bold text-gray-600 uppercase text-sm">Total:</span>
-                <span id="valorTotal" class="text-2xl font-black text-gray-900">R$ 8,50</span>
+                <span class="font-bold temaTextos uppercase text-sm">Total:</span>
+                <span id="valorTotal" class="text-2xl font-black temaTitulos">R$ 8,50</span>
             </div>
             
 
@@ -861,11 +862,11 @@ slcEndereco.addEventListener('change', (event) => {
             </div>
         </div>
 
-        <h2 class="text-2xl font-black text-gray-800 mb-2">Seu carrinho está vazio</h2>
-        <p class="text-gray-500 mb-8">Parece que você ainda não escolheu suas delícias. Que tal dar uma olhada no cardápio?</p>
+        <h2 class="text-2xl font-black temaTextos mb-2">Seu carrinho está vazio</h2>
+        <p class="temaTextos2 mb-8">Parece que você ainda não escolheu suas delícias. Que tal dar uma olhada no cardápio?</p>
 
         <button onclick="toggleModalVazio(),navegacao('home')" 
-                class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all uppercase tracking-wider text-sm">
+                class="w-full temaBotoes font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all uppercase tracking-wider text-sm">
             Voltar ao Cardápio
         </button>
     </div>
@@ -969,17 +970,17 @@ slcEndereco.addEventListener('change', (event) => {
                 </svg>
             </div>
 
-            <h3 class="text-2xl font-black text-gray-800 mb-2">Confirmar</h3>
-            <p id="msg-produto-removido" class="text-gray-600 mb-8 px-4 font-medium">
+            <h3 class="text-2xl font-black temaTextos mb-2">Confirmar</h3>
+            <p id="msg-produto-removido" class="temaTextos2 mb-8 px-4 font-medium">
                 O item será retirado do seu carrinho.
             </p>
 
             <div class="space-y-3">
-                <button onclick="fecharModalRemover(),confirmaRemover()" class="w-full bg-red-500 text-white font-bold py-4 rounded-2xl transition-all active:scale-95 shadow-lg shadow-gray-200">
+                <button onclick="fecharModalRemover(),confirmaRemover()" class="w-full bg-red-500 text-white font-bold py-4 rounded-2xl transition-all active:scale-95">
                     Ok, remover
                 </button>
                 
-                <button onclick="navegacao(paginaAtual), fecharModalRemover()" class="w-full bg-white text-gray-500 font-bold py-3 hover:text-red-500 transition-colors">
+                <button onclick="navegacao(paginaAtual), fecharModalRemover()" class="w-full temaTexto font-bold py-3 hover:text-red-500 transition-colors">
                     voltar para carrinho
                 </button>
             </div>
@@ -1043,7 +1044,7 @@ slcEndereco.addEventListener('change', (event) => {
   <!--modal endereço temporario---> 
         
         
-  <div id="enderecoTemp" class="bg-white w-full h-full p-4 flex flex-col gap-2 z-0">
+  <div id="enderecoTemp" class=" w-full h-full p-4 flex flex-col gap-2 z-0">
  <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="voltarPage()">
         <i class="w-4 h-4" data-lucide="undo-2"></i>
       </button>
@@ -1051,45 +1052,37 @@ slcEndereco.addEventListener('change', (event) => {
    </div>
   
     
-        <!---ENDERECO ALTERNATIVO-->
-    
-    
-    <!------------->
-    
       <form id="formEnderecoAlternativo" class="space-y-4" onsubmit="cadastrarEnderecoAlternativo(event)">
 
     <div>
             
-    <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Endereço</label>
+    <label class="block text-xs font-bold temaTextos uppercase mb-1 ml-1">Endereço</label>
     
-      <input type="number"  id="inputCEPAlt" placeholder="CEP -busca automatica"
-      class=" hidden w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
-      
             <div class="flex gap-5 justify-between mt-5" >
       <input id="inputRuaAlt" required type="text" placeholder="Nome da rua" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        class="w-full rounded-xl px-4 py-4 temaTextos2  focus:ring-1 focus:ring-gray-400 transition-all shadow-sm">
             </div>
       
       <div class="flex gap-5 justify-between mt-4" >
       <input id="inputCasaAlt" type="number" placeholder="000" required
-        class="w-[20%] bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        class="w-[20%] temaTextos2 rounded-xl px-4 py-4  focus:ring-1 focus:ring-gray-400 transition-all shadow-sm  transition-all shadow-sm">
         
         
       <input type="text" id="inputComplementoAlt" placeholder=" apt, altos, fds, casa 2..." 
-        class="w-[70%] bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        class="w-[70%]  rounded-xl px-4 py-4 temaTextos2  focus:ring-1 focus:ring-gray-400 transition-all shadow-sm transition-all shadow-sm">
        </div>
        
         <div class="my-4">
     
       <input required type="text" id="inputBairroAlt" placeholder="Nome do Bairro" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        class="w-full rounded-xl px-4 py-4 temaTextos2  focus:ring-1 focus:ring-gray-400 transition-all shadow-sm">
     </div>
 
 
 
     <div class="pt-4">
       <button id="btnEnviaCadUser" type="submit" 
-        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl  transition-transform active:scale-95 uppercase tracking-wider">
+        class="w-full temaBotoes  font-black py-4 rounded-2xl  transition-transform active:scale-95 uppercase tracking-wider">
         cadastrar Endereço 
       </button>
     </div>
@@ -1098,16 +1091,16 @@ slcEndereco.addEventListener('change', (event) => {
 
 
 
- <div class=" py-8 px-4 bg-white text-zinc-900  text-center rounded-lg mx-2">
+ <div class=" py-8 px-4 temaCards  text-center rounded-lg mx-2">
 
   <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
     
-    <div class="w-full text-sm  tracking-wide">
+    <div class="w-full text-sm temaTextos2  tracking-wide">
       &copy; 2026 Leandro Peçanha Luiz. Todos os direitos reservados.
     </div>
 
     <div class="flex flex-col items-center md:items-end gap-2">
-      <p class="text-yellow-500 font-medium text-sm">
+      <p class="temaTitulos font-medium text-sm">
         Tem um comércio e quer digitalizar suas vendas?
       </p>
       <a href="#" class="inline-flex items-center px-4 py-2  text-zinc-900 text-xs font-bold uppercase tracking-widest rounded-md bg-yellow-400 transition-colors duration-200">
