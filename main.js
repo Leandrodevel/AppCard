@@ -906,7 +906,11 @@ const codInput = document.getElementById('remInputCod').value
   meuCarrinho = meuCarrinho.filter(item => item.cod !== codInput);
   localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
   atualizaContador()
+  if(meuCarrinho.length ===0){
+    navegacao('home')
+  }else{
   navegacao(paginaAtual)
+  }
   closeModal()
 
 }
@@ -1267,7 +1271,7 @@ function carregarHistorico() {
 
         return `
         <div class="w-full temaCards rounded-2xl  overflow-hidden">
-            <div class=" px-6 py-3 flex justify-between items-center border-b temaBordas">
+            <div class=" px-6 py-3 flex justify-between items-center border-b">
                 <span class="text-xs font-bold temaTitulos uppercase tracking-widest">Pedido #${item.numero}</span>
                 <span class="text-xs text-gray-500">${item.data}</span>
             </div>
@@ -1283,7 +1287,7 @@ function carregarHistorico() {
                     </div>
                 `).join('')}
                 
-                <hr class="my-4 border-dashed temaBordas">
+                <hr class="my-4 border-dashed">
 
                 <div class="flex justify-between items-center">
                     <div>
