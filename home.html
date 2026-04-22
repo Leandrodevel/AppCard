@@ -110,7 +110,7 @@ async function userDados() {
     alt="Background" 
     class="absolute inset-0 w-full h-full object-cover object-bottom"
   />
-  <div class="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent z-10"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/80 from-30% to-transparent z-10"></div>
             
     <div class="flex items-center justify-between mb-4 z-30 relative">
       
@@ -130,7 +130,7 @@ async function userDados() {
   </span>--->
   
   <span class="text-center">
-    <h2 class="temaTitulos uppercase font-bold text-3xl mogra-regular shadow-lg shadow-black"> Boteco sem Limite</h2>
+    <h2 class="temaTitulos uppercase  font-bold text-3xl mogra-regular shadow-lg shadow-black"> Boteco sem Limite</h2>
   <small class="text-xs text-white">mercado de bebidas</small>
   </span>
 </div>
@@ -1040,10 +1040,10 @@ slcEndereco.addEventListener('change', (event) => {
       <script>
   function ativabtnBottom(id){
   
-    const allsBtnNavBottom = ['btbHome','btbProm','btbCar','btbUser']
+    const allsBtnNavBottom = ['btbHome','btbProm','btbCar','btbUser','btbSearch']
     
     allsBtnNavBottom.map(bb =>{
-     document.getElementById(bb).classList.remove('temaTextos')
+     document.getElementById(bb).classList.remove('temaTitulos')
      
     })
     document.getElementById(id).classList.add('temaTitulos')
