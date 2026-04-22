@@ -315,7 +315,7 @@ async function listarCat(idAtivo, classe) {
 
   // --- Botão "Todos" ---
   const divTodos = document.createElement('button');
-  divTodos.className = 'shadow-sm shadow-gray-500/30 bg-yellow-400 font-bold text-sm px-3 py-1 rounded-lg whitespace-nowrap text-gray-700';
+  divTodos.className = 'shadow-sm  temaBotoes font-bold text-sm px-3 py-1 rounded-lg whitespace-nowrap ';
   divTodos.innerText = 'Todos';
   divTodos.id = 'todos';
 
@@ -326,7 +326,7 @@ async function listarCat(idAtivo, classe) {
   });
 
   if (!idAtivo) {
-    divTodos.classList.replace('bg-yellow-400', 'bg-white');
+    divTodos.classList.replace('temaBotoes', 'temaBotoesHover');
   }
 
   navCat.appendChild(divTodos);
@@ -339,11 +339,11 @@ async function listarCat(idAtivo, classe) {
     const btn = document.createElement('button');
     btn.id = idBotao;
     btn.innerText = item;
-    btn.className = 'shadow-sm shadow-gray-500/30 bg-yellow-400 font-bold text-sm px-3 py-1 rounded-lg whitespace-nowrap text-gray-700';
+    btn.className = 'shadow-sm  temaBotoes font-bold text-sm px-3 py-1 rounded-lg whitespace-nowrap ';
 
     // Aplica destaque se estiver ativo
     if (idBotao === idAtivo) {
-      btn.classList.replace('bg-yellow-400', 'bg-white');
+      btn.classList.replace('temaBotoes', 'temaBotoesHover');
     }
 
     btn.addEventListener('click', () => {
@@ -520,7 +520,7 @@ const db = await getDados();
    const semPromocao = document.createElement('div')
   semPromocao.className = 'w-full flex justify-center relative '
         semPromocao.innerHTML=`
-<div id="promocoesVazias" class="w-full max-w-2xl mx-auto my-12 p-12 bg-white rounded-[3rem] border-2 border-dashed border-yellow-100 flex flex-col items-center text-center">
+<div id="promocoesVazias" class="w-full max-w-2xl mx-auto my-12 p-12  rounded-[3rem] border-2 border-dashed border-yellow-100 flex flex-col items-center text-center">
     
     <div class="bg-yellow-50 p-8 rounded-full mb-6 animate-bounce-slow">
         <i data-lucide="tag" class="w-20 h-20 text-yellow-500 opacity-40"></i>
@@ -567,17 +567,16 @@ const db = await getDados();
         OFERTA IMPERDÍVEL!
     </span>
     
-  <div class="w-full bg-white p-8 rounded-3xl shadow-sm border hover:shadow-lg transition-shadow ">
+  <div class="w-full temaCards p-8 rounded-3xl  ">
   
 
-  
                  <button id="bt+${de.cod}" 
                 
                 onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
                 <h3 class="text-2xl font-bold text-red-500 mb-2">${nomeEscapado} </h3>
                  </button>
 
-                <p class="text-gray-700 text-lg italic  mb-4">${de.tipo}</p>
+                <p class="temaTextos text-lg italic  mb-4">${de.tipo}</p>
                   
                 <div class="grid grid-cols-2">
                 <div class="grid grid-cols-1">
@@ -588,7 +587,7 @@ const db = await getDados();
                 </div>
 
             <button id="bt+${de.cod}" 
-                class="relative bg-yellow-400 text-gray-700 rounded-xl p-2.5  flex items-center gap-2 font-black justify-center" 
+                class="relative temaBotoes rounded-xl p-2.5  flex items-center gap-2 font-black justify-center" 
                 onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
              ADICIONAR
 
@@ -794,17 +793,17 @@ document.getElementById('modalOverlay').innerHTML=''
   
   document.getElementById('modalOverlay').innerHTML=`
 
-<div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl transform translate-y-full transition-transform duration-300" id="modalBox">
+<div class="temaCards w-full max-w-md rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl transform translate-y-full transition-transform duration-300" id="modalBox">
     
     <div class="flex justify-between items-start mb-4">
       <div>
-        <h2 id="modalProdNome" class="text-2xl font-black text-gray-900 leading-tight">${nome}</h2>
-        <p id="modalProdDetalhe" class="text-gray-700 font-medium">${embalagem}</p>
+        <h2 id="modalProdNome" class="text-2xl font-black temaTitulos leading-tight">${nome}</h2>
+        <p id="modalProdDetalhe" class="temaTexto font-medium">${embalagem}</p>
       </div>
       
       <!-- ÍCONE: X (FECHAR) -->
-      <button onclick="closeModal()" class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition-colors">
-        <i data-lucide="x" class="w-6 h-6 text-gray-600"></i>
+      <button onclick="closeModal()" class="temaBotoes p-2 rounded-full  transition-colors">
+        <i data-lucide="x" class="w-6 h-6 "></i>
       </button>
     </div>
     
@@ -813,15 +812,15 @@ document.getElementById('modalOverlay').innerHTML=''
     <div class="flex items-center justify-between mb-8">
       <div>
         <span class="text-xs font-bold text-orange-500 uppercase tracking-widest">Preço Unitário</span>
-        <div class="text-3xl font-black text-gray-900" id="modalProdPreco">${precoFinal}</div>
+        <div class="text-3xl font-black temaTexto" id="modalProdPreco">${precoFinal}</div>
       </div>
       
-      <button class="border border-red-500 rounded-md p-2 ${btnDel}" id="deleteItem" onclick="removerItem('${cod}')">
-      <i data-lucide="trash" class="w-6 h-6  text-red-500 "></i>
+      <button class="border border-red-500 rounded-md font-black p-2 ${btnDel}" id="deleteItem" onclick="removerItem('${cod}')">
+      <i data-lucide="trash" class="w-6 h-6  text-red-500 font-black"></i>
       </button>
       
       
-      <div class="flex items-center bg-gray-100 rounded-2xl p-1 border border-gray-200">
+      <div class="flex items-center temaBotoes rounded-2xl p-1">
       
   
         <!-- ÍCONE: MINUS (MENOS) -->
@@ -838,7 +837,7 @@ document.getElementById('modalOverlay').innerHTML=''
       </div>
     </div>
     
-    <button id="modalProdBtnAdd" onclick="confirmAdd('${cod}','${nome}', '${embalagem}','${preco}')" class="w-full bg-yellow-400 hover:bg-orange-600 text-white font-black py-4 rounded-2xl shadow-lg shadow-orange-200 transition-all flex justify-between px-6 items-center">
+    <button id="modalProdBtnAdd" onclick="confirmAdd('${cod}','${nome}', '${embalagem}','${preco}')" class="w-full temaBotoes text-white font-black py-4 rounded-2xl  transition-all flex justify-between px-6 items-center">
       <span>ADICIONAR AO PEDIDO</span>
       <div class="flex items-center gap-2">
         <span id="totalPrice" class="bg-orange-600 px-3 py-1 rounded-lg text-sm">R$ 9,90</span>

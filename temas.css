@@ -6,12 +6,12 @@
 .tema-acai-branco    { --bg-cor: #ffffff; --el-cor: #4b0082; --txt-cor: #1a1a1a; }
 
 /* Temas Escuros (Fundo Preto) */
-.tema-amarelo-preto  { --bg-cor: #0f0f0f; --el-cor: #ffcc00; --txt-cor: #ffffff;--bg-cor-2:#282828  }
-.tema-laranja-preto  { --bg-cor: #0f0f0f; --el-cor: #ff6600; --txt-cor: #ffffff; --bg-cor-2:#282828 }
-.tema-vermelho-preto { --bg-cor: #0f0f0f; --el-cor: #dc3545; --txt-cor: #ffffff; --bg-cor-2:#282828 }
-.tema-verde-preto    { --bg-cor: #0f0f0f; --el-cor: #28a745; --txt-cor: #ffffff; --bg-cor-2:#282828 }
-.tema-azul-preto     { --bg-cor: #0f0f0f; --el-cor: #007bff; --txt-cor: #ffffff; --bg-cor-2:#282828 }
-.tema-acai-preto     { --bg-cor: #0f0f0f; --el-cor: #4b0082; --txt-cor: #ffffff;--bg-cor-2:#282828  }
+.tema-amarelo-preto  { --bg-cor: #0f0f0f;--el-cor-hover:#fadd69; --el-cor: #ffcc00; --txt-cor: #ffffff;--bg-cor-2:#282828  }
+.tema-laranja-preto  { --bg-cor: #0f0f0f;--el-cor-hover:#fca063; --el-cor: #ff6600; --txt-cor: #ffffff; --bg-cor-2:#282828 }
+.tema-vermelho-preto { --bg-cor: #0f0f0f;--el-cor-hover:#e4717c; --el-cor: #dc3545; --txt-cor: #ffffff; --bg-cor-2:#282828 }
+.tema-verde-preto    { --bg-cor: #0f0f0f;--el-cor-hover:#51c46c; --el-cor: #28a745; --txt-cor: #ffffff; --bg-cor-2:#282828 }
+.tema-azul-preto     { --bg-cor: #0f0f0f;--el-cor-hover:#3395ff; --el-cor: #007bff; --txt-cor: #ffffff; --bg-cor-2:#282828 }
+.tema-acai-preto     { --bg-cor: #0f0f0f;--el-cor-hover:#975cc2; --el-cor: #742ba8; --txt-cor: #ffffff;--bg-cor-2:#282828  }
   
 .app {
     background-color: var(--bg-cor);
@@ -23,7 +23,11 @@ textarea,input,select{
 }
 .temaBotoes {
     background-color: var(--el-cor);
-    color: #fff; 
+    color: var(--txt-cor); 
+}
+.temaBotoesHover {
+    background-color: #fff;
+    color: var(--el-cor);
 }
 .TemaElementos{
     

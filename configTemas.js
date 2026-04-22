@@ -23,5 +23,5 @@ function trocarTema(nomeDoTema) {
 
 
 window.onload = () => {
-    trocarTema('tema-verde-preto');
+    trocarTema('tema-acai-preto');
 };
