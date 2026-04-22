@@ -1223,7 +1223,7 @@ document.getElementById('containerAjuda').innerHTML = `
             <h3 class="font-black temaTitulos text-xl mb-1">WhatsApp</h3>
             <p class="temaTextos2 font-bold text-sm mb-3">Suporte em Tempo Real</p>
             <p class="temaTextos2 text-sm leading-relaxed">
-                (22) 99999-9999<br>
+                (22) 997263224<br>
                 Segunda a Domingo, das 11h às 23h
             </p>
         </div>
@@ -1235,16 +1235,12 @@ document.getElementById('containerAjuda').innerHTML = `
         <div class="flex flex-col items-center gap-2">
             <i data-lucide="mail" class="w-5 h-5 text-yellow-500"></i>
             <span class="text-xs font-black temaTextos2 uppercase tracking-tighter">E-mail Corporativo</span>
-            <span class="font-bold temaTextos2">contato@suamarca.com.br</span>
+            <span class="font-bold temaTextos2">leandro.wdsn@gmail.com</span>
         </div>
 
         <div class="hidden md:block w-px h-12 bg-gray-200"></div>
 
-        <div class="flex flex-col items-center gap-2">
-            <i data-lucide="phone" class="w-5 h-5 text-yellow-500"></i>
-            <span class="text-xs font-black temaTextos2 uppercase tracking-tighter">Central de Voz</span>
-            <span class="font-bold temaTextos2">0800 123 4567</span>
-        </div>
+      
     </div>
 `
 lucide.createIcons();
