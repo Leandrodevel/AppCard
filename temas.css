@@ -1,160 +1,180 @@
-/* TEMA AMARELO: Destaque em Laranja Queimado (Sofisticado) */
-.tema-amarelo-branco { 
-    --bg-cor: #F6F6F6; 
-    --cor: #FFD700;
-    --cor-destaque: #E67E22; 
-    --cor-hover: #fadd69; 
-    --txt-cor: #1a1a1a; 
-    --txt-btn: #4f4f4f; 
-    --bg-cor-2: #fff;
-    --txt-cor-2: #919191;
-    --txt-cor-3: #757575;
+/* TEMA AMARELO CLARO */
+.tema-amarelo-claro { 
+    --bg-cor: #F5F7F8;    /* Branco Gelo */
+    --bg-cor-2: #FFFFFF;  /* Branco Puro (Cards) */
+    --bg-cor-3: #E9ECEE;
+    --cor: #D4AF37;
+    --cor-destaque: #6200EE;
+    --cor-hover: #FFD700; 
+    --txt-cor: #4A4A4A;   /* Cinza Grafite Suave */
+    --txt-cor-2: #757575; /* Texto secundário */
+    --txt-cor-3: #A0A0A0; /* Texto discreto */
+    --txt-btn: #FFFFFF; 
+    --border-cor: #E2E2E2;
 }
 
-/* TEMA LARANJA: Destaque em Vermelho Coral (Energético) */
-.tema-laranja-branco { 
-    --bg-cor: #fcfcfc; 
-    --cor: #ffa227;
-    --cor-destaque: #E63946; 
-    --cor-hover: #fca063;  
-    --txt-cor: #1a1a1a;
-    --txt-btn: #4f4f4f;
-    --bg-cor-2: #fff;
-    --txt-cor-2: #777;
-    --txt-cor-3: #b2b2b2; 
+/* TEMA LARANJA CLARO */
+.tema-laranja-claro { 
+    --bg-cor: #FDF9F6;    
+    --bg-cor-2: #FFFFFF;  
+    --bg-cor-3: #F5EEE6;
+    --cor: #E67E22;
+    --cor-destaque: #00796B;
+    --cor-hover: #FF8C00;  
+    --txt-cor: #524742;   /* Marrom acinzentado suave */
+    --txt-cor-2: #7D706B;
+    --txt-cor-3: #A89D98;
+    --txt-btn: #FFFFFF;
+    --border-cor: #F0E4D7;
 }
 
-/* TEMA VERMELHO: Destaque em Roxo Profundo (Moderno) */
-.tema-vermelho-branco { 
-    --bg-cor: #fcfcfc; 
-    --cor: #E63946;
-    --cor-destaque: #6D28D9; 
-    --cor-hover: #e4717c; 
-    --txt-cor: #1a1a1a;
-    --txt-btn: #f2f2f2;
-    --bg-cor-2: #fff; 
-    --txt-cor-2: #777;
-    --txt-cor-3: #b2b2b2;
+/* TEMA VERMELHO CLARO */
+.tema-vermelho-claro { 
+    --bg-cor: #F9F7F7;    
+    --bg-cor-2: #FFFFFF;  
+    --bg-cor-3: #F0EDED;
+    --cor: #D32F2F;
+    --cor-destaque: #1976D2;
+    --cor-hover: #FF4D4D; 
+    --txt-cor: #4F4545;   /* Cinza quente suave */
+    --txt-cor-2: #7A6E6E;
+    --txt-cor-3: #A59B9B;
+    --txt-btn: #FFFFFF;
+    --border-cor: #EBE0E0;
 }
 
-/* TEMA VERDE: Destaque em Azul Petróleo (Elegante) */
-.tema-verde-branco { 
-    --bg-cor: #fcfcfc; 
-    --cor: #2ECC71;
-    --cor-destaque: #2471A3; 
-    --cor-hover: #51c46c; 
-    --txt-cor: #1a1a1a; 
-    --txt-btn: #4a4a4a;
-    --bg-cor-2: #fff;
-    --txt-cor-2: #777;
-    --txt-cor-3: #b2b2b2; 
+/* TEMA VERDE CLARO */
+.tema-verde-claro { 
+    --bg-cor: #F5F8F6;    
+    --bg-cor-2: #FFFFFF;  
+    --bg-cor-3: #E9F0EB;
+    --cor: #27AE60;
+    --cor-destaque: #C2185B;
+    --cor-hover: #2ECC71; 
+    --txt-cor: #424945;   /* Verde musgo bem escuro e suave */
+    --txt-cor-2: #6B7771;
+    --txt-cor-3: #97A39D;
+    --txt-btn: #FFFFFF;
+    --border-cor: #DCE7E0;
 }
 
-/* TEMA AZUL: Destaque em Ciano/Turquesa (Tecnológico) */
-.tema-azul-branco { 
-    --bg-cor: #fcfcfc; 
-    --cor: #3160e0;
-    --cor-destaque: #0b778a; 
-    --cor-hover: #3395ff;  
-    --txt-cor: #1a1a1a; 
-    --txt-btn: #f2f2f2;
-    --bg-cor-2: #fff;
-    --txt-cor-2: #777;
-    --txt-cor-3: #b2b2b2; 
+/* TEMA AZUL CLARO */
+.tema-azul-claro { 
+    --bg-cor: #F4F8FB;    
+    --bg-cor-2: #FFFFFF;  
+    --bg-cor-3: #EAF1F7;
+    --cor: #1976D2;
+    --cor-destaque: #F57C00;
+    --cor-hover: #3B82F6;  
+    --txt-cor: #40464D;   /* Azul ardósia suave */
+    --txt-cor-2: #6A7480;
+    --txt-cor-3: #97A2AF;
+    --txt-btn: #FFFFFF; 
+    --border-cor: #DEE7EE;
 }
 
-/* TEMA AÇAÍ: Destaque em Rosa Magenta (Vibrante) */
-.tema-acai-branco { 
-    --bg-cor: #fcfcfc; 
-    --cor: #6b14aa;
-    --cor-destaque: #D81B60; 
+/* TEMA AÇAÍ CLARO */
+.tema-acai-claro { 
+    --bg-cor: #F8F6F9;    
+    --bg-cor-2: #FFFFFF;  
+    --bg-cor-3: #F0EBF2;
+    --cor: #6A1B9A;
+    --cor-destaque: #00BFA5;
     --cor-hover: #975cc2; 
-    --txt-cor: #1a1a1a;
-    --txt-btn: #f2f2f2; 
-    --bg-cor-2: #fff;
-    --txt-cor-2: #777;
-    --txt-cor-3: #b2b2b2; 
+    --txt-cor: #4D4452;   /* Roxo berinjela suave */
+    --txt-cor-2: #7A6F82;
+    --txt-cor-3: #A99FB0;
+    --txt-btn: #FFFFFF; 
+    --border-cor: #E8DFEB;
 }
-
 /* TEMA AMARELO ESCURO */
 .tema-amarelo-escuro { 
     --bg-cor: #121212; 
-    --cor: #FFD700;
-    --cor-destaque: #BB86FC; /* Roxo suave (estilo Material Design) */
-    --cor-hover: #fadd69; 
-    --txt-cor: #f5f5f5;
-    --txt-btn: #2e2e2e; 
     --bg-cor-2: #302f2f;
     --bg-cor-3: #504f4f;
+    --cor: #FFD700;
+    --cor-destaque: #BB86FC;
+    --cor-hover: #fadd69; 
+    --txt-cor: #f5f5f5;
     --txt-cor-2: #a0a0a0;
     --txt-cor-3: #4b4a4a;
-     --border-cor: #5a5a5a;
+    --txt-btn: #2e2e2e; 
+    --border-cor: #5a5a5a;
 }
 
 /* TEMA LARANJA ESCURO */
 .tema-laranja-escuro { 
     --bg-cor: #121212; 
+    --bg-cor-2: #1e1e1e;
+    --bg-cor-3: #2e2e2e;
     --cor: #FF8C00;
-    --cor-destaque: #03DAC6; /* Turquesa para um ar moderno/tech */
+    --cor-destaque: #03DAC6;
     --cor-hover: #fca063;  
     --txt-cor: #f5f5f5;
-    --txt-btn: #1a1a1a;
-    --bg-cor-2: #1e1e1e;
     --txt-cor-2: #a0a0a0;
-    --txt-cor-3: #444; 
+    --txt-cor-3: #444444;
+    --txt-btn: #1a1a1a;
+    --border-cor: #333333;
 }
 
 /* TEMA VERMELHO ESCURO */
 .tema-vermelho-escuro { 
     --bg-cor: #121212; 
-    --cor: #FF4D4D; /* Vermelho levemente mais claro para brilhar no escuro */
-    --cor-destaque: #FFB74D; /* Laranja pastel para detalhes */
+    --bg-cor-2: #1e1e1e; 
+    --bg-cor-3: #2e2e2e;
+    --cor: #FF4D4D;
+    --cor-destaque: #FFB74D;
     --cor-hover: #ff7878; 
     --txt-cor: #f5f5f5;
-    --txt-btn: #1a1a1a;
-    --bg-cor-2: #1e1e1e; 
     --txt-cor-2: #a0a0a0;
-    --txt-cor-3: #444;
+    --txt-cor-3: #444444;
+    --txt-btn: #1a1a1a;
+    --border-cor: #333333;
 }
 
 /* TEMA VERDE ESCURO */
 .tema-verde-escuro { 
     --bg-cor: #121212; 
+    --bg-cor-2: #1e1e1e;
+    --bg-cor-3: #2e2e2e;
     --cor: #2ECC71;
-    --cor-destaque: #F06292; /* Rosa/Pêssego para detalhes vibrantes */
+    --cor-destaque: #F06292;
     --cor-hover: #51c46c; 
     --txt-cor: #f5f5f5; 
-    --txt-btn: #1a1a1a;
-    --bg-cor-2: #1e1e1e;
     --txt-cor-2: #a0a0a0;
-    --txt-cor-3: #444; 
+    --txt-cor-3: #444444;
+    --txt-btn: #1a1a1a;
+    --border-cor: #333333;
 }
 
 /* TEMA AZUL ESCURO */
 .tema-azul-escuro { 
     --bg-cor: #121212; 
-    --cor: #3B82F6; /* Azul mais vivo */
-    --cor-destaque: #FCD34D; /* Amarelo ouro para detalhes */
+    --bg-cor-2: #1e1e1e;
+    --bg-cor-3: #2e2e2e;
+    --cor: #3B82F6;
+    --cor-destaque: #FCD34D;
     --cor-hover: #60a5fa;  
     --txt-cor: #f5f5f5; 
-    --txt-btn: #1a1a1a;
-    --bg-cor-2: #1e1e1e;
     --txt-cor-2: #a0a0a0;
-    --txt-cor-3: #444; 
-   
+    --txt-cor-3: #444444;
+    --txt-btn: #1a1a1a; 
+    --border-cor: #333333;
 }
 
 /* TEMA AÇAÍ ESCURO */
 .tema-acai-escuro { 
-    --bg-cor: #0f0a14; /* Roxo quase preto */
-    --cor: #975cc2; /* Roxo mais claro para leitura */
-    --cor-destaque: #00FFD1; /* Verde neon/menta (combinação clássica de açaí) */
+    --bg-cor: #0f0a14;
+    --bg-cor-2: #1c1425;
+    --bg-cor-3: #2d213a;
+    --cor: #975cc2;
+    --cor-destaque: #00FFD1;
     --cor-hover: #b388eb; 
     --txt-cor: #f5f5f5;
-    --txt-btn: #1a1a1a; 
-    --bg-cor-2: #1c1425;
     --txt-cor-2: #b2b2b2;
-    --txt-cor-3: #444; 
+    --txt-cor-3: #444444;
+    --txt-btn: #1a1a1a; 
+    --border-cor: #3a2a4d;
 }
 .app {
     background-color: var(--bg-cor);
