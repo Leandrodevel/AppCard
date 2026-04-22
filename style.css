@@ -121,6 +121,7 @@ background-repeat: no-repeat;
   padding-bottom: 80px;
   max-width: 640px;
   min-width: 360px;
+  min-height: 100dvh;
   box-sizing: border-box;
  }
 body {

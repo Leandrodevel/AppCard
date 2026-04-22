@@ -23,5 +23,5 @@ function trocarTema(nomeDoTema) {
 
 
 window.onload = () => {
-    trocarTema('tema-amarelo-branco'); // Define o tema padrão ao carregar a página
+    trocarTema('tema-azul-branco'); // Define o tema padrão ao carregar a página
 };
