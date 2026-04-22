@@ -123,18 +123,17 @@ async function userDados() {
          <div class="flex flex-row gap-2 items-center" id="statusOnline"></div>
      </div>
      
-<div id="bannerLoja" class=" relative z-20 w-full  left-0 px-2 py-1 translate-y-[-20%] ">
-<div class="  rounded-2xl flex items-center justify-evenly " >
+<div id="bannerLoja" class=" relative z-20 w-full  left-0 px-2 pt-1 translate-y-[-20%] ">
+<div class="  rounded-2xl flex items-center justify-evenly flex-col relative  " >
+ 
+    <h2 class="tituloBarnner uppercase  font-bold text-3xl mogra-regular pb-1 "> 
+      Boteco sem Limite
+    </h2>
+    <small class="subTituloBarnner text-sm text-white  translate-y-[-50%] capitalize">mercado de bebidas</small>
 
- <!-- <span class="square bg-gray-700 w-[60px] h-[60px] rounded-lg">
-  </span>--->
-  
-  <span class="text-center">
-    <h2 class="textoCor uppercase  font-bold text-3xl mogra-regular shadow-lg shadow-black"> Boteco sem Limite</h2>
-  <small class="text-xs text-white">mercado de bebidas</small>
-  </span>
 </div>
 </div>
+
     <div id="search" class="absolute z-50 w-full left-0 px-4 translate-y-[-40%]">
           <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class=" group">
       <input id="search-bar" name="searchBar" list="listBusca" type="search" placeholder="O que vamos beber hoje?" class="w-full   rounded-2xl py-3 pl-6 pr-4 text-sm  temaBordas transition-all">

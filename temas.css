@@ -209,7 +209,14 @@ textarea,input,select{
 .temaTitulos{
     color: var(--cor-destaque);
 }
-
+.tituloBarnner{
+    color: var(--cor);
+   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.699);
+}
+.subTituloBarnner{
+    color: var(--cor-destaque);
+    text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.699);
+}
 .temaCards {
     background-color: var(--bg-cor-2);
 }
