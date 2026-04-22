@@ -880,14 +880,14 @@ slcEndereco.addEventListener('change', (event) => {
             <div class="absolute top-0 w-24 h-24 rounded-full border-4 border-t-yellow-400 border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
             
             <div class="absolute top-0 flex items-center justify-center w-24 h-24">
-                <i data-lucide="shopping-bag" class="w-10 h-10 text-yellow-500 animate-bounce"></i>
+                <i data-lucide="shopping-bag" class="w-10 h-10 textoCor animate-bounce"></i>
             </div>
         </div>
 
-        <h2 class="text-2xl font-black text-gray-800 mb-2">Processando...</h2>
-        <p class="text-gray-500 text-sm mb-6">
+        <h2 class="text-2xl font-black temaTextos mb-2">Processando...</h2>
+        <p class="temaTextos2 text-sm mb-6">
             Estamos enviando seu pedido para. <br>
-            <span class="font-bold text-gray-700">Não feche esta tela.confirme o envio no whatsapp</span>
+            <span class="font-bold text-red-500">Não feche esta tela.confirme o envio no whatsapp</span>
         </p>
 
         <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden mb-2">
@@ -1023,7 +1023,7 @@ slcEndereco.addEventListener('change', (event) => {
       <script>
   function ativabtnBottom(id){
   
-    const allsBtnNavBottom = ['btbHome','btbProm','btbCar','btbUser','btbSearch']
+    const allsBtnNavBottom = ['btbHome','btbProm','btbCar','btbUser']
     
     allsBtnNavBottom.map(bb =>{
      document.getElementById(bb).classList.remove('temaTitulos')
