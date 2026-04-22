@@ -978,7 +978,7 @@ let comAcomp ='hidden'
 
     
               
-              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center w-full p-1 mb-1 border-l-[5px] rounded-md">
+              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center w-full p-1 mb-1 border-l-[5px] rounded-md temaCards">
                 
                 <div class=" justify-left flex text-left flex-col">
                 
