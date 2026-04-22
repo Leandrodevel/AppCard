@@ -58,21 +58,20 @@ function navegacao(open) {
     default:
       // Tab to edit
   }
+  const header = document.querySelector('header')
   
-  if( open === 'perfilUser'){
+  if( open !== 'perfilUser' || open !== 'pageCarrinho'){
 
-    const header = document.querySelector('header')
-    header.classList.add('hidden')
+    header.classList.remove('hidden')
 
-  }else{
-    
-    document.querySelector('header').classList.remove('hidden')
-  }
+  }else if(open === 'perfilUser' || open === 'pageCarrinho')
  
   if(open !=='cardapio'){
-    
+    document.getElementById('navCat').classList.add('hidden')
+  }else if(open === 'cardapio'){
     document.getElementById('navCat').classList.remove('hidden')
   }
+  
   if(open === 'home'|| open === 'cardapio'){
     
         document.getElementById('headerTools').classList.remove('hidden')
