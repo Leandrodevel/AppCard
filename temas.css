@@ -217,7 +217,7 @@ textarea,input,select{
     background-color: var(--bg-cor-3);
 }
 .temaBordas {
-    border-color: var(--border-cor);
+    border: 1.5px solid var(--cor);
 }
 /*
 Para o Roxo (Açaí), se o fundo for branco, a cor #4b0082 (Indigo) ou #3d0130 (Açaí profundo)
