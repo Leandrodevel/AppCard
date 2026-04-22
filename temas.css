@@ -1,9 +1,9 @@
-.tema-amarelo-branco { --bg-cor: #fcfcfc; --el-cor: #ffcc00;--el-cor-hover:#fadd69; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#555;}
-.tema-laranja-branco { --bg-cor: #fcfcfc; --el-cor: #ff6600;--el-cor-hover:#fca063;  --txt-cor: #1a1a1a;--bg-cor-2: #fff ;--txt-cor-2:#555; }
-.tema-vermelho-branco { --bg-cor: #fcfcfc; --el-cor: #dc3545;--el-cor-hover:#e4717c; --txt-cor: #1a1a1a;--bg-cor-2: #fff ; --txt-cor-2:#555;}
-.tema-verde-branco   { --bg-cor: #fcfcfc; --el-cor: #28a745;--el-cor-hover:#51c46c; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#555; }
-.tema-azul-branco    { --bg-cor: #fcfcfc; --el-cor: #007bff;--el-cor-hover:#3395ff;  --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#555; }
-.tema-acai-branco    { --bg-cor: #fcfcfc; --el-cor: #4b0082;--el-cor-hover:#975cc2; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#555; }
+.tema-amarelo-branco { --bg-cor:#F6F6F6; --el-cor: #ffcc00;--el-cor-hover:#fadd69; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#777;}
+.tema-laranja-branco { --bg-cor: #fcfcfc; --el-cor:#ECECEC #ff6600;--el-cor-hover:#fca063;  --txt-cor: #1a1a1a;--bg-cor-2: #fff ;--txt-cor-2:#777; }
+.tema-vermelho-branco { --bg-cor: #fcfcfc; --el-cor: #dc3545;--el-cor-hover:#e4717c; --txt-cor: #1a1a1a;--bg-cor-2: #fff ; --txt-cor-2:#777;}
+.tema-verde-branco   { --bg-cor: #fcfcfc; --el-cor: #28a745;--el-cor-hover:#51c46c; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#777; }
+.tema-azul-branco    { --bg-cor: #fcfcfc; --el-cor: #007bff;--el-cor-hover:#3395ff;  --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#777; }
+.tema-acai-branco    { --bg-cor: #fcfcfc; --el-cor: #4b0082;--el-cor-hover:#975cc2; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#777; }
 
 /* Temas Escuros (Fundo Preto) */
 .tema-amarelo-preto  { --bg-cor: #0f0f0f;--el-cor-hover:#fadd69; --el-cor: #ffcc00; --txt-cor: #ffffff;--bg-cor-2: #282828 ;--txt-cor-2:#f2f2f2; }
