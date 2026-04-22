@@ -398,7 +398,7 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
     const prodCard = document.createElement('div');
     prodCard.className = 'w-full grid grid-cols-1 px-2';
     prodCard.innerHTML = `
-      <div class=" py-4 mt-2 px-2 grid grid-cols-1 transition-colors rounded-lg relative">
+      <div class="py-1  mt-2 px-2 grid grid-cols-1 transition-colors rounded-lg relative">
         <div class="flex-grow pr-4 ">
           <h3 class=" font-black text-gray-700 uppercase tracking-tight flex">
             <span class=" text-md temaTitulos ml-2">${nomeEscapado.trim()}</span>
@@ -435,7 +435,7 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
       
       const prodEmb = document.createElement('div');
       prodEmb.innerHTML = `
-        <div class="temaCards rounded-2xl p-2 shadow-sm relative overflow-hidden flex flex-row items-center mb-2">
+        <div class="temaCards rounded-2xl p-2 shadow-sm relative overflow-hidden flex flex-row items-center">
             <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase">
                 OFERTA
             </span>

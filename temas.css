@@ -1,17 +1,17 @@
-.tema-amarelo-branco { --bg-cor: #ffffff; --el-cor: #ffcc00; --txt-cor: #1a1a1a; }
-.tema-laranja-branco { --bg-cor: #ffffff; --el-cor: #ff6600; --txt-cor: #1a1a1a; }
-.tema-vermelho-branco { --bg-cor: #ffffff; --el-cor: #dc3545; --txt-cor: #1a1a1a; }
-.tema-verde-branco   { --bg-cor: #ffffff; --el-cor: #28a745; --txt-cor: #1a1a1a; }
-.tema-azul-branco    { --bg-cor: #ffffff; --el-cor: #007bff; --txt-cor: #1a1a1a; }
-.tema-acai-branco    { --bg-cor: #ffffff; --el-cor: #4b0082; --txt-cor: #1a1a1a; }
+.tema-amarelo-branco { --bg-cor: #fcfcfc; --el-cor: #ffcc00;--el-cor-hover:#fadd69; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#555;}
+.tema-laranja-branco { --bg-cor: #fcfcfc; --el-cor: #ff6600;--el-cor-hover:#fca063;  --txt-cor: #1a1a1a;--bg-cor-2: #fff ;--txt-cor-2:#555; }
+.tema-vermelho-branco { --bg-cor: #fcfcfc; --el-cor: #dc3545;--el-cor-hover:#e4717c; --txt-cor: #1a1a1a;--bg-cor-2: #fff ; --txt-cor-2:#555;}
+.tema-verde-branco   { --bg-cor: #fcfcfc; --el-cor: #28a745;--el-cor-hover:#51c46c; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#555; }
+.tema-azul-branco    { --bg-cor: #fcfcfc; --el-cor: #007bff;--el-cor-hover:#3395ff;  --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#555; }
+.tema-acai-branco    { --bg-cor: #fcfcfc; --el-cor: #4b0082;--el-cor-hover:#975cc2; --txt-cor: #1a1a1a; --bg-cor-2: #fff ;--txt-cor-2:#555; }
 
 /* Temas Escuros (Fundo Preto) */
-.tema-amarelo-preto  { --bg-cor: #0f0f0f;--el-cor-hover:#fadd69; --el-cor: #ffcc00; --txt-cor: #ffffff;--bg-cor-2:#282828  }
-.tema-laranja-preto  { --bg-cor: #0f0f0f;--el-cor-hover:#fca063; --el-cor: #ff6600; --txt-cor: #ffffff; --bg-cor-2:#282828 }
-.tema-vermelho-preto { --bg-cor: #0f0f0f;--el-cor-hover:#e4717c; --el-cor: #dc3545; --txt-cor: #ffffff; --bg-cor-2:#282828 }
-.tema-verde-preto    { --bg-cor: #0f0f0f;--el-cor-hover:#51c46c; --el-cor: #28a745; --txt-cor: #ffffff; --bg-cor-2:#282828 }
-.tema-azul-preto     { --bg-cor: #0f0f0f;--el-cor-hover:#3395ff; --el-cor: #007bff; --txt-cor: #ffffff; --bg-cor-2:#282828 }
-.tema-acai-preto     { --bg-cor: #0f0f0f;--el-cor-hover:#975cc2; --el-cor: #742ba8; --txt-cor: #ffffff;--bg-cor-2:#282828  }
+.tema-amarelo-preto  { --bg-cor: #0f0f0f;--el-cor-hover:#fadd69; --el-cor: #ffcc00; --txt-cor: #ffffff;--bg-cor-2: #282828 ;--txt-cor-2:#f2f2f2; }
+.tema-laranja-preto  { --bg-cor: #0f0f0f;--el-cor-hover:#fca063; --el-cor: #ff6600; --txt-cor: #ffffff; --bg-cor-2: #282828;--txt-cor-2:#f2f2f2; }
+.tema-vermelho-preto { --bg-cor: #0f0f0f;--el-cor-hover:#e4717c; --el-cor: #dc3545; --txt-cor: #ffffff; --bg-cor-2: #282828;--txt-cor-2:#f2f2f2; }
+.tema-verde-preto    { --bg-cor: #0f0f0f;--el-cor-hover:#51c46c; --el-cor: #28a745; --txt-cor: #ffffff; --bg-cor-2: #282828;--txt-cor-2:#f2f2f2; }
+.tema-azul-preto     { --bg-cor: #0f0f0f;--el-cor-hover:#3395ff; --el-cor: #007bff; --txt-cor: #ffffff; --bg-cor-2: #282828;--txt-cor-2:#f2f2f2; }
+.tema-acai-preto     { --bg-cor: #0f0f0f;--el-cor-hover:#975cc2; --el-cor: #742ba8; --txt-cor: #ffffff;--bg-cor-2:#282828;--txt-cor-2:#f2f2f2;  }
   
 .app {
     background-color: var(--bg-cor);
@@ -33,7 +33,7 @@ textarea,input,select{
     
 }
 .temaTextos{
- color: #F1F1F1  
+ color: var(--txt-cor-2) 
 }
 .temaTitulos{
     color: var(--el-cor);
