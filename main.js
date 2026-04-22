@@ -60,27 +60,17 @@ function navegacao(open) {
     default:
       // Tab to edit
   }
-  const header = document.querySelector('header')
-  
-  if( open !== 'perfilUser' || open !== 'pageCarrinho'){
 
-    header.classList.remove('hidden')
+  // Centraliza as verificações de estado
+const isUserOrCart = ['perfilUser', 'pageCarrinho'].includes(open);
+const isMenu = open === 'cardapio';
+const isHomeOrMenu = ['home', 'cardapio'].includes(open);
 
-  }else if(open === 'perfilUser' || open === 'pageCarrinho')
- 
-  if(open !=='cardapio'){
-    document.getElementById('navCat').classList.add('hidden')
-  }else if(open === 'cardapio'){
-    document.getElementById('navCat').classList.remove('hidden')
-  }
-  
-  if(open === 'home'|| open === 'cardapio'){
-    
-        document.getElementById('headerTools').classList.remove('hidden')
-  } else {
-    document.getElementById('headerTools').classList.add('hidden')
+// Gerencia as classes de forma limpa
+document.getElementById('header').classList.toggle('hidden', isUserOrCart);
+document.getElementById('navCat').classList.toggle('hidden', !isMenu);
+document.getElementById('headerTools').classList.toggle('hidden', !isHomeOrMenu);
 
-  }
 
   allSections.forEach(s =>{
     
@@ -228,7 +218,7 @@ function faixaAmarela(){
 const marquee = document.getElementById('faixaTicker')
 let marqueeText=`<div class="animate-ticker">
 
-        🔥 CERVEJA GELADA EM MENOS DE 30 MINUTOS • COMPRE 5 LEVE 6 EM SKOL LATA • TAXA GRÁTIS ACIMA DE R$ 50,00 🔥
+        🔥 CERVEJA BOA, SEMPRE GELADA!!! • COMBOS DE ESPETINHOS • TAXA GRÁTIS ACIMA DE R$ 70,00 🔥
     </div> `;
 
  marquee.innerHTML = marqueeText;
@@ -1018,8 +1008,13 @@ let comAcomp ='hidden'
   lucide.createIcons();
 }
 async function enviarWhatsApp() {
-
 const userdados = await userDados()
+
+if(userdados.rua === '' || userdados.bairro === '' || userdados.casa === ''){
+  navegacao('enderecoTemp')
+  return
+}
+
 
 // Busca o input que está selecionado (checked)
   const meioDePagamento = document.querySelector('input[name="pay_method"]:checked');
@@ -1422,14 +1417,12 @@ async function cadastrarEnderecoAlternativo(e){
 
     userdados.bairro =   document.getElementById('inputBairroAlt').value
 
-    userdados.cep =   document.getElementById('inputCEPAlt').value
-
     userdados.complemento =  document.getElementById('inputComplementoAlt').value
 
 localStorage.setItem('userDados',JSON.stringify(userdados))
 
   alert('Endereço Cadastrado')
-  navegacao('home')
+  voltarPage()
   slcEnderecoModal()    
 }
 

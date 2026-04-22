@@ -3,13 +3,13 @@
     --bg-cor: #F5F7F8;    /* Branco Gelo */
     --bg-cor-2: #FFFFFF;  /* Branco Puro (Cards) */
     --bg-cor-3: #E9ECEE;
-    --cor: #D4AF37;
+    --cor: #f0ec00;
     --cor-destaque: #6200EE;
     --cor-hover: #FFD700; 
     --txt-cor: #4A4A4A;   /* Cinza Grafite Suave */
     --txt-cor-2: #757575; /* Texto secundário */
     --txt-cor-3: #A0A0A0; /* Texto discreto */
-    --txt-btn: #FFFFFF; 
+    --txt-btn: #525252; 
     --border-cor: #E2E2E2;
 }
 
@@ -90,7 +90,7 @@
 /* TEMA AMARELO ESCURO */
 .tema-amarelo-escuro { 
     --bg-cor: #121212; 
-    --bg-cor-2: #302f2f;
+    --bg-cor-2: #1b1b1b;
     --bg-cor-3: #504f4f;
     --cor: #FFD700;
     --cor-destaque: #BB86FC;
@@ -214,7 +214,7 @@ textarea,input,select{
    text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.699);
 }
 .subTituloBarnner{
-    color: var(--cor-destaque);
+    color: #f2f2f2);
     text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.699);
 }
 .temaCards {
