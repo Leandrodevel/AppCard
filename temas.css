@@ -183,6 +183,7 @@
 }
 textarea,input,select{
     background: var(--bg-cor-2);
+    color: var(--txt-cor-2);
 }
 .temaBotoes {
     background-color: var(--cor);

@@ -1053,7 +1053,7 @@ mensagem += `*Itens:*\n\n`;
 meuCarrinho.forEach(item => {
   
   // O emoji ➡️ e o formato "1x NOME" conforme a imagem
-  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${formatarMoeda(item.preco)}R$\n`;
+  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${formatarMoeda(item.preco * item.qtd)}R$\n`;
 
   if(item.acompanhamentos){
    mensagem+= `com (${item.acompanhamentos})\n`
@@ -1123,13 +1123,13 @@ let dataHora =hoje.toLocaleString('pt-BR')
     atualizaContador()
 
     navegacao('home')
-  //  window.open(url, '_blank');
+   window.open(url, '_blank');
 
 setTimeout(()=>{
-   //  window.location.reload()
+   window.location.reload()
     modal.classList.add('hidden');
 
-   //  enviarWhatsApp()
+    enviarWhatsApp()
 },3000)    
   
 },1000)
