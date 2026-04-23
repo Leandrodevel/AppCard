@@ -182,9 +182,8 @@ const user = await userDados()
    window.location.href = "index.html";
 }
 }
-
+/*
 const barraDeBusca = document.getElementById('search-bar')
-
 barraDeBusca.addEventListener('input', ()=>{
   const dbProdutos = JSON.parse(localStorage.getItem('estoqueDeProdutos'))
    // listaProdutos('',barraDeBusca.value,'')
@@ -205,14 +204,13 @@ barraDeBusca.addEventListener('input', ()=>{
        
    })    
 })
-
+*/
 function buscaProduto(termo) {
-  
   const headerTools = document.querySelector('headerTools')
-  
-  
+
 listaProdutos('',termo,'')
 navegacao('cardapio')
+
 }
 function faixaAmarela(){
 const marquee = document.getElementById('faixaTicker')
@@ -233,22 +231,22 @@ const instrucao =`
 ​Depois disso, é só aguardar nossa confirmação. Bom apetite! ✨"
 `
 function statusLoja() {
-  
-const statusDaLoja = document.getElementById('statusOnline')
 
+const statusDaLoja = document.getElementById('statusOnline')
 const agora = new Date();
 const horaAtual = agora.getHours();
 const horarioComercial = horaAtual >= 9 && horaAtual < 21;
 let minhaMensagem
 if(horarioComercial){
   statusDaLoja.innerHTML=`
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-1"></span> Aberto agora
-            </span>
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-1"></span>
+                    <span class="text-green-500 text-[10px] font-bold uppercase">Aberto agora</span>
   `
 }else{
 statusDaLoja.innerHTML=`
                 
-                  <span class="text-red-500 text-[10px] font-bold uppercase">Fechado agora</span>
+                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-1"></span>
+                    <span class="text-red-500 text-[10px] font-bold uppercase">Fechado agora</span>
  `
 }
 
