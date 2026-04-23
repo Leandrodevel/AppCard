@@ -233,33 +233,21 @@ const instrucao =`
 ​Depois disso, é só aguardar nossa confirmação. Bom apetite! ✨"
 `
 function statusLoja() {
-  // Tab to edit
-
+  
 const statusDaLoja = document.getElementById('statusOnline')
-
 
 const agora = new Date();
 const horaAtual = agora.getHours();
-
-// A variável será true se a hora for maior ou igual a 9 E menor que 18
 const horarioComercial = horaAtual >= 9 && horaAtual < 21;
-
 let minhaMensagem
-
 if(horarioComercial){
   statusDaLoja.innerHTML=`
-                  <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                </span>                       <span class="text-green-500 text-[10px] font-bold uppercase">Aberto agora</span>
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-1"></span> Aberto agora
+            </span>
   `
-  
 }else{
 statusDaLoja.innerHTML=`
-                 <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                </span>
+                
                   <span class="text-red-500 text-[10px] font-bold uppercase">Fechado agora</span>
  `
 }
