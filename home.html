@@ -508,15 +508,15 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 </div>
 
 <!-- Container dos Cards -->
-<div class="px-4 space-y-4 pb-10">
+<!-- Container com Rolagem Lateral -->
+<div class="flex overflow-x-auto space-x-4 px-4 pb-6 no-scrollbar snap-x snap-mandatory">
 
     <!-- Combo 01: Duas Pessoas -->
-    <div class="w-full bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-yellow-400/20"
+    <div class="min-w-[90%] md:min-w-[400px] bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-yellow-400/20 snap-center"
          style="background-image: url('./img/comboChurras.jpg'); 
                 background-size: cover; 
                 background-position: center;">
         
-        <!-- Degradê para leitura -->
         <div class="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/95 to-transparent"></div>
 
         <div class="relative z-10 w-3/4">
@@ -531,19 +531,19 @@ const classeComItem = [...new Set(dbListExist.map(item =>
                 <li>✦ Farofa e Molho Especial</li>
             </ul>
             <p class="text-white font-black text-xl mt-3">R$ 59,90</p>
-            <button  class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md hover:bg-yellow-500 transition-all" onclick="navegacao('customizarPedido'),customizarPedidoRender(1,'./img/comboPremium.jpg', 'Combo Duas Pessoas', 'Mais Pedido', 59.90)">
+            <button class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md active:scale-95 transition-all" 
+                    onclick="navegacao('customizarPedido'), customizarPedidoRender(1,'./img/comboChurras.jpg', 'Combo Duas Pessoas', 'Mais Pedido', 59.90)">
                 Adicionar ao Carrinho
             </button>
         </div>
     </div>
 
     <!-- Combo 02: Premium -->
-    <div class="w-full bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-white/10"
+    <div class="min-w-[90%] md:min-w-[400px] bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-white/10 snap-center"
          style="background-image: url('./img/comboPremium.jpg'); 
                 background-size: cover; 
                 background-position: center;">
         
-        <!-- Degradê mais escuro para o Premium -->
         <div class="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-transparent"></div>
 
         <div class="relative z-10 w-3/4">
@@ -558,13 +558,85 @@ const classeComItem = [...new Set(dbListExist.map(item =>
                 <li>✦ Salpicão Especial</li>
             </ul>
             <p class="text-white font-black text-xl mt-3">R$ 84,90</p>
-            <button class="mt-4 bg-white text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md hover:bg-gray-100 transition-all" onclick="navegacao('customizarPedido'),customizarPedidoRender(2,'./img/comboPremium.jpg', 'Combo Premium', 'Combo Completo', 84.90)  ">
+            <button class="mt-4 bg-white text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md active:scale-95 transition-all" 
+                    onclick="navegacao('customizarPedido'), customizarPedidoRender(2,'./img/comboPremium.jpg', 'Combo Premium', 'Combo Completo', 84.90)">
                 Adicionar ao Carrinho
             </button>
         </div>
     </div>
 
 </div>
+
+<style>
+/* Esconde a barra de rolagem mas mantém a funcionalidade */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+</style>
+
+<script>
+  // Inicializa ícones
+  lucide.createIcons();
+
+  function adicionarCombo(nome,embalagem,preco){
+    
+    const gerarID = () => {
+    const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
+    const data = Date.now();
+    return letras + data;
+};
+
+    const tipo = embalagem;
+    const preco = preco.replace(',', '.');
+    const obs = document.getElementById('obs-combo').value;
+    
+    // Pega todos os acompanhamentos marcados
+    const acompanhamentos = Array.from(document.querySelectorAll('input[name="acompanhamento-combo"]:checked')).map(el => el.value);
+
+    const item = {
+      cod: gerarID(),
+      nome: `Espetinho de ${sabor}`,
+      embalagem: '1 un.',
+      acompanhamentos: acompanhamentos,
+      observacao: obs,
+      preco: preco,
+      qtd:1
+    };
+
+    // Salva no LocalStorage
+    
+    meuCarrinho.push(item);
+    localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
+
+    
+      modalAdicionado(item.cod,item.nome,'',item.preco)
+      
+     atualizaContador()
+    
+    
+    let totItens = document.getElementById('qtd-itens')  
+
+    let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
+    return acumulador + p.qtd;
+}, 0); // O '0' é o valor inicial da soma
+
+      
+       totItens.innerText= totalCarrinho
+
+    
+    
+    
+    // Opcional: Limpar campos após adicionar
+    document.querySelectorAll('input[name="acompanhamento"]').forEach(el => el.checked = false);
+    document.getElementById('obs-pedido').value = '';
+  }
+</script>
+
 
     <!-------------mais pedidos--------->
     <div class="mt-8">
@@ -616,12 +688,15 @@ const classeComItem = [...new Set(dbListExist.map(item =>
       <div class="mb-6">
         <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">1. Escolha o Sabor</label>
         <select required id="sabor-espetinho" class="w-full bg-gray-50 border border-gray-200 p-4 rounded-2xl outline-none focus:border-red-500 transition-all text-gray-700 font-medium appearance-none">
-          <option value="Carne (Alcatra)">Carne (Alcatra)</option>
+          <option value="Carne (Boi)">Carne (Boi)</option>
+          <option value="Frango">Frango</option>
           <option value="Frango com Bacon">Frango com Bacon</option>
           <option value="Coração">Coração</option>
+          <option value="Linguiça Toscana">Linguiça Toscana</option>
+          <option value="Linguiça Calabresa">Linguiça Calabresa</option>
           <option value="Queijo Coalho">Queijo Coalho</option>
           <option value="Pão de Alho">Pão de Alho</option>
-          <option value="Misto">Misto (Carne e Linguiça)</option>
+          <option value="Kafta">Kafka (Com queijo)</option>
         </select>
       </div>
 

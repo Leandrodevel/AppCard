@@ -219,18 +219,17 @@ sectionCustomizar.innerHTML =`
         
         <!-- Grupo 1: Acompanhamentos Gratuitos -->
         <div>
-            <div class="bg-yellow-400/50 py-2 px-4 mb-3 border-l-4 border-yellow-400">
-                <h3 class="text-sm font-black text-white uppercase tracking-widest flex justify-between">
+            <div class="bg-gray-200/50 py-2 px-4 mb-3 border-l-4 border-yellow-400">
+                <h3 class="text-sm font-black text-gray-500 uppercase tracking-widest flex justify-between">
                     Escolha seus acompanhamentos
                     <span class="text-[10px] text-gray-400 font-bold">OBRIGATÓRIO</span>
                 </h3>
             </div>
-
             <!-- Listagem de Checkboxes (Fundo Branco conforme solicitado anteriormente) -->
             <div class="flex flex-col">
                 <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-yellow-50 transition-colors">
                     <div class="flex items-center gap-3">
-                        <input type="checkbox" name="acompanhamento" value="Vinagrete" checked class="w-5 h-5 accent-yellow-400 rounded">
+                        <input type="checkbox" name="acompanhamento-combo" value="Vinagrete" checked class="w-5 h-5 accent-yellow-400 rounded">
                         <span class="text-sm font-bold text-gray-800">Vinagrete</span>
                     </div>
                     <span class="text-[10px] font-bold text-green-600 uppercase italic">Incluso</span>
@@ -238,7 +237,7 @@ sectionCustomizar.innerHTML =`
 
                 <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-yellow-50 transition-colors">
                     <div class="flex items-center gap-3">
-                        <input type="checkbox" name="acompanhamento" value="Farofa" checked class="w-5 h-5 accent-yellow-400 rounded">
+                        <input type="checkbox" name="acompanhamento-combo" value="Farofa" checked class="w-5 h-5 accent-yellow-400 rounded">
                         <span class="text-sm font-bold text-gray-800">Farofa Especial</span>
                     </div>
                     <span class="text-[10px] font-bold text-green-600 uppercase italic">Incluso</span>
@@ -246,7 +245,7 @@ sectionCustomizar.innerHTML =`
 
                 <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-yellow-50 transition-colors">
                     <div class="flex items-center gap-3">
-                        <input type="checkbox" name="acompanhamento" value="Feijão Tropeiro" checked class="w-5 h-5 accent-yellow-400 rounded">
+                        <input type="checkbox" name="acompanhamento-combo" value="Feijão Tropeiro" checked class="w-5 h-5 accent-yellow-400 rounded">
                         <span class="text-sm font-bold text-gray-800">Feijão Tropeiro</span>
                     </div>
                     <span class="text-[10px] font-bold text-green-600 uppercase italic">Incluso</span>
@@ -256,25 +255,19 @@ sectionCustomizar.innerHTML =`
 
         <!-- Observações -->
         <div class="px-4">
-            <h3 class="text-[10px] font-black text-yellow-400 uppercase mb-2">Alguma observação?</h3>
-            <textarea placeholder="Ex: Carne bem passada, sem cebola..." 
-                      class="w-full bg-zinc-900 text-white rounded-2xl p-4 text-sm focus:outline-none border border-zinc-800 h-24 placeholder:text-zinc-600"></textarea>
+            <h3 class="text-[10px] font-black text-gray-400 uppercase mb-2">Alguma observação?</h3>
+            <textarea id="obs-combo" placeholder="Ex: Carne bem passada, sem cebola..." 
+                      class="w-full   rounded-2xl p-4 text-sm focus:outline-none border border-zinc-800 h-24 placeholder:text-zinc-600"></textarea>
         </div>
     </div>
 
     <!-- Barra Fixa de Finalização (Botão Adicionar) -->
-    <div class="sticky bottom-0 bg-black/80 backdrop-blur-md p-4 border-t border-zinc-800 mt-10">
+    <div class="sticky bottom-0  backdrop-blur-md p-4  ">
         <div class="flex items-center justify-between gap-4">
-            <!-- Controle de Quantidade -->
-            <div class="flex items-center bg-zinc-900 rounded-xl p-1 border border-zinc-800">
-                <button class="w-10 h-10 flex items-center justify-center text-yellow-400 font-bold text-xl">-</button>
-                <span class="w-8 text-center text-white font-bold">1</span>
-                <button class="w-10 h-10 flex items-center justify-center text-yellow-400 font-bold text-xl">+</button>
-            </div>
-            
+           
             <!-- Botão Adicionar -->
-            <button class="flex-grow bg-yellow-400 text-zinc-900 font-black py-4 rounded-xl text-sm uppercase italic tracking-tighter shadow-lg shadow-yellow-400/10 active:scale-95 transition-transform">
-                Adicionar R$ ${preco}
+            <button onclick="adicionarCombo('${nome}', '${tipo}', '${preco}')" class="flex-grow bg-green-500  font-black py-4 rounded-xl text-sm uppercase italic tracking-tighter shadow-lg shadow-yellow-400/10 active:scale-95 transition-transform">
+                Adicionar
             </button>
         </div>
     </div>
