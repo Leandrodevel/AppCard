@@ -192,7 +192,8 @@ textarea,input,select{
 
 .temaBotoesHover {
     background-color: #fff;
-    color: var(--cor);
+    border: 1px solid var(--cor);
+    color: var(--txt-cor-2);
 }
 
 .textoCor{

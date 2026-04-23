@@ -374,12 +374,12 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
     const prodCard = document.createElement('div');
     prodCard.className = 'w-full grid grid-cols-1 px-2';
     prodCard.innerHTML = `
-      <div class="py-1  mt-2 px-2 grid grid-cols-1 transition-colors rounded-lg relative">
+      <div class="py-1  mt-2 mb-4 px-2 grid grid-cols-1 transition-colors rounded-lg relative">
         <div class="flex-grow pr-4 ">
-          <h3 class=" font-black text-gray-700 uppercase tracking-tight flex">
+          <h4 class=" font-black text-gray-600 uppercase tracking-tight flex mb-1">
             <span class=" text-md temaTitulos ml-2">${nomeEscapado.trim()}</span>
             <i class="w-4 h-4 text-green-500 translate-y-[5px]" data-lucide="corner-right-down"></i>
-          </h3>
+          </h4>
         </div>
         <div id="listProdEmb${prod.id}"></div>
       </div>`;
@@ -411,14 +411,15 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
       
       const prodEmb = document.createElement('div');
       prodEmb.innerHTML = `
-        <div class="temaCards rounded-2xl p-2 shadow-sm relative overflow-hidden flex flex-row items-center">
+        <div class=" p-2 border-b border-gray-300 relative overflow-hidden flex flex-row items-center">
             <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase">
                 OFERTA
             </span>
-            <div class="flex-shrink-0 w-16 h-16 bg-gray-50 rounded-lg overflow-hidden mr-3"></div>
+            <div class="flex-shrink-0 w-16 h-16 bg-gray-50  overflow-hidden mr-3"></div>
             <div class="flex-grow flex items-center justify-between min-w-0">
+
                 <div class="flex flex-col min-w-0 -space-y-0.5"> 
-                    <h4 class="text-[10px] font-bold temaTextos truncate leading-tight uppercase tracking-tighter">
+                    <h4 class="text-[10px] font-bold text-gray-400 mb-1 truncate leading-tight uppercase tracking-tighter">
                         ${nomeEscapado}
                     </h4>
                     <button onclick="openModal('${emb.cod}','${nomeEscapado}','${emb.tipo}','${precoFinal.toFixed(2)}')" class="text-left">
@@ -535,43 +536,67 @@ const db = await getDados();
     const nomeEscapado = pr.nome.replace(/'/g, "");
 
   const promocao = document.createElement('div')
-  promocao.className = 'w-full flex justify-center relative '  
+  promocao.className = 'relative flex flex-row items-center p-2 bg-transparent border-b border-zinc-800 rounded-none transition-all active:bg-zinc-900/40 '  
+ const nomeImagem = `${pr.marca.replace(/[^a-zA-Z]/g,"").toLowerCase()}.svg`;
+  const imagem = await validarCaminhoImagem(nomeImagem)
   promocao.innerHTML=`
   
+<!-- Item de Destaque Minimalista (Estilo de.tipo) -->
 
-        <span class="bg-red-500 absolute top-0 right-0 px-2 py-0.5 rounded-xl font-black text-[14px] text-white tracking-tighter uppercase shadow-sm ">
-        OFERTA IMPERDÍVEL!
+    <!-- Badge de Oferta -->
+    <span class="absolute top-0 left-0 bg-red-600 px-2 py-0.5 font-black text-[8px] text-white uppercase tracking-tighter">
+        OFERTA IMPERDÍVEL
     </span>
-    
-  <div class="w-full temaCards p-8 rounded-3xl  ">
-  
+      
+    <!-- Container da Imagem (Pode usar a sua variável de imagem aqui) -->
+    <div class="flex-shrink-0 w-16 h-16 bg-transparent overflow-hidden mr-3">
+        <img src="${imagem}" alt="${nomeEscapado}" class="w-full h-full object-contain mix-blend-multiply"/>
+    </div>
+          
+    <div class="flex-grow flex items-center justify-between min-w-0">
+        
+        <div class="flex flex-col min-w-0 mr-2">
+            <!-- Botão de Título com ID e variáveis do objeto 'de' -->
+            <button id="bt-tit+${de.cod}" class="text-left focus:outline-none" 
+                    onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
+                <h3 class="temaTitulos text-[14px] font-bold truncate leading-tight mb-0.5">
+                    ${nomeEscapado}
+                </h3>
+            </button>
+            
+            <!-- Descrição (de.tipo) -->
+            <p class="temaTextos text-[10px] font-semibold text-gray-500 italic uppercase tracking-tight">
+                ${de.tipo}
+            </p>
 
-                 <button id="bt+${de.cod}" 
-                
+            <div class="flex items-baseline gap-2 mt-0.5">
+                <!-- Preço 'De' com ID do objeto 'de' -->
+                <span id="tr-${de.cod}" class="text-gray-500 text-[10px] line-through decoration-red-500/30">
+                    De: R$ ${precoFormatado.toFixed(2).replace(".",",")}
+                </span>
+                <!-- Preço Final -->
+                <span class="text-[15px] font-black text-red-600 italic">
+                    <span class="text-[10px]">R$</span> ${precoFinalFormatado}
+                </span>
+            </div>
+        </div>
+
+        <!-- Botão Adicionar com IDs e Lógica de Quantidade -->
+        <button id="bt+${de.cod}" 
+                class="temaBotoes p-2 relative active:scale-90 transition-all flex-shrink-0 rounded-xl" 
                 onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
-                <h3 class="text-2xl font-bold text-red-500 mb-2">${nomeEscapado} </h3>
-                 </button>
 
-                <p class="temaTextos text-lg italic  mb-4">${de.tipo}</p>
-                  
-                <div class="grid grid-cols-2">
-                <div class="grid grid-cols-1">
-                            <span id="tr-${de.cod}" class="text-gray-400 text-[16px] line-through decoration-red-300">
-                De: R$ ${precoFormatado.toFixed(2).replace(".",",")}
+            <!-- Badge de Quantidade com ID correspondente -->
+            <span id="qtdItemBtn2-${de.cod}" 
+                  class="hidden absolute -top-1 -right-1 bg-red-600 text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full z-10">
+                0
             </span>
-                <span class="text-4xl font-black text-red-500">${precoFinalFormatado}</span>
-                </div>
 
-            <button id="bt+${de.cod}" 
-                class="relative temaBotoes rounded-xl p-2.5  flex items-center gap-2 font-black justify-center" 
-                onclick="openModal('${de.cod}','${nomeEscapado}','${de.tipo}','${precoFinal.toFixed(2)}')">
-             ADICIONAR
-
-              <span  id="qtdItemBtn2-${de.cod}" class=" hidden absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full z-10">0</span>
+            <i class="w-5 h-5" data-lucide="shopping-basket"></i>
         </button>
+    </div>
 
-            </div>
-            </div>
+
   
   `
    boxPromocoes.appendChild(promocao)  
