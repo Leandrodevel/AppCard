@@ -165,12 +165,12 @@ function atualizaContador() {
 }    
     atualizaContador()
 
-async function customizarPedidoRender(cod, nome, tipo, preco) {
+async function customizarPedidoRender(cod,imagem, nome, tipo, preco) {
 const dados = await userDados()
 const sectionCustomizar = document.getElementById('customizarPedido')
 
 
-const srcImagem = ''
+const srcImagem = imagem
 
 sectionCustomizar.innerHTML =`
     <div class="relative w-full h-56 overflow-hidden">
@@ -185,7 +185,7 @@ sectionCustomizar.innerHTML =`
 
     <!-- Informações do Produto (Sem padding-x no container principal) -->
     <div class="mt-4 px-4">
-        <h2 class="text-3xl font-black text-white uppercase italic tracking-tighter">${nome}</h2>
+        <h2 class="text-3xl font-black text-zinc-700 uppercase italic tracking-tighter">${nome}</h2>
         <p class="text-gray-400 text-sm font-medium mt-1 uppercase italic">${tipo}</p>
         <div class="mt-2">
             <span class="text-yellow-400 font-black text-2xl">R$ ${preco}</span>
@@ -197,10 +197,10 @@ sectionCustomizar.innerHTML =`
         
         <!-- Grupo 1: Acompanhamentos Gratuitos -->
         <div>
-            <div class="bg-zinc-900/50 py-2 px-4 mb-3 border-l-4 border-yellow-400">
+            <div class="bg-yellow-400/50 py-2 px-4 mb-3 border-l-4 border-yellow-400">
                 <h3 class="text-sm font-black text-white uppercase tracking-widest flex justify-between">
                     Escolha seus acompanhamentos
-                    <span class="text-[10px] text-yellow-400 font-bold">OBRIGATÓRIO</span>
+                    <span class="text-[10px] text-gray-400 font-bold">OBRIGATÓRIO</span>
                 </h3>
             </div>
 
