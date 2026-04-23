@@ -1136,7 +1136,7 @@ setTimeout(() => {
 
   const endereco = `${userdados.rua},${userdados.casa} - ${userdados.bairro}`
   
-  const numeroTelefone = "5522997263224"; // Substitua pelo seu número (com DDD)
+  const numeroTelefone = "22998052702"; // Substitua pelo seu número (com DDD)
   // Centralizando a formatação de moeda para evitar repetição
 const formatarMoeda = (valor) => 
   valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
