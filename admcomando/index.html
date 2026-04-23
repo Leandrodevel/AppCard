@@ -16,11 +16,85 @@
 //teste de github
   // 1. Configurações de acesso
   const SUPABASE_URL = 'https://wyhqwprshbgwjlnxndhm.supabase.co'
-  
   const SUPABASE_KEY ='sb_publishable_avVe0cMnriaF8Ogt42Z7Xg_PTD5pdnZ'
-
-  // 2. Inicializa o cliente
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+// --- FUNÇÃO DE CADASTRO (SIGN UP) ---
+async function handleSignUp(event) {
+    event.preventDefault();
+    
+    const nome = document.getElementById('cadNomeUser').value;
+    const email = document.getElementById('cadEmail').value;
+    const senha = document.getElementById('cadSenha').value;
+    const btn = document.getElementById('btnCadastrar');
+    btn.disabled = true;
+    btn.innerText = "CRIANDO CONTA...";
+    // O Supabase Auth lida com a criação do usuário
+    const { data, error } = await _supabase.auth.signUp({
+        email: email,
+        password: senha,
+        options: {
+            data: {
+                full_name: nome // Salva o nome nos metadados do usuário
+            }
+        }
+    });
+
+    if (error) {
+        alert("Erro no cadastro: " + error.message);
+        btn.disabled = false;
+        btn.innerText = "CRIAR MINHA CONTA";
+    } else {
+        alert("Cadastro realizado! Verifique seu e-mail para confirmar (se habilitado) ou faça login.");
+        navegacao('loginAdm'); // Direciona para o login
+    }
+}
+
+// --- FUNÇÃO DE LOGIN (SIGN IN) ---
+async function handleLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const senha = document.getElementById('loginSenha').value;
+    const btn = document.getElementById('btnLogin');
+    btn.disabled = true;
+    btn.innerText = "ENTRANDO...";
+    const { data, error } = await _supabase.auth.signInWithPassword({
+        email: email,
+        password: senha
+    });
+
+    if (error) {
+        alert("Erro ao entrar: " + error.message);
+        btn.disabled = false;
+        btn.innerText = "ENTRAR NO CARDÁPIO";
+    } else {
+        alert("Login realizado com sucesso!");
+        // Se for o admin, você pode mostrar a seção de admin
+      navegacao('admProdutos');
+    
+      
+    }
+}
+
+// --- FUNÇÃO DE LOGOUT (OPCIONAL) ---
+async function handleLogout() {
+    const { error } = await _supabase.auth.signOut();
+    if (!error) {
+        location.reload(); // Recarrega para limpar o estado da página
+    }
+}
+
+async function verificarSessao() {
+    const { data: { session } } = await _supabase.auth.getSession();
+    if (session) {
+      navegacao('admProdutos');
+    }else {
+       
+        navegacao('loginAdm')
+    }
+}
+verificarSessao();
 
   // Exemplo de função para salvar seus dados (Opção 2 - JSONB)
   async function criaProduto(produto) {
@@ -111,7 +185,7 @@
     
     <div>
       <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
-      <input required type="text" id="cadNome" placeholder="Seu nome" 
+      <input required type="text" id="cadNomeUser" placeholder="Seu nome" 
         class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
     </div>
 
@@ -135,13 +209,13 @@
     </div>
     
     <p class="text-center text-xs text-gray-500 mt-4">
-      Já tem uma conta? <a href="login.html" class="text-yellow-600 font-bold underline">Faça login</a>
+      Já tem uma conta? <button onclick="navegacao('loginAdm')" class="text-yellow-600 font-bold underline">Faça login</button>
     </p>
   </form>
 
 </section>
 
-<section id="loginUser" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
+<section id="loginAdm" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
 
   <div class="mb-8">
     <h1 class="text-2xl font-black text-gray-900 leading-tight">Bem-vindo de volta!</h1>
@@ -165,22 +239,23 @@
     <div class="pt-4">
       <button id="btnLogin" type="submit" 
         class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
-        Entrar no Cardápio
+        Acessar
       </button>
     </div>
     
     <p class="text-center text-xs text-gray-500 mt-4">
-      Ainda não tem conta? <a href="cadastro.html" class="text-yellow-600 font-bold underline">Cadastre-se aqui</a>
+      Ainda não tem conta? <button onclick="navegacao('cadastroReal')" class="text-yellow-600 font-bold underline">Cadastre-se aqui</button>
     </p>
   </form>
 
 </section>
 
-  <div class="min-h-screen bg-gray-50 p-4 font-sans text-gray-800">
+<section id="admProdutos">
+  <div class="min-h-screen  p-4 font-sans text-gray-800">
   
-  <div class="max-w-4xl mx-auto mb-6">
-    <div class="flex justify-between items-center mb-6">
-       <a href="index.html">H</a>
+  <div class="w-full mx-auto mb-6">
+    <div class="flex justify-between items-center mb-6 flex-col">
+       <button onclick="handleLogout()" class="text-gray-600 font-bold">sair</button>
       <h1 class="text-2xl font-black tracking-tight">ADMIN <span class="text-yellow-500">CARDÁPIO</span></h1>
    
       <button onclick="abrirModalCadastro()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm transition-all active:scale-95">
@@ -275,7 +350,7 @@
         </form>
     </div>
 </div>
-
+</section>
 <script>
   const classesCateg = {
     'Bebidas': ['Águas', 'Cachaças', 'Cervejas', 'Whiskys', 'Vodkas', 'Destilados', 'Aperitivos', 'Refrigerantes', 'Energéticos','Combos','Drink'],
@@ -431,18 +506,16 @@ async function renderizarAdmin() {
 }
 
 // --- FUNÇÕES DE CONTROLE ---
-
 async function toggleAtivo(idxProd, idxEmb) {
-    let dados =await obterDados();
+    let produtos = await obterDados();
+    let produto = produtos[idxProd];
     
-    dados[idxProd].embalagens[idxEmb].ativo = !dados[idxProd].embalagens[idxEmb].ativo 
+    // Inverte o status da embalagem específica
+    produto.embalagens[idxEmb].ativo = !produto.embalagens[idxEmb].ativo;
     
-      const novoDado =[dados[idxProd].embalagens[idxEmb]]
-   
-//  alert(JSON.stringify(novoDado))
- atualizaDadosEmbalagens(dados[idxProd].id,novoDado);
+    // Salva o ARRAY INTEIRO de embalagens de volta no banco
+    await atualizaDadosEmbalagens(produto.id, produto.embalagens);
 }
-
 async function toggleDestaque(idxProd, idxEmb) {
     
     let dados = await obterDados();
@@ -524,72 +597,84 @@ const gerarID = () => {
     const data = Date.now();
     return letras + data;
 }
-
-document.getElementById('formCadastro').addEventListener('submit', function(e) {
+// --- LOGICA DE SALVAMENTO CORRIGIDA ---
+document.getElementById('formCadastro').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    async function cadprod(){
-    let dados = await obterDados()
-    
-    alert('subit o formCadastro')
-    
-    // 1. Capturar todos os valores
-    const idProd = keyVariacao.value ? keyVariacao.value : gerarID()
+    // 1. Capturar valores (Ajuste os IDs no HTML para evitar duplicidade)
+    const idExistente = document.getElementById('keyVariacao').value;
     const classe = document.getElementById('cadClasse').value;
     const categoria = document.getElementById('cadCategoria').value;
     const marca = document.getElementById('cadMarca').value;
-    const nome = document.getElementById('cadNome').value;
+    const nome = document.getElementById('cadNome').value; // Certifique-se que este ID é único
     
-    // Variação
-    const cod = document.getElementById('cadCod').value = gerarID();
+    const skuNovo = 'SKU' + Date.now();
     const tipo = document.getElementById('cadTipo').value;
     const preco = document.getElementById('cadPreco').value;
     const estoque = parseInt(document.getElementById('cadEstoque').value);
     const vendas = parseInt(document.getElementById('cadVendas').value);
-  
-    const novaEmbalagem = {
-        cod: cod,
+
+    const novaEmbObj = {
+        cod: skuNovo,
         tipo: tipo,
-        preco: preco.replace(",","."),
+        preco: preco.replace(",", "."),
         estoque: estoque,
         vendas: vendas,
         desconto: "0.00",
         ativo: true,
         destaque: false
     };
-    
-    // 4. Verificar se o produto (pelo ID ou Nome) já existe
-    const indexExistente = dados.findIndex(p => p.id === idProd || p.nome === nome);
-    
-    if (indexExistente !== -1) {
-        alert('nova embalagens')
-        // Se já existe, apenas adicionamos a nova embalagem ao array
-        novaEmbalagem(indexExistente,novaEmbalagem)
-    } else { alert ('novo prod')
-        // Se não existe, cria o objeto completo
+
+    const produtosAtuais = await obterDados();
+    const produtoExistente = produtosAtuais.find(p => p.id == idExistente);
+
+    if (produtoExistente) {
+        // MODO VARIAÇÃO: Adiciona ao array existente
+        const novasEmbalagens = [...produtoExistente.embalagens, novaEmbObj];
+        
+        const { error } = await _supabase
+            .from('estoque')
+            .update({ embalagens: novasEmbalagens })
+            .eq('id', produtoExistente.id);
+
+        if (error) alert("Erro ao adicionar variação: " + error.message);
+        else alert("Variação adicionada!");
+
+    } else {
+        // MODO NOVO PRODUTO
         const novoProduto = {
-            id_comercial: idProd,
             classe: classe,
             categoria: categoria,
             marca: marca,
             nome: nome,
-            embalagens: [novaEmbalagem],
-            
+            embalagens: [novaEmbObj]
         };
-        criaProduto(novoProduto)
+
+        const { error } = await _supabase
+            .from('estoque')
+            .insert(novoProduto);
+
+        if (error) alert("Erro ao criar produto: " + error.message);
+        else alert("Produto cadastrado com sucesso!");
     }
-    
-    // 5. Salvar e resetar
-   // localStorage.setItem('estoqueDeProdutos', JSON.stringify(dados));
-   
-    
-    alert("Produto/Variação salva com sucesso!");
+
     fecharModalCadastro();
-    if (typeof renderizarAdmin === "function") renderizarAdmin();
-}cadprod() });
+    renderizarAdmin();
+});
 
 
-
+function navegacao(openId) {
+    const allpages = ['cadastroReal', 'loginAdm','admProdutos'];
+    switch(openId){
+        case 'admProdutos':
+              renderizarAdmin();
+        break;
+    }
+    allpages.forEach(page => {
+        document.getElementById(page).style.display = 'none';
+    });
+document.getElementById(openId).style.display = 'flex';
+}
 
 
 

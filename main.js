@@ -1,6 +1,3 @@
-
-
-
 document.addEventListener('DOMContentLoaded', async () => {
     const user = await verificarLogin();
 
@@ -45,11 +42,6 @@ const compartilharDados = async () => {
 };
   document.getElementById('btnCompartilhar').addEventListener('click', compartilharDados);
 
-
-
-
-
-
 let historicoPages = []
 let ultimoIndex='home'
 let paginaAtual
@@ -90,17 +82,14 @@ function navegacao(open) {
 const isUserOrCart = ['perfilUser', 'pageCarrinho'].includes(open);
 const isMenu = open === 'cardapio';
 const isHomeOrMenu = ['home', 'cardapio'].includes(open);
-
 // Gerencia as classes de forma limpa
 document.getElementById('header').classList.toggle('hidden', isUserOrCart);
 document.getElementById('navCat').classList.toggle('hidden', !isMenu);
 document.getElementById('headerTools').classList.toggle('hidden', !isHomeOrMenu);
 
-
-  allSections.forEach(s =>{
+ allSections.forEach(s =>{
     
     document.getElementById(s).classList.add('hidden')
-    
   })
   document.getElementById(open).classList.remove('hidden')
 }
