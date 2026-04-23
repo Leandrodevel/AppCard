@@ -146,12 +146,6 @@ function voltarPage() {
   alert('palavra incorreta')
 } 
 }
-async function exibeDadosHeader(){
-const meusDados = await userDados()
-const headerViewEndereco= document.getElementById('btnViewEndereco')
- headerViewEndereco.innerHTML=meusDados.nome
-}
-exibeDadosHeader()
 const formatMoeda = (valor) => 
 valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
@@ -1525,12 +1519,13 @@ window.addEventListener('click', (e) => {
 });
 async function preencheEndereco() {
  const dados = await userDados()
+ if(dados.rua || dados.casa){
   document.getElementById('inputRuaAlt').value = dados.rua || ''
   document.getElementById('inputCasaAlt').value = dados.casa || ''
   document.getElementById('inputBairroAlt').value = dados.bairro || ''
   document.getElementById('inputCEPAlt').value = dados.cep || ''
   document.getElementById('inputComplementoAlt').value = dados.complemento || ''
-}
+}}
 let servicoInstalacao; // Variável para guardar o evento
 const botaoInstalar = document.getElementById('btnInstalar');
 

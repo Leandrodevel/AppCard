@@ -592,7 +592,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 };
 
     const tipo = embalagem;
-    const preco = preco.replace(',', '.');
+     preco = preco.replace(',', '.');
     const obs = document.getElementById('obs-combo').value;
     
     // Pega todos os acompanhamentos marcados
@@ -600,7 +600,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
     const item = {
       cod: gerarID(),
-      nome: `Espetinho de ${sabor}`,
+      nome: nome,
       embalagem: '1 un.',
       acompanhamentos: acompanhamentos,
       observacao: obs,
@@ -665,7 +665,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     
 </section>
 
-<!---fim do combos-->
+<!---fim do os-->
 <section id="montarEspetinho">
 <div class=" min-h-screen  pb-12 font-sans">
   <section class="max-w-md mx-auto overflow-hidden ">
