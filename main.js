@@ -286,29 +286,21 @@ const user = await userDados()
    window.location.href = "index.html";
 }
 }
-/*
+
 const barraDeBusca = document.getElementById('search-bar')
 barraDeBusca.addEventListener('input', ()=>{
+    
+    if(barraDeBusca.value.length > 0){
   const dbProdutos = JSON.parse(localStorage.getItem('estoqueDeProdutos'))
-   // listaProdutos('',barraDeBusca.value,'')
+     navegacao('cardapio')
+    listaProdutos('',barraDeBusca.value,'')
     
-    const buscaSugestao = dbProdutos.filter(sb=> sb.nome.toLowerCase().includes(barraDeBusca.value.toLowerCase())) || []
-    
-    const listaBusca = document.getElementById('listBusca')
-   
-   listaBusca.innerHTML =''
-   
-   buscaSugestao.forEach(bs=>{
-     
-     const optList = document.createElement('option')
-     optList.className='bg-white'
-     optList.innerText = bs.nome
-     
-     listaBusca.appendChild(optList)
-       
-   })    
+    }else if(barraDeBusca.value.length <1){
+        
+        navegacao('home')
+    }
 })
-*/
+
 function buscaProduto(termo) {
   const headerTools = document.querySelector('headerTools')
 

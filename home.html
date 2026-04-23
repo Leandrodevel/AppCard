@@ -127,7 +127,7 @@ async function userDados() {
     <!-- Lado Direito: Botões Finos -->
     <div class="flex items-center space-x-2">
         <!-- Botão Lupa -->
-        <button class="p-2 text-gray-400 hover:text-yellow-400 transition-colors" aria-label="Buscar">
+        <button class="p-2 text-gray-400 hover:text-yellow-400 transition-colors" aria-label="Buscar" onclick="openBox('searchBox', event)">
             <i data-lucide="search" class="w-5 h-5 stroke-[1.5]"></i>
         </button>
         
@@ -144,8 +144,17 @@ async function userDados() {
   lucide.createIcons();
 </script>
 
-<main class=" px-1  grid grid-cols-1">
-  
+<main class=" px-1 grid grid-cols-1">
+  <div id="searchBox" class="w-full left-0 px-4 fixed hidden translate-y-[-20%] z-50">
+        <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class="relative group">
+      <input id="search-bar" name="searchBar" list="listBusca" type="search" placeholder="O que vamos beber hoje?" class="w-full bg-gray-100 border-2 shadow-sm border-gray-400 rounded-2xl py-3 pl-12 pr-4 text-sm transition-all">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-4 top-3 group-focus-within:text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </form>
+
+  </div>
   <div id="headerTools">
      <!----------menu superior----------> 
     <div class="w-full px-2">
