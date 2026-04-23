@@ -1,3 +1,6 @@
+
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     const user = await verificarLogin();
 
@@ -9,6 +12,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(`Sessão ativa para: ${user.nome || 'Usuário'}`);
     }
 });
+async function verificarLogin() {
+    const dados = await userDados();
+    
+    // Verifica se os dados existem E se o campo logged é verdadeiro
+    if (!dados || dados.logged !== true) {
+        console.warn("Acesso negado: Usuário não está logado.");
+        window.location.replace('index.html'); // .replace é melhor que .href pois remove a página atual do histórico (o usuário não consegue "voltar" para a página protegida)
+        return false;
+    }
+
+    return dados;
+}
+
 const compartilharDados = async () => {
   const dadosCompartilhamento = {
     title: 'Cardápio Budega',
@@ -31,19 +47,6 @@ const compartilharDados = async () => {
 
 
 
-async function verificarLogin() {
-
-    const dados = await userDados();
-    
-    // Verifica se os dados existem E se o campo logged é verdadeiro
-    if (!dados || dados.logged !== true) {
-        console.warn("Acesso negado: Usuário não está logado.");
-        window.location.replace('index.html'); // .replace é melhor que .href pois remove a página atual do histórico (o usuário não consegue "voltar" para a página protegida)
-        return false;
-    }
-
-    return dados;
-}
 
 
 

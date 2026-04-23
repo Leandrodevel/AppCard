@@ -77,6 +77,7 @@ background-repeat: no-repeat;
   background-size: cover; /* Faz a imagem ocupar todo o espaço */
 }
     </style>
+
 </head>
 <body>
     <section id="splash">
@@ -93,107 +94,26 @@ background-repeat: no-repeat;
         </div>
     </div>
  </section>
- <script>
-document.addEventListener('DOMContentLoaded', () => {
+     <script>
+document.addEventListener('DOMContentLoaded', () => { 
+  
   setTimeout(() => {
-    
     const splash = document.getElementById('splash-pulse-container');
     splash.style.transition = 'opacity 0.5s ease';
     splash.style.opacity = '0';
-    
-    
-    setTimeout(() =>{ 
-    splash.remove()
-    window.location.href = "loginUsers.html";
-    }, 300);
-    
-    
+    const dados = JSON.parse(localStorage.getItem('userDados'));
+  
+    if ( dados && dados.logged  === true) {
+       window.location.replace('home.html');
+        return false;
+    }else if(!dados || dados.logged === false){
+        window.location.replace('loginUsers.html');
+        return false;
+    }
   }, 1000); // 3 segundos é suficiente
+ 
 });
 
-
-//teste de github
-  // 1. Configurações de acesso
-  const SUPABASE_URL = 'https://wyhqwprshbgwjlnxndhm.supabase.co'
-  
-  const SUPABASE_KEY ='sb_publishable_avVe0cMnriaF8Ogt42Z7Xg_PTD5pdnZ'
-
-  // 2. Inicializa o cliente
-  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
-
-  async function UserDados() {
-    
-  const { data, error } = await _supabase
-    .from('users')
-    .select('*'); // O asterisco traz todas as colunas
-
-  if (error) {
-    console.error('Erro ao ler dados:', error.message);
-  } else {
-    
-    return data || []
-    // Para acessar a primeira embalagem do primeiro produto:
-     
-  }
-  
-}
-async function logarUsuario(email, password) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password,
-  })
-
-  if (error) {
-    console.error('Erro ao logar:', error.message)
-    return { sucesso: false, erro: error.message }
-  }
-
-  // Se chegou aqui, o login foi um sucesso!
-  console.log('Usuário logado:', data.user)
-  
-  // Redirecionar o usuário, por exemplo:
-  window.location.href = '/dashboard.html'
-}
-
-async function checarSessao() {
-  const { data: { session } } = await supabase.auth.getSession()
-
-  if (session) {
-    console.log('Usuário está ativo:', session.user.email)
-  } else {
-    console.log('Nenhum usuário logado.')
-  }
-}
-async function sair() {
-  const { error } = await supabase.auth.signOut()
-  if (!error) {
-    window.location.href = '/login.html'
-  }
-}
-
-//metodo signup
-//fazer login de usuario
-
-async function cadastrarUsuario(email, password) {
-  const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
-    // Opcional: metadados como nome, telefone, etc.
-    options: {
-      data: {
-        first_name: 'João',
-        age: 25,
-      }
-    }
-  })
-
-  if (error) {
-    console.error('Erro no cadastro:', error.message)
-  } else {
-    alert('Verifique seu e-mail para confirmar o cadastro!')
-    console.log('Usuário criado:', data.user)
-  }
-}
  </script>
 </body>
 </html>

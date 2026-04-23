@@ -15,8 +15,6 @@ async function verificaLogin() {
       setTimeout(() =>{ 
 window.location.href = "home.html";
     }, 500);
-
-   
     }else{
       
         const userNome = document.getElementById('inputNome')
