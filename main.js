@@ -519,7 +519,7 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
             <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase">
                 OFERTA
             </span>
-            <div class="flex-shrink-0 w-16 h-16 bg-gray-50  overflow-hidden mr-3"></div>
+          
             <div class="flex-grow flex items-center justify-between min-w-0">
 
                 <div class="flex flex-col min-w-0 -space-y-0.5"> 
@@ -731,7 +731,7 @@ async function validarCaminhoImagem(nomeArquivo) {
   try {
     const response = await fetch(caminho, { method: 'HEAD' });
     // Se retornar 200-299, a imagem existe
-    return response.ok ? caminho : './img/noimage.gif';
+    return response.ok ? caminho : './img/logo.png';
   } catch {
     return './img/noimage.gif'; // Se der erro de rede, usa a padrão
   }
