@@ -117,7 +117,7 @@ async function userDados() {
         <!-- Nome do Estabelecimento -->
         <div>
             <h1 class="text-lg font-black uppercase tracking-tighter leading-none">
-                Espetinho <span class="text-yellow-400">Do Chef</span>
+                CARDÁPIO <span class="text-yellow-400">BUDEGA</span>
             </h1>
             <span class="text-[10px] font-bold flex items-center uppercase" id="statusOnline">
              status da loja
@@ -531,7 +531,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
                 <li>✦ Farofa e Molho Especial</li>
             </ul>
             <p class="text-white font-black text-xl mt-3">R$ 59,90</p>
-            <button class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md hover:bg-yellow-500 transition-all" onclick="navegacao('comboDuas')">
+            <button  class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md hover:bg-yellow-500 transition-all" onclick="navegacao('customizarPedido'),customizarPedidoRender(1, 'Combo Duas Pessoas', 'Combo', 59.90)">
                 Adicionar ao Carrinho
             </button>
         </div>
@@ -558,7 +558,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
                 <li>✦ Salpicão Especial</li>
             </ul>
             <p class="text-white font-black text-xl mt-3">R$ 84,90</p>
-            <button class="mt-4 bg-white text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md hover:bg-gray-100 transition-all" onclick="navegacao('comboPremium')">
+            <button class="mt-4 bg-white text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md hover:bg-gray-100 transition-all" onclick="navegacao('customizarPedido')">
                 Adicionar ao Carrinho
             </button>
         </div>
@@ -566,7 +566,6 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
 </div>
 
-<!---fim do combos-->
     <!-------------mais pedidos--------->
     <div class="mt-8">
     <div class="px-4 flex items-center justify-between mb-4">
@@ -589,6 +588,12 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     
   </div>
 </section>
+<!-- Seção de Customização do Item -->
+<section id="customizarPedido" class="min-h-screen">
+    
+</section>
+
+<!---fim do combos-->
 <section id="montarEspetinho">
 <div class=" min-h-screen  pb-12 font-sans">
   <section class="max-w-md mx-auto overflow-hidden ">

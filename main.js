@@ -42,7 +42,7 @@ function navegacao(open) {
       behavior: 'auto'
   })
       
-  const allSections=['home','cardapio','pageCarrinho','pagePromocao','montarEspetinho','perfilUser','editarUser','enderecoTemp']
+  const allSections=['home','cardapio','pageCarrinho','pagePromocao','montarEspetinho','perfilUser','editarUser','enderecoTemp','customizarPedido']
   
   switch (open) {
     case 'home':
@@ -164,7 +164,102 @@ function atualizaContador() {
       atualizarCarrinho()
 }    
     atualizaContador()
-    
+
+async function customizarPedidoRender(cod, nome, tipo, preco) {
+const dados = await userDados()
+const sectionCustomizar = document.getElementById('customizarPedido')
+
+
+const srcImagem = ''
+
+sectionCustomizar.innerHTML =`
+    <div class="relative w-full h-56 overflow-hidden">
+        <img src="${srcImagem}" class="w-full h-full object-cover" alt="${nome}">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        
+        <!-- Botão Voltar Flutuante -->
+        <button onclick="navegacao('home')" class="absolute top-4 left-4 bg-black/50 p-2 rounded-full text-white backdrop-blur-sm">
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        </button>
+    </div>
+
+    <!-- Informações do Produto (Sem padding-x no container principal) -->
+    <div class="mt-4 px-4">
+        <h2 class="text-3xl font-black text-white uppercase italic tracking-tighter">${nome}</h2>
+        <p class="text-gray-400 text-sm font-medium mt-1 uppercase italic">${tipo}</p>
+        <div class="mt-2">
+            <span class="text-yellow-400 font-black text-2xl">R$ ${preco}</span>
+        </div>
+    </div>
+
+    <!-- ÁREA DE ESCOLHA (Complementos e Adicionais) -->
+    <div class="mt-8 space-y-6">
+        
+        <!-- Grupo 1: Acompanhamentos Gratuitos -->
+        <div>
+            <div class="bg-zinc-900/50 py-2 px-4 mb-3 border-l-4 border-yellow-400">
+                <h3 class="text-sm font-black text-white uppercase tracking-widest flex justify-between">
+                    Escolha seus acompanhamentos
+                    <span class="text-[10px] text-yellow-400 font-bold">OBRIGATÓRIO</span>
+                </h3>
+            </div>
+
+            <!-- Listagem de Checkboxes (Fundo Branco conforme solicitado anteriormente) -->
+            <div class="flex flex-col">
+                <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-yellow-50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" name="acompanhamento" value="Vinagrete" checked class="w-5 h-5 accent-yellow-400 rounded">
+                        <span class="text-sm font-bold text-gray-800">Vinagrete</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-green-600 uppercase italic">Incluso</span>
+                </label>
+
+                <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-yellow-50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" name="acompanhamento" value="Farofa" checked class="w-5 h-5 accent-yellow-400 rounded">
+                        <span class="text-sm font-bold text-gray-800">Farofa Especial</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-green-600 uppercase italic">Incluso</span>
+                </label>
+
+                <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-yellow-50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" name="acompanhamento" value="Feijão Tropeiro" checked class="w-5 h-5 accent-yellow-400 rounded">
+                        <span class="text-sm font-bold text-gray-800">Feijão Tropeiro</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-green-600 uppercase italic">Incluso</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Observações -->
+        <div class="px-4">
+            <h3 class="text-[10px] font-black text-yellow-400 uppercase mb-2">Alguma observação?</h3>
+            <textarea placeholder="Ex: Carne bem passada, sem cebola..." 
+                      class="w-full bg-zinc-900 text-white rounded-2xl p-4 text-sm focus:outline-none border border-zinc-800 h-24 placeholder:text-zinc-600"></textarea>
+        </div>
+    </div>
+
+    <!-- Barra Fixa de Finalização (Botão Adicionar) -->
+    <div class="sticky bottom-0 bg-black/80 backdrop-blur-md p-4 border-t border-zinc-800 mt-10">
+        <div class="flex items-center justify-between gap-4">
+            <!-- Controle de Quantidade -->
+            <div class="flex items-center bg-zinc-900 rounded-xl p-1 border border-zinc-800">
+                <button class="w-10 h-10 flex items-center justify-center text-yellow-400 font-bold text-xl">-</button>
+                <span class="w-8 text-center text-white font-bold">1</span>
+                <button class="w-10 h-10 flex items-center justify-center text-yellow-400 font-bold text-xl">+</button>
+            </div>
+            
+            <!-- Botão Adicionar -->
+            <button class="flex-grow bg-yellow-400 text-zinc-900 font-black py-4 rounded-xl text-sm uppercase italic tracking-tighter shadow-lg shadow-yellow-400/10 active:scale-95 transition-transform">
+                Adicionar R$ ${preco}
+            </button>
+        </div>
+    </div>
+
+`
+
+}
 async function atualizaPontos(total){
   const dataPontos = await userDados()
 const newPontos= total * 0.
@@ -838,10 +933,10 @@ document.getElementById('modalOverlay').innerHTML=''
       </div>
     </div>
     
-    <button id="modalProdBtnAdd" onclick="confirmAdd('${cod}','${nome}', '${embalagem}','${preco}')" class="w-full temaBotoes text-white font-black py-4 rounded-2xl  transition-all flex justify-between px-6 items-center">
+    <button id="modalProdBtnAdd" onclick="confirmAdd('${cod}','${nome}', '${embalagem}','${preco}')" class="w-full temaBotoes font-black py-4 rounded-2xl  transition-all flex justify-between px-6 items-center">
       <span>ADICIONAR AO PEDIDO</span>
       <div class="flex items-center gap-2">
-        <span id="totalPrice" class="bg-orange-600 px-3 py-1 rounded-lg text-sm">R$ 9,90</span>
+        <span id="totalPrice" class="bg-yellow-500 px-3 py-1 rounded-lg text-sm">R$ 9,90</span>
         <!-- ÍCONE: SHOPPING-CART (OPCIONAL) -->
     </div>
     </button>
@@ -921,7 +1016,6 @@ document.getElementById('modalRemover').classList.add('hidden')
   
 }
 function confirmAdd(cod,nome,embalagem,preco) {
-
   const produto = {
         cod: cod,
         nome:nome,
@@ -929,8 +1023,6 @@ function confirmAdd(cod,nome,embalagem,preco) {
         preco: preco.replace(/[^0-9,.]/g,""),
         qtd: Number(currentQty)
     };
-    
-    
   const repetido = meuCarrinho.find(x=>x.cod === cod)
   
   if(repetido){
@@ -938,15 +1030,15 @@ function confirmAdd(cod,nome,embalagem,preco) {
     repetido.qtd = Number(currentQty)
     
   }else{
-   
   meuCarrinho.push(produto)
   }
   localStorage.setItem('carrinho',JSON.stringify(meuCarrinho))
   modalAdicionado(cod,nome,embalagem,preco)
-
   atualizaContador()
   closeModal();
+
 }
+
 function atualizarCarrinho() {
    
     
@@ -1375,7 +1467,6 @@ function fecharModalConfirmar() {
     document.getElementById('modalConfirmarRepetir').classList.add('hidden');
     voltarPage()
 }
-
 async function cadastrarEnderecoAlternativo(e){
   
   const userdados = await userDados()
@@ -1395,7 +1486,36 @@ localStorage.setItem('userDados',JSON.stringify(userdados))
   voltarPage()
   slcEnderecoModal()    
 }
+function modalAdicionado(cod, nome, tipo, preco) {
+    const modal = document.getElementById('modalAdicionado');
+   
+  const displayMsg = document.getElementById('msg-produto');
 
+    // Insere o nome do produto no parágrafo
+    displayMsg.innerHTML = `O item <span class="text-yellow-600 font-bold">"${nome}"</span> foi colocado no seu carrinho.`;
+
+    // Exibe o modal
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+function fecharModalAdicionado() {
+    const modal = document.getElementById('modalAdicionado');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+}
+// Fecha se clicar fora do card branco
+window.addEventListener('click', (e) => {
+    const modal = document.getElementById('modalAdicionado');
+    if (e.target === modal) fecharModalAdicionado();
+});
+async function preencheEndereco() {
+ const dados = await userDados()
+  document.getElementById('inputRuaAlt').value = dados.rua || ''
+  document.getElementById('inputCasaAlt').value = dados.casa || ''
+  document.getElementById('inputBairroAlt').value = dados.bairro || ''
+  document.getElementById('inputCEPAlt').value = dados.cep || ''
+  document.getElementById('inputComplementoAlt').value = dados.complemento || ''
+}
 let servicoInstalacao; // Variável para guardar o evento
 const botaoInstalar = document.getElementById('btnInstalar');
 
