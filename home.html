@@ -566,9 +566,6 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
 </div>
 
-
-
-
 <!---fim do combos-->
     <!-------------mais pedidos--------->
     <div class="mt-8">
@@ -593,8 +590,8 @@ const classeComItem = [...new Set(dbListExist.map(item =>
   </div>
 </section>
 <section id="montarEspetinho">
-<div class=" min-h-screen p-4 pb-12 font-sans">
-  <section class="max-w-md mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+<div class=" min-h-screen  pb-12 font-sans">
+  <section class="max-w-md mx-auto overflow-hidden ">
     <div class="relative">
       <img src="./img/img1.jpg" alt="Espetinho" class="w-full h-56 object-cover">
       <span class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">BRASA VIVA</span>
@@ -606,7 +603,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
           <h2 id="main-prod-nome" class="text-2xl font-bold text-gray-800">Monte seu Espetinho</h2>
           <p class="text-gray-500 text-sm mt-1">Escolha o sabor e os seus acompanhamentos favoritos.</p>
         </div>
-        <span class="text-xl font-black text-red-600">R$ <span id="main-prod-preco">8,90</span></span>
+        <span class="text-lg font-black text-red-600">R$ <span id="main-prod-preco">8,90</span></span>
       </div>
 
       <hr class="my-6 border-gray-100">
@@ -626,22 +623,30 @@ const classeComItem = [...new Set(dbListExist.map(item =>
       <div class="mb-6">
         <label class="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">2. Acompanhamentos (Grátis)</label>
         <div class="grid grid-cols-2 gap-3">
-          <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-transparent has-[:checked]:border-red-200 has-[:checked]:bg-red-50">
-            <input type="checkbox" name="acompanhamento" value="Vinagrete" class="w-5 h-5 accent-red-500 rounded">
-            <span class="text-sm font-medium text-gray-700">Vinagrete</span>
-          </label>
-          <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-transparent has-[:checked]:border-red-200 has-[:checked]:bg-red-50">
-            <input type="checkbox" name="acompanhamento" value="Farofa" class="w-5 h-5 accent-red-500 rounded">
-            <span class="text-sm font-medium text-gray-700">Farofa</span>
-          </label>
-          <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-transparent has-[:checked]:border-red-200 has-[:checked]:bg-red-50">
-            <input type="checkbox" name="acompanhamento" value="Feijão Tropeiro" class="w-5 h-5 accent-red-500 rounded">
-            <span class="text-sm font-medium text-gray-700">Feijão Tropeiro</span>
-          </label>
-          <label class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100 transition-colors border border-transparent has-[:checked]:border-red-200 has-[:checked]:bg-red-50">
-            <input type="checkbox" name="acompanhamento" value="Salpicão" class="w-5 h-5 accent-red-500 rounded">
-            <span class="text-sm font-medium text-gray-700">Salpicão</span>
-          </label>
+         <!-- Vinagrete Marcado -->
+<label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors border border-gray-100 has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
+    <input type="checkbox" name="acompanhamento" value="Vinagrete" checked class="w-5 h-5 accent-yellow-400 rounded">
+    <span class="text-sm font-medium text-gray-700">Vinagrete</span>
+</label>
+
+<!-- Farofa Marcado -->
+<label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors border border-gray-100 has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
+    <input type="checkbox" name="acompanhamento" value="Farofa" checked class="w-5 h-5 accent-yellow-400 rounded">
+    <span class="text-sm font-medium text-gray-700">Farofa</span>
+</label>
+
+<!-- Feijão Tropeiro Marcado -->
+<label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors border border-gray-100 has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
+    <input type="checkbox" name="acompanhamento" value="Feijão Tropeiro" checked class="w-5 h-5 accent-yellow-400 rounded">
+    <span class="text-sm font-medium text-gray-700">Feijão Tropeiro</span>
+</label>
+
+<!-- Salpicão Marcado -->
+<label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors border border-gray-100 has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
+    <input type="checkbox" name="acompanhamento" value="Salpicão" checked class="w-5 h-5 accent-yellow-400 rounded">
+    <span class="text-sm font-medium text-gray-700">Salpicão</span>
+</label>
+
         </div>
       </div>
 
