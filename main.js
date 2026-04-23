@@ -481,7 +481,7 @@ const marcaEscapada = prod.marca.replace(/'/g, "\\'");
       <div class="py-1  mt-2 mb-4 px-2 grid grid-cols-1 transition-colors rounded-lg relative">
         <div class="flex-grow pr-4 ">
           <h4 class=" font-black text-gray-600 uppercase tracking-tight flex mb-1">
-            <span class=" text-md temaTitulos ml-2">${nomeEscapado.trim()}</span>
+            <span class=" text-md text-blue-500 ml-2">${nomeEscapado.trim()}</span>
             <i class="w-4 h-4 text-green-500 translate-y-[5px]" data-lucide="corner-right-down"></i>
           </h4>
         </div>
