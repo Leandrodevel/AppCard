@@ -104,44 +104,46 @@ async function userDados() {
 
 <div id="app" class="app">
  
-  <header id="header" class=" transition-transform duration-500 ease-in-out  ifLogged sticky top-0 z-50 px-4 pt-4 pb-2 temaCards relative mb-1">
-<img 
-    src="./img/bgHeader.jpg" 
-    alt="Background" 
-    class="absolute inset-0 w-full h-full object-cover object-bottom"
-  />
-  <div class="absolute inset-0 bg-gradient-to-b from-black/80 from-30% to-transparent z-10"></div>
-            
-    <div class="flex items-center justify-between mb-4 z-30 relative">
-      
-      <div class="flex gap-2 flex-row items-center">
-        <span class=" capitalize text-sm font-bold text-yellow-400 tracking-wider">Olá </span>
-        <span class="flex items-center text-sm font-bold text-gray-200 capitalize"  id="btnViewEndereco">
-          Usuario
-           </span>
-      </div>
-         <div class="flex flex-row gap-2 items-center" id="statusOnline"></div>
-     </div>
-     
-<div id="bannerLoja" class=" relative z-20 w-full  left-0 px-2 pt-1 translate-y-[-20%] ">
-<div class="  rounded-2xl flex items-center justify-evenly flex-col relative  " >
- 
-    <h2 class="tituloBarnner uppercase  font-bold text-3xl mogra-regular pb-1 "> 
-      CARDÁPIO DIGITAL
-    </h2>
-    <small class="subTituloBarnner text-sm text-white  translate-y-[-50%] capitalize">By LpSource</small>
 
-</div>
-</div>
-
-    <div id="search" class="absolute z-50 w-full left-0 px-4 translate-y-[-40%]">
-          <form onsubmit="event.preventDefault();buscaProduto(this.searchBar.value)" class=" group">
-      <input id="search-bar" name="searchBar" list="listBusca" type="search" placeholder="O que vamos beber hoje?" class="w-full   rounded-2xl py-3 pl-6 pr-4 text-sm  temaBordas transition-all">
-    </form>
-    <datalist id="listBusca">
-    </datalist>
+<header id="header" class=" bg-zinc-900 text-white px-4 py-3 flex items-center justify-between border-b border-yellow-400/20 sticky top-0 z-50">
+    
+    <!-- Lado Esquerdo: Logo e Nome -->
+    <div class="flex items-center space-x-3">
+        <!-- Círculo para Logo -->
+        <div class="w-12 h-12 rounded-full border-2 border-yellow-400 overflow-hidden bg-zinc-800 flex-shrink-0 shadow-lg">
+            <img src="./img/logo.png" alt="Logo" class="w-full h-full object-cover">
+        </div>
+        
+        <!-- Nome do Estabelecimento -->
+        <div>
+            <h1 class="text-lg font-black uppercase tracking-tighter leading-none">
+                Espetinho <span class="text-yellow-400">Do Chef</span>
+            </h1>
+            <span class="text-[10px] text-green-500 font-bold flex items-center uppercase">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-1"></span> Aberto agora
+            </span>
+        </div>
     </div>
-  </header>
+
+    <!-- Lado Direito: Botões Finos -->
+    <div class="flex items-center space-x-2">
+        <!-- Botão Lupa -->
+        <button class="p-2 text-gray-400 hover:text-yellow-400 transition-colors" aria-label="Buscar">
+            <i data-lucide="search" class="w-5 h-5 stroke-[1.5]"></i>
+        </button>
+        
+        <!-- Botão Compartilhar -->
+        <button class="p-2 text-gray-400 hover:text-yellow-400 transition-colors" aria-label="Compartilhar">
+            <i data-lucide="share-2" class="w-5 h-5 stroke-[1.5]"></i>
+        </button>
+    </div>
+</header>
+
+<!-- Script para carregar os ícones (se ainda não tiver) -->
+<script src="https://unpkg.com"></script>
+<script>
+  lucide.createIcons();
+</script>
 
 <main class=" px-1 py-2 grid grid-cols-1">
   
@@ -492,27 +494,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
                   </button>
             </div>
         </div>
-                 <!-----------COMBO GIN---
-
-        <div class="min-w-[280px] bg-gray-900 rounded-3xl p-5 flex relative overflow-hidden group shadow-xl transition-transform duration-300 active:scale-95">
             
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-yellow-400/20 rounded-full blur-2xl group-hover:bg-yellow-400/30 transition-all"></div>
-
-            <div class="relative z-10 w-2/3">
-                <span class="bg-yellow-400 text-gray-900 text-[10px] font-bold px-2 py-1 rounded-full uppercase">Promoção</span>
-                <h4 class="text-2xl font-extrabold text-white mt-2 leading-tight">Combo Gin + Tônica</h4>
-                <p class="text-yellow-400 font-bold text-xl mt-1">R$ 89,90</p>
-                <button class="mt-4 bg-yellow-400 text-gray-900 font-bold py-2.5 px-5 rounded-xl text-sm shadow-lg hover:bg-yellow-300 transition-colors">
-                    Aproveitar
-                </button>
-            </div>
-
-            <div class="absolute right-2 bottom-4 opacity-30 group-hover:opacity-100 group-hover:-rotate-12 transition-all duration-500">
-                 <i data-lucide="star" class="text-yellow-400 w-24 h-24"></i>
-            </div>
-        </div>
-
-    </div>----------> 
 </div>                
 </div>
 
@@ -520,56 +502,72 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
 
 <!---combos de churrascos-->
- <div class="px-4 mb-4 ">
-        <h2 class="text-xl font-black temaTitulos uppercase tracking-tight flex">
-            SUPER  <span class="ml-2 tema-text-base">COMBOS </span>
-              <i class="rotate-12 ml-2" data-lucide="crown"class="mr-2"></i>
-        </h2>
-    </div>
-<div class=" px-4 min-h-screen font-sans">
-  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 gap-6">
-    
-    <!-- Combo 01: Duas Pessoas -->
-    <div class="bg-zinc-900 border-2 border-yellow-400 rounded-2xl p-6 flex flex-col justify-between  transition-transform">
-      <div>
-        <span class="bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full uppercase">Popular</span>
-        <h2 class="text-yellow-400 text-2xl font-black mt-4 uppercase italic">Combo Duas Pessoas</h2>
-        <p class="text-gray-400 text-sm mt-2">A combinação clássica para o seu jantar.</p>
-        <ul class="text-white mt-6 space-y-2 text-sm">
-          <li class="flex items-center"><span class="text-yellow-400 mr-2">✦</span> 5 Espetinhos (Carne, Frango, Toscana, Coração e Pão de Alho)</li>
-          <li class="flex items-center"><span class="text-yellow-400 mr-2">✦</span> Farofa e Molho Especial</li>
-          <li class="flex items-center"><span class="text-yellow-400 mr-2">✦</span> Batata Frita com Queijo e Bacon</li>
-        </ul>
-      </div>
-      <div class="mt-8">
-        <div class="text-white text-3xl font-bold mb-4">R$ 59,90</div>
-        <button class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-extrabold py-3 rounded-lg transition-colors">ADICIONAR AO CARRINHO</button>
-      </div>
-    </div>
-
-    <!-- Combo 02: Combo Premium (Destaque) -->
-    <div class="bg-yellow-400 rounded-2xl p-6 flex flex-col justify-betweentransition-transform border-4 border-white">
-      <div>
-        <span class="bg-black text-yellow-400 text-xs font-bold px-3 py-1 rounded-full uppercase">O Mais Completo</span>
-        <h2 class="text-black text-2xl font-black mt-4 uppercase italic">Combo Premium</h2>
-        <p class="text-black/70 text-sm mt-2 font-medium">Tudo do combo anterior com acompanhamentos extras.</p>
-        <ul class="text-black mt-6 space-y-2 text-sm font-semibold">
-          <li class="flex items-center"><span class="mr-2">✓</span> 5 Espetinhos + Batata Queijo e Bacon</li>
-          <li class="flex items-center"><span class="mr-2">✓</span> Vinagrete e Feijão Tropeiro</li>
-          <li class="flex items-center"><span class="mr-2">✓</span> Salpicão Especial</li>
-          <li class="flex items-center"><span class="mr-2">✓</span> Arroz Soltinho</li>
-        </ul>
-      </div>
-      <div class="mt-8">
-        <div class="text-black text-3xl font-black mb-4 border-t border-black/20 pt-4 text-center">R$ 84,90</div>
-        <button class="w-full bg-black hover:bg-zinc-800 text-yellow-400 font-extrabold py-3 rounded-lg transition-colors italic">PEÇA O COMPLETO</button>
-      </div>
-    </div>
-
-   
-
-  </div>
+<div class="px-4 mb-4">
+    <h2 class="text-xl font-black temaTitulos uppercase tracking-tight flex">
+        SUPER <span class="ml-2 tema-text-base">COMBOS</span>
+        <i class="rotate-12 ml-2" data-lucide="crown"></i>
+    </h2>
 </div>
+
+<!-- Container dos Cards -->
+<div class="px-4 space-y-4 pb-10">
+
+    <!-- Combo 01: Duas Pessoas -->
+    <div class="w-full bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-yellow-400/20"
+         style="background-image: url('./img/comboChurras.jpg'); 
+                background-size: cover; 
+                background-position: center;">
+        
+        <!-- Degradê para leitura -->
+        <div class="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/95 to-transparent"></div>
+
+        <div class="relative z-10 w-3/4">
+            <span class="bg-yellow-400 text-black text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-sm">Popular</span>
+            <h4 class="text-2xl font-extrabold text-white mt-2 leading-tight uppercase italic">
+                <span class="text-yellow-400 block">Combo</span>
+                Duas Pessoas
+            </h4>
+            <ul class="text-white/80 text-[11px] mt-2 space-y-0.5 font-medium">
+                <li>✦ 5 Espetos Variados</li>
+                <li>✦ Batata Frita, Queijo e Bacon</li>
+                <li>✦ Farofa e Molho Especial</li>
+            </ul>
+            <p class="text-white font-black text-xl mt-3">R$ 59,90</p>
+            <button class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md hover:bg-yellow-500 transition-all" onclick="navegacao('comboDuas')">
+                Adicionar ao Carrinho
+            </button>
+        </div>
+    </div>
+
+    <!-- Combo 02: Premium -->
+    <div class="w-full bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-white/10"
+         style="background-image: url('./img/comboPremium.jpg'); 
+                background-size: cover; 
+                background-position: center;">
+        
+        <!-- Degradê mais escuro para o Premium -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-transparent"></div>
+
+        <div class="relative z-10 w-3/4">
+            <span class="bg-white text-black text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-sm">O Mais Completo</span>
+            <h4 class="text-2xl font-extrabold text-white mt-2 leading-tight uppercase italic">
+                <span class="text-yellow-400 block">Combo</span>
+                Premium
+            </h4>
+            <ul class="text-white/80 text-[11px] mt-2 space-y-0.5 font-medium">
+                <li>✦ Itens do Combo 1 + Arroz</li>
+                <li>✦ Feijão Tropeiro e Vinagrete</li>
+                <li>✦ Salpicão Especial</li>
+            </ul>
+            <p class="text-white font-black text-xl mt-3">R$ 84,90</p>
+            <button class="mt-4 bg-white text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md hover:bg-gray-100 transition-all" onclick="navegacao('comboPremium')">
+                Adicionar ao Carrinho
+            </button>
+        </div>
+    </div>
+
+</div>
+
 
 
 
@@ -1044,29 +1042,29 @@ slcEndereco.addEventListener('change', (event) => {
   
 <!---NAVBAR BOTTOM--->
 
- <nav id="navBottom" class="temaCards z-10 fixed bottom-0 w-full px-6 py-3 flex justify-between items-center shadow-[0_-5px_15px_rgba(0,0,0,0.05)]
+ <nav id="navBottom" class="bg-zinc-900 text-white z-10 fixed bottom-0 w-full px-6 py-3 flex justify-between items-center shadow-[0_-5px_15px_rgba(0,0,0,0.05)]
  max-w-[640px] min-w-[360px]">
     
 
-    <button id="btbHome" class="flex flex-col items-center temaTextos " onclick="navegacao('home'),ativabtnBottom('btbHome')">
+    <button id="btbHome" class="flex flex-col items-center  " onclick="navegacao('home'),ativabtnBottom('btbHome')">
       <i  data-lucide="house" class="h-6 w-6"></i>
       <span class="text-[10px] font-bold uppercase">Início</span>
     </button>
     
-        <button id="btbProm" class="flex flex-col items-center justify-center temaTextos" onclick="navegacao('pagePromocao'),ativabtnBottom('btbProm')">
+        <button id="btbProm" class="flex flex-col items-center justify-center " onclick="navegacao('pagePromocao'),ativabtnBottom('btbProm')">
       <i  data-lucide="ticket-percent" class="h-6 w-6 "></i>
       <span class="text-[10px] font-bold uppercase">Promoção</span>
     </button>
   
     <div class="relative">
       <span  id="qtd-itens" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
-    <button id="btbCar" class="flex flex-col items-center temaTextos" onclick="verCarrinho(),ativabtnBottom('btbCar')">
+    <button id="btbCar" class="flex flex-col items-center " onclick="verCarrinho(),ativabtnBottom('btbCar')">
       
     <i  class="W;6 H-6" data-lucide="shopping-basket"></i>
       <span class="text-[10px] font-bold uppercase">Meu Carrinho</span>
     </button>
     </div>
-    <button id="btbUser" class="flex flex-col items-center temaTextos" onclick="verPerfil(),ativabtnBottom('btbUser')">
+    <button id="btbUser" class="flex flex-col items-center " onclick="verPerfil(),ativabtnBottom('btbUser')">
       <i data-lucide="user" class="h-6 w-6"></i>
       <span class="text-[10px] font-bold uppercase">Perfil</span>
     </button>
@@ -1078,10 +1076,10 @@ slcEndereco.addEventListener('change', (event) => {
     const allsBtnNavBottom = ['btbHome','btbProm','btbCar','btbUser']
     
     allsBtnNavBottom.map(bb =>{
-     document.getElementById(bb).classList.remove('temaTitulos')
+     document.getElementById(bb).classList.remove('text-yellow-400')
      
     })
-    document.getElementById(id).classList.add('temaTitulos')
+    document.getElementById(id).classList.add('text-yellow-400')
   }
   ativabtnBottom('btbHome')
   </script>
@@ -1168,10 +1166,7 @@ slcEndereco.addEventListener('change', (event) => {
   lucide.createIcons();
 });
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(() => console.log("Service Worker Registrado!"));
-}
+
 </script>
  </div>
 </body>

@@ -217,7 +217,6 @@ navegacao('cardapio')
 function faixaAmarela(){
 const marquee = document.getElementById('faixaTicker')
 let marqueeText=`<div class="animate-ticker">
-
         🔥 CERVEJA BOA, SEMPRE GELADA!!! • COMBOS DE ESPETINHOS • TAXA GRÁTIS ACIMA DE R$ 70,00 🔥
     </div> `;
 
@@ -664,7 +663,7 @@ divtop10.innerHTML = '';
     const srcImagem = await validarCaminhoImagem(nomeImagem);
 
   const card = document.createElement('div'); // Nome da variável simplificado
-  card.className = "w-full flex-none px-2 pb-4";
+  card.className = "w-full flex-none px-2 border-b border-gray-100"; // Classe única para o card
   
   // Formatando o preço para o padrão brasileiro
   const precoFormatado = parseFloat(item.preco.replace(",","."))
@@ -688,7 +687,7 @@ const marcaEscapada = item.marca.replace(/'/g, "\\'");
  
    
   card.innerHTML = `
-<div class=" temaCards rounded-2xl p-3 shadow-sm relative overflow-hidden flex flex-row items-center mb-2">
+<div class="   p-3 shadow-sm relative overflow-hidden flex flex-row items-center ">
     
     <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase tracking-tighter">
         OFERTA
@@ -1366,44 +1365,8 @@ function fecharModalConfirmar() {
     voltarPage()
 }
 
-
-document.getElementById('form-cadastro').addEventListener('submit', function(e) {
-  e.preventDefault();
-  // Aqui você salvaria os dados no banco
-  document.getElementById('modal-cadastro').style.display = 'none';
-  alert('Bem-vindo(a)!');
-});
-function modalAdicionado(cod, nome, tipo, preco) {
-    const modal = document.getElementById('modalAdicionado');
-   
-  const displayMsg = document.getElementById('msg-produto');
-
-    // Insere o nome do produto no parágrafo
-    displayMsg.innerHTML = `O item <span class="text-yellow-600 font-bold">"${nome}"</span> foi colocado no seu carrinho.`;
-
-    // Exibe o modal
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-}
-function fecharModalAdicionado() {
-    const modal = document.getElementById('modalAdicionado');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-}
-// Fecha se clicar fora do card branco
-window.addEventListener('click', (e) => {
-    const modal = document.getElementById('modalAdicionado');
-    if (e.target === modal) fecharModalAdicionado();
-});
-async function preencheEndereco() {
- const dados = await userDados()
-  document.getElementById('inputRuaAlt').value = dados.rua || ''
-  document.getElementById('inputCasaAlt').value = dados.casa || ''
-  document.getElementById('inputBairroAlt').value = dados.bairro || ''
-  document.getElementById('inputCEPAlt').value = dados.cep || ''
-  document.getElementById('inputComplementoAlt').value = dados.complemento || ''
-}
 async function cadastrarEnderecoAlternativo(e){
+  
   const userdados = await userDados()
    e.preventDefault(); // Impede a página de recarregar
   
