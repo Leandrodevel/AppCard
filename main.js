@@ -731,7 +731,7 @@ async function validarCaminhoImagem(nomeArquivo) {
   try {
     const response = await fetch(caminho, { method: 'HEAD' });
     // Se retornar 200-299, a imagem existe
-    return response.ok ? caminho : './img/logo.png';
+    return response.ok ? caminho : './img/noimage.gif';
   } catch {
     return './img/noimage.gif'; // Se der erro de rede, usa a padrão
   }
