@@ -9,6 +9,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(`Sessão ativa para: ${user.nome || 'Usuário'}`);
     }
 });
+const compartilharDados = async () => {
+  const dadosCompartilhamento = {
+    title: 'Cardápio Budega',
+    text: 'Confira o nosso cardápio!',
+    url: 'https://lpcardapios.vercel.app/budega/index.html'
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(dadosCompartilhamento);
+      console.log('Conteúdo compartilhado com sucesso!');
+    } else {
+      // Fallback para navegadores que não suportam a API
+      alert('Seu navegador não suporta a função de compartilhar. Copie o link manualmente.');
+    }
+  } catch (err) {
+    console.error('Erro ao compartilhar:', err);
+  }
+};
+  document.getElementById('btnCompartilhar').addEventListener('click', compartilharDados);
+
+
+
 async function verificarLogin() {
 
     const dados = await userDados();
