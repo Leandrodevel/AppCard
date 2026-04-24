@@ -88,7 +88,7 @@ async function handleLogout() {
 async function verificarSessao() {
     const { data: { session } } = await _supabase.auth.getSession();
     if (session) {
-      navegacao('admProdutos');
+      navegacao('dashboard');
     }else {
        
         navegacao('loginAdm')
@@ -172,7 +172,140 @@ async function verificarSessao() {
 </script>
 </head>
 <body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
- 
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <nav class="flex justify-between items-center h-20">
+     
+
+      
+      
+      <div class="flex-shrink-0">
+        <h1 class="text-sm mr-2 font-bold text-gray-800">ADM Cardápio</h1>
+      </div>
+
+      <div class="flex space-x-6 h-full">
+        
+        <button class="flex flex-col items-center justify-center text-gray-600 hover:text-blue-600 transition-colors" onclick="navegacao('dashboard')">
+          <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+          <span class="text-[10px] uppercase font-medium mt-1">Dashboard</span>
+        </button>
+
+        <button onclick="navegacao('admProdutos')" class="flex flex-col items-center justify-center text-gray-600 hover:text-blue-600 transition-colors">
+          <i data-lucide="package" class="w-6 h-6"></i>
+          <span class="text-[10px] uppercase font-medium mt-1">Produtos</span>
+        </button>
+
+        <a href="#" class="flex flex-col items-center justify-center text-gray-600 hover:text-blue-600 transition-colors">
+          <i data-lucide="store" class="w-6 h-6"></i>
+          <span class="text-[10px] uppercase font-medium mt-1">Sua Loja</span>
+        </a>
+
+        <button class="flex flex-col items-center justify-center text-gray-600 hover:text-red-600 transition-colors" onclick="handleLogout()">
+          <i data-lucide="log-out" class="w-6 h-6"></i>
+          <span class="text-[10px] uppercase font-medium mt-1">Sair</span>
+        </button>
+
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+</script>
+
+ <section id="dashboard" class="hidden p-4  mx-auto animate-fadeIn flex flex-col">
+  
+  <div class="mb-8">
+    <h1 class="text-2xl font-black text-gray-900">Visão Geral</h1>
+    <p class="text-gray-500 text-sm">Acompanhe o desempenho da sua loja em tempo real.</p>
+  </div>
+
+  <div class=" w-full rimg grid grid-cols-1 gap-4 mb-8">
+    
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100">
+      <div class="bg-blue-50 w-10 h-10 rounded-2xl flex items-center justify-center text-blue-600 mb-3">
+        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+      </div>
+      <p class="text-gray-500 text-xs font-bold uppercase tracking-wider">Vendas Totais</p>
+      <h2 id="dashTotalVendas" class="text-2xl font-black text-gray-900 mt-1">0</h2>
+    </div>
+
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100">
+      <div class="bg-green-50 w-10 h-10 rounded-2xl flex items-center justify-center text-green-600 mb-3">
+        <i data-lucide="dollar-sign" class="w-5 h-5"></i>
+      </div>
+      <p class="text-gray-500 text-xs font-bold uppercase tracking-wider">Faturamento</p>
+      <h2 id="dashFaturamento" class="text-2xl font-black text-gray-900 mt-1">R$ 0,00</h2>
+    </div>
+
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100">
+      <div class="bg-yellow-50 w-10 h-10 rounded-2xl flex items-center justify-center text-yellow-600 mb-3">
+        <i data-lucide="layers" class="w-5 h-5"></i>
+      </div>
+      <p class="text-gray-500 text-xs font-bold uppercase tracking-wider">Produtos</p>
+      <h2 id="dashTotalProdutos" class="text-2xl font-black text-gray-900 mt-1">0</h2>
+    </div>
+
+    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100">
+      <div class="bg-red-50 w-10 h-10 rounded-2xl flex items-center justify-center text-red-600 mb-3">
+        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+      </div>
+      <p class="text-gray-500 text-xs font-bold uppercase tracking-wider">Estoque Baixo</p>
+      <h2 id="dashEstoqueBaixo" class="text-2xl font-black text-gray-900 mt-1">0</h2>
+    </div>
+
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <div class="lg:col-span-1 bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+      <h3 class="font-black text-gray-800 mb-4 flex items-center gap-2">
+        <i data-lucide="trending-up" class="w-5 h-5 text-yellow-500"></i>
+        TOP 5 MAIS VENDIDOS
+      </h3>
+      <div id="listaMaisVendidos" class="space-y-4">
+        <p class="text-gray-400 text-sm italic">Carregando dados...</p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="font-black text-gray-800">STATUS DA OPERAÇÃO</h3>
+        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">LOJA ABERTA</span>
+      </div>
+      
+      <div class="space-y-6">
+        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
+          <div class="flex items-center gap-3">
+            <div class="bg-yellow-400 p-2 rounded-lg">
+                <i data-lucide="clock" class="w-5 h-5 text-yellow-900"></i>
+            </div>
+            <div>
+              <p class="font-bold text-gray-800">Tempo médio de entrega</p>
+              <p class="text-xs text-gray-500">Baseado nos últimos 7 dias</p>
+            </div>
+          </div>
+          <span class="font-black text-xl text-gray-900">32 min</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <button onclick="navegacao('admProdutos')" class="p-4 bg-gray-900 text-white rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-gray-800 transition-all">
+                <i data-lucide="plus-circle" class="w-6 h-6 text-yellow-400"></i>
+                Adicionar Itens
+            </button>
+            <button class="p-4 bg-yellow-400 text-yellow-900 rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-yellow-500 transition-all">
+                <i data-lucide="share-2" class="w-6 h-6"></i>
+                Compartilhar Link
+            </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <section id="cadastroReal" class="min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
 
   <div class="mb-8">
@@ -249,19 +382,15 @@ async function verificarSessao() {
 
 </section>
 
-<section id="admProdutos">
-  <div class="min-h-screen  p-4 font-sans text-gray-800">
-  
-  <div class="w-full mx-auto mb-6">
-    <div class="flex justify-between items-center mb-6 flex-col">
-       <button onclick="handleLogout()" class="text-gray-600 font-bold">sair</button>
-      <h1 class="text-2xl font-black tracking-tight">ADMIN <span class="text-yellow-500">CARDÁPIO</span></h1>
-   
+<section id="admProdutos" class="w-full">
+  <div class="min-h-screen w-full  p-4 font-sans text-gray-800">
+      <div class="flex justify-between items-center mb-6 flex-col">
       <button onclick="abrirModalCadastro()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm transition-all active:scale-95">
         + Novo Produto
       </button>
     </div>
-
+  <div class="w-full mx-auto mb-6">
+ 
     <div class="relative">
       <input type="text" id="inputBusca" oninput="renderizarAdmin()" placeholder="Pesquisar por nome ou código..." 
              class="w-full p-4 rounded-2xl border-none shadow-md focus:ring-2 focus:ring-yellow-400 outline-none">
@@ -664,7 +793,7 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
 
 
 function navegacao(openId) {
-    const allpages = ['cadastroReal', 'loginAdm','admProdutos'];
+    const allpages = ['cadastroReal', 'loginAdm','admProdutos','dashboard'];
     switch(openId){
         case 'admProdutos':
               renderizarAdmin();
