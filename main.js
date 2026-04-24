@@ -1,14 +1,14 @@
 async function verificarLogin() {
     const dados = await userDados();
     
-    // Verifica se os dados existem E se o campo logged é verdadeiro
-    if (!dados || dados.logged !== true) {
-        window.location.replace('loginUsers.html'); // .replace é melhor que .href pois remove a página atual do histórico (o usuário não consegue "voltar" para a página protegida)
-        return false;
+      const unlock = dados.logged === true? 'home' : 'loginUsers.html'
+   if(unlock === 'home'){
+   navegacao('home'); 
+    }else if(unlock !== 'home' ){
+    window.location.replace(`${unlock}.html`); 
     }
-
-    return dados;
 }
+verificarLogin()
 
 const compartilharDados = async () => {
   const dadosCompartilhamento = {

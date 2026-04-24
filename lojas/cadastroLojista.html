@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Administrador - Flat Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200 p-0 md:p-10 font-sans">
+
+    <div class="max-w-4xl mx-auto bg-white p-8 shadow-none rounded-none">
+        <header class="mb-10 border-b border-gray-100 pb-4">
+            <h1 class="text-2xl font-black text-gray-800 uppercase tracking-tighter">Cadastro de Administrador</h1>
+            <p class="text-sm text-gray-500">Preencha os dados do proprietário da conta.</p>
+        </header>
+
+        <form id="formAdm" class="space-y-8">
+            
+            <section>
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-4">Informações de Identidade</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                    <div class="p-2">
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Nome Completo</label>
+                        <input type="text" id="adm_nome" placeholder="NOME DO PROPRIETÁRIO" required
+                            class="w-full bg-gray-50 border-none rounded-none p-3 text-sm focus:bg-gray-100 focus:ring-0 outline-none">
+                    </div>
+
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-4">Contato e Acesso</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                    <div class="p-2">
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">E-mail (Login)</label>
+                        <input type="email" id="adm_email" placeholder="admin@exemplo.com" required
+                            class="w-full bg-gray-50 border-none rounded-none p-3 text-sm focus:bg-gray-100 focus:ring-0 outline-none">
+                    </div>
+                    <div class="p-2">
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Telefone / Celular</label>
+                        <input type="tel" id="adm_telefone" placeholder="(00) 00000-0000" required
+                            class="w-full bg-gray-50 border-none rounded-none p-3 text-sm focus:bg-gray-100 focus:ring-0 outline-none">
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-4">Assinatura</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                    <div class="p-2">
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Plano Escolhido</label>
+                        <select id="adm_plano" 
+                            class="w-full bg-gray-50 border-none rounded-none p-3 text-sm focus:bg-gray-100 focus:ring-0 outline-none appearance-none cursor-pointer">
+                            <option value="gratis">PLANO START (GRÁTIS)</option>
+                            <option value="pro">PLANO PRO (MENSAL)</option>
+                            <option value="premium">PLANO PREMIUM (ANUAL)</option>
+                        </select>
+                    </div>
+                  
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-4">Segurança</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                    <div class="p-2">
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Senha de Acesso</label>
+                        <input type="password" id="adm_senha" placeholder="********" required
+                            class="w-full bg-gray-50 border-none rounded-none p-3 text-sm focus:bg-gray-100 focus:ring-0 outline-none">
+                    </div>
+                    <div class="p-2">
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Confirmar Senha</label>
+                        <input type="password" id="adm_senha_confirma" placeholder="********" required
+                            class="w-full bg-gray-50 border-none rounded-none p-3 text-sm focus:bg-gray-100 focus:ring-0 outline-none">
+                    </div>
+                </div>
+            </section>
+
+            <div class="mt-10">
+                <button type="submit" 
+                    class="w-full bg-yellow-400 text-white font-black py-5 uppercase tracking-[0.2em] text-sm hover:bg-black transition-colors rounded-none shadow-none" onclick="irPara('cadastroLoja.html')">
+                    Continuar
+                </button>
+            </div>
+
+        </form>
+    </div>
+<script src="config.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

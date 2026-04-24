@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dados = JSON.parse(localStorage.getItem('userDados'));
   
     if ( dados && dados.logged  === true) {
-       window.location.replace('home.html');
+       window.location.replace('home.html?comercio=budega');
         return false;
     }else if(!dados || dados.logged === false){
         window.location.replace('loginUsers.html');

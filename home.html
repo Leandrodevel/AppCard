@@ -20,6 +20,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
+<script src="configLojas.js" defer ></script>
 
 <script>
 
@@ -94,13 +95,10 @@ async function userDados() {
 
   }
 
-
-
-
 </script>
 
 </head>
-<body class="bg-gray-900 font-sans">
+<body class=" font-sans">
 
 <div id="app" class="app">
  
@@ -111,7 +109,7 @@ async function userDados() {
     <div class="flex items-center space-x-3">
         <!-- Círculo para Logo -->
         <div class="w-12 h-12 rounded-full border-2 border-yellow-400 overflow-hidden bg-zinc-800 flex-shrink-0 shadow-lg">
-            <img src="./img/logotipo.png" alt="Logo" class="w-full h-full object-cover">
+           <a href="home.html?cardapio='budega"> <img src="./img/logotipo.png" alt="Logo" class="w-full h-full object-cover"></a>
         </div>
         
         <!-- Nome do Estabelecimento -->
@@ -283,188 +281,6 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     mt-2 gap-2 ">
     </nav>    
   </div>
-
-<section id="perfilUser" class="w-full mx-auto  min-h-screen">
-  
-  <div class="flex justify-between items-center p-4">
-    <a href="/index-admin.html" class="hidden" id="adminBtn">
-      <button class="p-2 bg-white shadow-sm rounded-xl text-gray-700 active:scale-95 transition-all">
-        <i class="w-5 h-5" data-lucide="user-key"></i>
-      </button>
-    </a>
-  
-
-  </div>
-
-  <div class="px-6 text-center flex flex-col items-center">
-    
-    <div class="relative mb-4">
-      <div class="w-24 h-24 temaBotoes rounded-full p-1 flex items-center justify-center ">
-        <h1 id="pflLetra" class="font-black text-4xl text-white drop-shadow-md capitalize">L</h1>
-      </div>
-      <button onclick="navegacao('editarUser')" class="absolute bottom-0 right-0 p-2 temaCards  rounded-full border-2 border-white ">
-        <i class="w-3 h-3" data-lucide="pencil"></i>
-      </button>
-    </div>
-
-    <h2 id="pflNome" class="text-2xl font-black temaTitulos tracking-tight capitalize">João da Silva</h2>    
-    <p id="pflTel" class="text-gray-400 text-sm font-medium mb-8">(22) 99888-7766</p>
-
-    <div class="w-full temaCards p-4 rounded-2xl  flex items-center space-x-4 mb-6 text-left">
-      <div class="bg-yellow-100 p-3 rounded-xl text-yellow-600">
-        <i class="w-6 h-6" data-lucide="map-pin"></i>
-      </div>
-      <div class="flex-grow overflow-hidden">
-        <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Endereço de entrega</p>
-        <p id="spanEndereco" class="text-sm temaTextos font-semibold truncate">Toque para adicionar endereço</p>
-      </div>
-      <button onclick="navegacao('enderecoTemp')" class="p-2 temaBotoes rounded-lg ">
-        <i class="w-4 h-4" data-lucide="chevron-right"></i>
-      </button>
-    </div>
-
-<div class="w-full  temaCards p-6 rounded-2xl  mx-auto flex justify-around ">
-  
-  <div class="grid grid-cols-4 gap-3 max-w-sm">
-    
-    <button onclick="navegacaoUser('historico')" class="aspect-square temaBotoes transition-all rounded-xl flex flex-col items-center justify-center p-2  group">
-      <i data-lucide="history" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
-      <span class="text-[10px] font-bold uppercase tracking-tighter">Histórico</span>
-    </button>
-
-    <button class="aspect-square temaBotoes transition-all rounded-xl flex flex-col items-center justify-center p-2  group" onclick="">
-      <i data-lucide="settings" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
-      <span class="text-[10px] font-bold uppercase tracking-tighter">Ajustes</span>
-    </button>
-
-    <button onclick="navegacaoUser('ajuda')" class="aspect-square temaBotoes transition-all rounded-xl flex flex-col items-center justify-center p-2  group">
-      <i data-lucide="help-circle" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
-      <span class="text-[10px] font-bold uppercase tracking-tighter">Ajuda</span>
-    </button>
-
-    <button onclick="logout()" class="aspect-square bg-red-500 text-white transition-all rounded-xl flex flex-col items-center justify-center p-2  group">
-      <i data-lucide="log-out" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
-      <span class="text-[10px] font-bold uppercase tracking-tighter">Sair</span>
-    </button>
-
-  </div>
-</div>
-<!-- NAVEGACAO MENU USUARIO-->
-  <div id="navagacaoUser" class="w-full">
-    
-    <!--historico-->
-
- <div id="historico" class="flex flex-col w-full items-center gap-3 mb-8 mt-4 ">
-        <h2 class="text-2xl font-black temaTextos">Meus Pedidos</h2>
-  <div id="containerHistorico" class="space-y-6 w-full"></div>
-    </div>
-   
- <div id="ajuda" class="flex flex-col w-full items-center gap-3 mb-8 mt-4 temaTextos ">
-  <div id="containerAjuda" class="space-y-6 w-full"></div>
-    </div>
-  </div>
-   
- <!------------------
-  <div class="w-full bg-white rounded-[2.5rem] p-6 shadow-xl relative overflow-hidden mb-10 border border-gray-100 mt-2">
-    <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-400 opacity-20 rounded-full"></div>
-    
-    <div class="flex justify-between items-start mb-6 relative z-10">
-      
-      <div class="text-left">
-        <span class="text-yellow-600 text-[10px] font-black uppercase tracking-[0.2em]">Fidelidade</span>
-        <p class="text-gray-900 text-3xl font-black"><span id="pflPontos">750</span> <span class="text-xs font-light text-gray-400">pts</span></p>
-      </div>
-
-      <div class="bg-yellow-400 px-3 py-1 rounded-full shadow-md shadow-yellow-400/30">
-        <p class="text-[9px] font-extrabold text-gray-900 uppercase">🎁 Vale Copão</p>
-      </div>
-
-    </div>
-
-    <div class="relative w-full bg-gray-100 rounded-full h-3 mb-4 p-0.5 overflow-hidden border border-gray-200">
-      <div id="pflBarraPontos" class="bg-yellow-400 h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(250,204,21,0.4)]" style="width: 75%"></div>
-    </div>
-    
-    <div class="flex justify-between text-[10px] font-bold uppercase tracking-tighter text-gray-400 px-1">
-      <span>0 pts</span>
-      <span class="text-yellow-600">Faltam <span id="pflPontosRestantes">250</span> pts</span>
-      <span>1000</span>
-    </div>
-
-    <div class="mt-6 pt-6 border-t border-gray-100">
-      <div class="grid grid-cols-5 gap-3">
-      
-        <div class="aspect-square bg-yellow-400 rounded-xl flex items-center justify-center shadow-md shadow-yellow-400/20">
-          <i data-lucide="check" class="text-gray-900 w-5 h-5 stroke-[3]"></i>
-        </div>
-     
-        <div class="aspect-square bg-yellow-400 rounded-xl flex items-center justify-center shadow-md shadow-yellow-400/20">
-          <i data-lucide="check" class="text-gray-900 w-5 h-5 stroke-[3]"></i>
-        </div>
-       
-        <div class="aspect-square bg-yellow-400 rounded-xl flex items-center justify-center shadow-md shadow-yellow-400/20">
-          <i data-lucide="check" class="text-gray-900 w-5 h-5 stroke-[3]"></i>
-        </div>
-       
-        <div class="aspect-square border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-300 font-black text-sm">
-          4</div>
-        <div class="aspect-square border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-300 font-black text-sm">
-          5</div>
-      </div>
-
-      <p class="text-[9px] text-gray-400 mt-4 italic">Complete 10 pedidos para resgatar seu prêmio!</p>
-    
-    </div>
-</div>------------------->
- 
-</section>
-  <section id="editarUser" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
-
-
-  <div class="mb-8 flex">
-   
-     <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="voltarPage()">
-        <i class="w-4 h-4" data-lucide="undo-2"></i>
-      </button>
-   
-    <h1 class="text-2xl font-black text-gray-900 leading-tight">Editar informações do perfil</h1>
-
-
-  </div>
-
-  <form id="formEditar" onsubmit="editarUser(event.defaultPrevented(),'editar')" class="space-y-4">
-    
-    <div>
-      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
-      <input required type="text" id="editNome" placeholder="Ex: João Silva" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
-    </div>
-
-    <div>
-      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">WhatsApp</label>
-      
-      <input required type="tel" id="editTel" placeholder="(00) 00000-0000" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
-    </div>
-
-    <p class="text-[10px] text-gray-400 text-center px-4 py-2">
-      Ao atualizar, os dados anteriores serão perdidos
-    </p>
-
-    <div class="pt-4">
-      <button id="btnEditarCadUser" type="submit" 
-        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
-        Atualizar cadastro
-      </button>
-    </div>
-    </form>
-
-
-</section>
-<section id="cardapio">
-    <div id="cardapio-grid" class=" pb-[200px] ">
-    </div>
-  </section>
 <section id="home" class=" min-h-screen font-sans text-gray-900 pb-20">
    <div class="z-500" >
 
@@ -669,6 +485,188 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     
   </div>
 </section>
+<section id="perfilUser" class="w-full mx-auto hidden  min-h-screen">
+  
+  <div class="flex justify-between items-center p-4">
+    <a href="/index-admin.html" class="hidden" id="adminBtn">
+      <button class="p-2 bg-white shadow-sm rounded-xl text-gray-700 active:scale-95 transition-all">
+        <i class="w-5 h-5" data-lucide="user-key"></i>
+      </button>
+    </a>
+  
+
+  </div>
+
+  <div class="px-6 text-center flex flex-col items-center">
+    
+    <div class="relative mb-4">
+      <div class="w-24 h-24 temaBotoes rounded-full p-1 flex items-center justify-center ">
+        <h1 id="pflLetra" class="font-black text-4xl text-white drop-shadow-md capitalize">L</h1>
+      </div>
+      <button onclick="navegacao('editarUser')" class="absolute bottom-0 right-0 p-2 temaCards  rounded-full border-2 border-white ">
+        <i class="w-3 h-3" data-lucide="pencil"></i>
+      </button>
+    </div>
+
+    <h2 id="pflNome" class="text-2xl font-black temaTitulos tracking-tight capitalize">João da Silva</h2>    
+    <p id="pflTel" class="text-gray-400 text-sm font-medium mb-8">(22) 99888-7766</p>
+
+    <div class="w-full temaCards p-4 rounded-2xl  flex items-center space-x-4 mb-6 text-left">
+      <div class="bg-yellow-100 p-3 rounded-xl text-yellow-600">
+        <i class="w-6 h-6" data-lucide="map-pin"></i>
+      </div>
+      <div class="flex-grow overflow-hidden">
+        <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Endereço de entrega</p>
+        <p id="spanEndereco" class="text-sm temaTextos font-semibold truncate">Toque para adicionar endereço</p>
+      </div>
+      <button onclick="navegacao('enderecoTemp')" class="p-2 temaBotoes rounded-lg ">
+        <i class="w-4 h-4" data-lucide="chevron-right"></i>
+      </button>
+    </div>
+
+<div class="w-full  temaCards p-6 rounded-2xl  mx-auto flex justify-around ">
+  
+  <div class="grid grid-cols-4 gap-3 max-w-sm">
+    
+    <button onclick="navegacaoUser('historico')" class="aspect-square temaBotoes transition-all rounded-xl flex flex-col items-center justify-center p-2  group">
+      <i data-lucide="history" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tighter">Histórico</span>
+    </button>
+
+    <button class="aspect-square temaBotoes transition-all rounded-xl flex flex-col items-center justify-center p-2  group" onclick="">
+      <i data-lucide="settings" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tighter">Ajustes</span>
+    </button>
+
+    <button onclick="navegacaoUser('ajuda')" class="aspect-square temaBotoes transition-all rounded-xl flex flex-col items-center justify-center p-2  group">
+      <i data-lucide="help-circle" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tighter">Ajuda</span>
+    </button>
+
+    <button onclick="logout()" class="aspect-square bg-red-500 text-white transition-all rounded-xl flex flex-col items-center justify-center p-2  group">
+      <i data-lucide="log-out" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform"></i>
+      <span class="text-[10px] font-bold uppercase tracking-tighter">Sair</span>
+    </button>
+
+  </div>
+</div>
+<!-- NAVEGACAO MENU USUARIO-->
+  <div id="navagacaoUser" class="w-full">
+    
+    <!--historico-->
+
+ <div id="historico" class="flex flex-col w-full items-center gap-3 mb-8 mt-4 ">
+        <h2 class="text-2xl font-black temaTextos">Meus Pedidos</h2>
+  <div id="containerHistorico" class="space-y-6 w-full"></div>
+    </div>
+   
+ <div id="ajuda" class="flex flex-col w-full items-center gap-3 mb-8 mt-4 temaTextos ">
+  <div id="containerAjuda" class="space-y-6 w-full"></div>
+    </div>
+  </div>
+   
+ <!------------------
+  <div class="w-full bg-white rounded-[2.5rem] p-6 shadow-xl relative overflow-hidden mb-10 border border-gray-100 mt-2">
+    <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-400 opacity-20 rounded-full"></div>
+    
+    <div class="flex justify-between items-start mb-6 relative z-10">
+      
+      <div class="text-left">
+        <span class="text-yellow-600 text-[10px] font-black uppercase tracking-[0.2em]">Fidelidade</span>
+        <p class="text-gray-900 text-3xl font-black"><span id="pflPontos">750</span> <span class="text-xs font-light text-gray-400">pts</span></p>
+      </div>
+
+      <div class="bg-yellow-400 px-3 py-1 rounded-full shadow-md shadow-yellow-400/30">
+        <p class="text-[9px] font-extrabold text-gray-900 uppercase">🎁 Vale Copão</p>
+      </div>
+
+    </div>
+
+    <div class="relative w-full bg-gray-100 rounded-full h-3 mb-4 p-0.5 overflow-hidden border border-gray-200">
+      <div id="pflBarraPontos" class="bg-yellow-400 h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(250,204,21,0.4)]" style="width: 75%"></div>
+    </div>
+    
+    <div class="flex justify-between text-[10px] font-bold uppercase tracking-tighter text-gray-400 px-1">
+      <span>0 pts</span>
+      <span class="text-yellow-600">Faltam <span id="pflPontosRestantes">250</span> pts</span>
+      <span>1000</span>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-gray-100">
+      <div class="grid grid-cols-5 gap-3">
+      
+        <div class="aspect-square bg-yellow-400 rounded-xl flex items-center justify-center shadow-md shadow-yellow-400/20">
+          <i data-lucide="check" class="text-gray-900 w-5 h-5 stroke-[3]"></i>
+        </div>
+     
+        <div class="aspect-square bg-yellow-400 rounded-xl flex items-center justify-center shadow-md shadow-yellow-400/20">
+          <i data-lucide="check" class="text-gray-900 w-5 h-5 stroke-[3]"></i>
+        </div>
+       
+        <div class="aspect-square bg-yellow-400 rounded-xl flex items-center justify-center shadow-md shadow-yellow-400/20">
+          <i data-lucide="check" class="text-gray-900 w-5 h-5 stroke-[3]"></i>
+        </div>
+       
+        <div class="aspect-square border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-300 font-black text-sm">
+          4</div>
+        <div class="aspect-square border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-gray-300 font-black text-sm">
+          5</div>
+      </div>
+
+      <p class="text-[9px] text-gray-400 mt-4 italic">Complete 10 pedidos para resgatar seu prêmio!</p>
+    
+    </div>
+</div>------------------->
+ 
+</section>
+  <section id="editarUser" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
+
+
+  <div class="mb-8 flex">
+   
+     <button class=" close text-2xl bg-yellow-400 rounded-md p-2 mr-2 h-fit w-fit" onclick="voltarPage()">
+        <i class="w-4 h-4" data-lucide="undo-2"></i>
+      </button>
+   
+    <h1 class="text-2xl font-black text-gray-900 leading-tight">Editar informações do perfil</h1>
+
+
+  </div>
+
+  <form id="formEditar" onsubmit="editarUser(event.defaultPrevented(),'editar')" class="space-y-4">
+    
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
+      <input required type="text" id="editNome" placeholder="Ex: João Silva" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <div>
+      <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">WhatsApp</label>
+      
+      <input required type="tel" id="editTel" placeholder="(00) 00000-0000" 
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+    </div>
+
+    <p class="text-[10px] text-gray-400 text-center px-4 py-2">
+      Ao atualizar, os dados anteriores serão perdidos
+    </p>
+
+    <div class="pt-4">
+      <button id="btnEditarCadUser" type="submit" 
+        class="w-full bg-yellow-400 hover:bg-yellow-400 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+        Atualizar cadastro
+      </button>
+    </div>
+    </form>
+
+
+</section>
+<section id="cardapio">
+    <div id="cardapio-grid" class=" pb-[200px] ">
+    </div>
+  </section>
+
 <!-- Seção de Customização do Item -->
 <section id="customizarPedido" class="min-h-screen">
     
