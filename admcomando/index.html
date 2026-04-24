@@ -172,16 +172,7 @@ async function verificarSessao() {
 </script>
 </head>
 <body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
-  <script type="text/javascript" charset="utf-8">
-  
-async function testaDados(){
-  const dados = await obterDados() 
-  
-  alert(JSON.stringify(dados))
-    
-}
-  testaDados()
-</script>
+ 
 <section id="cadastroReal" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
 
   <div class="mb-8">
@@ -445,8 +436,6 @@ const keyVariacao = document.getElementById('keyVariacao')
 variacao()
 async function renderizarAdmin() {
     const produtos = await obterDados();
-  
-    alert(produtos)
     const termoBusca = document.getElementById('inputBusca').value.toLowerCase();
     const container = document.getElementById('listaAdmin');
     
@@ -469,7 +458,7 @@ async function renderizarAdmin() {
 
         const card = document.createElement('div');
         card.className = `bg-white p-4 rounded-2xl shadow-sm border-2 ${estaAtivo ? 'border-transparent' : 'border-red-100 opacity-60'}`;
-
+        const temDesconto = item.emb.desconto > 0? '':'hidden'
         card.innerHTML = `
             <div class="flex justify-between items-start mb-4">
                 <div class="flex-1">
@@ -491,12 +480,13 @@ async function renderizarAdmin() {
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 border-t pt-4">
                 <div class="flex flex-col">
-                    <span class="text-[10px] text-gray-400 uppercase font-bold">Preço Final</span>
-                    <span class="font-black text-lg text-gray-700">R$ ${pFinal.toFixed(2).replace(".", ",")}</span>
+                <small class="text-gray-500 line-through ${temDesconto}">  de: ${item.emb.preco}</small>
                 </div>
 
+                    <span class="text-[10px] text-gray-400 uppercase font-bold">Preço Final</span>
+                    <span class="font-black text-lg text-gray-700 ">R$ ${pFinal.toFixed(2).replace(".", ",")}</span>
                 <button onclick="editarDesconto(${item.indexProd}, ${item.indexEmb})" class="flex items-center justify-center gap-1 bg-red-50 text-red-600 p-2 rounded-xl text-xs font-black hover:bg-red-100 transition">
-                   🏷️ DESC.
+                 ${parseFloat(item.emb.desconto).toFixed(2).replace(".",",")}  🏷️ DESC.
                 </button>
                 
                 <button onclick="editarPreco(${item.indexProd}, ${item.indexEmb}, 'estoque')" class="flex items-center justify-center gap-1 bg-blue-50 text-blue-600 p-2 rounded-xl text-xs font-black hover:bg-blue-100 transition">
