@@ -385,6 +385,41 @@ async function verificarSessao() {
 <section id="admProdutos" class="w-full">
   <div class="min-h-screen w-full  p-4 font-sans text-gray-800">
       <div class="flex justify-between items-center mb-6 flex-col">
+    <div class="w-full max-w-[720px] mx-auto mb-8 px-4">
+  <div class="grid grid-cols-4 gap-2">
+    
+    <button onclick="definirFiltro('lista')" class="flex flex-col items-center group active:scale-90 transition-transform">
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
+        <i data-lucide="bottle-wine" class="w-6 h-6 text-gray-600 group-hover:text-yellow-500"></i>
+      </div>
+      <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Itens de<br>Prateleira</span>
+    </button>
+
+    <button onclick="definirFiltro('montar')" class="flex flex-col items-center group active:scale-90 transition-transform">
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
+        <i data-lucide="pizza" class="w-6 h-6 text-gray-600 group-hover:text-yellow-500"></i>
+      </div>
+      <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Para<br>Montar</span>
+    </button>
+
+    <button onclick="definirFiltro('combos')" class="flex flex-col items-center group active:scale-90 transition-transform">
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
+        <i data-lucide="boxes" class="w-6 h-6 text-gray-600 group-hover:text-yellow-500"></i>
+      </div>
+      <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Combos<br>Prontos</span>
+    </button>
+
+    <button onclick="definirFiltro('promocao')" class="flex flex-col items-center group active:scale-90 transition-transform">
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
+        <i data-lucide="badge-percent" class="w-6 h-6 text-red-500"></i>
+      </div>
+      <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Em<br>Promoção(destaque no inicio)</span>
+</button>
+
+</div>
+</div>
+
+
       <button onclick="abrirModalCadastro()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm transition-all active:scale-95">
         + Novo Produto
       </button>
@@ -806,7 +841,7 @@ document.getElementById(openId).style.display = 'flex';
 }
 
 
-
+lucide.createIcons()
 
 
 </script>
