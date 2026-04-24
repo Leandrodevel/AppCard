@@ -124,15 +124,7 @@ background-repeat: no-repeat;
   min-height: 100dvh;
   box-sizing: border-box;
  }
-body {
-margin: 0 auto;
-opacity: 0; transition: opacity 0.15s;
-}
-body.auth-ok { opacity: 1; }
-@keyframes bounce-slow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
+
 .animate-bounce-slow {
   animation: bounce-slow 3s ease-in-out infinite;
 }
