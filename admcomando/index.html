@@ -89,8 +89,9 @@ async function verificarSessao() {
     const { data: { session } } = await _supabase.auth.getSession();
     if (session) {
       navegacao('dashboard');
+      document.getElementById('header').classList.remove('hidden')
     }else {
-       
+       document.getElementById('header').classList.add('hidden')
         navegacao('loginAdm')
     }
 }
@@ -172,7 +173,7 @@ async function verificarSessao() {
 </script>
 </head>
 <body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
-<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+<header id="header" class=" hidden bg-white border-b border-gray-200 sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4">
     <nav class="flex justify-between items-center h-20">
      
