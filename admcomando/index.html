@@ -71,7 +71,7 @@ async function handleLogin(event) {
     } else {
         alert("Login realizado com sucesso!");
         // Se for o admin, você pode mostrar a seção de admin
-      navegacao('admProdutos');
+      navegacao('dashboard');
     
       
     }
@@ -516,6 +516,21 @@ async function verificarSessao() {
 </section>
 <script>
 verificarSessao();
+async function qtdVendidos() {
+  try {
+    const produtos = await obterDados();
+    
+    // Retorna apenas produtos que possuem ao menos uma embalagem com vendas
+    return produtos.filter(p => {
+      return p.embalagens.some(emb => emb.vendas > 0);
+    });
+  } catch (erro) {
+    console.error("Erro ao buscar dados:", erro);
+    return [];
+  }
+}
+
+alert(JSON.stringify(qtdVendidos()))
 
   const classesCateg = {
     'Bebidas': ['Águas', 'Cachaças', 'Cervejas', 'Whiskys', 'Vodkas', 'Destilados', 'Aperitivos', 'Refrigerantes', 'Energéticos','Combos','Drink'],
