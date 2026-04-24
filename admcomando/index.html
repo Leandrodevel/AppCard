@@ -94,7 +94,7 @@ async function verificarSessao() {
         navegacao('loginAdm')
     }
 }
-verificarSessao();
+
 
   // Exemplo de função para salvar seus dados (Opção 2 - JSONB)
   async function criaProduto(produto) {
@@ -154,11 +154,9 @@ verificarSessao();
 }
 
   async function obterDados() {
-    
   const { data, error } = await _supabase
     .from('estoque')
     .select('*'); // O asterisco traz todas as colunas
-
   if (error) {
     console.error('Erro ao ler dados:', error.message);
   } else {
@@ -170,10 +168,20 @@ verificarSessao();
   
 }
 
+
 </script>
 </head>
 <body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
+  <script type="text/javascript" charset="utf-8">
   
+async function testaDados(){
+  const dados = await obterDados() 
+  
+  alert(JSON.stringify(dados))
+    
+}
+  testaDados()
+</script>
 <section id="cadastroReal" class="bg-white min-h-screen-[70%] flex flex-col p-6 font-sans max-w-md mx-auto overflow-auto">
 
   <div class="mb-8">
@@ -352,6 +360,8 @@ verificarSessao();
 </div>
 </section>
 <script>
+verificarSessao();
+
   const classesCateg = {
     'Bebidas': ['Águas', 'Cachaças', 'Cervejas', 'Whiskys', 'Vodkas', 'Destilados', 'Aperitivos', 'Refrigerantes', 'Energéticos','Combos','Drink'],
     'Petiscos': ['Amendoins', 'Azeitonas', 'Queijos'],
@@ -435,12 +445,12 @@ const keyVariacao = document.getElementById('keyVariacao')
 variacao()
 async function renderizarAdmin() {
     const produtos = await obterDados();
-    
+  
+    alert(produtos)
     const termoBusca = document.getElementById('inputBusca').value.toLowerCase();
     const container = document.getElementById('listaAdmin');
     
     container.innerHTML = '';
-
     // Processamos as variações para exibição individual
     let listaProcessada = [];
     produtos.forEach((prod, indexProd) => {
@@ -451,6 +461,7 @@ async function renderizarAdmin() {
         });
     });
     listaProcessada.forEach(item => {
+        
         const pOriginal = parseFloat(item.emb.preco.replace(",", "."));
         const pDesconto = parseFloat(item.emb.desconto  );
         const pFinal = pOriginal - pDesconto;
@@ -572,8 +583,7 @@ async function excluirItem(idxProd, idxEmb) {
     
 }
 
-// Inicializar
-renderizarAdmin();
+
 
   
   // --- FUNÇÕES DO MODAL ---
