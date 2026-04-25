@@ -1,14 +1,75 @@
 async function verificarLogin() {
     const dados = await userDados();
     
-      const unlock = dados.logged === true? 'home' : 'loginUsers.html'
-   if(unlock === 'home'){
-   navegacao('home'); 
+    if(dados){
+        
+   if(dados.logged === true){
+    return dados.logged
     }else if(unlock !== 'home' ){
-    window.location.replace(`${unlock}.html`); 
+      openLogin() 
     }
+    } else {
+     return  openLogin()
+        
+    }
+    
 }
-verificarLogin()
+function openLogin(){
+    
+    document.getElementById('modalCadastro').classList.remove('hidden')
+    
+}
+/*
+//history.pushState('modal_open', null);
+// Adiciona um estado ao histórico para que haja algo para "voltar"
+history.pushState({ page: 1 }, "", "");
+
+window.onpopstate = function(event) {
+  // Quando o botão voltar é pressionado, este evento dispara
+  alert("Botão voltar pressionado!");
+  // Se quiser manter o usuário na mesma tela, adicione o estado novamente
+  history.pushState({ page: 1 }, "", "");
+};
+*/
+
+let aguardandoSegundoClique = false;
+let timeoutSair;
+
+window.onpopstate = function() {
+    const toast = document.getElementById('toastSair');
+
+    if (!aguardandoSegundoClique) {
+        // Primeiro clique: bloqueia e avisa
+        aguardandoSegundoClique = true;
+        
+        // Exibe o toast
+        toast.classList.replace('opacity-0', 'opacity-100');
+        
+        // "Empurra" o histórico de volta para evitar a saída imediata
+        history.pushState(null, "");
+
+        // Reseta o estado após 2 segundos
+        timeoutSair = setTimeout(() => {
+            aguardandoSegundoClique = false;
+            toast.classList.replace('opacity-100', 'opacity-0');
+        }, 2000);
+    } else {
+        // Segundo clique dentro do tempo: sai do app/página
+        clearTimeout(timeoutSair);
+        history.back(); 
+    }
+};
+
+// Inicialização: Cria um estado inicial para que o 'voltar' tenha o que capturar
+if (!history.state) {
+    history.replaceState({ home: true }, "");
+    history.pushState(null, ""); 
+}
+
+
+
+
+
 
 const compartilharDados = async () => {
   const dadosCompartilhamento = {
@@ -63,7 +124,14 @@ function navegacao(open) {
       preencheEndereco()
       break;
     default:
-      // Tab to edit
+      case 'perfilUser':
+          verificarLogin()
+     break;
+     case 'pageCarrinho':
+         slcEnderecoModal()          
+         break;
+     
+      
   }
 
   // Centraliza as verificações de estado

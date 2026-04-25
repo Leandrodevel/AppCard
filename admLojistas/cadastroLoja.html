@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Loja - Cardápio Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-6">
+
+    <div class="max-w-2xl mx-auto  p-8 ">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Cadastrar Minha Loja</h2>
+        
+        <form id="formCadastroLoja" class="space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nome do Comércio</label>
+                    <input type="text" id="nome_comercio" required class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Link da Loja (Slug)</label>
+                    <input type="text" id="slug" placeholder="ex: budega-do-joao" required class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-orange-500 focus:border-orange-500">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">WhatsApp (com DDD)</label>
+                    <input type="text" id="whatsapp" placeholder="21999999999" class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Tema</label>
+                 
+                 
+                 
+                 
+                 <div class=" p-6 rounded-2xl shadow-sm border border-gray-100">
+    <label class="block text-xs font-bold text-gray-500 mb-4 uppercase tracking-widest">
+        Selecione o Visual:
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        
+        <label class="relative cursor-pointer group">
+            <input type="radio" name="tema_comercio" value="tema-amarelo-claro" class="peer sr-only" checked>
+            
+            <div class="overflow-hidden rounded-lg border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:ring-2 peer-checked:ring-blue-100 transition-all">
+                <div class="flex h-10 w-full">
+                    <div class="w-1/2" style="background-color: #FFD100;"></div> <div class="w-1/2" style="background-color: #F5F7F8;"></div> </div>
+                <div class="bg-white py-1 px-2 text-[10px] font-bold text-center uppercase text-gray-600 peer-checked:bg-blue-600 peer-checked:text-white transition-colors">
+                    Amarelo
+                </div>
+            </div>
+        </label>
+
+        <label class="relative cursor-pointer group">
+            <input type="radio" name="tema_comercio" value="tema-acai-escuro" class="peer sr-only">
+            <div class="overflow-hidden rounded-lg border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:ring-2 peer-checked:ring-blue-100 transition-all">
+                <div class="flex h-10 w-full">
+                    <div class="w-1/2" style="background-color: #975cc2;"></div>
+                    <div class="w-1/2" style="background-color: #0f0a14;"></div>
+                </div>
+                <div class="bg-white py-1 px-2 text-[10px] font-bold text-center uppercase text-gray-600">
+                    Açaí Noturno
+                </div>
+            </div>
+        </label>
+
+        <label class="relative cursor-pointer group">
+            <input type="radio" name="tema_comercio" value="tema-verde-claro" class="peer sr-only">
+            <div class="overflow-hidden rounded-lg border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:ring-2 peer-checked:ring-blue-100 transition-all">
+                <div class="flex h-10 w-full">
+                    <div class="w-1/2" style="background-color: #27AE60;"></div>
+                    <div class="w-1/2" style="background-color: #F5F8F6;"></div>
+                </div>
+                <div class="bg-white py-1 px-2 text-[10px] font-bold text-center uppercase text-gray-600">
+                    Verde Soft
+                </div>
+            </div>
+        </label>
+
+        <label class="relative cursor-pointer group">
+            <input type="radio" name="tema_comercio" value="tema-laranja-escuro" class="peer sr-only">
+            <div class="overflow-hidden rounded-lg border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:ring-2 peer-checked:ring-blue-100 transition-all">
+                <div class="flex h-10 w-full">
+                    <div class="w-1/2" style="background-color: #FF8C00;"></div>
+                    <div class="w-1/2" style="background-color: #121212;"></div>
+                </div>
+                <div class="bg-white py-1 px-2 text-[10px] font-bold text-center uppercase text-gray-600">
+                    Laranja Dark
+                </div>
+            </div>
+        </label>
+
+        <label class="relative cursor-pointer group">
+            <input type="radio" name="tema_comercio" value="tema-azul-claro" class="peer sr-only">
+            <div class="overflow-hidden rounded-lg border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:ring-2 peer-checked:ring-blue-100 transition-all">
+                <div class="flex h-10 w-full">
+                    <div class="w-1/2" style="background-color: #1976D2;"></div>
+                    <div class="w-1/2" style="background-color: #F4F8FB;"></div>
+                </div>
+                <div class="bg-white py-1 px-2 text-[10px] font-bold text-center uppercase text-gray-600">
+                    Azul Sky
+                </div>
+            </div>
+        </label>
+
+        <label class="relative cursor-pointer group">
+            <input type="radio" name="tema_comercio" value="tema-vermelho-escuro" class="peer sr-only">
+            <div class="overflow-hidden rounded-lg border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:ring-2 peer-checked:ring-blue-100 transition-all">
+                <div class="flex h-10 w-full">
+                    <div class="w-1/2" style="background-color: #FF4D4D;"></div>
+                    <div class="w-1/2" style="background-color: #121212;"></div>
+                </div>
+                <div class="bg-white py-1 px-2 text-[10px] font-bold text-center uppercase text-gray-600">
+                    Vermelho Dark
+                </div>
+            </div>
+        </label>
+
+    </div>
+</div>
+
+                 
+                 
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="space-y-4">
+                <h3 class="font-semibold text-gray-700">Localização</h3>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Endereço Completo</label>
+                    <input type="text" id="endereco_completo" placeholder="Rua, número, bairro..." class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Cidade</label>
+                    <input type="text" id="cidade" class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm">
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="space-y-4">
+                <h3 class="font-semibold text-gray-700">Redes Sociais</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Instagram (Link)</label>
+                        <input type="url" id="instagram_url" placeholder="https://instagram.com/..." class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Facebook (Link)</label>
+                        <input type="url" id="facebook_url" class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm">
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="w-full bg-orange-600 text-white font-bold py-3 rounded-lg hover:bg-orange-700 transition duration-300" onclick="registraLoja()">
+                    Criar Meu Cardápio
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script type="module">
+        // Aqui você importaria o seu supabase client
+        // import { supabase } from './configSupabase.js';
+
+        const form = document.getElementById('formCadastroLoja');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const dadosLoja = {
+                nome_comercio: document.getElementById('nome_comercio').value,
+                slug: document.getElementById('slug').value.toLowerCase().trim(),
+                whatsapp: document.getElementById('whatsapp').value,
+                tema_comercio: document.getElementById('tema_comercio').value,
+                endereco_completo: document.getElementById('endereco_completo').value,
+                cidade: document.getElementById('cidade').value,
+                instagram_url: document.getElementById('instagram_url').value,
+                facebook_url: document.getElementById('facebook_url').value,
+                // Aqui você pode definir um horário padrão para evitar que o campo comece nulo
+                horarios_funcionamento: { segunda: "08:00-18:00", terca: "08:00-18:00" } 
+            };
+
+            console.log("Enviando dados:", dadosLoja);
+            alert('Dados prontos para enviar! Agora é só conectar com o supabase.insert()');
+            
+            /* Exemplo de envio:
+            const { error } = await supabase.from('lojas').insert([dadosLoja]);
+            if (!error) window.location.href = `Home.html?comercio=${dadosLoja.slug}`;
+            */
+        });
+    </script>
+<script src="config.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>

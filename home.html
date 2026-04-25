@@ -849,24 +849,26 @@ const classeComItem = [...new Set(dbListExist.map(item =>
             
             <div id="" class="">
               <span class="">Entregar em:</span>
+              <div id="selEndereco">
+
+              </div>
               
-              <select required name="" id="selectEndereco" class="w-full my-2 p-3 rounded-xl outline-none focus:border-red-600 transition">
+              <script>
+    async function slcEnderecoModal(){ 
+      const userExist = await userDados()
+  const selEndereco = document.getElementById('selEndereco')
+      
+    if(userExist){
+      selEndereco.innerHTML=`
+                    <select required name="" id="selectEndereco" class="w-full my-2 p-3 rounded-xl outline-none focus:border-red-600 transition">
                 <option value="" selected>endereco1</option>
                 
               </select>
-              
-              
-              <script>
-    async function slcEnderecoModal(){    
-      const userExist = await userDados()
-    const slcEndereco = document.getElementById('selectEndereco')
+      `
+     const slcEndereco = document.getElementById('selectEndereco')
     selectEndereco.innerHTML = ''
-  
-  
-  const optEndereco = document.createElement('option')
-    
+    const optEndereco = document.createElement('option')
     if (userExist.rua && userExist.rua !== '') {
-      
     optEndereco.selected = true
     optEndereco.innerText = `${userExist.rua}, ${userExist.casa} - ${userExist.bairro}`
     slcEndereco.appendChild(optEndereco)
@@ -878,8 +880,6 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     }
   const optNovo = new Option('Novo endereco','movoEndereco')
     slcEndereco.add(optNovo)
-    
-    
 
 slcEndereco.addEventListener('change', (event) => {
   if (event.target.value === "movoEndereco") {
@@ -890,9 +890,15 @@ slcEndereco.addEventListener('change', (event) => {
     // abrirModalCadastro();
   }
 });
-     }
-    slcEnderecoModal()          
-                
+}else{
+  selEndereco.innerHTML=`
+            <button onclick="navegacao('enderecoTemp')" class="w-full bg-gray-300 hover:bg-green-700 text-white py-4 rounded-2xl font-black uppercase tracking-wide flex items-center justify-center gap-2 transition-all shadow-lg shadow-green-600/20">
+              Cadastrar Endereço 
+            </button>
+  `
+}
+ }
+    
               </script>
               
               
@@ -989,6 +995,13 @@ slcEndereco.addEventListener('change', (event) => {
 <!---MODAL ADICIONAR  PRODUTO--->
  <div id="modalOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center transition-opacity duration-300">
 </div>
+
+<div id="toastSair" class="fixed bottom-20 left-1/2 -translate-x-1/2 bg-zinc-800 text-white px-4 py-2 rounded-md text-sm transition-opacity duration-300 opacity-0 pointer-events-none z-[9999]">
+  Toque novamente para sair
+</div>
+
+
+
 <!----FIM--> 
  <div id="modalVazio" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
@@ -1178,6 +1191,55 @@ slcEndereco.addEventListener('change', (event) => {
   </nav>
   
   <!--modal endereço temporario---> 
+  
+  <!--modal  modal login user---> 
+  
+  
+  <div id="modalCadastro" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden">
+  
+  <section id="cadastroUser" class="bg-white w-full max-w-md rounded-3xl shadow-2xl flex flex-col p-8 font-sans overflow-auto relative animate-in fade-in zoom-in duration-300">
+    
+    <button onclick="toggleModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <div class="mb-8">
+      <h1 class="text-2xl font-black text-gray-900 leading-tight">Bom te ver por aqui!</h1>
+      <p class="text-gray-700 mt-2 text-sm">Preencha os dados.</p>
+    </div>
+
+    <form id="formCadastro" onsubmit="enviaCadastroUser(event,'cadastrar')" class="space-y-4">
+      
+      <div>
+        <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
+        <input required type="text" id="inputNome" placeholder="Ex: João Silva" 
+          class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">WhatsApp</label>
+        <input required type="tel" id="inputTel" placeholder="(00) 00000-0000" 
+          class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+      </div>
+
+      <div class="pt-4">
+        <button id="btnEnviaCadUser" type="submit" 
+          class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-all active:scale-95 uppercase tracking-wider">
+         Continuar
+        </button>
+        
+        <div class="mt-4 w-full text-center flex justify-center text-sm">
+          <a class="text-yellow-600 font-semibold underline hover:text-yellow-700" href="admcomando/index.html">Acessar com e-mail</a>  
+        </div>
+      </div>
+    </form>
+  </section>
+</div>
+
+  
+  <!--modal  modal login user---> 
         
         
   <div id="enderecoTemp" class=" w-full h-full p-4 flex flex-col gap-2 z-0">

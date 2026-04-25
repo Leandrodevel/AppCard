@@ -89,9 +89,8 @@ async function verificarSessao() {
     const { data: { session } } = await _supabase.auth.getSession();
     if (session) {
       navegacao('dashboard');
-      document.getElementById('header').classList.remove('hidden')
+      
     }else {
-       document.getElementById('header').classList.add('hidden')
         navegacao('loginAdm')
     }
 }
@@ -530,9 +529,6 @@ async function qtdVendidos() {
     return [];
   }
 }
-
-alert(JSON.stringify(qtdVendidos()))
-
   const classesCateg = {
     'Bebidas': ['Águas', 'Cachaças', 'Cervejas', 'Whiskys', 'Vodkas', 'Destilados', 'Aperitivos', 'Refrigerantes', 'Energéticos','Combos','Drink'],
     'Petiscos': ['Amendoins', 'Azeitonas', 'Queijos'],
@@ -760,7 +756,6 @@ async function excluirItem(idxProd, idxEmb) {
 function abrirModalCadastro() {
     document.getElementById('modalCadastro').classList.remove('hidden');
 }
-
 async function fecharModalCadastro() {
       
     // 2. Obter banco
@@ -845,6 +840,15 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
 
 function navegacao(openId) {
     const allpages = ['cadastroReal', 'loginAdm','admProdutos','dashboard'];
+    
+    if(openId !== 'loginAdm'){
+      
+      document.getElementById('header').classList.remove('hidden')
+      
+    }else if(openId === 'loginAdm'){
+      document.getElementById('header').classList.add('hidden')
+    }
+    
     switch(openId){
         case 'admProdutos':
               renderizarAdmin();
