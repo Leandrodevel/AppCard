@@ -19,58 +19,33 @@ function openLogin(){
     document.getElementById('modalCadastro').classList.remove('hidden')
     
 }
-/*
-//history.pushState('modal_open', null);
-// Adiciona um estado ao histórico para que haja algo para "voltar"
-history.pushState({ page: 1 }, "", "");
 
-window.onpopstate = function(event) {
-  // Quando o botão voltar é pressionado, este evento dispara
-  alert("Botão voltar pressionado!");
-  // Se quiser manter o usuário na mesma tela, adicione o estado novamente
-  history.pushState({ page: 1 }, "", "");
-};
-*/
 
-let aguardandoSegundoClique = false;
-let timeoutSair;
+   
+const toast = document.getElementById('toastSair');
 
+if (!history.state) {
+   history.pushState({ page: 1 }, "", "");
+}
 window.onpopstate = function() {
-    const toast = document.getElementById('toastSair');
-
-    if (!aguardandoSegundoClique) {
-        // Primeiro clique: bloqueia e avisa
-        aguardandoSegundoClique = true;
-        
-        // Exibe o toast
-        toast.classList.replace('opacity-0', 'opacity-100');
-        
-        // "Empurra" o histórico de volta para evitar a saída imediata
-        history.pushState(null, "");
-
-        // Reseta o estado após 2 segundos
+   // Primeiro você define o estado
+   history.pushState({ page: 1 }, "", "");
+navegacao('home')
+/*
+if (history.state && history.state.page === '1') {
+    alert
+    toast.classList.replace('opacity-0', 'opacity-100');
         timeoutSair = setTimeout(() => {
-            aguardandoSegundoClique = false;
             toast.classList.replace('opacity-100', 'opacity-0');
-        }, 2000);
+        }, 500);
     } else {
         // Segundo clique dentro do tempo: sai do app/página
         clearTimeout(timeoutSair);
-        history.back(); 
-    }
-};
-
-// Inicialização: Cria um estado inicial para que o 'voltar' tenha o que capturar
-if (!history.state) {
-    history.replaceState({ home: true }, "");
-    history.pushState(null, ""); 
+     //   history.back(); 
+    }/
+    */
 }
-
-
-
-
-
-
+    
 const compartilharDados = async () => {
   const dadosCompartilhamento = {
     title: 'Cardápio Budega',
@@ -156,6 +131,7 @@ function voltarPage() {
    const paginaAnterior = historicoPages.pop()
   paginaAtual = paginaAnterior 
   navegacao(paginaAnterior)
+  return paginaAtual
 }}
  async function editarUser() {
     
