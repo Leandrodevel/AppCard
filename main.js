@@ -1542,6 +1542,7 @@ async function preencheEndereco() {
   document.getElementById('inputCEPAlt').value = dados.cep || ''
   document.getElementById('inputComplementoAlt').value = dados.complemento || ''
 }}
+
 let servicoInstalacao; // Variável para guardar o evento
 const botaoInstalar = document.getElementById('btnInstalar');
 
@@ -1554,11 +1555,12 @@ window.addEventListener('beforeinstallprompt', (e) => {
   servicoInstalacao = e;
   
   // Agora que sabemos que o app é instalável, mostramos o botão
-  botaoInstalar.style.display = 'block';
+  botaoInstalar.classList.remove('hidden')
 });
 
 // 2. Lógica do clique no botão
 botaoInstalar.addEventListener('click', async () => {
+    alert('click')
   if (!servicoInstalacao) return;
 
   // Mostra a caixa de diálogo de instalação do navegador
@@ -1572,13 +1574,13 @@ botaoInstalar.addEventListener('click', async () => {
   servicoInstalacao = null;
 
   // Esconde o botão novamente
-  botaoInstalar.style.display = 'none';
+  botaoInstalar.classList.add('hidden');
 });
 
 // 3. (Opcional) Esconde o botão se o app já for instalado
 window.addEventListener('appinstalled', () => {
   console.log('App instalado com sucesso!');
-  botaoInstalar.style.display = 'none';
+  botaoInstalar.classList.add('hidden');
 });
 
 lucide.createIcons();
