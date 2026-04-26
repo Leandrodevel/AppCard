@@ -1,27 +1,21 @@
 async function verificarLogin() {
     const dados = await userDados();
-    
     if(dados){
-        
    if(dados.logged === true){
     return dados.logged
-    }else if(unlock !== 'home' ){
+    }else if(dados.logged !== 'home' ){
+        
       openLogin() 
+     return dados.logged
     }
     } else {
-     return  openLogin()
-        
+      openLogin()
+        return dados.logged
     }
-    
 }
 function openLogin(){
-    
     document.getElementById('modalCadastro').classList.remove('hidden')
-    
 }
-
-
-   
 const toast = document.getElementById('toastSair');
 
 if (!history.state) {
@@ -103,7 +97,8 @@ function navegacao(open) {
           verificarLogin()
      break;
      case 'pageCarrinho':
-         slcEnderecoModal()          
+         slcEnderecoModal()
+         verificarLogin()
          break;
      
       
@@ -133,6 +128,49 @@ function voltarPage() {
   navegacao(paginaAnterior)
   return paginaAtual
 }}
+
+
+async function enviaCadastroUser(e) {
+const usuario = await userDados()
+  e.preventDefault()
+
+const userNome = document.getElementById('inputNome')
+const userTel = document.getElementById('inputTel')
+
+  const gerarID = () => {
+    const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
+    const data = Date.now();
+    return letras + data;
+};
+
+if (usuario){
+
+usuario.logged = true
+
+ localStorage.setItem('userDados',JSON.stringify(usuario))
+  window.location.reload()
+  
+}else if(!usuario){
+    
+const usuarioCompleto = {
+    id:gerarID(),
+    nome: userNome.value,
+    tel: userTel.value,
+    rua:'',
+    casa:'',
+    bairro:'',
+    complemento:'',
+    logged: true,
+    pontos:0
+  }
+    localStorage.setItem('userDados',JSON.stringify(usuarioCompleto))
+
+  if(usuario){
+      alert('Cadastro realizado!')
+  }
+}
+}
+
  async function editarUser() {
     
   const userdados = await userDados()
@@ -1492,11 +1530,20 @@ function fecharModalConfirmar() {
     document.getElementById('modalConfirmarRepetir').classList.add('hidden');
     voltarPage()
 }
+
+async function preencheEndereco() {
+    const dados = await userDados()
+    
+    if (dados.rua || dados.casa) {
+        document.getElementById('inputRuaAlt').value = dados.rua || ''
+        document.getElementById('inputCasaAlt').value = dados.casa || ''
+        document.getElementById('inputBairroAlt').value = dados.bairro || ''
+        document.getElementById('inputComplementoAlt').value = dados.complemento || ''
+    }
+}
 async function cadastrarEnderecoAlternativo(e){
   
   const userdados = await userDados()
-   e.preventDefault(); // Impede a página de recarregar
-  
     userdados.rua = document.getElementById('inputRuaAlt').value
 
     userdados.casa =   document.getElementById('inputCasaAlt').value
@@ -1533,15 +1580,6 @@ window.addEventListener('click', (e) => {
     const modal = document.getElementById('modalAdicionado');
     if (e.target === modal) fecharModalAdicionado();
 });
-async function preencheEndereco() {
- const dados = await userDados()
- if(dados.rua || dados.casa){
-  document.getElementById('inputRuaAlt').value = dados.rua || ''
-  document.getElementById('inputCasaAlt').value = dados.casa || ''
-  document.getElementById('inputBairroAlt').value = dados.bairro || ''
-  document.getElementById('inputCEPAlt').value = dados.cep || ''
-  document.getElementById('inputComplementoAlt').value = dados.complemento || ''
-}}
 
 let servicoInstalacao; // Variável para guardar o evento
 const botaoInstalar = document.getElementById('btnInstalar');
