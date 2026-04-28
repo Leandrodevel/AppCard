@@ -1600,10 +1600,11 @@ const container = document.getElementById('containerCombo')
 for (let combo of dados) {
   const cardCombo = document.createElement('div')
   cardCombo.className='min-w-[90%] md:min-w-[400px] bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-yellow-400/20 snap-center'
-  cardCombo.style = `background-image: url('./img/comboChurras.jpg'); 
-background - size: cover;
-background - position: center;`
-
+  // Usando template string sem espaços extras nas propriedades
+  const imagem = ''
+cardCombo.style.backgroundImage = "url('./img/"+imagem+".jpg')";
+cardCombo.style.backgroundSize = "cover";
+cardCombo.style.backgroundPosition = "center";
   cardCombo.innerHTML=`
 
         <div class="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/95 to-transparent"></div>
