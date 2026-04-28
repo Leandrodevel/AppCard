@@ -1277,7 +1277,7 @@ document.getElementById(openId).style.display = 'flex';
             renderizarPagina();
         }
 
-        function salvarDados() {
+        async function salvarDados() {
             // Sincroniza inputs com o objeto antes de salvar
             produtoCombo.nome = document.getElementById('input-nome').value;
             produtoCombo.categoria = document.getElementById('input-categoria').value;
@@ -1286,7 +1286,17 @@ document.getElementById(openId).style.display = 'flex';
             produtoCombo.embalagens[0].ativo = document.getElementById('input-ativo').value === "true";
 
             console.log("JSON pronto para envio:", JSON.stringify(produtoCombo, null, 2));
+
+             const { error } = await _supabase
+            .from('estoque')
+            .insert(produtoCombo);
+        if (error) alert("Erro ao criar produto: " + error.message);
+        else alert("Produto cadastrado com sucesso!");
+    
+
             alert("Dados salvos no console do navegador!");
+
+
         }
         function adicionarAdicional() {
     const nomeInput = document.getElementById('novo-adc-nome');
