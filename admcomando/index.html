@@ -1194,7 +1194,7 @@ document.getElementById(openId).style.display = 'flex';
 
    // Dados iniciais
         const produtoCombo = {
-            id: '000522',
+            id_comercial:gerarID() ,
             nome: 'combo familia',
             classe: 'combo',
             categoria: 'combo de churrasco',
@@ -1209,7 +1209,7 @@ document.getElementById(openId).style.display = 'flex';
                 ativo: true,
                 acompanhamentos: ['farofa', 'vinagrete', 'pão de alho', 'salpicão', 'feijão tropeiro'],
                 adicionais: [
-                    { nome: 'carne extra', preco: 10.00 },
+                    { nome: 'carne extra', preco:" 10.00" },
                     { nome: 'batata extra', preco: 12.00 },
                 ]
             }]
@@ -1220,12 +1220,12 @@ document.getElementById(openId).style.display = 'flex';
             const emb = produtoCombo.embalagens[0];
 
             // Textos e Inputs
-            document.getElementById('display-id').innerText = produtoCombo.id;
+            document.getElementById('display-id').innerText = produtoCombo.id_comercial;
             document.getElementById('input-nome').value = produtoCombo.nome;
             document.getElementById('input-categoria').value = produtoCombo.categoria;
             document.getElementById('input-marca').value = produtoCombo.marca;
             document.getElementById('input-preco').value = emb.preco.toFixed(2);
-            document.getElementById('input-desconto').value = emb.desconto;
+            document.getElementById('input-desconto').value = emb.desconto.replace(",",".");
             document.getElementById('input-cod').value = emb.cod;
             document.getElementById('input-ativo').value = emb.ativo.toString();
 
@@ -1235,7 +1235,7 @@ document.getElementById(openId).style.display = 'flex';
                 <div class="bg-orange-50 border border-orange-200 px-4 py-2 rounded-lg text-sm font-medium text-orange-800 flex items-center gap-3">
                     ${item}
                     <button onclick="removerAcompanhamento(${index})" class="hover:text-red-600 transition-colors">
-                        <i class="fa-solid fa-circle-xmark"></i>
+                        x<i class="fa-solid fa-circle-xmark"></i>
                     </button>
                 </div>
             `).join('') + `
@@ -1249,7 +1249,7 @@ document.getElementById(openId).style.display = 'flex';
             corpoTabela.innerHTML = emb.adicionais.map((adc, index) => `
                 <tr class="hover:bg-gray-50 transition-colors">
                     <td class="px-4 py-3 text-sm text-gray-700 font-medium">${adc.nome}</td>
-                    <td class="px-4 py-3 text-sm text-right font-bold text-gray-900">R$ ${adc.preco.toFixed(2)}</td>
+                    <td class="px-4 py-3 text-sm text-right font-bold text-gray-900">R$ ${adc.preco}</td>
                     <td class="px-4 py-3 text-center">
                         <button onclick="removerAdicional(${index})" class="text-red-400 hover:text-red-600 p-2">
                             <i class="fa-solid fa-trash-can"></i>
@@ -1279,10 +1279,11 @@ document.getElementById(openId).style.display = 'flex';
 
         async function salvarDados() {
             // Sincroniza inputs com o objeto antes de salvar
+            produtoCombo.id_comercial = gerarID()
             produtoCombo.nome = document.getElementById('input-nome').value;
             produtoCombo.categoria = document.getElementById('input-categoria').value;
             produtoCombo.marca = document.getElementById('input-marca').value;
-            produtoCombo.embalagens[0].preco = parseFloat(document.getElementById('input-preco').value);
+            produtoCombo.embalagens[0].preco = document.getElementById('input-preco').value.replace(",",".");
             produtoCombo.embalagens[0].ativo = document.getElementById('input-ativo').value === "true";
 
             console.log("JSON pronto para envio:", JSON.stringify(produtoCombo, null, 2));
@@ -1300,7 +1301,7 @@ document.getElementById(openId).style.display = 'flex';
         }
         function adicionarAdicional() {
     const nomeInput = document.getElementById('novo-adc-nome');
-    const precoInput = document.getElementById('novo-adc-preco');
+    const precoInput = document.getElementById('novo-adc-preco'). replace(",",".");
 
     const nome = nomeInput.value.trim();
     const preco = parseFloat(precoInput.value);
