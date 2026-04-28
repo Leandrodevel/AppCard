@@ -870,13 +870,13 @@ const marcaEscapada = item.marca.replace(/'/g, "\\'");
   card.innerHTML = `
 <div class="   p-3 shadow-sm relative overflow-hidden flex flex-row items-center ">
     
-    <span class="${classeDesconto} bg-red-600 absolute top-0 left-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase tracking-tighter">
+    <span class="${classeDesconto} bg-red-600 absolute top-0 right-0 px-2 py-0.5 rounded-br-lg font-black text-[9px] text-white uppercase tracking-tighter">
         OFERTA
     </span>
       
-    <div class="flex-shrink-0 w-20 h-20 bg-gray-50 rounded-xl overflow-hidden mr-3">
+   <!--- <div class="flex-shrink-0 w-20 h-20 bg-gray-50 rounded-xl overflow-hidden mr-3">
         <img src="${srcImagem}" alt="${nomeEscapado}" class="w-full h-full object-contain mix-blend-multiply"/>
-    </div>
+    </div>--->
           
     <div class="flex-grow flex items-center justify-between min-w-0">
         
@@ -1587,6 +1587,53 @@ function fecharModalAdicionado() {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
 }
+
+
+async function renderizarCombos() {
+const db = await getDados();
+const dados = db.filter(c=>{
+    const ifCombo = c.classe ==='combo'
+    const ifAtivo = c.embalagens.some(a=>a.ativo === true)
+    return ifCombo && ifAtivo
+})
+const container = document.getElementById('containerCombo')
+for (let combo of dados) {
+  const cardCombo = document.createElement('div')
+  cardCombo.className='min-w-[90%] md:min-w-[400px] bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-yellow-400/20 snap-center'
+  cardCombo.style = `background-image: url('./img/comboChurras.jpg'); 
+background - size: cover;
+background - position: center;`
+
+  cardCombo.innerHTML=`
+
+        <div class="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/95 to-transparent"></div>
+
+        <div class="relative z-10 w-3/4">
+            <span class="bg-yellow-400 text-black text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-sm">Popular</span>
+            <h4 class="text-2xl font-extrabold text-white mt-2 leading-tight uppercase italic">
+                <span class="text-yellow-400 block">
+                ${combo.nome}</span>
+            </h4>
+            <ul class="text-white/80 text-[12px] mt-2 space-y-0.5 font-medium capitalize font-black">
+                <li>✦ ${combo.embalagens[0].tipo}</li>
+                <li>✦ ${combo.embalagens[0].acompanhamentos.join(", ")}</li>
+            </ul>
+            <p class="text-white font-black text-xl mt-3">R$ ${combo.embalagens[0].preco.replace(".",",")}</p>
+            <button class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md active:scale-95 transition-all" 
+                    onclick="navegacao('customizarPedido'), customizarPedidoRender(1,'./img/comboChurras.jpg', 'Combo Duas Pessoas', 'Mais Pedido', 59.90)">
+                Adicionar ao Carrinho
+            </button>
+        </div>
+    
+
+  `
+  
+ container.appendChild(cardCombo)
+  
+}
+
+}
+renderizarCombos()
 // Fecha se clicar fora do card branco
 window.addEventListener('click', (e) => {
     const modal = document.getElementById('modalAdicionado');

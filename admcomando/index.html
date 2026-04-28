@@ -1196,11 +1196,11 @@ document.getElementById(openId).style.display = 'flex';
         const produtoCombo = {
             id_comercial:gerarID() ,
             nome: 'combo familia',
-            classe: 'combo',
+            classe: 'combos',
             categoria: 'combo de churrasco',
             marca: 'da casa',
             embalagens: [{
-                cod: '000522',
+                cod: gerarID(),
                 tipo: 'completo',
                 preco: 59.90,
                 estoque: '',
@@ -1278,33 +1278,49 @@ document.getElementById(openId).style.display = 'flex';
         }
 
         async function salvarDados() {
-            // Sincroniza inputs com o objeto antes de salvar
-            produtoCombo.id_comercial = gerarID()
-            produtoCombo.nome = document.getElementById('input-nome').value;
-            produtoCombo.categoria = document.getElementById('input-categoria').value;
-            produtoCombo.marca = document.getElementById('input-marca').value;
-            produtoCombo.embalagens[0].preco = document.getElementById('input-preco').value.replace(",",".");
-            produtoCombo.embalagens[0].ativo = document.getElementById('input-ativo').value === "true";
+    // 1. Captura os valores dos inputs NO MOMENTO do clique
+    const nome = document.getElementById('input-nome').value;
+    const categoria = document.getElementById('input-categoria').value;
+    const marca = document.getElementById('input-marca').value;
+    const preco = document.getElementById('input-preco').value.replace(",", ".");
+    const ativo = document.getElementById('input-ativo').value === "true";
 
-            console.log("JSON pronto para envio:", JSON.stringify(produtoCombo, null, 2));
+    // 2. Monta um NOVO objeto com os dados frescos
+    // Usamos o 'spread operator' (...) para manter os dados fixos (como acompanhamentos)
+    const dadosParaEnviar = {
+        ...produtoCombo, // Pega a estrutura base (classe, acompanhamentos, etc)
+        id_comercial: gerarID(), // Gera um ID novo a cada salvamento
+        nome: nome,
+        categoria: categoria,
+        marca: marca,
+        embalagens: [{
+            ...produtoCombo.embalagens[0], // Mantém cod, tipo, acompanhamentos
+            preco: preco,
+            ativo: ativo
+        }]
+    };
 
-             const { error } = await _supabase
-            .from('estoque')
-            .insert(produtoCombo);
-        if (error) alert("Erro ao criar produto: " + error.message);
-        else alert("Produto cadastrado com sucesso!");
-    
+    console.log("Enviando dados atuais:", dadosParaEnviar);
 
-            alert("Dados salvos no console do navegador!");
+    // 3. Envia para o Supabase
+    const { error } = await _supabase
+        .from('estoque')
+        .insert([dadosParaEnviar]); // O Supabase prefere receber um array []
 
+    if (error) {
+        alert("Erro ao criar produto: " + error.message);
+    } else {
+        alert("Produto cadastrado com sucesso!");
+        // Opcional: Limpar os campos após o sucesso
+    }
+}
 
-        }
         function adicionarAdicional() {
     const nomeInput = document.getElementById('novo-adc-nome');
     const precoInput = document.getElementById('novo-adc-preco'). replace(",",".");
 
     const nome = nomeInput.value.trim();
-    const preco = parseFloat(precoInput.value);
+    const preco = precoInput.value.replace(",",".");
 
     // Validação simples
     if (nome === "" || isNaN(preco)) {

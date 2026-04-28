@@ -334,61 +334,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
 
 <!-- Container dos Cards -->
 <!-- Container com Rolagem Lateral -->
-<div class="flex overflow-x-auto space-x-4 px-4 pb-6 no-scrollbar snap-x snap-mandatory">
-
-    <!-- Combo 01: Duas Pessoas -->
-    <div class="min-w-[90%] md:min-w-[400px] bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-yellow-400/20 snap-center"
-         style="background-image: url('./img/comboChurras.jpg'); 
-                background-size: cover; 
-                background-position: center;">
-        
-        <div class="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/95 to-transparent"></div>
-
-        <div class="relative z-10 w-3/4">
-            <span class="bg-yellow-400 text-black text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-sm">Popular</span>
-            <h4 class="text-2xl font-extrabold text-white mt-2 leading-tight uppercase italic">
-                <span class="text-yellow-400 block">Combo</span>
-                Duas Pessoas
-            </h4>
-            <ul class="text-white/80 text-[11px] mt-2 space-y-0.5 font-medium">
-                <li>✦ 5 Espetos Variados</li>
-                <li>✦ Batata Frita, Queijo e Bacon</li>
-                <li>✦ Farofa e Molho Especial</li>
-            </ul>
-            <p class="text-white font-black text-xl mt-3">R$ 59,90</p>
-            <button class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md active:scale-95 transition-all" 
-                    onclick="navegacao('customizarPedido'), customizarPedidoRender(1,'./img/comboChurras.jpg', 'Combo Duas Pessoas', 'Mais Pedido', 59.90)">
-                Adicionar ao Carrinho
-            </button>
-        </div>
-    </div>
-
-    <!-- Combo 02: Premium -->
-    <div class="min-w-[90%] md:min-w-[400px] bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-white/10 snap-center"
-         style="background-image: url('./img/comboPremium.jpg'); 
-                background-size: cover; 
-                background-position: center;">
-        
-        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-transparent"></div>
-
-        <div class="relative z-10 w-3/4">
-            <span class="bg-white text-black text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-sm">O Mais Completo</span>
-            <h4 class="text-2xl font-extrabold text-white mt-2 leading-tight uppercase italic">
-                <span class="text-yellow-400 block">Combo</span>
-                Premium
-            </h4>
-            <ul class="text-white/80 text-[11px] mt-2 space-y-0.5 font-medium">
-                <li>✦ Itens do Combo 1 + Arroz</li>
-                <li>✦ Feijão Tropeiro e Vinagrete</li>
-                <li>✦ Salpicão Especial</li>
-            </ul>
-            <p class="text-white font-black text-xl mt-3">R$ 84,90</p>
-            <button class="mt-4 bg-white text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md active:scale-95 transition-all" 
-                    onclick="navegacao('customizarPedido'), customizarPedidoRender(2,'./img/comboPremium.jpg', 'Combo Premium', 'Combo Completo', 84.90)">
-                Adicionar ao Carrinho
-            </button>
-        </div>
-    </div>
+<div id="containerCombo" class="flex overflow-x-auto space-x-4 px-4 pb-6 no-scrollbar snap-x snap-mandatory">
 
 </div>
 
