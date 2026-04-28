@@ -245,7 +245,12 @@ function atualizaContador() {
     atualizaContador()
 
 async function customizarPedidoRender(cod,imagem, nome, tipo, preco) {
-const dados = await userDados()
+const db = await getDados()
+
+const dados = db.find(d=>{
+    
+    return d.embalagens.some(emb=> emb.cod === cod)
+})
 const sectionCustomizar = document.getElementById('customizarPedido')
 
 
@@ -253,7 +258,7 @@ const srcImagem = imagem
 
 sectionCustomizar.innerHTML =`
     <div class="relative w-full h-56 overflow-hidden">
-        <img src="${srcImagem}" class="w-full h-full object-cover" alt="${nome}">
+        <img src="${srcImagem}" class="w-full h-full object-cover" alt="${dados.nome}">
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
         
         <!-- Botão Voltar Flutuante -->
@@ -264,7 +269,7 @@ sectionCustomizar.innerHTML =`
 
     <!-- Informações do Produto (Sem padding-x no container principal) -->
     <div class="mt-4 px-4">
-        <h2 class="text-3xl font-black text-zinc-700 uppercase italic tracking-tighter">${nome}</h2>
+        <h2 class="text-3xl font-black text-zinc-700 uppercase italic tracking-tighter">${dados.nome}</h2>
         <p class="text-gray-400 text-sm font-medium mt-1 uppercase italic">${tipo}</p>
         <div class="mt-2">
             <span class="text-yellow-400 font-black text-2xl">R$ ${preco}</span>
@@ -283,30 +288,18 @@ sectionCustomizar.innerHTML =`
                 </h3>
             </div>
             <!-- Listagem de Checkboxes (Fundo Branco conforme solicitado anteriormente) -->
-            <div class="flex flex-col">
+        ${dados.embalagens[0].acompanhamentos.map(ac=>`
+              <div class="flex flex-col">
                 <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-yellow-50 transition-colors">
                     <div class="flex items-center gap-3">
-                        <input type="checkbox" name="acompanhamento-combo" value="Vinagrete" checked class="w-5 h-5 accent-yellow-400 rounded">
-                        <span class="text-sm font-bold text-gray-800">Vinagrete</span>
+                        <input type="checkbox" name="acompanhamento-combo" value="${ac}" checked class="w-5 h-5 accent-yellow-400 rounded">
+                        <span class="text-sm font-bold text-gray-800">${ac}</span>
                     </div>
                     <span class="text-[10px] font-bold text-green-600 uppercase italic">Incluso</span>
                 </label>
+            `).join('')}
 
-                <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-yellow-50 transition-colors">
-                    <div class="flex items-center gap-3">
-                        <input type="checkbox" name="acompanhamento-combo" value="Farofa" checked class="w-5 h-5 accent-yellow-400 rounded">
-                        <span class="text-sm font-bold text-gray-800">Farofa Especial</span>
-                    </div>
-                    <span class="text-[10px] font-bold text-green-600 uppercase italic">Incluso</span>
-                </label>
-
-                <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-yellow-50 transition-colors">
-                    <div class="flex items-center gap-3">
-                        <input type="checkbox" name="acompanhamento-combo" value="Feijão Tropeiro" checked class="w-5 h-5 accent-yellow-400 rounded">
-                        <span class="text-sm font-bold text-gray-800">Feijão Tropeiro</span>
-                    </div>
-                    <span class="text-[10px] font-bold text-green-600 uppercase italic">Incluso</span>
-                </label>
+                
             </div>
         </div>
 
@@ -1597,12 +1590,15 @@ const dados = db.filter(c=>{
     return ifCombo && ifAtivo
 })
 const container = document.getElementById('containerCombo')
+let i=0
 for (let combo of dados) {
   const cardCombo = document.createElement('div')
   cardCombo.className='min-w-[90%] md:min-w-[400px] bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-yellow-400/20 snap-center'
   // Usando template string sem espaços extras nas propriedades
-  const imagem = ''
-cardCombo.style.backgroundImage = "url('./img/"+imagem+".jpg')";
+  const imagem = ['comboChurras','comboPremium']
+  
+  
+cardCombo.style.backgroundImage = "url('./img/"+imagem[i++]+".jpg')";
 cardCombo.style.backgroundSize = "cover";
 cardCombo.style.backgroundPosition = "center";
   cardCombo.innerHTML=`
@@ -1621,7 +1617,7 @@ cardCombo.style.backgroundPosition = "center";
             </ul>
             <p class="text-white font-black text-xl mt-3">R$ ${combo.embalagens[0].preco.replace(".",",")}</p>
             <button class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md active:scale-95 transition-all" 
-                    onclick="navegacao('customizarPedido'), customizarPedidoRender(1,'./img/comboChurras.jpg', 'Combo Duas Pessoas', 'Mais Pedido', 59.90)">
+                    onclick="navegacao('customizarPedido'), customizarPedidoRender('${combo.embalagens[0].cod}','./img/${imagem[i]}.jpg', '${combo.nome}', '${combo.embalagens[0].tipo}', '${combo.embalagens[0].preco}')">
                 Adicionar ao Carrinho
             </button>
         </div>
