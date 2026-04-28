@@ -1,3 +1,4 @@
+
 async function verificarLogin() {
     const dados = await userDados();
     if(dados){
@@ -492,7 +493,12 @@ async function listarCat(idAtivo, classe) {
   navegacao('cardapio');
 }
 async function listaProdutos(idCat, termo, lista) {
-  const myDb = await getDados();
+  const dbGeral_puro = await getDados();
+const myDb = dbGeral_puro.filter(produto => {
+    // Verificamos se dentro do array de embalagens existe ALGUMA onde 'ativo' é true
+    return produto.embalagens.some(emb => emb.ativo === true);
+});
+
 
   const cardapioGrid = document.getElementById('cardapio-grid');
   if (!cardapioGrid) return;
@@ -639,8 +645,12 @@ const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === emb.cod) || {qtd:0};
   lucide.createIcons();
 }
 async function listaProm() {
-const db = await getDados();
-         
+const dbGeral_puro = await getDados();
+         // Forma correta de filtrar
+const db = dbGeral_puro.filter(produto => {
+    // Verificamos se dentro do array de embalagens existe ALGUMA onde 'ativo' é true
+    return produto.embalagens.some(emb => emb.ativo === true);
+});
    const boxPromocoes= document.getElementById('boxPromocoes')
     
     boxPromocoes.innerHTML=''
@@ -792,15 +802,17 @@ async function validarCaminhoImagem(nomeArquivo) {
 }
 
 async function listaTop20() {
- 
-const dbGeral = await getDados();
+const dbGeral_puro = await getDados();
+// Forma correta de filtrar
+const dbGeral = dbGeral_puro.filter(produto => {
+    // Verificamos se dentro do array de embalagens existe ALGUMA onde 'ativo' é true
+    return produto.embalagens.some(emb => emb.ativo === true);
+});
 
 const divtop10 = document.getElementById('boxTop10');
 
 // Filtramos apenas a categoria cerveja antes de processar as variações
 const apenasGeral = dbGeral.filter(x => x);
-
-
 let variacoesGeral = [];
 // 2. Criar lista de variações (Flattening)
 apenasGeral.forEach(produto => {

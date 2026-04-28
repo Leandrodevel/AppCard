@@ -22,7 +22,7 @@
     } else {
         // Sucesso! O Supabase já guarda a sessão no localStorage automaticamente
         console.log('Login realizado com sucesso:', data.user);
-        window.location.href = 'cardapio.html';
+        navegacao('dashboard');
     }
 }
 async function handleSignUp(event) {

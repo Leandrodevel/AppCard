@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banzzero - Listagem de Combos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans pb-10">
+ 
+   
+
+         <div class="flex gap-4 w-full justify-center m-4">
+      <a href="produtoCombo.html" class="w-[200px] bg-orange-600 hover:bg-orange-700 text-white px-5 py-2 rounded-lg font-bold text-sm transition-all flex items-center gap-2 shadow-md shadow-orange-100">
+                <i class="fa-solid fa-plus"></i> NOVO COMBO
+            </a></div>
+            
+        <div class="flex flex-col md:flex-row gap-4 mb-8 justify-between">
+            <div class="relative flex-1">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-gray-400"></i>
+                <input type="text" id="busca-combo" placeholder="Buscar combo pelo nome..." 
+                    class="w-full pl-10 pr-4 py-3 border rounded-xl bg-white outline-none focus:ring-2 focus:ring-orange-200 transition-all">
+            </div>
+            <select class="px-4 py-3 border rounded-xl bg-white outline-none font-medium text-gray-600 cursor-pointer">
+                <option value="">Todas as Categorias</option>
+                <option value="churrasco">Churrasco</option>
+                <option value="bebidas">Bebidas</option>
+            </select>
+        </div>
+
+        <div id="grid-combos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+
+        <div id="empty-state" class="hidden text-center py-20">
+            <i class="fa-regular fa-face-frown text-5xl text-gray-300 mb-4"></i>
+            <h3 class="text-xl font-medium text-gray-500">Nenhum combo encontrado.</h3>
+        </div>
+   
+
+    <script>
+        // Simulando dados vindo de um banco (Supabase/Firebase)
+        const listaCombos = [
+            {
+                id: '000522',
+                nome: 'Combo Família',
+                categoria: 'Combo de Churrasco',
+                preco: 59.90,
+                ativo: true,
+                itens: ['Farofa', 'Vinagrete', 'Pão de Alho', 'Carne'],
+                imagem: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=300&q=80'
+            },
+            {
+                id: '000523',
+                nome: 'Combo Casal',
+                categoria: 'Combo de Churrasco',
+                preco: 35.00,
+                ativo: true,
+                itens: ['Arroz', 'Feijão Tropeiro', 'Espetinho'],
+                imagem: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=300&q=80'
+            },
+            {
+                id: '000524',
+                nome: 'Balde de Cerveja',
+                categoria: 'Bebidas',
+                preco: 45.00,
+                ativo: false,
+                itens: ['5 Skol 269ml', 'Gelo'],
+                imagem: 'https://images.unsplash.com/photo-1597075095302-60cc3866810a?auto=format&fit=crop&w=300&q=80'
+            }
+        ];
+
+        function renderizarLista() {
+            const grid = document.getElementById('grid-combos');
+            
+            grid.innerHTML = listaCombos.map(combo => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all group">
+                    <div class="relative h-40 overflow-hidden">
+                        <img src="${combo.imagem}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="${combo.ativo ? 'bg-green-500' : 'bg-gray-500'} text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                                ${combo.ativo ? 'Ativo' : 'Inativo'}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-lg leading-tight capitalize">${combo.nome}</h3>
+                                <p class="text-xs text-gray-400 font-medium uppercase">${combo.categoria}</p>
+                            </div>
+                            <span class="text-orange-600 font-black text-lg italic">R$ ${combo.preco.toFixed(2)}</span>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-dashed flex items-center justify-between">
+                            <div class="flex -space-x-2">
+                                ${combo.itens.slice(0, 3).map(() => `
+                                    <div class="w-7 h-7 rounded-full bg-orange-100 border-2 border-white flex items-center justify-center text-[10px] text-orange-600 font-bold">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                `).join('')}
+                                ${combo.itens.length > 3 ? `<div class="w-7 h-7 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-[10px] text-gray-500">+${combo.itens.length - 3}</div>` : ''}
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <button onclick="editarCombo('${combo.id}')" class="p-2 bg-gray-100 hover:bg-orange-100 hover:text-orange-600 rounded-lg text-gray-500 transition-colors">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button onclick="excluirCombo('${combo.id}')" class="p-2 bg-gray-100 hover:bg-red-100 hover:text-red-600 rounded-lg text-gray-500 transition-colors">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function editarCombo(id) {
+            alert("Redirecionando para edição do combo: " + id);
+            // Aqui você usaria: window.location.href = `cadastro.html?id=${id}`;
+        }
+
+        function excluirCombo(id) {
+            if(confirm("Deseja realmente remover este combo?")) {
+                const index = listaCombos.findIndex(c => c.id === id);
+                listaCombos.splice(index, 1);
+                renderizarLista();
+            }
+        }
+
+        // Filtro de Busca Simples
+        document.getElementById('busca-combo').addEventListener('input', (e) => {
+            const termo = e.target.value.toLowerCase();
+            const filtrados = listaCombos.filter(c => c.nome.toLowerCase().includes(termo));
+            
+            // Aqui uma lógica simples de renderização filtrada
+            if(filtrados.length === 0) {
+                document.getElementById('grid-combos').classList.add('hidden');
+                document.getElementById('empty-state').classList.remove('hidden');
+            } else {
+                document.getElementById('grid-combos').classList.remove('hidden');
+                document.getElementById('empty-state').classList.add('hidden');
+                // Re-renderiza com os filtrados (em uma app real você passaria o array para a função)
+            }
+        });
+
+        window.onload = renderizarLista;
+    </script>
+</body>
+</html>

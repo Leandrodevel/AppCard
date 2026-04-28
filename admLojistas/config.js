@@ -18,7 +18,10 @@ function registraLogista(){
     telefone: document.getElementById('adm_telefone').value,
     plano: document.getElementById('adm_plano').value
   };
-  
+  if(document.getElementById('adm_senha').value !== document.getElementById('adm_confirmar_senha').value) {
+    alert('As senhas não coincidem!');
+    return; // Para a execução se as senhas não coincidirem
+  }
   salvarNoCache(dadosLogista);
 //  alert(JSON.stringify(memoria))
 }

@@ -1,6 +1,6 @@
 /* TEMA AMARELO CLARO */
 .tema-amarelo-claro{ 
-    --bg-cor: #F5F7F8;    /* Branco Gelo */
+    --bg-cor: rgb(253, 253, 253);    /* Branco Gelo */
     --bg-cor-2: #FFFFFF;  /* Branco Puro (Cards) */
     --bg-cor-3: #E9ECEE;
     --cor: #FFD100;

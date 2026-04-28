@@ -7,8 +7,6 @@
     <title> Cardápio Digital</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
       <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
@@ -69,7 +67,6 @@ async function handleLogin(event) {
         btn.disabled = false;
         btn.innerText = "ENTRAR NO CARDÁPIO";
     } else {
-        alert("Login realizado com sucesso!");
         // Se for o admin, você pode mostrar a seção de admin
       navegacao('dashboard');
     
@@ -88,6 +85,7 @@ async function handleLogout() {
 async function verificarSessao() {
     const { data: { session } } = await _supabase.auth.getSession();
     if (session) {
+
       navegacao('dashboard');
       
     }else {
@@ -172,6 +170,7 @@ async function verificarSessao() {
 </script>
 </head>
 <body class="bg-[#f2f2f2] text-gray-700 pb-24 font-sans">
+
 <header id="header" class=" hidden bg-white border-b border-gray-200 sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4">
     <nav class="flex justify-between items-center h-20">
@@ -383,61 +382,93 @@ async function verificarSessao() {
 </section>
 
 <section id="admProdutos" class="w-full">
+
   <div class="min-h-screen w-full  p-4 font-sans text-gray-800">
       <div class="flex justify-between items-center mb-6 flex-col">
-    <div class="w-full max-w-[720px] mx-auto mb-8 px-4">
-  <div class="grid grid-cols-4 gap-2">
+
+         <div class="w-full max-w-[720px] mx-auto mb-8 px-4">
+             <div class="grid grid-cols-4 gap-2">
     
-    <button onclick="definirFiltro('lista')" class="flex flex-col items-center group active:scale-90 transition-transform">
+    <button onclick="definirFiltro('listaAdmin')" class="flex flex-col items-center group active:scale-90 transition-transform">
       <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
         <i data-lucide="bottle-wine" class="w-6 h-6 text-gray-600 group-hover:text-yellow-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Itens de<br>Prateleira</span>
     </button>
 
-    <button onclick="definirFiltro('montar')" class="flex flex-col items-center group active:scale-90 transition-transform">
+    <button onclick="definirFiltro('combosParaMontar')" class="flex flex-col items-center group active:scale-90 transition-transform">
       <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
         <i data-lucide="pizza" class="w-6 h-6 text-gray-600 group-hover:text-yellow-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Para<br>Montar</span>
     </button>
 
-    <button onclick="definirFiltro('combos')" class="flex flex-col items-center group active:scale-90 transition-transform">
+    <button onclick="" class="flex flex-col items-center group active:scale-90 transition-transform">
       <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
         <i data-lucide="boxes" class="w-6 h-6 text-gray-600 group-hover:text-yellow-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Combos<br>Prontos</span>
     </button>
 
-    <button onclick="definirFiltro('promocao')" class="flex flex-col items-center group active:scale-90 transition-transform">
+    <button onclick="" class="flex flex-col items-center group active:scale-90 transition-transform">
       <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
         <i data-lucide="badge-percent" class="w-6 h-6 text-red-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Em<br>Promoção(destaque no inicio)</span>
 </button>
 
-</div>
-</div>
+            </div>
+        </div>
+<script>
+function definirFiltro(filtro) {
 
-
-      <button onclick="abrirModalCadastro()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm transition-all active:scale-95">
-        + Novo Produto
-      </button>
-    </div>
-  <div class="w-full mx-auto mb-6">
+  
+  const sectionsProdutos = ['listaAdmin', 'combosParaMontar','cadastroCombo'];
  
-    <div class="relative">
-      <input type="text" id="inputBusca" oninput="renderizarAdmin()" placeholder="Pesquisar por nome ou código..." 
-             class="w-full p-4 rounded-2xl border-none shadow-md focus:ring-2 focus:ring-yellow-400 outline-none">
-    </div>
-  </div>
+    sectionsProdutos.forEach(element => {
+       document.getElementById(element).classList.add('hidden');
+    });
+  document.getElementById(filtro).classList.remove('hidden');
+
+
+  switch(filtro) {
+    case 'listaAdmin':
+      // Lógica para mostrar apenas itens de prateleira
+      renderizarAdmin();
+      break;
+    case 'combosParaMontar':
+     renderizarCombosParaMontar();
+      break;
+
+      case 'cadastroCombo':
+      renderizarCadastroCombo();
+      break;
+
+    default:
+      // Lógica para mostrar todos os itens
+      renderizarAdmin();
+  }
+}
+</script>
 
   <div id="listaAdmin" class="max-w-4xl mx-auto space-y-3">
+    
     </div>
+ <!--combos para montar-->
+<section id="combosParaMontar" class="hidden max-w-4xl mx-auto space-y-3">
+
+</section>
+<!--modal novo combo montar-->
+
+<div id="cadastroCombo" class="hidden max-w-4xl mx-auto space-y-3">
+
 </div>
 
+<!--fim-->
 
-
+ 
+  </div>
+</div>
 
 <div id="modalCadastro" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
@@ -514,6 +545,8 @@ async function verificarSessao() {
     </div>
 </div>
 </section>
+
+
 <script>
 verificarSessao();
 async function qtdVendidos() {
@@ -610,12 +643,198 @@ const keyVariacao = document.getElementById('keyVariacao')
 
 }
 variacao()
+
+async function renderizarCombosParaMontar() {
+    // 1. Obter os dados (certifique-se que obterDados() está importada)
+    const produtos = await obterDados();
+  
+    const sectionCombo = document.getElementById('combosParaMontar');
+    // Limpa a seção antes de renderizar para evitar duplicatas
+    sectionCombo.innerHTML = '';
+    const container = document.createElement('div');
+    container.classList = 'w-full m-4'; // Removi o flex centralizado aqui para não quebrar o grid abaixo
+    
+    container.innerHTML = `
+         <div class="flex gap-4 w-full justify-center mb-6">
+        <button onclick="definirFiltro('cadastroCombo')" class="w-[200px] bg-orange-600 hover:bg-orange-700 text-white px-5 py-2 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-plus"></i> NOVO COMBO
+        </button>
+    </div>
+            
+        <div class="flex flex-col md:flex-row gap-4 mb-8 justify-between">
+            <div class="relative flex-1">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-gray-400"></i>
+                <input type="text" id="busca-combo" placeholder="Buscar combo pelo nome..." 
+                    class="w-full pl-10 pr-4 py-3 border rounded-xl bg-white outline-none focus:ring-2 focus:ring-orange-200 transition-all">
+            </div>
+            <select id="filtro-categoria" class="px-4 py-3 border rounded-xl bg-white outline-none font-medium text-gray-600 cursor-pointer">
+                <option value="">Todas as Categorias</option>
+                <option value="churrasco">Churrasco</option>
+                <option value="bebidas">Bebidas</option>
+            </select>
+        </div>
+
+        <div id="grid-combos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+
+        <div id="empty-state" class="hidden text-center py-20">
+            <i class="fa-regular fa-face-frown text-5xl text-gray-300 mb-4"></i>
+            <h3 class="text-xl font-medium text-gray-500">Nenhum combo encontrado.</h3>
+        </div>
+    `;
+
+    // CORREÇÃO: appendChild espera o OBJETO elemento, não uma string 'container'
+    sectionCombo.appendChild(container);
+
+    // Após anexar ao DOM, você pode chamar a função que desenha os cards dentro do #grid-combos
+      renderizarLista()
+      lucide.createIcons()
+}
+ function renderizarCadastroCombo(){
+ 
+ const sectionCombo = document.getElementById('cadastroCombo');
+    // Limpa a seção antes de renderizar para evitar duplicatas
+    sectionCombo.innerHTML = '';
+    const container = document.createElement('div');
+    container.classList = 'w-full m-4'; // Removi o flex centralizado aqui para não quebrar o grid abaixo
+    container.innerHTML = `
+ <div class="max-w-4xl mx-auto py-8 px-4">
+        <div class="mb-8 border-b border-gray-300 pb-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Gerenciamento de Produto</h1>
+                <p class="text-gray-500">ID do Sistema: <span id="display-id" class="font-mono text-orange-600">---</span></p>
+            </div>
+            <div class="flex gap-4 w-full justify-center">
+            <button onclick="salvarDados()" class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-2 rounded-lg font-bold transition-all shadow-lg active:scale-95">
+                <i class="fa-solid fa-floppy-disk mr-2"></i> SALVAR COMBO
+            </button>
+             <button onclick="definirFiltro('combosParaMontar')" class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-2 rounded-lg font-bold transition-all shadow-lg active:scale-95">
+              LISTAR COMBOS
+             </button>
+        </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6">
+            
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="text-sm uppercase tracking-wider font-bold mb-4 text-orange-500">Informações Básicas</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Nome do Produto</label>
+                        <input type="text" id="input-nome" class="w-full p-3 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-orange-500 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Categoria</label>
+                        <input type="text" id="input-categoria" class="w-full p-3 border rounded-xl bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Marca / Origem</label>
+                        <input type="text" id="input-marca" class="w-full p-3 border rounded-xl bg-gray-50">
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <h2 class="text-sm uppercase tracking-wider font-bold mb-4 text-orange-500">Valores e Estoque</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Preço Venda</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-3 text-gray-400 text-sm">R$</span>
+                            <input type="number" id="input-preco" step="0.01" class="w-full p-3 pl-10 border rounded-xl font-bold text-green-600 outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Desconto</label>
+                        <input type="text" id="input-desconto" class="w-full p-3 border rounded-xl bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Status</label>
+                        <select id="input-ativo" class="w-full p-3 border rounded-xl bg-gray-50 font-medium">
+                            <option value="true">Ativo</option>
+                            <option value="false">Inativo</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Cód. Barra</label>
+                        <input type="text" id="input-cod" readonly class="w-full p-3 border rounded-xl bg-gray-100 text-gray-500 cursor-not-allowed">
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <div class="mb-8">
+                    <h2 class="text-sm uppercase tracking-wider font-bold mb-4 text-orange-500">Acompanhamentos do Combo</h2>
+                    <div id="container-acompanhamentos" class="flex flex-wrap gap-2">
+                        </div>
+                </div>
+
+                <div>
+                    <h2 class="text-sm uppercase tracking-wider font-bold mb-4 text-orange-500">Itens Adicionais (Extras)</h2>
+                    <div class="overflow-hidden border rounded-xl">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 border-b">
+                                <tr>
+                                    <th class="px-4 py-3 text-xs font-bold text-gray-500 uppercase">Descrição</th>
+                                    <th class="px-4 py-3 text-xs font-bold text-gray-500 uppercase text-right">Valor</th>
+                                    <th class="px-4 py-3 text-xs font-bold text-gray-500 uppercase text-center w-20">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpo-tabela-adicionais" class="divide-y divide-gray-100">
+                                </tbody>
+                        </table>
+  
+                    </div>
+                                     <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-2 p-4 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+    <input type="text" id="novo-adc-nome" placeholder="Nome (ex: Queijo)" class="p-2 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-300">
+    <div class="relative">
+        <span class="absolute left-2 top-2 text-gray-400 text-sm">R$</span>
+        <input type="number" id="novo-adc-preco" placeholder="0.00" step="0.01" class="w-full p-2 pl-8 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-orange-300">
+    </div>
+    <button onclick="adicionarAdicional()" class="bg-gray-800 hover:bg-black text-white px-4 py-2 rounded-lg text-sm font-bold transition-all">
+        <i class="fa-solid fa-plus mr-1"></i> ADICIONAR
+    </button>
+</div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    
+    `
+  sectionCombo.appendChild(container);
+
+    // Após anexar ao DOM, você pode chamar a função que desenha os cards dentro do #grid-combos
+   renderizarPagina();
+     
+ }
+
+
+
 async function renderizarAdmin() {
     const produtos = await obterDados();
-    const termoBusca = document.getElementById('inputBusca').value.toLowerCase();
+  
     const container = document.getElementById('listaAdmin');
-    
-    container.innerHTML = '';
+      container.innerHTML = '';
+    const htools = document.createElement('div')
+    htools.className = 'flex flex-col gap-4 w-full'
+    htools.innerHTML = `
+
+    <button onclick="abrirModalCadastro()" 
+    class=" bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm ">
+        + Novo Produto
+      </button>
+
+      <input type="text" id="inputBusca" oninput="renderizarAdmin()" placeholder="Pesquisar por nome ou código..." 
+             class="w-full p-4 rounded-2xl border-none shadow-md focus:ring-2 focus:ring-yellow-400 outline-none">
+  
+
+    `
+    container.appendChild(htools)
+
+ const termoBusca = document.getElementById('inputBusca').value.toLowerCase();
+
+   
     // Processamos as variações para exibição individual
     let listaProcessada = [];
     produtos.forEach((prod, indexProd) => {
@@ -679,7 +898,9 @@ async function renderizarAdmin() {
             </div>
         `;
         container.appendChild(card);
+      
     });
+    lucide.createIcons()
 }
 
 // --- FUNÇÕES DE CONTROLE ---
@@ -851,8 +1072,9 @@ function navegacao(openId) {
     
     switch(openId){
         case 'admProdutos':
-              renderizarAdmin();
+              definirFiltro('listaAdmin')
         break;
+        
     }
     allpages.forEach(page => {
         document.getElementById(page).style.display = 'none';
@@ -860,7 +1082,240 @@ function navegacao(openId) {
 document.getElementById(openId).style.display = 'flex';
 }
 
+    // Simulando dados vindo de um banco (Supabase/Firebase)
+        const listaCombos = [
+            {
+                id: '000522',
+                nome: 'Combo Família',
+                categoria: 'Combo de Churrasco',
+                preco: 59.90,
+                ativo: true,
+                itens: ['Farofa', 'Vinagrete', 'Pão de Alho', 'Carne'],
+                imagem: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=300&q=80'
+            },
+            {
+                id: '000523',
+                nome: 'Combo Casal',
+                categoria: 'Combo de Churrasco',
+                preco: 35.00,
+                ativo: true,
+                itens: ['Arroz', 'Feijão Tropeiro', 'Espetinho'],
+                imagem: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=300&q=80'
+            },
+            {
+                id: '000524',
+                nome: 'Balde de Cerveja',
+                categoria: 'Bebidas',
+                preco: 45.00,
+                ativo: false,
+                itens: ['5 Skol 269ml', 'Gelo'],
+                imagem: 'https://images.unsplash.com/photo-1597075095302-60cc3866810a?auto=format&fit=crop&w=300&q=80'
+            }
+        ];
 
+        function renderizarLista() {
+            const grid = document.getElementById('grid-combos');
+            grid.innerHTML = listaCombos.map(combo => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all group">
+                    <div class="relative h-40 overflow-hidden">
+                        <img src="${combo.imagem}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 left-3">
+                            <span class="${combo.ativo ? 'bg-green-500' : 'bg-gray-500'} text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                                ${combo.ativo ? 'Ativo' : 'Inativo'}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-lg leading-tight capitalize">${combo.nome}</h3>
+                                <p class="text-xs text-gray-400 font-medium uppercase">${combo.categoria}</p>
+                            </div>
+                            <span class="text-orange-600 font-black text-lg italic">R$ ${combo.preco.toFixed(2)}</span>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-dashed flex items-center justify-between">
+                            <div class="flex -space-x-2">
+                                ${combo.itens.slice(0, 3).map(() => `
+                                    <div class="w-7 h-7 rounded-full bg-orange-100 border-2 border-white flex items-center justify-center text-[10px] text-orange-600 font-bold">
+                                        <i class="fa-solid fa-check"></i>
+                                    </div>
+                                `).join('')}
+                                ${combo.itens.length > 3 ? `<div class="w-7 h-7 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-[10px] text-gray-500">+${combo.itens.length - 3}</div>` : ''}
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <button onclick="editarCombo('${combo.id}')" class="p-2 bg-gray-100 hover:bg-orange-100 hover:text-orange-600 rounded-lg text-gray-500 transition-colors">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button onclick="excluirCombo('${combo.id}')" class="p-2 bg-gray-100 hover:bg-red-100 hover:text-red-600 rounded-lg text-gray-500 transition-colors">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+           lucide.createIcons()
+        }
+
+        function editarCombo(id) {
+            alert("Redirecionando para edição do combo: " + id);
+            // Aqui você usaria: window.location.href = `cadastro.html?id=${id}`;
+        }
+
+        function excluirCombo(id) {
+            if(confirm("Deseja realmente remover este combo?")) {
+                const index = listaCombos.findIndex(c => c.id === id);
+                listaCombos.splice(index, 1);
+                renderizarLista();
+            }
+        }
+
+        // Filtro de Busca Simples
+      /*
+        document.getElementById('busca-combo').addEventListener('input', (e) => {
+            const termo = e.target.value.toLowerCase();
+            const filtrados = listaCombos.filter(c => c.nome.toLowerCase().includes(termo));
+            
+            // Aqui uma lógica simples de renderização filtrada
+            if(filtrados.length === 0) {
+                document.getElementById('grid-combos').classList.add('hidden');
+                document.getElementById('empty-state').classList.remove('hidden');
+            } else {
+                document.getElementById('grid-combos').classList.remove('hidden');
+                document.getElementById('empty-state').classList.add('hidden');
+                // Re-renderiza com os filtrados (em uma app real você passaria o array para a função)
+            }
+        });
+
+*/
+
+   // Dados iniciais
+        const produtoCombo = {
+            id: '000522',
+            nome: 'combo familia',
+            classe: 'combo',
+            categoria: 'combo de churrasco',
+            marca: 'da casa',
+            embalagens: [{
+                cod: '000522',
+                tipo: 'completo',
+                preco: 59.90,
+                estoque: '',
+                vendas: '',
+                desconto: "0.00",
+                ativo: true,
+                acompanhamentos: ['farofa', 'vinagrete', 'pão de alho', 'salpicão', 'feijão tropeiro'],
+                adicionais: [
+                    { nome: 'carne extra', preco: 10.00 },
+                    { nome: 'batata extra', preco: 12.00 },
+                ]
+            }]
+        };
+
+        // Função para preencher a tela
+        function renderizarPagina() {
+            const emb = produtoCombo.embalagens[0];
+
+            // Textos e Inputs
+            document.getElementById('display-id').innerText = produtoCombo.id;
+            document.getElementById('input-nome').value = produtoCombo.nome;
+            document.getElementById('input-categoria').value = produtoCombo.categoria;
+            document.getElementById('input-marca').value = produtoCombo.marca;
+            document.getElementById('input-preco').value = emb.preco.toFixed(2);
+            document.getElementById('input-desconto').value = emb.desconto;
+            document.getElementById('input-cod').value = emb.cod;
+            document.getElementById('input-ativo').value = emb.ativo.toString();
+
+            // Renderizar Badges de Acompanhamentos
+            const containerAcomp = document.getElementById('container-acompanhamentos');
+            containerAcomp.innerHTML = emb.acompanhamentos.map((item, index) => `
+                <div class="bg-orange-50 border border-orange-200 px-4 py-2 rounded-lg text-sm font-medium text-orange-800 flex items-center gap-3">
+                    ${item}
+                    <button onclick="removerAcompanhamento(${index})" class="hover:text-red-600 transition-colors">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                </div>
+            `).join('') + `
+                <button onclick="adicionarAcompanhamento()" class="bg-gray-100 hover:bg-gray-200 border-dashed border-2 border-gray-300 px-4 py-2 rounded-lg text-sm font-bold text-gray-500 transition-all">
+                    + NOVO
+                </button>
+            `;
+
+            // Renderizar Tabela de Adicionais
+            const corpoTabela = document.getElementById('corpo-tabela-adicionais');
+            corpoTabela.innerHTML = emb.adicionais.map((adc, index) => `
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-4 py-3 text-sm text-gray-700 font-medium">${adc.nome}</td>
+                    <td class="px-4 py-3 text-sm text-right font-bold text-gray-900">R$ ${adc.preco.toFixed(2)}</td>
+                    <td class="px-4 py-3 text-center">
+                        <button onclick="removerAdicional(${index})" class="text-red-400 hover:text-red-600 p-2">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+             lucide.createIcons()
+        }
+        // Funções de Ação
+        function removerAcompanhamento(index) {
+            produtoCombo.embalagens[0].acompanhamentos.splice(index, 1);
+            renderizarPagina();
+        }
+        function adicionarAcompanhamento() {
+            const novo = prompt("Nome do acompanhamento:");
+            if (novo) {
+                produtoCombo.embalagens[0].acompanhamentos.push(novo.toLowerCase());
+                renderizarPagina();
+            }
+        }
+
+        function removerAdicional(index) {
+            produtoCombo.embalagens[0].adicionais.splice(index, 1);
+            renderizarPagina();
+        }
+
+        function salvarDados() {
+            // Sincroniza inputs com o objeto antes de salvar
+            produtoCombo.nome = document.getElementById('input-nome').value;
+            produtoCombo.categoria = document.getElementById('input-categoria').value;
+            produtoCombo.marca = document.getElementById('input-marca').value;
+            produtoCombo.embalagens[0].preco = parseFloat(document.getElementById('input-preco').value);
+            produtoCombo.embalagens[0].ativo = document.getElementById('input-ativo').value === "true";
+
+            console.log("JSON pronto para envio:", JSON.stringify(produtoCombo, null, 2));
+            alert("Dados salvos no console do navegador!");
+        }
+        function adicionarAdicional() {
+    const nomeInput = document.getElementById('novo-adc-nome');
+    const precoInput = document.getElementById('novo-adc-preco');
+
+    const nome = nomeInput.value.trim();
+    const preco = parseFloat(precoInput.value);
+
+    // Validação simples
+    if (nome === "" || isNaN(preco)) {
+        alert("Por favor, preencha o nome e o preço corretamente.");
+        return;
+    }
+
+    // Adiciona ao objeto original
+    const novoItem = {
+        nome: nome.toLowerCase(),
+        preco: preco
+    };
+
+    produtoCombo.embalagens[0].adicionais.push(novoItem);
+
+    // Limpa os campos
+    nomeInput.value = "";
+    precoInput.value = "";
+
+    // Atualiza a visualização da tabela
+    renderizarPagina();
+}
 lucide.createIcons()
 
 
