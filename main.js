@@ -253,7 +253,6 @@ const dados = db.find(d=>{
 })
 const sectionCustomizar = document.getElementById('customizarPedido')
 
-alert(imagem)
 const srcImagem = imagem
 
 sectionCustomizar.innerHTML =`
