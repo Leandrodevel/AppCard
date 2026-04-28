@@ -253,7 +253,7 @@ const dados = db.find(d=>{
 })
 const sectionCustomizar = document.getElementById('customizarPedido')
 
-
+alert(imagem)
 const srcImagem = imagem
 
 sectionCustomizar.innerHTML =`
@@ -302,6 +302,30 @@ sectionCustomizar.innerHTML =`
                 
             </div>
         </div>
+        <div>
+            <div class="bg-gray-200/50 py-2 px-4 mb-3 border-l-4 border-green-500">
+                <h3 class="text-sm font-black text-gray-500 uppercase tracking-widest flex justify-between">
+                    Turbine seu pedido
+                    <span class="text-[10px] text-gray-400 font-bold">OPCIONAL</span>
+                </h3>
+            </div>
+            
+            ${dados.embalagens[0].adicionais.map(add => `
+                <label class="flex items-center justify-between p-4 bg-white border-b border-gray-100 cursor-pointer has-[:checked]:bg-green-50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" name="adicional-combo" value="${add.nome}" data-preco="${add.preco}" class="w-5 h-5 accent-green-500 rounded">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-bold text-gray-800">${add.nome}</span>
+                            <span class="text-[10px] text-gray-500 italic">+ R$ ${add.preco}</span>
+                        </div>
+                    </div>
+                    <i data-lucide="plus" class="w-4 h-4 text-gray-300"></i>
+                </label>
+            `).join('')}
+        </div>
+
+        <div class="px-4">
+        
 
         <!-- Observações -->
         <div class="px-4">
@@ -1595,10 +1619,10 @@ for (let combo of dados) {
   const cardCombo = document.createElement('div')
   cardCombo.className='min-w-[90%] md:min-w-[400px] bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-yellow-400/20 snap-center'
   // Usando template string sem espaços extras nas propriedades
-  const imagem = ['comboChurras','comboPremium']
+  const imagem = ['./img/comboChurras.jpg','./img/comboPremium.jpg']
   
   
-cardCombo.style.backgroundImage = "url('./img/"+imagem[i++]+".jpg')";
+cardCombo.style.backgroundImage = `url(${imagem[i++]})`;
 cardCombo.style.backgroundSize = "cover";
 cardCombo.style.backgroundPosition = "center";
   cardCombo.innerHTML=`
@@ -1617,7 +1641,7 @@ cardCombo.style.backgroundPosition = "center";
             </ul>
             <p class="text-white font-black text-xl mt-3">R$ ${combo.embalagens[0].preco.replace(".",",")}</p>
             <button class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md active:scale-95 transition-all" 
-                    onclick="navegacao('customizarPedido'), customizarPedidoRender('${combo.embalagens[0].cod}','./img/${imagem[i]}.jpg', '${combo.nome}', '${combo.embalagens[0].tipo}', '${combo.embalagens[0].preco}')">
+                    onclick="navegacao('customizarPedido'), customizarPedidoRender('${combo.embalagens[0].cod}','${imagem[i]}', '${combo.nome}', '${combo.embalagens[0].tipo}', '${combo.embalagens[0].preco}')">
                 Adicionar ao Carrinho
             </button>
         </div>
