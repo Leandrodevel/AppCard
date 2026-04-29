@@ -454,7 +454,7 @@ async function listarCat(idAtivo, classe) {
 
   const dbClasse = myDb.filter(db => {
     const prodClasse = db.classe.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[ ]/g, "");
-    const slcClasse = classe === prodClasse || !classe;
+    const slcClasse = classe === prodClasse  || !classe;
     return slcClasse;
   });
 
@@ -512,7 +512,10 @@ async function listaProdutos(idCat, termo, lista) {
   const dbGeral_puro = await getDados();
 const myDb = dbGeral_puro.filter(produto => {
     // Verificamos se dentro do array de embalagens existe ALGUMA onde 'ativo' é true
-    return produto.embalagens.some(emb => emb.ativo === true);
+  
+     const ativos =  produto.embalagens.some(emb => emb.ativo === true);
+    const itens = produto.classe !== 'combo'
+    return ativos && itens
 });
 
 
@@ -665,7 +668,9 @@ const dbGeral_puro = await getDados();
          // Forma correta de filtrar
 const db = dbGeral_puro.filter(produto => {
     // Verificamos se dentro do array de embalagens existe ALGUMA onde 'ativo' é true
-    return produto.embalagens.some(emb => emb.ativo === true);
+    const ativos =  produto.embalagens.some(emb => emb.ativo === true);
+    const itens = produto.classe !== 'combo'
+    return ativos && itens
 });
    const boxPromocoes= document.getElementById('boxPromocoes')
     
@@ -822,7 +827,9 @@ const dbGeral_puro = await getDados();
 // Forma correta de filtrar
 const dbGeral = dbGeral_puro.filter(produto => {
     // Verificamos se dentro do array de embalagens existe ALGUMA onde 'ativo' é true
-    return produto.embalagens.some(emb => emb.ativo === true);
+    const ativos =  produto.embalagens.some(emb => emb.ativo === true);
+    const itens = produto.classe !== 'combo'
+    return ativos && itens
 });
 
 const divtop10 = document.getElementById('boxTop10');
