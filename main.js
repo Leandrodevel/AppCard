@@ -339,7 +339,7 @@ sectionCustomizar.innerHTML =`
         <div class="flex items-center justify-between gap-4">
            
             <!-- Botão Adicionar -->
-            <button onclick="adicionarCombo('${nome}', '${tipo}', '${preco}')" class="flex-grow bg-green-500  font-black py-4 rounded-xl text-sm uppercase italic tracking-tighter shadow-lg shadow-yellow-400/10 active:scale-95 transition-transform">
+            <button onclick="adicionarCombo('${cod}','${nome}', '${tipo}', '${preco}')" class="flex-grow bg-green-500  font-black py-4 rounded-xl text-sm uppercase italic tracking-tighter shadow-lg shadow-yellow-400/10 active:scale-95 transition-transform">
                 Adicionar
             </button>
         </div>
@@ -1132,31 +1132,70 @@ function confirmAdd(cod,nome,embalagem,preco) {
 
 function atualizarCarrinho() {
    
-    
+   
   const container = document.getElementById("itensCarrinho");
   const totalElemento = document.getElementById("valorTotal");
-  
+   let acumulaValores=[]
+  let textoAdicionais
+  let textoAcompanhamentos
+    let totalAdicionais
   // Limpa a lista antes de renderizar
   container.innerHTML = "";
 let comAcomp ='hidden'
+let comAdicionais ='hidden'
   // 1. Renderiza os Itens
   meuCarrinho.forEach(item => {
       
-      if(item.acompanhamentos){comAcomp = ''}else{comAcomp='hidden'}
-  
-  
-    // Formatando o preço para o padrão brasileiro
+     
+      
+      if(item.adicionais){
+        if(item.adicionais.length > 0){
+      
+      textoAcompanhamentos = item.acompanhamentos.map(n=>`
+   <span class="py-0.5 px-1.5 rounded-lg bg-yellow-100/50"> ${n}</span>`).join('')
+        totalAdicionais = item.adicionais.reduce((acumulador, item) => {
+        return acumulador + item.preco;}, 0); // O '0' é o valor inicial da soma
+        comAcomp = ''
+
+      }
+    }else{
+        totalAdicionais = 0.00
+        comAcomp='hidden'
+      }
 
 
-  
+
+    if(item.adicionais){
+        if(item.adicionais.length > 0){
+      
+      textoAdicionais = item.adicionais.map(n=>`
+        <div id="spanAdicionais" class=" w-ful text-zinc-700 text-[12px] bg-yellow-100/50 flex items-center justify-between">
+       <span> ${n.nome}</span> 
+       <span>R$ ${n.preco.toFixed(2).replace(".",",")}</span>
+        </div>`).join('')
+
+        totalAdicionais = item.adicionais.reduce((acumulador, item) => {
+        return acumulador + item.preco;}, 0); // O '0' é o valor inicial da soma
+        comAdicionais = ''
+
+      }
+    }else{
+        totalAdicionais = 0.00
+        comAdicionais='hidden'
+      }
+
+
+ 
    let precoFinal = parseFloat(item.preco).toFixed(2)
-   
-  let precoXquantidade = (item.qtd* item.preco).toFixed(2)
-   
+
+  let precoXquantidade = (item.qtd* item.preco + totalAdicionais).toFixed(2)
+
+    acumulaValores.push(parseFloat(precoXquantidade))
+
   precoXquantidade = precoXquantidade.replace(".",",")
-   
+
   precoFinal = precoFinal.replace(".",",")
-       
+      
     container.innerHTML += `
 
     
@@ -1174,29 +1213,37 @@ let comAcomp ='hidden'
                 </div>
   
         <div class="grid grid-cols-1">
-          <span class="${comAcomp} w-ful text-orange-400 text-[12px] border-b">
-         Ac: ${item.acompanhamentos}
+   
+          <span class="${comAcomp} w-ful text-orange-400 text-[12px] flex gap-1 flex-wrap">
+         <span class="text-yellow-700">Acomp:</span> ${textoAcompanhamentos}
           </span>
+
+          <div  class="${comAdicionais} w-full text-[12px] border-b flex flex-col m-0">
+        <span class="font-bold text-zinc-700">Extras:</span>
+        ${textoAdicionais}
+          </div>
+
           <span class="${comAcomp} w-ful text-blue-400 text-[12px]">
          Obs: ${item.observacao}
           </span>
             </div>
                 </div>
               
-                <span class="font-bold">R$ ${precoXquantidade}</span>
+                <span class="font-bold ring">R$ ${precoXquantidade}</span>
                 
                 </button>
                 
             
       
     `;
+    
   });
 
   // 2. O "Reduce" em ação para o total
-  const total = meuCarrinho.reduce((acc, item) => acc + parseFloat((item.preco*item.qtd)) ,0);
   
+  let total = acumulaValores.reduce((acc, item) => acc + item ,0);
   
-  
+
   totalElemento.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   lucide.createIcons();
 }

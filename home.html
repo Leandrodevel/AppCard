@@ -356,8 +356,9 @@ const classeComItem = [...new Set(dbListExist.map(item =>
   // Inicializa ícones
   lucide.createIcons();
 
-  function adicionarCombo(nome,embalagem,preco){
-    
+ async function adicionarCombo(cod,nome,embalagem,preco){
+    const db = await getDados()
+
     const gerarID = () => {
     const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
     const data = Date.now();
@@ -370,12 +371,35 @@ const classeComItem = [...new Set(dbListExist.map(item =>
     
     // Pega todos os acompanhamentos marcados
     const acompanhamentos = Array.from(document.querySelectorAll('input[name="acompanhamento-combo"]:checked')).map(el => el.value);
+ // Pega todos os adicionais marcados
 
+
+  // Capturamos o elemento inteiro no map, não apenas o value
+const adicionais = Array.from(document.querySelectorAll('input[name="adicional-combo"]:checked')).map(el => {
+    return {
+        nome: el.value,
+        // Acessamos o atributo data-preco através do dataset
+        preco: parseFloat(el.dataset.preco) 
+    };
+});
+
+// 2. Soma os preços usando o .reduce()
+const totalAdicionais = adicionais.reduce((acumulador, item) => {
+    return acumulador + item.preco;
+}, 0); // O '0' é o valor inicial da soma
+
+// Para exibir o preço do primeiro item selecionado (exemplo)
+if (adicionais.length > 0) {
+    alert(`Nome: ${adicionais[0].nome} - Preço: R$ ${adicionais[0].preco.toFixed(2)}`);
+}
+
+console.log(adicionais);
     const item = {
       cod: gerarID(),
       nome: nome,
       embalagem: '1 un.',
       acompanhamentos: acompanhamentos,
+      adicionais: adicionais,
       observacao: obs,
       preco: preco,
       qtd:1
