@@ -450,15 +450,17 @@ function openBox(target, event) {
   window.addEventListener('click', fecharAoClicarFora);
 }
 async function listarCat(idAtivo, classe) {
+ 
   let myDb = await getDados();
 
   const dbClasse = myDb.filter(db => {
     const prodClasse = db.classe.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[ ]/g, "");
-    const slcClasse = classe === prodClasse  || !classe;
+    const slcClasse = classe === prodClasse  || !classe ;
     return slcClasse;
   });
 
   const dbCategorias = [...new Set(dbClasse.map(bl => bl.categoria))];
+
   dbCategorias.sort((a, b) => a.localeCompare(b));
 
   const navCat = document.getElementById('navCat');
