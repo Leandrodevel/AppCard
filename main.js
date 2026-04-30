@@ -230,6 +230,7 @@ window.addEventListener('scroll', () => {
   });
   
 let meuCarrinho = JSON.parse(localStorage.getItem('carrinho')) || []
+
 function atualizaContador() {
  
   meuCarrinho = JSON.parse(localStorage.getItem('carrinho')) || []
@@ -450,8 +451,7 @@ function openBox(target, event) {
   window.addEventListener('click', fecharAoClicarFora);
 }
 async function listarCat(idAtivo, classe) {
- 
-  let myDb = await getDados();
+  const myDb = await getDados();
 
   const dbClasse = myDb.filter(db => {
     const prodClasse = db.classe.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[ ]/g, "");
@@ -810,9 +810,7 @@ const quantosNoCarrinho = meuCarrinho.find(ic =>ic.cod === de.cod) || {qtd:0};
     }
   }
   if (typeof lucide !== 'undefined') lucide.createIcons();
-      }
-      
-      
+      }    
 async function validarCaminhoImagem(nomeArquivo) {
   const caminho = `./img/${nomeArquivo}`;
   try {
@@ -1139,6 +1137,61 @@ function confirmAdd(cod,nome,embalagem,preco) {
 
 }
 
+
+function adicionarEspetinho(){
+    
+  const gerarID = () => {
+    const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
+    const data = Date.now();
+    return letras + data;
+};
+
+
+    const sabor = document.getElementById('sabor-espetinho').value;
+    const preco = parseFloat(document.getElementById('main-prod-preco').innerText.replace(',', '.'));
+    const obs = document.getElementById('obs-pedido').value;
+    
+    // Pega todos os acompanhamentos marcados
+    const acompanhamentos = Array.from(document.querySelectorAll('input[name="acompanhamento"]:checked')).map(el => el.value);
+
+    const item = {
+      cod:gerarID(),
+      nome: `Espetinho de ${sabor}`,
+      embalagem: '1 un.',
+      acompanhamentos: acompanhamentos,
+      observacao: obs,
+      preco: preco,
+      qtd:1
+    };
+
+    // Salva no LocalStorage
+    
+    meuCarrinho.push(item);
+    localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
+
+    
+      modalAdicionado(item.cod,item.nome,'',item.preco)
+      
+     atualizaContador()
+    
+    
+    let totItens = document.getElementById('qtd-itens')  
+
+    let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
+    return acumulador + p.qtd;
+}, 0); // O '0' é o valor inicial da soma
+
+      
+       totItens.innerText= totalCarrinho
+
+    
+    
+    
+    // Opcional: Limpar campos após adicionar
+    document.querySelectorAll('input[name="acompanhamento"]').forEach(el => el.checked = false);
+    document.getElementById('obs-pedido').value = '';
+  }
+
 function atualizarCarrinho() {
    
    
@@ -1157,18 +1210,12 @@ let comAdicionais ='hidden'
       
      
       
-      if(item.adicionais){
-        if(item.adicionais.length > 0){
-      
+      if(item.acompanhamentos){
       textoAcompanhamentos = item.acompanhamentos.map(n=>`
    <span class="py-0.5 px-1.5 rounded-lg bg-yellow-100/50"> ${n}</span>`).join('')
-        totalAdicionais = item.adicionais.reduce((acumulador, item) => {
-        return acumulador + item.preco;}, 0); // O '0' é o valor inicial da soma
-        comAcomp = ''
-
-      }
+    comAcomp=''
     }else{
-        totalAdicionais = 0.00
+       
         comAcomp='hidden'
       }
 
@@ -1209,9 +1256,10 @@ let comAdicionais ='hidden'
 
     
               
-              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')" class="flex justify-between items-center w-full p-1 mb-1 border-l-[5px] rounded-md temaCards">
+              <button onclick="openModal('${item.cod}','${item.nome}','${item.embalagem}','${item.preco}')"
+               class="flex justify-between items-center w-full p-1 mb-1 border-l-[5px] rounded-md temaCards relative">
                 
-                <div class=" justify-left flex text-left flex-col">
+                <div class="w-full  justify-left flex text-left flex-col">
                 
                 <div class="grid grid-cols-1">
               <span>
@@ -1238,7 +1286,7 @@ let comAdicionais ='hidden'
             </div>
                 </div>
               
-                <span class="font-bold ring">R$ ${precoXquantidade}</span>
+                <span class="font-bold  absolute right-2 bottom-0 ">R$ ${precoXquantidade}</span>
                 
                 </button>
                 
@@ -1258,7 +1306,7 @@ let comAdicionais ='hidden'
 }
 async function enviarWhatsApp() {
 const userdados = await userDados()
-
+let somaAdicionais=[]
 if(userdados.rua === '' || userdados.bairro === '' || userdados.casa === ''){
   navegacao('enderecoTemp')
   return
@@ -1307,6 +1355,19 @@ meuCarrinho.forEach(item => {
   if(item.acompanhamentos){
    mensagem+= `com (${item.acompanhamentos})\n`
   }else{}
+
+   if(item.adicionais){
+
+let juntaAdicionais = item.adicionais.reduce((acumulador, item) => {
+    return acumulador + item.preco;
+}, 0); // O '0' é o valor inicial da soma
+somaAdicionais.push(juntaAdicionais)
+textoAdicionais = item.adicionais.map(n=>` ${n.nome} - R$ ${n.preco.toFixed(2).replace(".",",")}`).join(" | ")
+
+   mensagem+= `Extras:(${textoAdicionais})\n`
+
+   
+  }else{}
   if(item.observacao){
  mensagem += `(${item.observacao})\n`;
   }else{}
@@ -1323,10 +1384,12 @@ mensagem += `\n❕OBS: ${obsCarrinho || ''}\n\n`;
 
 // Cálculo do Total
 const totalProdutos = meuCarrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
+const totalAdicionais = somaAdicionais.reduce((acumulador, item) => {
+    return acumulador + item;
+}, 0); // O '0' é o valor inicial da soma
 
 
-
-const totalGeral = totalProdutos;
+const totalGeral = totalProdutos + totalAdicionais;
 
 //mensagem += `Taxa de entrega: 3,00R$\n\n`;
 
@@ -1344,8 +1407,8 @@ const inputTroco= parseFloat(document.getElementById('inputTroco').value).toFixe
 
 /* Envio */
 const numeroLimpo = numeroTelefone.replace(/\D/g, '');
-const url = `https://wa.me/${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
-    
+//const url = `https://wa.me/${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
+    alert(mensagem)
     
     const hoje = new Date();
 // Data e hora: DD/MM/AAAA, HH:MM:SS
@@ -1408,6 +1471,7 @@ function verCarrinho(){
 
 
 }
+
 async function verPerfil() {
  const dados = await userDados() 
 
@@ -1550,6 +1614,10 @@ function carregarHistorico() {
     // Atualiza os ícones do Lucide
     lucide.createIcons();
 }
+
+
+
+
 function repetirPedido(numeroPedido) {
     
     // 1. Pegar o histórico e o carrinho atual (Síncrono, sem await)

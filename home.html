@@ -386,12 +386,6 @@ const adicionais = Array.from(document.querySelectorAll('input[name="adicional-c
 const totalAdicionais = adicionais.reduce((acumulador, item) => {
     return acumulador + item.preco;
 }, 0); // O '0' é o valor inicial da soma
-
-// Para exibir o preço do primeiro item selecionado (exemplo)
-if (adicionais.length > 0) {
-    alert(`Nome: ${adicionais[0].nome} - Preço: R$ ${adicionais[0].preco.toFixed(2)}`);
-}
-
 console.log(adicionais);
     const item = {
       cod: gerarID(),
@@ -725,58 +719,7 @@ console.log(adicionais);
   // Inicializa ícones
   lucide.createIcons();
 
-  function adicionarEspetinho(){
-    
-    const gerarID = () => {
-    const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
-    const data = Date.now();
-    return letras + data;
-};
-
-    const sabor = document.getElementById('sabor-espetinho').value;
-    const preco = parseFloat(document.getElementById('main-prod-preco').innerText.replace(',', '.'));
-    const obs = document.getElementById('obs-pedido').value;
-    
-    // Pega todos os acompanhamentos marcados
-    const acompanhamentos = Array.from(document.querySelectorAll('input[name="acompanhamento"]:checked')).map(el => el.value);
-
-    const item = {
-      cod: gerarID(),
-      nome: `Espetinho de ${sabor}`,
-      embalagem: '1 un.',
-      acompanhamentos: acompanhamentos,
-      observacao: obs,
-      preco: preco,
-      qtd:1
-    };
-
-    // Salva no LocalStorage
-    
-    meuCarrinho.push(item);
-    localStorage.setItem('carrinho', JSON.stringify(meuCarrinho));
-
-    
-      modalAdicionado(item.cod,item.nome,'',item.preco)
-      
-     atualizaContador()
-    
-    
-    let totItens = document.getElementById('qtd-itens')  
-
-    let  totalCarrinho= meuCarrinho.reduce((acumulador, p) => {
-    return acumulador + p.qtd;
-}, 0); // O '0' é o valor inicial da soma
-
-      
-       totItens.innerText= totalCarrinho
-
-    
-    
-    
-    // Opcional: Limpar campos após adicionar
-    document.querySelectorAll('input[name="acompanhamento"]').forEach(el => el.checked = false);
-    document.getElementById('obs-pedido').value = '';
-  }
+  
 </script>
 
    </section>
@@ -805,7 +748,7 @@ console.log(adicionais);
             </button>
         </div>
         
-        <div  class="  p-4 max-h-[40vh] overflow-y-auto text-sm" id="itensCarrinho">
+        <div  class="  p-4 max-h-[40vh] overflow-y-auto text-sm " id="itensCarrinho">
             
           
             
