@@ -1,3 +1,5 @@
+ // Inicializar ícones do Lucide
+       
 let memoria
 // Função auxiliar para gerenciar o salvamento
 function salvarNoCache(dados) {
