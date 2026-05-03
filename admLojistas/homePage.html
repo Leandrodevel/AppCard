@@ -7,7 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+   <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .gradient-text {
             background: linear-gradient(135deg, #f97316 0%, #ed213a 100%);
@@ -15,6 +16,7 @@
             -webkit-text-fill-color: transparent;
         }
     </style>
+
 </head>
 <body class="bg-slate-50 text-slate-900 overflow-x-hidden">
 
@@ -30,7 +32,9 @@
             <div class="hidden md:flex items-center gap-8 font-semibold text-slate-600">
                 <a href="#funcionalidades" class="hover:text-orange-600 transition-colors">Funcionalidades</a>
                 <a href="#personalizacao" class="hover:text-orange-600 transition-colors">Personalização</a>
-                <a href="#contato" class="bg-orange-600 text-white px-6 py-2.5 rounded-full hover:bg-orange-700 transition-all shadow-lg shadow-orange-200">Começar Agora</a>
+                     <a href="#contato" class="bg-orange-600 text-white px-6 py-2.5 rounded-full hover:bg-orange-700 transition-all shadow-lg shadow-orange-200">Começar Agora</a>
+                <a href="login.html" class="bg-orange-600 text-white px-6 py-2.5 rounded-full hover:bg-orange-700 transition-all shadow-lg shadow-orange-200">Acessar</a>
+            
             </div>
         </div>
     </nav>
@@ -47,9 +51,7 @@
                     Sua loja com identidade própria, pedidos organizados e fechamento direto no WhatsApp. Sem taxas abusivas por pedido.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <button class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all flex items-center gap-2">
-                        Criar meu cardápio <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </button>
+                   
                     <a href="../home.html?id_comercio=budega" class="bg-white border-2 border-slate-200 px-8 py-4 rounded-2xl font-bold text-lg hover:border-orange-600 transition-all">
                         Ver Demonstração
                     </a>

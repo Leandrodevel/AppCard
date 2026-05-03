@@ -89,7 +89,7 @@ async function verificarSessao() {
       navegacao('dashboard');
       
     }else {
-        navegacao('loginAdm')
+         window.location.href = './login.html';
     }
 }
 
@@ -177,11 +177,12 @@ async function verificarSessao() {
      
 
       
-      
-      <div class="flex-shrink-0">
-        <h1 class="text-sm mr-2 font-bold text-gray-800">ADM Cardápio</h1>
-      </div>
-
+          <div class="flex items-center gap-2">
+                <div class="bg-orange-600 p-2 rounded-lg">
+                    <i data-lucide="layout-template" class="text-white w-6 h-6"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight">LP <span class="text-orange-600">Cardápios</span></span>
+            </div>
       <div class="flex space-x-6 h-full">
         
         <button class="flex flex-col items-center justify-center text-gray-600 hover:text-blue-600 transition-colors" onclick="navegacao('dashboard')">
@@ -240,7 +241,7 @@ async function verificarSessao() {
     </div>
 
     <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100">
-      <div class="bg-yellow-50 w-10 h-10 rounded-2xl flex items-center justify-center text-yellow-600 mb-3">
+      <div class="bg-red-50 w-10 h-10 rounded-2xl flex items-center justify-center text-red-600 mb-3">
         <i data-lucide="layers" class="w-5 h-5"></i>
       </div>
       <p class="text-gray-500 text-xs font-bold uppercase tracking-wider">Produtos</p>
@@ -261,7 +262,7 @@ async function verificarSessao() {
     
     <div class="lg:col-span-1 bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
       <h3 class="font-black text-gray-800 mb-4 flex items-center gap-2">
-        <i data-lucide="trending-up" class="w-5 h-5 text-yellow-500"></i>
+        <i data-lucide="trending-up" class="w-5 h-5 text-red-500"></i>
         TOP 5 MAIS VENDIDOS
       </h3>
       <div id="listaMaisVendidos" class="space-y-4">
@@ -278,8 +279,8 @@ async function verificarSessao() {
       <div class="space-y-6">
         <div class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
           <div class="flex items-center gap-3">
-            <div class="bg-yellow-400 p-2 rounded-lg">
-                <i data-lucide="clock" class="w-5 h-5 text-yellow-900"></i>
+            <div class="bg-red-400 p-2 rounded-lg">
+                <i data-lucide="clock" class="w-5 h-5 text-red-900"></i>
             </div>
             <div>
               <p class="font-bold text-gray-800">Tempo médio de entrega</p>
@@ -291,10 +292,10 @@ async function verificarSessao() {
 
         <div class="grid grid-cols-2 gap-4">
             <button onclick="navegacao('admProdutos')" class="p-4 bg-gray-900 text-white rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-gray-800 transition-all">
-                <i data-lucide="plus-circle" class="w-6 h-6 text-yellow-400"></i>
+                <i data-lucide="plus-circle" class="w-6 h-6 text-red-400"></i>
                 Adicionar Itens
             </button>
-            <button class="p-4 bg-yellow-400 text-yellow-900 rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-yellow-500 transition-all">
+            <button class="p-4 bg-red-400 text-red-900 rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-red-500 transition-all">
                 <i data-lucide="share-2" class="w-6 h-6"></i>
                 Compartilhar Link
             </button>
@@ -317,30 +318,30 @@ async function verificarSessao() {
     <div>
       <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome Completo</label>
       <input required type="text" id="cadNomeUser" placeholder="Seu nome" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-all shadow-sm">
     </div>
 
     <div>
       <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">E-mail</label>
       <input required type="email" id="cadEmail" placeholder="seu@email.com" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-all shadow-sm">
     </div>
 
     <div>
       <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Senha (mín. 6 caracteres)</label>
       <input required type="password" id="cadSenha" placeholder="••••••" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-all shadow-sm">
     </div>
 
     <div class="pt-4">
       <button id="btnCadastrar" type="submit" 
-        class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+        class="w-full bg-red-400 hover:bg-red-500 text-red-900 font-black py-4 rounded-2xl shadow-lg shadow-red-100 transition-transform active:scale-95 uppercase tracking-wider">
         Criar Minha Conta
       </button>
     </div>
     
     <p class="text-center text-xs text-gray-500 mt-4">
-      Já tem uma conta? <button onclick="navegacao('loginAdm')" class="text-yellow-600 font-bold underline">Faça login</button>
+      Já tem uma conta? <button onclick="navegacao('loginAdm')" class="text-red-600 font-bold underline">Faça login</button>
     </p>
   </form>
 
@@ -358,24 +359,24 @@ async function verificarSessao() {
     <div>
       <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">E-mail</label>
       <input required type="email" id="loginEmail" placeholder="seu@email.com" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-all shadow-sm">
     </div>
 
     <div>
       <label class="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Senha</label>
       <input required type="password" id="loginSenha" placeholder="••••••" 
-        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all shadow-sm">
+        class="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-4 text-gray-700 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-all shadow-sm">
     </div>
 
     <div class="pt-4">
       <button id="btnLogin" type="submit" 
-        class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-black py-4 rounded-2xl shadow-lg shadow-yellow-100 transition-transform active:scale-95 uppercase tracking-wider">
+        class="w-full bg-red-400 hover:bg-red-500 text-red-900 font-black py-4 rounded-2xl shadow-lg shadow-red-100 transition-transform active:scale-95 uppercase tracking-wider">
         Acessar
       </button>
     </div>
     
   <p class="text-center text-xs text-gray-500 mt-4">
-     <a href="../loginUsers.html"  class="text-yellow-600 font-bold underline text-sm ">Acesso rápido (nome e telefone)</a>
+     <a href="../loginUsers.html"  class="text-red-600 font-bold underline text-sm ">Acesso rápido (nome e telefone)</a>
     </p>
   </form>
 
@@ -390,28 +391,28 @@ async function verificarSessao() {
              <div class="grid grid-cols-4 gap-2">
     
     <button onclick="definirFiltro('listaAdmin')" class="flex flex-col items-center group active:scale-90 transition-transform">
-      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
-        <i data-lucide="bottle-wine" class="w-6 h-6 text-gray-600 group-hover:text-yellow-500"></i>
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-red-400">
+        <i data-lucide="bottle-wine" class="w-6 h-6 text-gray-600 group-hover:text-red-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Itens de<br>Prateleira</span>
     </button>
 
     <button onclick="definirFiltro('combosParaMontar')" class="flex flex-col items-center group active:scale-90 transition-transform">
-      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
-        <i data-lucide="pizza" class="w-6 h-6 text-gray-600 group-hover:text-yellow-500"></i>
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-red-400">
+        <i data-lucide="pizza" class="w-6 h-6 text-gray-600 group-hover:text-red-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Para<br>Montar</span>
     </button>
 
     <button onclick="" class="flex flex-col items-center group active:scale-90 transition-transform">
-      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
-        <i data-lucide="boxes" class="w-6 h-6 text-gray-600 group-hover:text-yellow-500"></i>
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-red-400">
+        <i data-lucide="boxes" class="w-6 h-6 text-gray-600 group-hover:text-red-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Combos<br>Prontos</span>
     </button>
 
     <button onclick="" class="flex flex-col items-center group active:scale-90 transition-transform">
-      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-yellow-400">
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-red-400">
         <i data-lucide="badge-percent" class="w-6 h-6 text-red-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Em<br>Promoção(destaque no inicio)</span>
@@ -481,64 +482,64 @@ function definirFiltro(filtro) {
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">variação de ...</label>
-                    <select id="keyVariacao" placeholder="0001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                    <select id="keyVariacao" placeholder="0001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none">
                         
                     </select>
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Classe</label>
-                    <select id="cadClasse" required placeholder="bebidas" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none"></select>
+                    <select id="cadClasse" required placeholder="bebidas" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none"></select>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Categoria</label>
-                    <select id="cadCategoria" required placeholder="cerveja" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                    <select id="cadCategoria" required placeholder="cerveja" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none">
                         
                     </select>
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Marca</label>
-                    <input type="text" id="cadMarca" required placeholder="brahma" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                    <input type="text" id="cadMarca" required placeholder="brahma" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none">
                 </div>
             </div>
 
             <div>
                 <label class="text-[10px] font-bold text-gray-400 uppercase">Nome Completo</label>
-                <input type="text" id="cadNome" required placeholder="Cerveja Brahma Chopp" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                <input type="text" id="cadNome" required placeholder="Cerveja Brahma Chopp" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none">
             </div>
 
             <hr class="my-2">
-            <p class="text-[10px] font-black text-yellow-600 uppercase">Primeira Embalagem/Variação</p>
+            <p class="text-[10px] font-black text-red-600 uppercase">Primeira Embalagem/Variação</p>
 
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Cód. SKU</label>
-                    <input type="text" disabled id="cadCod" required placeholder="B001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                    <input type="text" disabled id="cadCod" required placeholder="B001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none">
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Tipo</label>
-                    <input type="text" id="cadTipo" required placeholder="Lata 350ml" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                    <input type="text" id="cadTipo" required placeholder="Lata 350ml" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none">
                 </div>
             </div>
 
             <div class="grid grid-cols-3 gap-2">
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Preço</label>
-                    <input type="text" id="cadPreco" required placeholder="3,80" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                    <input type="text" id="cadPreco" required placeholder="3,80" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none">
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Estoque</label>
-                    <input type="number" id="cadEstoque" required placeholder="100" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                    <input type="number" id="cadEstoque" required placeholder="100" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none">
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Vendas Init</label>
-                    <input type="number" id="cadVendas" value="0" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-yellow-400 outline-none">
+                    <input type="number" id="cadVendas" value="0" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-400 outline-none">
                 </div>
             </div>
 
-            <button type="submit" class="w-full bg-yellow-400 text-gray-900 font-black py-3 rounded-xl shadow-lg mt-2">
+            <button type="submit" class="w-full bg-red-400 text-gray-900 font-black py-3 rounded-xl shadow-lg mt-2">
                 CADASTRAR PRODUTO
             </button>
         </form>
@@ -827,12 +828,12 @@ async function renderizarAdmin() {
     htools.innerHTML = `
 
     <button onclick="abrirModalCadastro()" 
-    class=" bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm ">
+    class=" bg-red-400 hover:bg-red-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm ">
         + Novo Produto
       </button>
 
       <input type="text" id="inputBusca" oninput="renderizarAdmin()" placeholder="Pesquisar por nome ou código..." 
-             class="w-full p-4 rounded-2xl border-none shadow-md focus:ring-2 focus:ring-yellow-400 outline-none">
+             class="w-full p-4 rounded-2xl border-none shadow-md focus:ring-2 focus:ring-red-400 outline-none">
   
 
     `
@@ -867,13 +868,13 @@ async function renderizarAdmin() {
                         <h3 class="font-bold text-lg">${item.nome}</h3>
                         <span class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-500">${item.emb.vendas} vendidos</span>
                     </div>
-                    <p class="text-sm font-bold text-yellow-600">${item.emb.tipo}</p>
+                    <p class="text-sm font-bold text-red-600">${item.emb.tipo}</p>
                 </div>
                 
                 <div class="flex flex-col items-end">
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" class="sr-only peer" ${estaAtivo ? 'checked' : ''} onchange="toggleAtivo(${item.indexProd}, ${item.indexEmb})">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-400"></div>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-400"></div>
                         <span class="ml-2 text-xs font-bold text-gray-400 uppercase">${estaAtivo ? 'Ativo' : 'Off'}</span>
                     </label>
                 </div>
@@ -894,7 +895,7 @@ async function renderizarAdmin() {
                    📦 ESTOQUE (${item.emb.estoque || 0})
                 </button>
 
-                <button onclick="toggleDestaque(${item.indexProd}, ${item.indexEmb})" class="flex items-center justify-center gap-1 ${item.emb.destaque ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'} p-2 rounded-xl text-xs font-black transition">
+                <button onclick="toggleDestaque(${item.indexProd}, ${item.indexEmb})" class="flex items-center justify-center gap-1 ${item.emb.destaque ? 'bg-red-400 text-white' : 'bg-gray-100 text-gray-400'} p-2 rounded-xl text-xs font-black transition">
                    ⭐ DESTAQUE
                 </button>
             </div>
