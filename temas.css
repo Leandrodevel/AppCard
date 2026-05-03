@@ -15,7 +15,7 @@
 
 /* TEMA LARANJA CLARO */
 .tema-laranja-claro { 
-    --bg-cor: #FDF9F6;    
+    --bg-cor: rgb(253, 253, 253);    
     --bg-cor-2: #FFFFFF;  
     --bg-cor-3: #F5EEE6;
     --cor: #E67E22;
@@ -30,7 +30,7 @@
 
 /* TEMA VERMELHO CLARO */
 .tema-vermelho-claro { 
-    --bg-cor: #F9F7F7;    
+    --bg-cor: rgb(253, 253, 253);    
     --bg-cor-2: #FFFFFF;  
     --bg-cor-3: #F0EDED;
     --cor: #D32F2F;
@@ -45,7 +45,7 @@
 
 /* TEMA VERDE CLARO */
 .tema-verde-claro { 
-    --bg-cor: #F5F8F6;    
+    --bg-cor: rgb(253, 253, 253);     
     --bg-cor-2: #FFFFFF;  
     --bg-cor-3: #E9F0EB;
     --cor: #27AE60;
@@ -60,7 +60,7 @@
 
 /* TEMA AZUL CLARO */
 .tema-azul-claro { 
-    --bg-cor: #F4F8FB;    
+    --bg-cor:rgb(253, 253, 253);     
     --bg-cor-2: #FFFFFF;  
     --bg-cor-3: #EAF1F7;
     --cor: #1976D2;
@@ -75,7 +75,7 @@
 
 /* TEMA AÇAÍ CLARO */
 .tema-acai-claro { 
-    --bg-cor: #F8F6F9;    
+    --bg-cor: rgb(253, 253, 253);     
     --bg-cor-2: #FFFFFF;  
     --bg-cor-3: #F0EBF2;
     --cor: #6A1B9A;

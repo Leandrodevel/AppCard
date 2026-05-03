@@ -451,16 +451,16 @@ function definirFiltro(filtro) {
 }
 </script>
 
-  <div id="listaAdmin" class="max-w-4xl mx-auto space-y-3">
+  <div id="listaAdmin" class="w-full mx-auto space-y-3">
     
     </div>
  <!--combos para montar-->
-<section id="combosParaMontar" class="hidden max-w-4xl mx-auto space-y-3">
+<section id="combosParaMontar" class="hidden max-w-md mx-auto w-full px-4">
 
 </section>
 <!--modal novo combo montar-->
 
-<div id="cadastroCombo" class="hidden max-w-4xl mx-auto space-y-3">
+<div id="cadastroCombo" class="hidden  mx-auto space-y-3">
 
 </div>
 
@@ -655,40 +655,46 @@ async function renderizarCombosParaMontar() {
     container.classList = 'w-full m-4'; // Removi o flex centralizado aqui para não quebrar o grid abaixo
     
     container.innerHTML = `
-         <div class="flex gap-4 w-full justify-center mb-6">
-        <button onclick="definirFiltro('cadastroCombo')" class="w-[200px] bg-orange-600 hover:bg-orange-700 text-white px-5 py-2 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2">
+<!-- Botão: Centralizado horizontalmente -->
+    <div class="flex justify-center mb-6">
+        <button onclick="definirFiltro('cadastroCombo')" class="w-full max-w-[200px] bg-orange-600 text-white px-5 py-2 rounded-lg font-bold text-sm">
             <i class="fa-solid fa-plus"></i> NOVO COMBO
         </button>
     </div>
             
-        <div class="flex flex-col md:flex-row gap-4 mb-8 justify-between">
-            <div class="relative flex-1">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-gray-400"></i>
-                <input type="text" id="busca-combo" placeholder="Buscar combo pelo nome..." 
-                    class="w-full pl-10 pr-4 py-3 border rounded-xl bg-white outline-none focus:ring-2 focus:ring-orange-200 transition-all">
-            </div>
-            <select id="filtro-categoria" class="px-4 py-3 border rounded-xl bg-white outline-none font-medium text-gray-600 cursor-pointer">
-                <option value="">Todas as Categorias</option>
-                <option value="churrasco">Churrasco</option>
-                <option value="bebidas">Bebidas</option>
-            </select>
+    <!-- Filtros: mx-auto garante centralização se houver largura definida -->
+    <div class="flex flex-col gap-4 mb-8 p-4 ring-2 ring-red-500 rounded-xl bg-white shadow-sm">
+        
+        <div class="relative w-full">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-gray-400"></i>
+            <input type="text" id="busca-combo" placeholder="Buscar combo..." 
+                class="w-full pl-10 pr-4 py-3 border rounded-xl outline-none focus:ring-2 focus:ring-orange-200">
         </div>
 
-        <div id="grid-combos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            </div>
+        <select id="filtro-categoria" class="w-full px-4 py-3 border rounded-xl bg-white outline-none">
+            <option value="">Todas as Categorias</option>
+            <option value="churrasco">Churrasco</option>
+            <option value="bebidas">Bebidas</option>
+        </select>
+    </div>
 
-        <div id="empty-state" class="hidden text-center py-20">
-            <i class="fa-regular fa-face-frown text-5xl text-gray-300 mb-4"></i>
-            <h3 class="text-xl font-medium text-gray-500">Nenhum combo encontrado.</h3>
-        </div>
+    <!-- Grid de Combos -->
+    <div id="grid-combos" class="grid grid-cols-1 gap-6 w-full">
+        <!-- Itens aqui -->
+    </div>
     `;
 
     // CORREÇÃO: appendChild espera o OBJETO elemento, não uma string 'container'
     sectionCombo.appendChild(container);
 
-    // Após anexar ao DOM, você pode chamar a função que desenha os cards dentro do #grid-combos
-      renderizarLista()
-      lucide.createIcons()
+// 1. Renderiza os cards primeiro
+    renderizarLista(); 
+    // 2. SÓ DEPOIS disso você inicializa os ícones
+    // Isso vai procurar todas as tags data-lucide que acabaram de ser criadas
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+
 }
  function renderizarCadastroCombo(){
  
@@ -1083,82 +1089,83 @@ document.getElementById(openId).style.display = 'flex';
 }
 
     // Simulando dados vindo de um banco (Supabase/Firebase)
-        const listaCombos = [
-            {
-                id: '000522',
-                nome: 'Combo Família',
-                categoria: 'Combo de Churrasco',
-                preco: 59.90,
-                ativo: true,
-                itens: ['Farofa', 'Vinagrete', 'Pão de Alho', 'Carne'],
-                imagem: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=300&q=80'
-            },
-            {
-                id: '000523',
-                nome: 'Combo Casal',
-                categoria: 'Combo de Churrasco',
-                preco: 35.00,
-                ativo: true,
-                itens: ['Arroz', 'Feijão Tropeiro', 'Espetinho'],
-                imagem: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=300&q=80'
-            },
-            {
-                id: '000524',
-                nome: 'Balde de Cerveja',
-                categoria: 'Bebidas',
-                preco: 45.00,
-                ativo: false,
-                itens: ['5 Skol 269ml', 'Gelo'],
-                imagem: 'https://images.unsplash.com/photo-1597075095302-60cc3866810a?auto=format&fit=crop&w=300&q=80'
-            }
-        ];
 
-        function renderizarLista() {
-            const grid = document.getElementById('grid-combos');
-            grid.innerHTML = listaCombos.map(combo => `
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all group">
-                    <div class="relative h-40 overflow-hidden">
-                        <img src="${combo.imagem}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute top-3 left-3">
-                            <span class="${combo.ativo ? 'bg-green-500' : 'bg-gray-500'} text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
-                                ${combo.ativo ? 'Ativo' : 'Inativo'}
-                            </span>
-                        </div>
+      async function renderizarLista() {
+    const db = await obterDados();
+    // Filtra apenas os que são classe combo
+    const buscaCombos = db.filter(comb => comb.classe === 'combo');
+
+    // Limpamos a lista antes de começar para não duplicar ao re-renderizar
+    let listaCombos = [];
+
+    for (const item of buscaCombos) {
+        // Criamos o objeto DIRETAMENTE (sem o [])
+        const objetoCombo = {
+            id: item.id,
+            nome: item.nome,
+            categoria: item.categoria,
+            // Ajuste aqui: se embalagens for array, pegamos o índice 0
+            preco: item.embalagens[0]?.preco || 0,
+            ativo: item.embalagens[0]?.ativo || false,
+            // Se itens for para contar bolinhas, pegamos a array de itens/adicionais
+            itens: item.embalagens[0]?.adicionais || [],
+            imagem: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=300&q=80'
+        };
+
+        listaCombos.push(objetoCombo);
+    }
+
+    const grid = document.getElementById('grid-combos');
+    if (!grid) return;
+
+    grid.innerHTML = listaCombos.map(combo => `
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all group">
+            <div class="relative h-40 overflow-hidden">
+                <img src="${combo.imagem}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute top-3 left-3">
+                    <span class="${combo.ativo ? 'bg-green-500' : 'bg-gray-500'} text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                        ${combo.ativo ? 'Ativo' : 'Inativo'}
+                    </span>
+                </div>
+            </div>
+
+            <div class="p-5">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <h3 class="font-bold text-gray-800 text-lg leading-tight capitalize">${combo.nome}</h3>
+                        <p class="text-xs text-gray-400 font-medium uppercase">${combo.categoria}</p>
                     </div>
+                    <span class="text-orange-600 font-black text-lg italic">R$ ${parseFloat(combo.preco).toFixed(2).replace('.', ',')}</span>
+                </div>
 
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
-                                <h3 class="font-bold text-gray-800 text-lg leading-tight capitalize">${combo.nome}</h3>
-                                <p class="text-xs text-gray-400 font-medium uppercase">${combo.categoria}</p>
+                <div class="mt-4 pt-4 border-t border-dashed flex items-center justify-between">
+                    <div class="flex -space-x-2">
+                        ${combo.itens.slice(0, 3).map(() => `
+                            <div class="w-7 h-7 rounded-full bg-orange-100 border-2 border-white flex items-center justify-center text-orange-600">
+                                <i data-lucide="check" class="w-3 h-3"></i>
                             </div>
-                            <span class="text-orange-600 font-black text-lg italic">R$ ${combo.preco.toFixed(2)}</span>
-                        </div>
-
-                        <div class="mt-4 pt-4 border-t border-dashed flex items-center justify-between">
-                            <div class="flex -space-x-2">
-                                ${combo.itens.slice(0, 3).map(() => `
-                                    <div class="w-7 h-7 rounded-full bg-orange-100 border-2 border-white flex items-center justify-center text-[10px] text-orange-600 font-bold">
-                                        <i class="fa-solid fa-check"></i>
-                                    </div>
-                                `).join('')}
-                                ${combo.itens.length > 3 ? `<div class="w-7 h-7 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-[10px] text-gray-500">+${combo.itens.length - 3}</div>` : ''}
-                            </div>
-                            
-                            <div class="flex gap-2">
-                                <button onclick="editarCombo('${combo.id}')" class="p-2 bg-gray-100 hover:bg-orange-100 hover:text-orange-600 rounded-lg text-gray-500 transition-colors">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                                <button onclick="excluirCombo('${combo.id}')" class="p-2 bg-gray-100 hover:bg-red-100 hover:text-red-600 rounded-lg text-gray-500 transition-colors">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                        `).join('')}
+                        ${combo.itens.length > 3 ? `<div class="w-7 h-7 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center text-[10px] text-gray-500 font-bold">+${combo.itens.length - 3}</div>` : ''}
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button onclick="editarCombo('${combo.id}')" class="p-2 bg-gray-100 hover:bg-orange-100 hover:text-orange-600 rounded-lg text-gray-500 transition-colors">
+                            <i data-lucide="edit-3" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="excluirCombo('${combo.id}')" class="p-2 bg-gray-100 hover:bg-red-100 hover:text-red-600 rounded-lg text-gray-500 transition-colors">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 </div>
-            `).join('');
-           lucide.createIcons()
-        }
+            </div>
+        </div>
+    `).join('');
+
+    // ESSENCIAL: Recriar os ícones do Lucide após inserir no HTML
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+}
 
         function editarCombo(id) {
             alert("Redirecionando para edição do combo: " + id);

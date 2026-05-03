@@ -1,4 +1,15 @@
 
+// Impede o clique direito
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Impede atalhos como F12, Ctrl+Shift+I, Ctrl+U
+document.onkeydown = function(e) {
+    if (e.keyCode == 123 || 
+        (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || 
+        (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+        return false;
+    }
+}
 async function verificarLogin() {
     const dados = await userDados();
     if(dados){
@@ -1374,9 +1385,10 @@ textoAdicionais = item.adicionais.map(n=>` ${n.nome} - R$ ${n.preco.toFixed(2).r
  mensagem += ` \n`
  
 });
+if(obsCarrinho){
 // Caso tenha observações ou opcionais (como os molhos da imagem)
 mensagem += `\n❕OBS: ${obsCarrinho || ''}\n\n`;
-  
+}
 // Detalhes de Delivery
   mensagem += `🏠 envie para: ${endereco || "Endereço não informado"}\n\n`;
 
@@ -1561,7 +1573,7 @@ lucide.createIcons();
 function carregarHistorico() {
 
     // Simulando a busca no localStorage (ajuste o nome da chave se necessário)
-    const historicoCompleto = JSON.parse(localStorage.getItem('meuHistorico')) || [];
+    const historicoCompleto = JSON.parse(localStorage.getItem('meuHistorico')).slice(0,5) || [];
     const container = document.getElementById('containerHistorico');
 
     if (historicoCompleto.length === 0) {

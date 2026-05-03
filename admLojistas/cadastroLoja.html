@@ -11,9 +11,9 @@
     <div class="max-w-2xl mx-auto  p-8 ">
         <h2 class="text-2xl font-bold mb-6 text-gray-800">Cadastrar Minha Loja</h2>
         
-        <form id="formCadastroLoja" class="space-y-6">
+        <form id="formCadastroLoja" class="space-y-6 grid grid-cols-1">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1  gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nome do Comércio</label>
                     <input type="text" id="nome_comercio" required class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-orange-500 focus:border-orange-500">
@@ -24,12 +24,12 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1  gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">WhatsApp (com DDD)</label>
                     <input type="text" id="whatsapp" placeholder="21999999999" class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm">
                 </div>
-                <div>
+                <div >
                     <label class="block text-sm font-medium text-gray-700">Tema</label>
                  
                  
@@ -42,6 +42,19 @@
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
         
+          <label class="relative cursor-pointer group">
+            <input type="radio" name="tema_comercio" value="tema-amarelo-escuro" class="peer sr-only">
+            <div class="overflow-hidden rounded-lg border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:ring-2 peer-checked:ring-blue-100 transition-all">
+                <div class="flex h-10 w-full">
+                    <div class="w-1/2" style="background-color: #FFD100;"></div>
+                    <div class="w-1/2" style="background-color: #121212;"></div>
+                </div>
+                <div class="bg-white py-1 px-2 text-[10px] font-bold text-center uppercase text-gray-600">
+                    Amarelo Dark
+                </div>
+            </div>
+        </label>
+
         <label class="relative cursor-pointer group">
             <input type="radio" name="tema_comercio" value="tema-amarelo-claro" class="peer sr-only" checked>
             
@@ -118,14 +131,25 @@
                 </div>
             </div>
         </label>
-
+         <label class="relative cursor-pointer group">
+            <input type="radio" name="tema_comercio" value="tema-vermelho-claro" class="peer sr-only">
+            <div class="overflow-hidden rounded-lg border-2 border-gray-200 peer-checked:border-blue-600 peer-checked:ring-2 peer-checked:ring-blue-100 transition-all">
+                <div class="flex h-10 w-full">
+                    <div class="w-1/2" style="background-color: #FF4D4D;"></div>
+                    <div class="w-1/2" style="background-color: #F4F8FB;"></div>
+                </div>
+                <div class="bg-white py-1 px-2 text-[10px] font-bold text-center uppercase text-gray-600">
+                    Vermelho Claro
+                </div>
+            </div>
+        </label>
     </div>
 </div>
 
                  
                  
                 </div>
-            </div>
+          
 
             <hr>
 
@@ -145,7 +169,7 @@
 
             <div class="space-y-4">
                 <h3 class="font-semibold text-gray-700">Redes Sociais</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1  gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Instagram (Link)</label>
                         <input type="url" id="instagram_url" placeholder="https://instagram.com/..." class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm">
@@ -164,7 +188,7 @@
             </div>
         </form>
     </div>
-
+  </div>
     <script type="module">
         // Aqui você importaria o seu supabase client
         // import { supabase } from './configSupabase.js';

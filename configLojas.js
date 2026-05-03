@@ -6,6 +6,8 @@ const idcomercio = urlParams.get('id_comercio') || 'lpcardapios';
  let nomeComercio  
  let logoComercio 
  let temaComercio 
+alert(idComercio)
+if(idcomercio === 'lpcardapios')  window.location.href = 'admLojistas/homePage.html';
 
 async function renderizaComercio() {
   try {

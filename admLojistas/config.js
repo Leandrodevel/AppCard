@@ -12,21 +12,23 @@ function salvarNoCache(dados) {
 }
 
 function registraLogista(){
+
   const dadosLogista = {
     nome: document.getElementById('adm_nome').value,
     email: document.getElementById('adm_email').value,
     telefone: document.getElementById('adm_telefone').value,
     plano: document.getElementById('adm_plano').value
   };
-  if(document.getElementById('adm_senha').value !== document.getElementById('adm_confirmar_senha').value) {
+  if(document.getElementById('adm_senha').value !== document.getElementById('adm_senha_confirma').value) {
     alert('As senhas não coincidem!');
     return; // Para a execução se as senhas não coincidirem
   }
   salvarNoCache(dadosLogista);
-//  alert(JSON.stringify(memoria))
+ window.location.href = 'cadastroLoja.html';
 }
 
-function registraLoja() {
+function registraLoja(e) {
+    e.preventDefault()
   const dadosLoja = {
     comercio: document.getElementById('nome_comercio').value,
     link: document.getElementById('slug').value,
@@ -38,6 +40,7 @@ function registraLoja() {
 }
 
 function irPara(url) {
+    event.preventDefault();
   // 1. Salva os dados da tela atual antes de sair
   
   // 2. Agora sim, muda de página
