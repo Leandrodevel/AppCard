@@ -6,10 +6,24 @@
     <title>Cadastro de Loja - Cardápio Digital</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 p-6">
+<body class="bg-gray-50">
+
+    <!-- Navegação -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="bg-orange-600 p-2 rounded-lg">
+                    <i data-lucide="layout-template" class="text-white w-6 h-6"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight">LP <span class="text-orange-600">Cardápios</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-semibold text-slate-600">
+              <h2 class="text-2xl font-bold mb-6 text-gray-800">Cadastrar Minha Loja</h2> </div>
+        </div>
+    </nav>
 
     <div class="max-w-2xl mx-auto  p-8 ">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">Cadastrar Minha Loja</h2>
+     
         
         <form id="formCadastroLoja" class="space-y-6 grid grid-cols-1">
             
@@ -149,7 +163,91 @@
                  
                  
                 </div>
-          
+          <div class="max-w-md bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+    <!-- Título -->
+    <h2 class="text-sm font-bold text-gray-800 uppercase tracking-wider mb-5 border-b pb-2">
+        Horário de Funcionamento
+    </h2>
+
+    <div class="space-y-4">
+        <!-- Segunda -->
+        <div class="flex items-center gap-4">
+            <input type="checkbox" name="seg_aberto" checked class="w-4 h-4 rounded text-blue-600 border-gray-300">
+            <span class="w-10 text-xs font-bold text-gray-500">SEG</span>
+            <div class="flex items-center gap-3 flex-1">
+                <input type="time" name="seg_ini" value="08:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+                <span class="text-gray-400">→</span>
+                <input type="time" name="seg_fim" value="18:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+            </div>
+        </div>
+
+        <!-- Terça -->
+        <div class="flex items-center gap-4">
+            <input type="checkbox" name="ter_aberto" checked class="w-4 h-4 rounded text-blue-600 border-gray-300">
+            <span class="w-10 text-xs font-bold text-gray-500">TER</span>
+            <div class="flex items-center gap-3 flex-1">
+                <input type="time" name="ter_ini" value="08:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+                <span class="text-gray-400">→</span>
+                <input type="time" name="ter_fim" value="18:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+            </div>
+        </div>
+
+        <!-- Quarta -->
+        <div class="flex items-center gap-4">
+            <input type="checkbox" name="qua_aberto" checked class="w-4 h-4 rounded text-blue-600 border-gray-300">
+            <span class="w-10 text-xs font-bold text-gray-500">QUA</span>
+            <div class="flex items-center gap-3 flex-1">
+                <input type="time" name="qua_ini" value="08:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+                <span class="text-gray-400">→</span>
+                <input type="time" name="qua_fim" value="18:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+            </div>
+        </div>
+
+        <!-- Quinta -->
+        <div class="flex items-center gap-4">
+            <input type="checkbox" name="qui_aberto" checked class="w-4 h-4 rounded text-blue-600 border-gray-300">
+            <span class="w-10 text-xs font-bold text-gray-500">QUI</span>
+            <div class="flex items-center gap-3 flex-1">
+                <input type="time" name="qui_ini" value="08:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+                <span class="text-gray-400">→</span>
+                <input type="time" name="qui_fim" value="18:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+            </div>
+        </div>
+
+        <!-- Sexta -->
+        <div class="flex items-center gap-4">
+            <input type="checkbox" name="sex_aberto" checked class="w-4 h-4 rounded text-blue-600 border-gray-300">
+            <span class="w-10 text-xs font-bold text-gray-500">SEX</span>
+            <div class="flex items-center gap-3 flex-1">
+                <input type="time" name="sex_ini" value="08:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+                <span class="text-gray-400">→</span>
+                <input type="time" name="sex_fim" value="18:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+            </div>
+        </div>
+
+        <!-- Sábado -->
+        <div class="flex items-center gap-4">
+            <input type="checkbox" name="sab_aberto" checked class="w-4 h-4 rounded text-blue-600 border-gray-300">
+            <span class="w-10 text-xs font-bold text-gray-500">SAB</span>
+            <div class="flex items-center gap-3 flex-1">
+                <input type="time" name="sab_ini" value="08:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+                <span class="text-gray-400">→</span>
+                <input type="time" name="sab_fim" value="12:00" class="w-full text-sm border-b border-gray-200 focus:border-blue-500 outline-none bg-transparent pb-1">
+            </div>
+        </div>
+
+        <!-- Domingo -->
+        <div class="flex items-center gap-4 opacity-50">
+            <input type="checkbox" name="dom_aberto" class="w-4 h-4 rounded text-red-600 border-gray-300">
+            <span class="w-10 text-xs font-bold text-gray-400">DOM</span>
+            <div class="flex items-center gap-3 flex-1">
+                <input type="time" name="dom_ini" class="w-full text-sm border-b border-gray-200 outline-none bg-transparent pb-1">
+                <span class="text-gray-300">→</span>
+                <input type="time" name="dom_fim" class="w-full text-sm border-b border-gray-200 outline-none bg-transparent pb-1">
+            </div>
+        </div>
+    </div>
+</div>
 
             <hr>
 
@@ -182,44 +280,13 @@
             </div>
 
             <div class="pt-4">
-                <button type="submit" class="w-full bg-orange-600 text-white font-bold py-3 rounded-lg hover:bg-orange-700 transition duration-300" onclick="registraLoja()">
+                <button type="submit" class="w-full bg-orange-600 text-white font-bold py-3 rounded-lg hover:bg-orange-700 transition duration-300">
                     Cadastrar Minha Loja
                 </button>
             </div>
         </form>
     </div>
   </div>
-    <script type="module">
-        // Aqui você importaria o seu supabase client
-        // import { supabase } from './configSupabase.js';
-
-        const form = document.getElementById('formCadastroLoja');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const dadosLoja = {
-                nome_comercio: document.getElementById('nome_comercio').value,
-                slug: document.getElementById('slug').value.toLowerCase().trim(),
-                whatsapp: document.getElementById('whatsapp').value,
-                tema_comercio: document.getElementById('tema_comercio').value,
-                endereco_completo: document.getElementById('endereco_completo').value,
-                cidade: document.getElementById('cidade').value,
-                instagram_url: document.getElementById('instagram_url').value,
-                facebook_url: document.getElementById('facebook_url').value,
-                // Aqui você pode definir um horário padrão para evitar que o campo comece nulo
-                horarios_funcionamento: { segunda: "08:00-18:00", terca: "08:00-18:00" } 
-            };
-
-            console.log("Enviando dados:", dadosLoja);
-            alert('Dados prontos para enviar! Agora é só conectar com o supabase.insert()');
-            
-            /* Exemplo de envio:
-            const { error } = await supabase.from('lojas').insert([dadosLoja]);
-            if (!error) window.location.href = `Home.html?comercio=${dadosLoja.slug}`;
-            */
-        });
-    </script>
 <script src="config.js" type="text/javascript" charset="utf-8"></script>
 
 </body>

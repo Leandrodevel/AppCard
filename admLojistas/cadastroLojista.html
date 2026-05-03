@@ -6,15 +6,25 @@
     <title>Cadastro Administrador - Flat Design</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-200 p-0 md:p-10 font-sans">
+<body class="bg-gray-200 p-0 ">
+        <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="bg-orange-600 p-2 rounded-lg">
+                    <i data-lucide="layout-template" class="text-white w-6 h-6"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight">LP <span class="text-orange-600">Cardápios</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-semibold text-slate-600">
+           <p class="text-sm text-gray-500">Preencha os dados do proprietário da conta.</p>
+           </div>
+        </div>
+    </nav>
 
     <div class="max-w-4xl mx-auto bg-white p-8 shadow-none rounded-none">
-        <header class="mb-10 border-b border-gray-100 pb-4">
-            <h1 class="text-2xl font-black text-gray-800 uppercase tracking-tighter">Cadastro de Administrador</h1>
-            <p class="text-sm text-gray-500">Preencha os dados do proprietário da conta.</p>
-        </header>
+       
 
-        <form id="formAdm" class="space-y-8">
+        <form id="cadastroLogista" onsubmit="registraLogista(event)" class="space-y-8">
             
             <section>
                 <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-4">Informações de Identidade</h2>
@@ -76,7 +86,7 @@
             </section>
 
             <div class="mt-10">
-                <button type="button"
+                <button
                     class="w-full bg-red-500 text-white font-black py-5 uppercase tracking-[0.2em] text-sm rounded-none shadow-none" onclick="registraLogista()">
                     Continuar
                 </button>
