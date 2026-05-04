@@ -407,7 +407,7 @@ let marqueeText=`<div class="animate-ticker">
 
  marquee.innerHTML = marqueeText;
 }
-faixaAmarela()
+
 const instrucao =`
 ​"Olá! Seja muito bem-vindo(a) à Tricker! 🚀
 ​Ficamos muito felizes em ter você aqui. Para facilitar seu pedido, nosso cardápio funciona de forma automática e prática:
@@ -417,28 +417,7 @@ const instrucao =`
 ​Envio: Clique em enviar e sua lista pronta será enviada diretamente para o nosso WhatsApp!
 ​Depois disso, é só aguardar nossa confirmação. Bom apetite! ✨"
 `
-function statusLoja() {
 
-const statusDaLoja = document.getElementById('statusOnline')
-const agora = new Date();
-const horaAtual = agora.getHours();
-const horarioComercial = horaAtual >= 9 && horaAtual < 21;
-let minhaMensagem
-if(horarioComercial){
-  statusDaLoja.innerHTML=`
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-1"></span>
-                    <span class="text-green-500 text-[10px] font-bold uppercase">Aberto agora</span>
-  `
-}else{
-statusDaLoja.innerHTML=`
-                
-                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-1"></span>
-                    <span class="text-red-500 text-[10px] font-bold uppercase">Fechado agora</span>
- `
-}
-
-}
-statusLoja()
 function openBox(target, event) {
   // 1. Impede que o clique no botão chegue ao 'window' imediatamente
   event.stopPropagation();
@@ -1314,149 +1293,6 @@ let comAdicionais ='hidden'
 
   totalElemento.innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   lucide.createIcons();
-}
-async function enviarWhatsApp() {
-const userdados = await userDados()
-let somaAdicionais=[]
-if(userdados.rua === '' || userdados.bairro === '' || userdados.casa === ''){
-  navegacao('enderecoTemp')
-  return
-}
-
-
-// Busca o input que está selecionado (checked)
-  const meioDePagamento = document.querySelector('input[name="pay_method"]:checked');
-
-    const modal = document.getElementById('modalProcessando');
-    modal.classList.remove('hidden');
-    // Garante que os ícones do Lucide carreguem dentro do modal
-    lucide.createIcons();
-    
-    
-setTimeout(() => {
-
-  
-  const obsCarrinho= document.getElementById('obsCarrinho').value
-  
-
-  const endereco = `${userdados.rua},${userdados.casa} - ${userdados.bairro}`
-  
-  const numeroTelefone = "5522998052702" // Substitua pelo seu número (com DDD)
-  // Centralizando a formatação de moeda para evitar repetição
-const formatarMoeda = (valor) => 
-  valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-// Simulando um número de pedido aleatório ou sequencial
-
-const numeroPedido = Date.now().toString().slice(-6); // Pega os últimos 6 dígitos do timestamp
-
-let mensagem = `☝️Olá, Gostaria de Fazer um pedido.\n\n`;
-
-mensagem += `* Meu nome é : ${userdados.nome}\n\n`;
-
- mensagem += `📋 *Pedido n° ${numeroPedido}*\n\n`;
-
-mensagem += `*Itens:*\n\n`;
-
-meuCarrinho.forEach(item => {
-  
-  // O emoji ➡️ e o formato "1x NOME" conforme a imagem
-  mensagem += `➡️ ${item.qtd}x ${item.nome.toUpperCase()} - ${formatarMoeda(item.preco * item.qtd)}R$\n`;
-
-  if(item.acompanhamentos){
-   mensagem+= `com (${item.acompanhamentos})\n`
-  }else{}
-
-   if(item.adicionais){
-
-let juntaAdicionais = item.adicionais.reduce((acumulador, item) => {
-    return acumulador + item.preco;
-}, 0); // O '0' é o valor inicial da soma
-somaAdicionais.push(juntaAdicionais)
-textoAdicionais = item.adicionais.map(n=>` ${n.nome} - R$ ${n.preco.toFixed(2).replace(".",",")}`).join(" | ")
-
-   mensagem+= `Extras:(${textoAdicionais})\n`
-
-   
-  }else{}
-  if(item.observacao){
- mensagem += `(${item.observacao})\n`;
-  }else{}
- mensagem += ` \n`
- 
-});
-if(obsCarrinho){
-// Caso tenha observações ou opcionais (como os molhos da imagem)
-mensagem += `\n❕OBS: ${obsCarrinho || ''}\n\n`;
-}
-// Detalhes de Delivery
-  mensagem += `🏠 envie para: ${endereco || "Endereço não informado"}\n\n`;
-
-//const taxaEntrega = 3.00  
-
-// Cálculo do Total
-const totalProdutos = meuCarrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
-const totalAdicionais = somaAdicionais.reduce((acumulador, item) => {
-    return acumulador + item;
-}, 0); // O '0' é o valor inicial da soma
-
-
-const totalGeral = totalProdutos + totalAdicionais;
-
-//mensagem += `Taxa de entrega: 3,00R$\n\n`;
-
-mensagem += `*Total: ${formatarMoeda(totalGeral)}*\n`;
-
-mensagem += `*forma de Pagamento: ${meioDePagamento.value}*\n\n`;
-
-if(meioDePagamento.value ==='DINHEIRO'){
-
-const inputTroco= parseFloat(document.getElementById('inputTroco').value).toFixed(2)
-
-  mensagem += `*Troco para :${formatarMoeda(inputTroco)}*\n\n`;
-}
-
-
-/* Envio */
-const numeroLimpo = numeroTelefone.replace(/\D/g, '');
-//const url = `https://wa.me/${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
-    alert(mensagem)
-    
-    const hoje = new Date();
-// Data e hora: DD/MM/AAAA, HH:MM:SS
-let dataHora =hoje.toLocaleString('pt-BR')
-    
-   let meuPedido= [{numero:numeroPedido, pedido:[],data:dataHora}]
-    
-    meuPedido[0].pedido.push(...meuCarrinho)
-    
-    const historico = JSON.parse(localStorage.getItem('meuHistorico')) || []
-    
-    let meuHistorico = historico.push(...meuPedido)
-   // meuHistorico.push(...meuPedido)
- //   let meusPedidos = []
-  //  meusPedidos.push(pedido)
-  
-  localStorage.setItem('meuHistorico', JSON.stringify(historico));
-  
-    meuCarrinho = []
-    localStorage.setItem('carrinho', JSON.stringify(''));
-
- //   modal.classList.add('hidden');
-    
-    atualizaContador()
-
-    navegacao('home')
-   window.open(url, '_blank');
-
-setTimeout(()=>{
-   window.location.reload()
-    modal.classList.add('hidden');
-
-    enviarWhatsApp()
-},3000)    
-  
-},1000)
 }
 function verCarrinho(){
     

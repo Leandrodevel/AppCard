@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/:slug", "destination": "/cardapio.html?loja=:slug" }
+  ]
+}
