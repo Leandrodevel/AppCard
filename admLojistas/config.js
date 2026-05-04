@@ -152,10 +152,10 @@ async function enviarParaSupabase() {
         alert("Cadastro realizado com sucesso!");
 
         // Opcional: Limpar cache após sucesso
-        // localStorage.removeItem('cadastroLogista');
+        localStorage.removeItem('cadastroLogista');
         
         // Redirecionar
-        // window.location.href = "dashboard.html";
+        window.location.href = "login.html";
 
     } catch (error) {
         console.error("Erro ao salvar:", error.message);
