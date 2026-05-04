@@ -590,7 +590,7 @@ document.getElementById(openId).style.display = 'flex';
     if (!grid) return;
 
     grid.innerHTML = listaCombos.map(combo => `
-        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all group">
+        <div class="max-w-[300px] bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all group">
             <div class="relative h-40 overflow-hidden">
                 <img src="${combo.imagem}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 <div class="absolute top-3 left-3">
