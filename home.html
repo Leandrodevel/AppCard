@@ -61,28 +61,25 @@
     }
   }
   
-  async function getDadosDb() {
-    
+  async function getDadosDb(idLoja) {
+  // Verificação de segurança: se não houver ID, não busca nada
+  if (!idLoja) {
+    console.error('ID da loja não fornecido.');
+    return [];
+  }
+
   const { data, error } = await _supabase
     .from('estoque')
-    .select('*'); // O asterisco traz todas as colunas
+    .select('*')
+    .eq('id_comercial', idLoja); // Filtra onde a coluna id_comercio é igual ao id da loja
 
   if (error) {
-    console.error('Erro ao ler dados:', error.message);
-  } else {
-    
-    return data || []
-    // Para acessar a primeira embalagem do primeiro produto:
-     
-  }
+    console.error('Erro ao ler estoque:', error.message);
+    return [];
+  } 
   
+  return data || [];
 }
-async function salvaDbLocal(){
-  const db = await getDadosDb() || []
-localStorage.setItem('estoqueDeProdutos',JSON.stringify(db))
-}
-
-salvaDbLocal()
 
 async function getDados(){
   

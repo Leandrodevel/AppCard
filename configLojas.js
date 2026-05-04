@@ -46,6 +46,17 @@ async function carregarCardapioPublico() {
 }
 // Dentro do carregarCardapioPublico()
 if (loja) {
+
+// 2. Agora que temos o ID da loja (loja.id), buscamos os produtos dela
+   const produtos = await getDadosDb(loja.id);
+
+  localStorage.setItem('estoqueDeProdutos',JSON.stringify(produtos))
+
+
+
+
+
+
     const btnShare = document.getElementById('btnCompartilhar');
     if (btnShare) {
         // Passa o objeto 'loja' completo para a função
