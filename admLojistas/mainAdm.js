@@ -1,4 +1,5 @@
 verificarSessao();
+
 async function qtdVendidos() {
   try {
     const produtos = await obterDados();
