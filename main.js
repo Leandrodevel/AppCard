@@ -71,7 +71,7 @@ function navegacao(open) {
       behavior: 'auto'
   })
       
-  const allSections=['home','cardapio','pageCarrinho','pagePromocao','montarEspetinho','perfilUser','editarUser','enderecoTemp','customizarPedido']
+  const allSections=['home','cardapio','pageCarrinho','pagePromocao','perfilUser','editarUser','enderecoTemp','customizarPedido']
   
   switch (open) {
     case 'home':
@@ -1109,14 +1109,6 @@ function confirmAdd(cod,nome,embalagem,preco) {
 
 }
 
-
-function adicionarEspetinho(){
-    
-  const gerarID = () => {
-    const letras = Math.random().toString(36).substring(2, 4).toUpperCase();
-    const data = Date.now();
-    return letras + data;
-};
 
 
     const sabor = document.getElementById('sabor-espetinho').value;

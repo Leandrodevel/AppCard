@@ -287,44 +287,7 @@ const classeComItem = [...new Set(dbListExist.map(item =>
   
   <div class="z-500" >
 
-     <!-----------DESTAQUES E PROMOCOES-------------> 
-    <div class="px-4 my-4">
-        <h2 class="text-xl font-black temaTitulos uppercase tracking-tight flex">
-            Destaques  <span class="ml-2 tema-text-base">e Promoções</span>
-              <i class="rotate-12 ml-2" data-lucide="crown"class="mr-2"></i>
-        </h2>
-    </div>
-        
-    <div class="flex justify-center  space-x-4 px-4 pb-4 ">
-
-         <!-----------ESPETINHO-------------> 
-        <div class="min-w-[340px] w-full bg-red-500 rounded-3xl p-5 flex relative overflow-hidden group shadow-lg"
-             style="background-image: url('./img/img1.jpg'); 
-                    background-size: 150%; 
-                    background-position: 100% center; 
-                    background-repeat: no-repeat;">
-            
-              <div class="absolute inset-0 bg-gradient-to-r from-zinc-900/90  to-transparent"></div>
-
-        <div class="relative z-10 w-2/3">
-          <span class="bg-white text-yellow-600 text-[10px] font-bold px-2 py-1 rounded-full uppercase shadow-sm">Destaque</span>
-              <h4 class="text-2xl font-extrabold text-white mt-2 leading-tight drop-shadow-md">
-                <p class="text-yellow-400 font-black font-bolder ">
-                  ESPETINHOS</p>
-                 COM JANTINHA</h4>
-                <p class="text-white font-bold text-xl mt-1">
-                  apenas 8,90 R$</p>
-                  <button class="mt-4 bg-yellow-400 text-zinc-900 font-bold py-2.5 px-5 rounded-xl text-sm shadow-md hover:bg-yellow-50 transition-colors" onclick="navegacao('montarEspetinho')">
-                    Pedir agora
-                  </button>
-            </div>
-        </div>
-            
-</div>                
-</div>
-
-   <!-------END----DESTAQUES E PROMOCOES-------------> 
-
+   
 
 <!---combos de churrascos-->
 <div class="px-4 mb-4">
@@ -662,92 +625,6 @@ console.log(adicionais);
     
 </section>
 
-<!---fim do os-->
-<section id="montarEspetinho">
-<div class=" min-h-screen  pb-12 font-sans">
-  <section class="max-w-md mx-auto overflow-hidden ">
-    <div class="relative">
-      <img src="./img/img1.jpg" alt="Espetinho" class="w-full h-56 object-cover">
-      <span class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">BRASA VIVA</span>
-    </div>
-
-    <div class="p-6">
-      <div class="flex justify-between items-start">
-        <div>
-          <h2 id="main-prod-nome" class="text-2xl font-bold text-gray-800">Monte seu Espetinho</h2>
-          <p class="text-gray-500 text-sm mt-1">Escolha o sabor e os seus acompanhamentos favoritos.</p>
-        </div>
-        <span class="text-lg font-black text-red-600">R$ <span id="main-prod-preco">8,90</span></span>
-      </div>
-
-      <hr class="my-6 border-gray-100">
-
-      <div class="mb-6">
-        <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">1. Escolha o Sabor</label>
-        <select required id="sabor-espetinho" class="w-full bg-gray-50 border border-gray-200 p-4 rounded-2xl outline-none focus:border-red-500 transition-all text-gray-700 font-medium appearance-none">
-          <option value="Carne (Boi)">Carne (Boi)</option>
-          <option value="Frango">Frango</option>
-          <option value="Frango com Bacon">Frango com Bacon</option>
-          <option value="Coração">Coração</option>
-          <option value="Linguiça Toscana">Linguiça Toscana</option>
-          <option value="Linguiça Calabresa">Linguiça Calabresa</option>
-          <option value="Queijo Coalho">Queijo Coalho</option>
-          <option value="Pão de Alho">Pão de Alho</option>
-          <option value="Kafta">Kafka (Com queijo)</option>
-        </select>
-      </div>
-
-      <div class="mb-6">
-        <label class="block text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">2. Acompanhamentos (Grátis)</label>
-        <div class="grid grid-cols-2 gap-3">
-         <!-- Vinagrete Marcado -->
-<label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors border border-gray-100 has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
-    <input type="checkbox" name="acompanhamento" value="Vinagrete" checked class="w-5 h-5 accent-yellow-400 rounded">
-    <span class="text-sm font-medium text-gray-700">Vinagrete</span>
-</label>
-
-<!-- Farofa Marcado -->
-<label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors border border-gray-100 has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
-    <input type="checkbox" name="acompanhamento" value="Farofa" checked class="w-5 h-5 accent-yellow-400 rounded">
-    <span class="text-sm font-medium text-gray-700">Farofa</span>
-</label>
-
-<!-- Feijão Tropeiro Marcado -->
-<label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors border border-gray-100 has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
-    <input type="checkbox" name="acompanhamento" value="Feijão Tropeiro" checked class="w-5 h-5 accent-yellow-400 rounded">
-    <span class="text-sm font-medium text-gray-700">Feijão Tropeiro</span>
-</label>
-
-<!-- Salpicão Marcado -->
-<label class="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors border border-gray-100 has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
-    <input type="checkbox" name="acompanhamento" value="Salpicão" checked class="w-5 h-5 accent-yellow-400 rounded">
-    <span class="text-sm font-medium text-gray-700">Salpicão</span>
-</label>
-
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">3. Alguma observação?</label>
-        <textarea id="obs-pedido" rows="3" placeholder="Ex: Tirar a gordura, ponto bem passado..." class="w-full bg-gray-50 border border-gray-200 p-4 rounded-2xl outline-none focus:border-red-500 transition-all text-sm"></textarea>
-      </div>
-
-      <button onclick="adicionarEspetinho()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-5 rounded-2xl flex items-center justify-center gap-3 shadow-lg shadow-red-200 transition-all active:scale-95">
-        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-        Adicionar ao Pedido
-      </button>
-    </div>
-  </section>
-</div>
-
-<script>
-  // Inicializa ícones
-  lucide.createIcons();
-
-  
-</script>
-
-   </section>
 <section id="pagePromocao" >
 <div class="mt-8">
  <div class="px-4 mb-3 flex justify-between items-end">
