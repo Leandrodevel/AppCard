@@ -590,7 +590,7 @@ document.getElementById(openId).style.display = 'flex';
     if (!grid) return;
 
     grid.innerHTML = listaCombos.map(combo => `
-        <div class="max-w-[300px] bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all group">
+        <div class="max-w-[360px] bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all group">
             <div class="relative h-40 overflow-hidden">
                 <img src="${combo.imagem}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 <div class="absolute top-3 left-3">
@@ -681,7 +681,7 @@ document.getElementById(openId).style.display = 'flex';
             document.getElementById('input-categoria').value = produtoCombo.categoria;
             document.getElementById('input-marca').value = produtoCombo.marca;
             document.getElementById('input-preco').value = emb.preco.toFixed(2);
-            document.getElementById('input-desconto').value = emb.desconto.replace(",",".");
+            document.getElementById('input-desconto').value = emb.desconto ? parseFloat(emb.desconto).toFixed(2) : "0.00";
             document.getElementById('input-cod').value = emb.cod;
             document.getElementById('input-ativo').value = emb.ativo.toString();
 
@@ -691,7 +691,8 @@ document.getElementById(openId).style.display = 'flex';
                 <div class="bg-orange-50 border border-orange-200 px-4 py-2 rounded-lg text-sm font-medium text-orange-800 flex items-center gap-3">
                     ${item}
                     <button onclick="removerAcompanhamento(${index})" class="hover:text-red-600 transition-colors">
-                        x<i class="fa-solid fa-circle-xmark"></i>
+                      <!-- Versão Lucide -->
+<i data-lucide="circle-x" class="w-6 h-6 text-red-500 hover:text-red-700 cursor-pointer"></i>
                     </button>
                 </div>
             `).join('') + `
@@ -708,7 +709,7 @@ document.getElementById(openId).style.display = 'flex';
                     <td class="px-4 py-3 text-sm text-right font-bold text-gray-900">R$ ${adc.preco}</td>
                     <td class="px-4 py-3 text-center">
                         <button onclick="removerAdicional(${index})" class="text-red-400 hover:text-red-600 p-2">
-                            <i class="fa-solid fa-trash-can"></i>
+                          <i data-lucide="trash-2"></i>
                         </button>
                     </td>
                 </tr>
