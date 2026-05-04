@@ -518,6 +518,7 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
 function navegacao(openId) {
     const allpages = ['admProdutos','dashboard'];
     
+    
     switch(openId){
         case 'admProdutos':
               definirFiltro('listaAdmin')
