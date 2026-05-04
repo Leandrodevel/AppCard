@@ -26,7 +26,7 @@ async function carregarUsuario(userId) {
   const produtoCombo= {
              id_comercial: idLojaAtiva, // Usamos o ID da loja como referência comercial
              nome: 'Combo Família',
-            classe: 'combos',
+            classe: 'combo',
             categoria: 'combo de churrasco',
              marca: 'da casa',
              embalagens: [{
@@ -776,7 +776,7 @@ document.getElementById(openId).style.display = 'flex';
 
         function adicionarAdicional() {
     const nomeInput = document.getElementById('novo-adc-nome');
-    const precoInput = document.getElementById('novo-adc-preco'). replace(",",".");
+    const precoInput = document.getElementById('novo-adc-preco') ;
 
     const nome = nomeInput.value.trim();
     const preco = precoInput.value.replace(",",".");
