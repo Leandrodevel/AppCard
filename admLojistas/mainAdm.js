@@ -278,7 +278,7 @@ async function renderizarAdmin() {
     htools.innerHTML = `
 
     <button onclick="abrirModalCadastro()" 
-    class=" bg-red-400 hover:bg-red-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm ">
+    class=" bg-orange-500 hover:bg-orange-500 text-gray-900 font-bold py-2 px-4 rounded-xl shadow-sm ">
         + Novo Produto
       </button>
 
@@ -324,7 +324,7 @@ async function renderizarAdmin() {
                 <div class="flex flex-col items-end">
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" class="sr-only peer" ${estaAtivo ? 'checked' : ''} onchange="toggleAtivo(${item.indexProd}, ${item.indexEmb})">
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-400"></div>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
                         <span class="ml-2 text-xs font-bold text-gray-400 uppercase">${estaAtivo ? 'Ativo' : 'Off'}</span>
                     </label>
                 </div>
@@ -345,7 +345,7 @@ async function renderizarAdmin() {
                    📦 ESTOQUE (${item.emb.estoque || 0})
                 </button>
 
-                <button onclick="toggleDestaque(${item.indexProd}, ${item.indexEmb})" class="flex items-center justify-center gap-1 ${item.emb.destaque ? 'bg-red-400 text-white' : 'bg-gray-100 text-gray-400'} p-2 rounded-xl text-xs font-black transition">
+                <button onclick="toggleDestaque(${item.indexProd}, ${item.indexEmb})" class="flex items-center justify-center gap-1 ${item.emb.destaque ? 'bg-orange-500 text-white' : 'bg-gray-100 text-gray-400'} p-2 rounded-xl text-xs font-black transition">
                    ⭐ DESTAQUE
                 </button>
             </div>

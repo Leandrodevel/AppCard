@@ -212,7 +212,7 @@ async function verificarSessao() {
         </button>
 
         <button onclick="handleLogout()" 
-                class="flex flex-col items-center justify-center flex-1 md:flex-none px-3 py-1 text-gray-400 hover:text-red-500 transition-all">
+                class="flex flex-col items-center justify-center flex-1 md:flex-none px-3 py-1 text-gray-400 hover:text-orange-500 transition-all">
           <i data-lucide="log-out" class="w-5 h-5"></i>
           <span class="text-[9px] font-bold uppercase mt-1">Sair</span>
         </button>
@@ -253,7 +253,7 @@ async function verificarSessao() {
     </div>
 
     <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100">
-      <div class="bg-red-50 w-10 h-10 rounded-2xl flex items-center justify-center text-red-600 mb-3">
+      <div class="bg-orange-50 w-10 h-10 rounded-2xl flex items-center justify-center text-orange-600 mb-3">
         <i data-lucide="layers" class="w-5 h-5"></i>
       </div>
       <p class="text-gray-500 text-xs font-bold uppercase tracking-wider">Produtos</p>
@@ -261,7 +261,7 @@ async function verificarSessao() {
     </div>
 
     <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100">
-      <div class="bg-red-50 w-10 h-10 rounded-2xl flex items-center justify-center text-red-600 mb-3">
+      <div class="bg-orange-50 w-10 h-10 rounded-2xl flex items-center justify-center text-orange-600 mb-3">
         <i data-lucide="alert-triangle" class="w-5 h-5"></i>
       </div>
       <p class="text-gray-500 text-xs font-bold uppercase tracking-wider">Estoque Baixo</p>
@@ -274,7 +274,7 @@ async function verificarSessao() {
     
     <div class="lg:col-span-1 bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
       <h3 class="font-black text-gray-800 mb-4 flex items-center gap-2">
-        <i data-lucide="trending-up" class="w-5 h-5 text-red-500"></i>
+        <i data-lucide="trending-up" class="w-5 h-5 text-orange-500"></i>
         TOP 5 MAIS VENDIDOS
       </h3>
       <div id="listaMaisVendidos" class="space-y-4">
@@ -291,8 +291,8 @@ async function verificarSessao() {
       <div class="space-y-6">
         <div class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
           <div class="flex items-center gap-3">
-            <div class="bg-red-500 p-2 rounded-lg">
-                <i data-lucide="clock" class="w-5 h-5 text-red-900"></i>
+            <div class="bg-orange-600 p-2 rounded-lg">
+                <i data-lucide="clock" class="w-5 h-5 text-orange-900"></i>
             </div>
             <div>
               <p class="font-bold text-gray-800">Tempo médio de entrega</p>
@@ -304,10 +304,10 @@ async function verificarSessao() {
 
         <div class="grid grid-cols-2 gap-4">
             <button onclick="navegacao('admProdutos')" class="p-4 bg-gray-900 text-white rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-gray-800 transition-all">
-                <i data-lucide="plus-circle" class="w-6 h-6 text-red-500"></i>
+                <i data-lucide="plus-circle" class="w-6 h-6 text-orange-500"></i>
                 Adicionar Itens
             </button>
-            <button class="p-4 bg-red-500 text-red-900 rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-red-500 transition-all">
+            <button class="p-4 bg-orange-600 text-orange-900 rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-orange-600 transition-all">
                 <i data-lucide="share-2" class="w-6 h-6"></i>
                 Compartilhar Link
             </button>
@@ -328,29 +328,29 @@ async function verificarSessao() {
              <div class="grid grid-cols-4 gap-2">
     
     <button onclick="definirFiltro('listaAdmin')" class="flex flex-col items-center group active:scale-90 transition-transform">
-      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-red-500">
-        <i data-lucide="bottle-wine" class="w-6 h-6 text-gray-600 group-hover:text-red-500"></i>
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-orange-500">
+        <i data-lucide="bottle-wine" class="w-6 h-6 text-gray-600 group-hover:text-orange-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Itens de<br>Prateleira</span>
     </button>
 
     <button onclick="definirFiltro('combosParaMontar')" class="flex flex-col items-center group active:scale-90 transition-transform">
-      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-red-500">
-        <i data-lucide="pizza" class="w-6 h-6 text-gray-600 group-hover:text-red-500"></i>
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-orange-500">
+        <i data-lucide="pizza" class="w-6 h-6 text-gray-600 group-hover:text-orange-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Para<br>Montar</span>
     </button>
 
     <button onclick="" class="flex flex-col items-center group active:scale-90 transition-transform">
-      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-red-500">
-        <i data-lucide="boxes" class="w-6 h-6 text-gray-600 group-hover:text-red-500"></i>
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-orange-500">
+        <i data-lucide="boxes" class="w-6 h-6 text-gray-600 group-hover:text-orange-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Combos<br>Prontos</span>
     </button>
 
     <button onclick="" class="flex flex-col items-center group active:scale-90 transition-transform">
-      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-red-500">
-        <i data-lucide="badge-percent" class="w-6 h-6 text-red-500"></i>
+      <div class="w-14 h-14 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-1 group-hover:border-orange-500">
+        <i data-lucide="badge-percent" class="w-6 h-6 text-orange-500"></i>
       </div>
       <span class="text-[9px] font-black uppercase text-gray-500 text-center leading-tight">Em<br>Promoção(destaque no inicio)</span>
 </button>
@@ -418,64 +418,64 @@ function definirFiltro(filtro) {
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">variação de ...</label>
-                    <select id="keyVariacao" placeholder="0001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none">
+                    <select id="keyVariacao" placeholder="0001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none">
                         
                     </select>
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Classe</label>
-                    <select id="cadClasse" required placeholder="bebidas" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none"></select>
+                    <select id="cadClasse" requiorange placeholder="bebidas" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none"></select>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Categoria</label>
-                    <select id="cadCategoria" required placeholder="cerveja" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none">
+                    <select id="cadCategoria" requiorange placeholder="cerveja" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none">
                         
                     </select>
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Marca</label>
-                    <input type="text" id="cadMarca" required placeholder="brahma" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none">
+                    <input type="text" id="cadMarca" requiorange placeholder="brahma" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none">
                 </div>
             </div>
 
             <div>
                 <label class="text-[10px] font-bold text-gray-400 uppercase">Nome Completo</label>
-                <input type="text" id="cadNome" required placeholder="Cerveja Brahma Chopp" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none">
+                <input type="text" id="cadNome" requiorange placeholder="Cerveja Brahma Chopp" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none">
             </div>
 
             <hr class="my-2">
-            <p class="text-[10px] font-black text-red-600 uppercase">Primeira Embalagem/Variação</p>
+            <p class="text-[10px] font-black text-orange-600 uppercase">Primeira Embalagem/Variação</p>
 
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Cód. SKU</label>
-                    <input type="text" disabled id="cadCod" required placeholder="B001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none">
+                    <input type="text" disabled id="cadCod" requiorange placeholder="B001" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none">
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Tipo</label>
-                    <input type="text" id="cadTipo" required placeholder="Lata 350ml" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none">
+                    <input type="text" id="cadTipo" requiorange placeholder="Lata 350ml" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none">
                 </div>
             </div>
 
             <div class="grid grid-cols-3 gap-2">
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Preço</label>
-                    <input type="text" id="cadPreco" required placeholder="3,80" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none">
+                    <input type="text" id="cadPreco" requiorange placeholder="3,80" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none">
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Estoque</label>
-                    <input type="number" id="cadEstoque" required placeholder="100" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none">
+                    <input type="number" id="cadEstoque" requiorange placeholder="100" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none">
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-gray-400 uppercase">Vendas Init</label>
-                    <input type="number" id="cadVendas" value="0" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-red-500 outline-none">
+                    <input type="number" id="cadVendas" value="0" class="w-full p-2 bg-gray-50 rounded-lg border-none ring-1 ring-gray-200 focus:ring-orange-500 outline-none">
                 </div>
             </div>
 
-            <button type="submit" class="w-full bg-red-500 text-gray-900 font-black py-3 rounded-xl shadow-lg mt-2">
+            <button type="submit" class="w-full bg-orange-600 text-gray-900 font-black py-3 rounded-xl shadow-lg mt-2">
                 CADASTRAR PRODUTO
             </button>
         </form>
