@@ -453,6 +453,30 @@ console.log(adicionais);
     </script>
     
   </div>
+  
+<!-- Rodapé Compacto -->
+<!-- Rodapé Ultra-Compacto -->
+<div class=" p-4 w-full">
+    <div class="max-w-md mx-auto space-y-4">
+        
+        <!-- Linha Única de Horários -->
+        <div class="text-center italic">
+            <h4 class="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1 not-italic">Funcionamento</h4>
+            <p id="textoHorarios" class="text-[11px] text-gray-500 leading-tight">
+                <!-- Injetado via JS: segunda a sexta 00:00 às 00:00... -->
+            </p>
+        </div>
+
+        <!-- Endereço e Contato -->
+        <div class="flex justify-between items-center text-[10px] text-gray-400 border-t border-gray-50 pt-3">
+            <span id="enderecoLoja" class="truncate max-w-[200px]">---</span>
+            <span id="telefoneLoja" class="font-bold text-gray-600">---</span>
+        </div>
+
+      
+        <p class="text-center text-[8px] text-gray-200 uppercase tracking-[0.3em]">LP. Cardápios</p>
+    </div>
+</div>
 </section>
 <section id="perfilUser" class="w-full mx-auto hidden  min-h-screen">
   
@@ -1061,35 +1085,6 @@ slcEndereco.addEventListener('change', (event) => {
 </main>
 <!-- Conteúdo principal da sua página acima... -->
 
-<!-- Rodapé Compacto -->
-<!-- Rodapé Ultra-Compacto -->
-<div class=" p-4 w-full">
-    <div class="max-w-md mx-auto space-y-4">
-        
-        <!-- Linha Única de Horários -->
-        <div class="text-center italic">
-            <h4 class="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1 not-italic">Funcionamento</h4>
-            <p id="textoHorarios" class="text-[11px] text-gray-500 leading-tight">
-                <!-- Injetado via JS: segunda a sexta 00:00 às 00:00... -->
-            </p>
-        </div>
-
-        <!-- Endereço e Contato -->
-        <div class="flex justify-between items-center text-[10px] text-gray-400 border-t border-gray-50 pt-3">
-            <span id="enderecoLoja" class="truncate max-w-[200px]">---</span>
-            <span id="telefoneLoja" class="font-bold text-gray-600">---</span>
-        </div>
-
-        <!-- Botão WhatsApp Estilo Flat -->
-        <a id="linkWhats" href="#" target="_blank" 
-           class="flex items-center justify-center gap-2 w-full bg-[#25D366] text-white py-3 rounded-lg font-bold uppercase tracking-widest text-[10px]">
-            <i data-lucide="message-circle" class="w-4 h-4"></i>
-            WhatsApp
-        </a>
-
-        <p class="text-center text-[8px] text-gray-200 uppercase tracking-[0.3em]">LP. Cardápios</p>
-    </div>
-</div>
 
         <!-- Copyright Minimalista -->
         <p class="text-center text-[9px] text-gray-300 uppercase tracking-widest pt-4">

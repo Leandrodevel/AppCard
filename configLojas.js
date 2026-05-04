@@ -44,6 +44,14 @@ async function carregarCardapioPublico() {
     }
 
 }
+// Dentro do carregarCardapioPublico()
+if (loja) {
+    const btnShare = document.getElementById('btnCompartilhar');
+    if (btnShare) {
+        // Passa o objeto 'loja' completo para a função
+        btnShare.onclick = () => compartilharDados(loja);
+    }
+}
         // 3. Aplica o tema visual salvo no banco
         if (loja.tema_comercio) {
             trocarTema(loja.tema_comercio);
@@ -99,7 +107,33 @@ function exibirHorariosResumidos(horarios) {
 
     pHorarios.innerHTML = textoFinal;
 }
+   
+const compartilharDados = async (loja) => {
+  // Pega o domínio atual para montar o link (ex: seusite.com/nome-da-loja)
+  const linkAtual = window.location.href;
 
+  const dadosCompartilhamento = {
+    title: `Cardápio - ${loja.nome_comercio}`,
+    text: `Confira o cardápio de ${loja.nome_comercio} no LP. Cardápios! 📋`,
+    url: linkAtual
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(dadosCompartilhamento);
+      console.log('Conteúdo compartilhado com sucesso!');
+    } else {
+      // Fallback: Tenta copiar o link para o clipboard se o navigator.share falhar
+      await navigator.clipboard.writeText(linkAtual);
+      alert('Link copiado para a área de transferência! Agora é só colar para compartilhar.');
+    }
+  } catch (err) {
+    // Evita logar erro se o usuário apenas cancelou o compartilhamento
+    if (err.name !== 'AbortError') {
+      console.error('Erro ao compartilhar:', err);
+    }
+  }
+};
 function verificarStatusLoja(horarios) {
     const statusDaLoja = document.getElementById('statusOnline');
     const agora = new Date();
