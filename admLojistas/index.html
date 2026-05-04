@@ -17,63 +17,6 @@
   const SUPABASE_KEY ='sb_publishable_avVe0cMnriaF8Ogt42Z7Xg_PTD5pdnZ'
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
-// --- FUNÇÃO DE CADASTRO (SIGN UP) ---
-async function handleSignUp(event) {
-    event.preventDefault();
-    
-    const nome = document.getElementById('cadNomeUser').value;
-    const email = document.getElementById('cadEmail').value;
-    const senha = document.getElementById('cadSenha').value;
-    const btn = document.getElementById('btnCadastrar');
-    btn.disabled = true;
-    btn.innerText = "CRIANDO CONTA...";
-    // O Supabase Auth lida com a criação do usuário
-    const { data, error } = await _supabase.auth.signUp({
-        email: email,
-        password: senha,
-        options: {
-            data: {
-                full_name: nome // Salva o nome nos metadados do usuário
-            }
-        }
-    });
-
-    if (error) {
-        alert("Erro no cadastro: " + error.message);
-        btn.disabled = false;
-        btn.innerText = "CRIAR MINHA CONTA";
-    } else {
-        alert("Cadastro realizado! Verifique seu e-mail para confirmar (se habilitado) ou faça login.");
-        navegacao('loginAdm'); // Direciona para o login
-    }
-}
-
-// --- FUNÇÃO DE LOGIN (SIGN IN) ---
-async function handleLogin(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('loginEmail').value;
-    const senha = document.getElementById('loginSenha').value;
-    const btn = document.getElementById('btnLogin');
-    btn.disabled = true;
-    btn.innerText = "ENTRANDO...";
-    const { data, error } = await _supabase.auth.signInWithPassword({
-        email: email,
-        password: senha
-    });
-
-    if (error) {
-        alert("Erro ao entrar: " + error.message);
-        btn.disabled = false;
-        btn.innerText = "ENTRAR NO CARDÁPIO";
-    } else {
-        // Se for o admin, você pode mostrar a seção de admin
-      navegacao('dashboard');
-    
-      
-    }
-}
-
 // --- FUNÇÃO DE LOGOUT (OPCIONAL) ---
 async function handleLogout() {
     const { error } = await _supabase.auth.signOut();
@@ -84,15 +27,20 @@ async function handleLogout() {
 
 async function verificarSessao() {
     const { data: { session } } = await _supabase.auth.getSession();
-    if (session) {
 
-      navegacao('dashboard');
-      
-    }else {
-         window.location.href = './login.html';
+    if (session) {
+        // O ID do usuário logado no Auth
+        const userId = session.user.id; 
+        console.log("ID do usuário logado:", userId);
+
+        navegacao('dashboard');
+        
+        // Você pode passar o userId para o carregarUsuario se precisar filtrar a loja pelo dono
+        carregarUsuario(userId); 
+    } else {
+        window.location.href = './login.html';
     }
 }
-
 
   // Exemplo de função para salvar seus dados (Opção 2 - JSONB)
   async function criaProduto(produto) {
@@ -152,9 +100,12 @@ async function verificarSessao() {
 }
 
   async function obterDados() {
+    id_comercio = JSON.parse(localStorage.getItem('idLojaAtiva'))?.idLoja || null;
+
   const { data, error } = await _supabase
     .from('estoque')
-    .select('*'); // O asterisco traz todas as colunas
+    .select('*') // O asterisco traz todas as colunas
+    .eq('id_comercial', id_comercio)
   if (error) {
     console.error('Erro ao ler dados:', error.message);
   } else {

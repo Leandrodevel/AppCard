@@ -1,24 +1,45 @@
 verificarSessao();
+// 1. Defina a variável global corretamente
+let idLojaAtiva = JSON.parse(localStorage.getItem('idLojaAtiva'))?.idLoja || null;
 
+async function carregarUsuario(userId) {
+    try {
+        const { data: lojas, error } = await _supabase
+            .from('lojas')
+            .select('*')
+            .eq('user_id', userId) // Filtra para pegar a loja que pertence a ESSE usuário
+            .single();
 
+        if (lojas) {
+            console.log("Loja do usuário carregada:", lojas.nome_comercio);
+            localStorage.setItem('idLojaAtiva', JSON.stringify({ idLoja: lojas.id }));
+           
+        }
 
-
-
-
-
-async function qtdVendidos() {
-  try {
-    const produtos = await obterDados();
-    
-    // Retorna apenas produtos que possuem ao menos uma embalagem com vendas
-    return produtos.filter(p => {
-      return p.embalagens.some(emb => emb.vendas > 0);
-    });
-  } catch (erro) {
-    console.error("Erro ao buscar dados:", erro);
-    return [];
-  }
+    } catch (err) {
+        console.error("Erro ao carregar loja do usuário:", err);
+    }
 }
+  
+
+// Criamos uma função para lidar com o produto, para garantir que o ID já exista
+  const produtoCombo= {
+             id_comercial: idLojaAtiva, // Usamos o ID da loja como referência comercial
+             nome: 'Combo Família',
+            classe: 'combos',
+            categoria: 'combo de churrasco',
+             marca: 'da casa',
+             embalagens: [{
+             cod: Date.now(),
+            tipo: 'completo',
+            preco: 59.90,
+             ativo: true,
+            acompanhamentos: ['farofa', 'vinagrete', 'pão de alho'],
+            adicionais: [{ nome: 'carne extra', preco: 10.00 }]
+                }]
+            };
+
+   
   const classesCateg = {
     'Bebidas': ['Águas', 'Cachaças', 'Cervejas', 'Whiskys', 'Vodkas', 'Destilados', 'Aperitivos', 'Refrigerantes', 'Energéticos','Combos','Drink'],
     'Petiscos': ['Amendoins', 'Azeitonas', 'Queijos'],
@@ -67,9 +88,8 @@ async function variacao(){
 const cadMarca =   document.getElementById('cadMarca')
 const cadNome =   document.getElementById('cadNome')
 const keyVariacao = document.getElementById('keyVariacao')
- const optkeyVariacao=  new Option('Variação de...','')   
+ const optkeyVariacao=  new Option('Novo Produto','')   
     keyVariacao.add(optkeyVariacao)
-    optkeyVariacao.disabled=true
     optkeyVariacao.selected=true
 
     
@@ -502,6 +522,7 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
     } else {
         // MODO NOVO PRODUTO
         const novoProduto = {
+            id_comercial: idLojaAtiva, // Referência à loja ativa
             classe: classe,
             categoria: categoria,
             marca: marca,
@@ -539,7 +560,7 @@ document.getElementById(openId).style.display = 'flex';
 }
 
     // Simulando dados vindo de um banco (Supabase/Firebase)
-
+ 
       async function renderizarLista() {
     const db = await obterDados();
     // Filtra apenas os que são classe combo
@@ -649,29 +670,7 @@ document.getElementById(openId).style.display = 'flex';
 
 */
 
-   // Dados iniciais
-        const produtoCombo = {
-            id_comercial:gerarID() ,
-            nome: 'combo familia',
-            classe: 'combos',
-            categoria: 'combo de churrasco',
-            marca: 'da casa',
-            embalagens: [{
-                cod: gerarID(),
-                tipo: 'completo',
-                preco: 59.90,
-                estoque: '',
-                vendas: '',
-                desconto: "0.00",
-                ativo: true,
-                acompanhamentos: ['farofa', 'vinagrete', 'pão de alho', 'salpicão', 'feijão tropeiro'],
-                adicionais: [
-                    { nome: 'carne extra', preco:" 10.00" },
-                    { nome: 'batata extra', preco: 12.00 },
-                ]
-            }]
-        };
-
+      
         // Função para preencher a tela
         function renderizarPagina() {
             const emb = produtoCombo.embalagens[0];
@@ -737,6 +736,7 @@ document.getElementById(openId).style.display = 'flex';
         async function salvarDados() {
     // 1. Captura os valores dos inputs NO MOMENTO do clique
     const nome = document.getElementById('input-nome').value;
+    const id_comercial = idLojaAtiva
     const categoria = document.getElementById('input-categoria').value;
     const marca = document.getElementById('input-marca').value;
     const preco = document.getElementById('input-preco').value.replace(",", ".");
@@ -744,9 +744,10 @@ document.getElementById(openId).style.display = 'flex';
 
     // 2. Monta um NOVO objeto com os dados frescos
     // Usamos o 'spread operator' (...) para manter os dados fixos (como acompanhamentos)
+   
     const dadosParaEnviar = {
         ...produtoCombo, // Pega a estrutura base (classe, acompanhamentos, etc)
-        id_comercial: gerarID(), // Gera um ID novo a cada salvamento
+        id_comercial: id_comercial,
         nome: nome,
         categoria: categoria,
         marca: marca,
