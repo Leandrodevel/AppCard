@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LP Comanda - Login</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body class="bg-gray-100 min-h-screen font-sans">
+
+
+
+    <section id="login-section" class="flex flex-col items-center justify-center min-h-screen p-4">
+
+        <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">LP Comanda</h1>
+
+            <p class="text-center text-gray-500 mb-6 text-sm">Acesse com seu e-mail e senha do Supabase</p>
+
+            <div class="space-y-4">
+
+                <div>
+
+                    <label class="block text-sm font-medium text-gray-700">E-mail</label>
+
+                    <input type="email" id="email" placeholder="seu@email.com" class="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+
+                </div>
+
+                <div>
+
+                    <label class="block text-sm font-medium text-gray-700">Senha</label>
+
+                    <input type="password" id="password" placeholder="••••••••" class="w-full mt-1 p-3 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+
+                </div>
+
+                <button onclick="fazerLogin()" id="btn-login" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-md">
+
+                    Entrar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section id="main-section" class="hidden p-4 max-w-2xl mx-auto">
+
+        <div class="mb-6">
+
+            <button onclick="novoCliente()" class="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition shadow-md">
+
+                <i class="fas fa-user-plus"></i> Novo Cliente
+
+            </button>
+
+        </div>
+
+
+
+        <header class="flex justify-between items-center mb-6">
+
+            <h2 class="text-xl font-bold text-gray-800">Minhas Comandas</h2>
+
+            <a href="../index.html" class="text-red-500 text-sm font-bold">Sair</a>
+
+        </header>
+
+
+
+        <div id="lista-cards" class="space-y-4"></div>
+
+    </section>
+
+
+
+    <div id="modal-opcoes" class="fixed inset-0 bg-black/50 hidden flex items-end sm:items-center justify-center z-50 p-4">
+
+        <div class="bg-white w-full max-w-sm rounded-t-3xl sm:rounded-2xl p-6 shadow-2xl animate-slide-up">
+
+            <h3 class="text-xl font-bold mb-6 text-center">Gerenciar Comanda</h3>
+
+            <div class="grid grid-cols-1 gap-3">
+
+                <button onclick="adicionarItem()" class="flex items-center justify-center gap-3 bg-blue-50 text-blue-700 font-bold py-4 rounded-xl hover:bg-blue-100 transition">
+
+                    <i class="fas fa-plus"></i> Adicionar Item
+
+                </button>
+
+                <button onclick="fecharComanda()" class="flex items-center justify-center gap-3 bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition">
+
+                    <i class="fas fa-check"></i> Fechar Comanda
+
+                </button>
+
+                <button onclick="fecharModal()" class="mt-2 text-gray-500 font-medium py-2">Cancelar</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+
+        const SUPABASE_URL = 'https://wyhqwprshbgwjlnxndhm.supabase.co';
+
+        const SUPABASE_KEY = 'sb_publishable_avVe0cMnriaF8Ogt42Z7Xg_PTD5pdnZ';
+
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+
+
+        let clienteAtivoId = null;
+
+
+
+        // --- Lógica de Autenticação ---
+
+
+
+        async function fazerLogin() {
+
+            const email = document.getElementById('email').value;
+
+            const password = document.getElementById('password').value;
+
+            const btn = document.getElementById('btn-login');
+
+
+
+            if (!email || !password) return alert("Preencha todos os campos");
+
+
+
+            btn.innerText = "Carregando...";
+
+            btn.disabled = true;
+
+
+
+            const { data, error } = await _supabase.auth.signInWithPassword({
+
+                email: email,
+
+                password: password,
+
+            });
+
+
+
+            if (error) {
+
+                alert("Erro no login: " + error.message);
+
+                btn.innerText = "Entrar";
+
+                btn.disabled = false;
+
+            } else {
+
+                mostrarDashboard();
+
+            }
+
+        }
+
+
+
+        async function fazerLogout() {
+
+            await _supabase.auth.signOut();
+
+            location.reload();
+
+        }
+
+
+
+        function mostrarDashboard() {
+
+            document.getElementById('login-section').classList.add('hidden');
+
+            document.getElementById('main-section').classList.remove('hidden');
+
+            inicializar();
+
+        }
+
+
+
+        // Verifica se já existe sessão ativa ao carregar a página
+
+        async function verificarSessao() {
+
+            const { data: { session } } = await _supabase.auth.getSession();
+
+            if (session) {
+
+                mostrarDashboard();
+
+            }
+
+        }
+
+        verificarSessao();
+
+
+
+        // --- Lógica das Comandas ---
+
+
+
+        async function inicializar() {
+
+            await carregarComandasDoBanco();
+
+            setInterval(carregarComandasDoBanco, 15000); 
+
+        }
+
+
+
+        async function carregarComandasDoBanco() {
+
+            const { data: comandas, error } = await _supabase
+
+                .from('comandas')
+
+                .select(`*, itens_comanda(*)`)
+
+                .order('criado_em', { ascending: false });
+
+
+
+            if (error) return console.error(error);
+
+
+
+            const listaCards = document.getElementById('lista-cards');
+
+            listaCards.innerHTML = ''; 
+
+
+
+            comandas.forEach(comanda => {
+
+                const card = document.createElement('div');
+
+                card.className = "bg-white p-5 rounded-2xl shadow-sm border-l-4 border-blue-500 cursor-pointer active:scale-95 transition-transform";
+
+                card.onclick = () => abrirModalOpcoes(comanda.id);
+
+
+
+                const itensHtml = comanda.itens_comanda.map(item => `
+
+                    <li class="flex justify-between border-b border-gray-50 py-1">
+
+                        <span>${item.descricao}</span> 
+
+                        <span class="font-medium">R$ ${parseFloat(item.preco).toFixed(2).replace('.', ',')}</span>
+
+                    </li>
+
+                `).join('');
+
+
+
+                card.innerHTML = `
+
+                    <div class="flex justify-between items-start">
+
+                        <div>
+
+                            <p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Cliente</p>
+
+                            <h3 class="text-lg font-semibold text-gray-800">${comanda.cliente_nome}</h3>
+
+                        </div>
+
+                        <div class="text-right">
+
+                            <p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total</p>
+
+                            <p class="text-lg font-bold text-green-600">R$ ${parseFloat(comanda.total || 0).toFixed(2).replace('.', ',')}</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-gray-100">
+
+                        <ul class="mt-2 text-sm text-gray-600 space-y-1">
+
+                            ${itensHtml || '<p class="text-sm text-gray-400 italic">Nenhum item</p>'}
+
+                        </ul>
+
+                    </div>
+
+                `;
+
+                listaCards.appendChild(card);
+
+            });
+
+        }
+
+
+
+        async function novoCliente() {
+
+    const nome = prompt("Nome do Cliente:");
+
+    if (!nome) return;
+
+
+
+    // Obtém o ID do usuário logado para garantir que a sessão é válida
+
+    const { data: { user } } = await _supabase.auth.getUser();
+
+    
+
+    if (!user) {
+
+        alert("Sessão expirada. Faça login novamente.");
+
+        return fazerLogout();
+
+    }
+
+
+
+    const { data, error } = await _supabase
+
+        .from('comandas')
+
+        .insert([{ 
+
+            cliente_nome: nome, 
+
+            total: 0 
+
+        }])
+
+        .select(); // Força o retorno do dado criado
+
+
+
+    if (error) {
+
+        console.error("Erro detalhado:", error);
+
+        alert("Erro ao criar cliente: " + error.message);
+
+    } else {
+
+        console.log("Cliente criado:", data);
+
+        await carregarComandasDoBanco(); // Recarrega a lista
+
+    }
+
+}
+
+
+
+
+
+        async function adicionarItem() {
+
+            fecharModal();
+
+            const descricao = prompt("Item:");
+
+            if (!descricao) return;
+
+            const precoStr = prompt("Preço:");
+
+            const preco = parseFloat(precoStr?.replace(',', '.'));
+
+            if (isNaN(preco)) return alert("Preço inválido");
+
+
+
+            await _supabase.from('itens_comanda').insert([{ comanda_id: clienteAtivoId, descricao, preco }]);
+
+            const { data: comanda } = await _supabase.from('comandas').select('total').eq('id', clienteAtivoId).single();
+
+            const novoTotal = (parseFloat(comanda.total) || 0) + preco;
+
+            await _supabase.from('comandas').update({ total: novoTotal }).eq('id', clienteAtivoId);
+
+            carregarComandasDoBanco();
+
+        }
+
+
+
+        async function fecharComanda() {
+
+            if (!confirm("Deseja fechar esta comanda?")) return;
+
+            await _supabase.from('comandas').delete().eq('id', clienteAtivoId);
+
+            fecharModal();
+
+            carregarComandasDoBanco();
+
+        }
+
+
+
+        function abrirModalOpcoes(id) {
+
+            clienteAtivoId = id;
+
+            document.getElementById('modal-opcoes').classList.replace('hidden', 'flex');
+
+        }
+
+
+
+        function fecharModal() {
+
+            document.getElementById('modal-opcoes').classList.replace('flex', 'hidden');
+
+        }
+
+    </script>
+
+
+
+    <style>
+
+        @keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        .animate-slide-up { animation: slide-up 0.3s ease-out; }
+
+    </style>
+
+</body>
+
+</html>
