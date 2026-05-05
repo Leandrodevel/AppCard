@@ -116,7 +116,20 @@
     </div>
 </div>
             <hr class="border-gray-50">
+<div class="space-y-4">
+    <div class="flex items-center justify-between ml-1">
+        <label class="text-[10px] font-black uppercase text-gray-400">Escolha a Foto do Produto</label>
+        <span id="foto-selecionada-nome" class="text-[10px] font-bold text-orange-600 uppercase tracking-wider">Nenhuma selecionada</span>
+    </div>
 
+    <!-- Grid de Fotos -->
+    <div class="grid grid-cols-5 gap-2 bg-gray-50 p-3 rounded-[2rem] border border-gray-100" id="galeria-fotos">
+        <!-- As fotos serão geradas pelo JS -->
+    </div>
+    
+    <!-- Input oculto para armazenar o nome da foto -->
+    <input type="hidden" id="prod-foto-nome">
+</div>
             <!-- Gestão de Horários -->
             <div>
                 <h3 class="text-sm font-black text-gray-800 mb-4 flex items-center gap-2">
@@ -131,7 +144,68 @@
         </div>
     </div>
 
+    
     <script>
+        // Array com os nomes das fotos que você já tem na sua pasta /assets/produtos/
+const bancoDeFotos = [
+    "churrasco.jpg", "cerveja.jpg", "pao-alho.jpg", "combo-1.jpg", 
+    "refrigerante.jpg", "espetinho.jpg", "vinagrete.jpg", "porcao.jpg",
+    "batata-frita.jpg", "suco.jpg"
+];
+
+function renderizarGaleria() {
+    const galeria = document.getElementById('galeria-fotos');
+    galeria.innerHTML = "";
+
+    bancoDeFotos.forEach(foto => {
+        galeria.innerHTML += `
+            <div onclick="selecionarFoto(this, '${foto}')" 
+                 class="relative aspect-square rounded-2xl overflow-hidden cursor-pointer border-4 border-transparent hover:border-orange-200 transition-all group">
+                <img src="../img/${foto}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                <div class="overlay-check hidden absolute inset-0 bg-orange-600/40 flex items-center justify-center">
+                    <i data-lucide="check" class="text-white w-6 h-6"></i>
+                </div>
+            </div>
+        `;
+    });
+    lucide.createIcons();
+}
+renderizarGaleria();
+function selecionarFoto(elemento, nomeFoto) {
+    // 1. Remove destaques anteriores
+    const todos = document.querySelectorAll('#galeria-fotos > div');
+    todos.forEach(div => {
+        div.classList.replace('border-orange-500', 'border-transparent');
+        div.querySelector('.overlay-check').classList.add('hidden');
+    });
+
+    // 2. Destaca a foto atual
+    elemento.classList.replace('border-transparent', 'border-orange-500');
+    elemento.querySelector('.overlay-check').classList.remove('hidden');
+
+    // 3. Salva o nome nos campos de controle
+    document.getElementById('prod-foto-nome').value = nomeFoto;
+    document.getElementById('foto-selecionada-nome').innerText = nomeFoto;
+}
+
+// 4. Integração no Salvar Produto
+async function salvarNovoProduto() {
+    const nomeFoto = document.getElementById('prod-foto-nome').value;
+
+    const produto = {
+        id_comercial: idLojaAtiva,
+        nome: document.getElementById('prod-nome').value,
+        foto: nomeFoto, // <--- Aqui o nome da foto é salvo
+        // ... restante dos dados (preço, categoria, etc)
+    };
+
+    const { error } = await _supabase.from('produtos').insert([produto]);
+    
+    if(!error) {
+        alert("Produto salvo com a foto: " + nomeFoto);
+        resetarFormulario();
+    }
+}
         // O JSON que você enviou
         let dadosAtuais = null;
 
