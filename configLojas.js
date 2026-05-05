@@ -69,8 +69,7 @@ if (loja) {
         }
 
         // 4. Manda os dados para a tela
-        exibirNaTela(loja);
-        exibirHorariosResumidos(loja.horarios_funcionamento);
+      
 
     } catch (error) {
         console.error("Erro inesperado:", error);
@@ -79,45 +78,6 @@ if (loja) {
 
 }
 
-function exibirNaTela(loja) {
-
-    // Dados Simples
-    document.getElementById('nomeLoja').innerText = loja.nome_comercio;
-    document.getElementById('enderecoLoja').innerText = `${loja.endereco_completo}, ${loja.cidade}`;
-     document.getElementById('telefoneLoja').innerText = loja.whatsapp;
-    // Exibir WhatsApp com link
-    const btnWhats = document.getElementById('linkWhats');
-    btnWhats.href = `[https://wa.me/55$](https://wa.me/55$){loja.whatsapp}`;
-}
-function exibirHorariosResumidos(horarios) {
-    const pHorarios = document.getElementById('textoHorarios');
-    
-    // Pegamos os horários base (segunda-feira)
-    const seg = horarios.seg;
-    const sab = horarios.sab;
-    const dom = horarios.dom;
-
-    let textoFinal = "";
-
-    // Agrupamento de Segunda a Sexta
-    if (seg && seg.aberto) {
-        textoFinal += `Segunda a Sexta: <span class="font-bold text-gray-700">${seg.horario}</span>`;
-    } else {
-        textoFinal += `Segunda a Sexta: <span class="text-red-400">Fechado</span>`;
-    }
-
-    // Adiciona Sábado se existir
-    if (sab && sab.aberto) {
-        textoFinal += ` • Sáb: <span class="font-bold text-gray-700">${sab.horario}</span>`;
-    }
-
-    // Adiciona Domingo se existir
-    if (dom && dom.aberto) {
-        textoFinal += ` • Dom: <span class="font-bold text-gray-700">${dom.horario}</span>`;
-    }
-
-    pHorarios.innerHTML = textoFinal;
-}
    
 const compartilharDados = async (loja) => {
   // Pega o domínio atual para montar o link (ex: seusite.com/nome-da-loja)

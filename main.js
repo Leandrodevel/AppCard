@@ -239,12 +239,14 @@ function atualizaContador() {
     atualizaContador()
 
 async function customizarPedidoRender(cod,imagem, nome, tipo, preco) {
+  
 const db = await getDados()
 
 const dados = db.find(d=>{
     
-    return d.embalagens.some(emb=> emb.cod === cod)
+    return d.embalagens.some(emb=> String(emb.cod) === String(cod))
 })
+
 const sectionCustomizar = document.getElementById('customizarPedido')
 
 const srcImagem = imagem
@@ -1567,15 +1569,15 @@ const dados = db.filter(c=>{
     return ifCombo && ifAtivo
 })
 const container = document.getElementById('containerCombo')
-let i=0
+
 for (let combo of dados) {
   const cardCombo = document.createElement('div')
   cardCombo.className='min-w-[90%] md:min-w-[400px] bg-zinc-900 rounded-3xl p-5 flex relative overflow-hidden shadow-lg border border-yellow-400/20 snap-center'
   // Usando template string sem espaços extras nas propriedades
-  const imagem = ['./img/comboChurras.jpg','./img/comboPremium.jpg']
+  const imagem = 'img1.jpg'
   
   
-cardCombo.style.backgroundImage = `url(${imagem[i++]})`;
+cardCombo.style.backgroundImage = ``;
 cardCombo.style.backgroundSize = "cover";
 cardCombo.style.backgroundPosition = "center";
   cardCombo.innerHTML=`
@@ -1594,7 +1596,7 @@ cardCombo.style.backgroundPosition = "center";
             </ul>
             <p class="text-white font-black text-xl mt-3">R$ ${combo.embalagens[0].preco.replace(".",",")}</p>
             <button class="mt-4 bg-yellow-400 text-zinc-900 font-black py-2.5 px-6 rounded-xl text-xs uppercase shadow-md active:scale-95 transition-all" 
-                    onclick="navegacao('customizarPedido'), customizarPedidoRender('${combo.embalagens[0].cod}','${imagem[i]}', '${combo.nome}', '${combo.embalagens[0].tipo}', '${combo.embalagens[0].preco}')">
+                    onclick="navegacao('customizarPedido'), customizarPedidoRender('${combo.embalagens[0].cod}','${imagem}', '${combo.nome}', '${combo.embalagens[0].tipo}', '${combo.embalagens[0].preco}')">
                 Adicionar ao Carrinho
             </button>
         </div>
