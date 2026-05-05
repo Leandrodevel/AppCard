@@ -48,9 +48,10 @@ async function carregarCardapioPublico() {
 if (loja) {
 
 // 2. Agora que temos o ID da loja (loja.id), buscamos os produtos dela
-   const produtos = await getDadosDb(loja.id);
+        const produtos = await getDadosDb(loja.id);
 
-  localStorage.setItem('estoqueDeProdutos',JSON.stringify(produtos))
+localStorage.setItem('estoqueDeProdutos',JSON.stringify(produtos))
+}
 
 
 
@@ -62,14 +63,14 @@ if (loja) {
         // Passa o objeto 'loja' completo para a função
         btnShare.onclick = () => compartilharDados(loja);
     }
-}
+
         // 3. Aplica o tema visual salvo no banco
         if (loja.tema_comercio) {
             trocarTema(loja.tema_comercio);
         }
 
-        // 4. Manda os dados para a tela
-      
+        document.getElementById('nomeLoja').innerText = loja.nome_comercio;
+   
 
     } catch (error) {
         console.error("Erro inesperado:", error);
@@ -77,6 +78,7 @@ if (loja) {
     // Dentro da sua função carregarCardapioPublico, após receber os dados da 'loja'
 
 }
+
 
    
 const compartilharDados = async (loja) => {
