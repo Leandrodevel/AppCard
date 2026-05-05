@@ -24,6 +24,7 @@ async function carregarCardapioPublico() {
             return;
         }
         if (loja) {
+            document.body.classList.add("visible");
     const nomeDaLoja = loja.nome_comercio; // Ex: "Budega do LP"
     verificarStatusLoja(loja.horarios_funcionamento);
     // Pega a primeira letra
