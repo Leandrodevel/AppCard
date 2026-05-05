@@ -15,13 +15,17 @@ async function carregarUsuario(userId) {
             localStorage.setItem('idLojaAtiva', JSON.stringify({ idLoja: lojas.id }));
            
         }
+        const btnShare = document.getElementById('btn_compartilhar');
+    if (btnShare) {
+        // Passa o objeto 'loja' completo para a função
+        btnShare.onclick = () => compartilharDados(lojas);
+    }
 
     } catch (err) {
         console.error("Erro ao carregar loja do usuário:", err);
     }
+    
 }
-  
-
 // Criamos uma função para lidar com o produto, para garantir que o ID já exista
   const produtoCombo= {
              id_comercial: idLojaAtiva, // Usamos o ID da loja como referência comercial
@@ -73,6 +77,32 @@ cadClasse.addEventListener('change', () => {
     });
 });
 
+const compartilharDados = async (loja) => {
+  // Pega o domínio atual para montar o link (ex: seusite.com/nome-da-loja)
+  const linkAtual = `https://lpcardapios.vercel.app/home.html?loja=${loja.slug}`;
+
+  const dadosCompartilhamento = {
+    title: `Cardápio - ${loja.nome_comercio}`,
+    text: `Confira o cardápio de ${loja.nome_comercio} no LP. Cardápios! 📋`,
+    url: linkAtual
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(dadosCompartilhamento);
+      console.log('Conteúdo compartilhado com sucesso!');
+    } else {
+      // Fallback: Tenta copiar o link para o clipboard se o navigator.share falhar
+      await navigator.clipboard.writeText(linkAtual);
+      alert('Link copiado para a área de transferência! Agora é só colar para compartilhar.');
+    }
+  } catch (err) {
+    // Evita logar erro se o usuário apenas cancelou o compartilhamento
+    if (err.name !== 'AbortError') {
+      console.error('Erro ao compartilhar:', err);
+    }
+  }
+};
 
     
 

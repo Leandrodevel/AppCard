@@ -6,7 +6,7 @@ async function carregarCardapioPublico() {
      
         if (!slugDaUrl) {
             console.error("Nenhuma loja informada na URL.");
-               window.location.href = "./admLojistas/homePage.html"; // Redireciona para a homepage padrão
+            //   window.location.href = "./admLojistas/homePage.html"; // Redireciona para a homepage padrão
             return;
         }
 
@@ -53,11 +53,6 @@ if (loja) {
 
 localStorage.setItem('estoqueDeProdutos',JSON.stringify(produtos))
 }
-
-
-
-
-
 
     const btnShare = document.getElementById('btnCompartilhar');
     if (btnShare) {
