@@ -159,7 +159,7 @@ async function renderizarCombosParaMontar() {
     // Limpa a seção antes de renderizar para evitar duplicatas
     sectionCombo.innerHTML = '';
     const container = document.createElement('div');
-    container.classList = 'w-full '; // Removi o flex centralizado aqui para não quebrar o grid abaixo
+    container.classList = 'w-full grid place-items-center'; // Removi o flex centralizado aqui para não quebrar o grid abaixo
     
     container.innerHTML = `
 <!-- Botão: Centralizado horizontalmente -->

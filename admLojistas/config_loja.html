@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações da Budega - LP Cardápios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 pb-20">
+
+    <div class="max-w-2xl mx-auto p-4">
+        <!-- Header de Edição -->
+        <header class="flex items-center justify-between my-8">
+            <div class="flex items-center gap-4">
+                <button onclick="window.history.back()" class="p-2 hover:bg-white rounded-full transition">
+                    <i data-lucide="arrow-left" class="w-6 h-6 text-gray-600"></i>
+                </button>
+                <h1 class="text-2xl font-black text-slate-800">Editar Loja</h1>
+            </div>
+            <button onclick="atualizarLoja()" class="bg-green-600 text-white px-6 py-2 rounded-xl font-bold shadow-lg shadow-green-100 active:scale-95 transition-all">
+                SALVAR
+            </button>
+        </header>
+        
+        <!-- Formulário de Dados Básicos -->
+        <div class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-gray-100 space-y-6">
+            
+            <div class="grid grid-cols-1 gap-5">
+                <div>
+                    <label class="text-[10px] font-black uppercase text-gray-400 ml-1">Nome do Comércio</label>
+                    <input type="text" id="nome_comercio" class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-orange-500 font-bold">
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-black uppercase text-gray-400 ml-1">Endereço Completo (Campos dos Goytacazes)</label>
+                    <input type="text" id="endereco_completo" class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-[10px] font-black uppercase text-gray-400 ml-1">WhatsApp</label>
+                        <input type="text" id="whatsapp" class="w-full p-4 bg-gray-50 rounded-2xl border-none outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-black uppercase text-gray-400 ml-1">Slug (Link Único)</label>
+                        <input type="text" id="slug" disabled class="w-full p-4 bg-gray-100 text-gray-400 rounded-2xl border-none outline-none cursor-not-allowed">
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-4">
+    <label class="text-[10px] font-black uppercase text-gray-400 ml-1">Estilo Visual (Pares de Cores)</label>
+    
+    <div class="grid grid-cols-2 gap-3" id="grade-temas">
+        <!-- Amarelo -->
+        <button onclick="selecionarTema('amarelo-preto', '#FFD700', '#000000')" class="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl border-2 border-transparent hover:border-yellow-400 transition-all">
+            <div class="flex -space-x-2">
+                <div class="w-6 h-6 rounded-full bg-[#FFD700] border-2 border-white"></div>
+                <div class="w-6 h-6 rounded-full bg-black border-2 border-white"></div>
+            </div>
+            <span class="text-xs font-bold">Amarelo/Preto</span>
+        </button>
+
+        <button onclick="selecionarTema('amarelo-branco', '#FFD700', '#FFFFFF')" class="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl border-2 border-transparent hover:border-yellow-400">
+            <div class="flex -space-x-2">
+                <div class="w-6 h-6 rounded-full bg-[#FFD700] border-2 border-white"></div>
+                <div class="w-6 h-6 rounded-full bg-white border-2 border-gray-100"></div>
+            </div>
+            <span class="text-xs font-bold">Amarelo/Branco</span>
+        </button>
+
+        <!-- Verde -->
+        <button onclick="selecionarTema('verde-branco', '#059669', '#FFFFFF')" class="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl border-2 border-transparent hover:border-green-500">
+            <div class="flex -space-x-2">
+                <div class="w-6 h-6 rounded-full bg-[#059669] border-2 border-white"></div>
+                <div class="w-6 h-6 rounded-full bg-white border-2 border-gray-100"></div>
+            </div>
+            <span class="text-xs font-bold">Verde/Branco</span>
+        </button>
+
+        <!-- Azul -->
+        <button onclick="selecionarTema('azul-branco', '#2563EB', '#FFFFFF')" class="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl border-2 border-transparent hover:border-blue-500">
+            <div class="flex -space-x-2">
+                <div class="w-6 h-6 rounded-full bg-[#2563EB] border-2 border-white"></div>
+                <div class="w-6 h-6 rounded-full bg-white border-2 border-gray-100"></div>
+            </div>
+            <span class="text-xs font-bold">Azul/Branco</span>
+        </button>
+
+        <!-- Vermelho -->
+        <button onclick="selecionarTema('vermelho-branco', '#DC2626', '#FFFFFF')" class="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl border-2 border-transparent hover:border-red-500">
+            <div class="flex -space-x-2">
+                <div class="w-6 h-6 rounded-full bg-[#DC2626] border-2 border-white"></div>
+                <div class="w-6 h-6 rounded-full bg-white border-2 border-gray-100"></div>
+            </div>
+            <span class="text-xs font-bold">Vermelho/Branco</span>
+        </button>
+
+        <!-- Roxo -->
+        <button onclick="selecionarTema('roxo-branco', '#7C3AED', '#FFFFFF')" class="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl border-2 border-transparent hover:border-purple-500">
+            <div class="flex -space-x-2">
+                <div class="w-6 h-6 rounded-full bg-[#7C3AED] border-2 border-white"></div>
+                <div class="w-6 h-6 rounded-full bg-white border-2 border-gray-100"></div>
+            </div>
+            <span class="text-xs font-bold">Roxo/Branco</span>
+        </button>
+
+        <!-- Laranja -->
+        <button onclick="selecionarTema('laranja-branco', '#EA580C', '#FFFFFF')" class="flex items-center gap-2 p-3 bg-gray-50 rounded-2xl border-2 border-transparent hover:border-orange-500">
+            <div class="flex -space-x-2">
+                <div class="w-6 h-6 rounded-full bg-[#EA580C] border-2 border-white"></div>
+                <div class="w-6 h-6 rounded-full bg-white border-2 border-gray-100"></div>
+            </div>
+            <span class="text-xs font-bold">Laranja/Branco</span>
+        </button>
+    </div>
+</div>
+            <hr class="border-gray-50">
+
+            <!-- Gestão de Horários -->
+            <div>
+                <h3 class="text-sm font-black text-gray-800 mb-4 flex items-center gap-2">
+                    <i data-lucide="clock" class="w-4 h-4 text-orange-600"></i>
+                    HORÁRIOS DE FUNCIONAMENTO
+                </h3>
+                
+                <div id="container-horarios" class="space-y-3">
+                    <!-- Gerado dinamicamente via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // O JSON que você enviou
+        let dadosAtuais = null;
+
+        async function carregarDadosIniciais() {
+            // Aqui você faria o fetch do Supabase usando o ID: 76e33437...
+            // Por enquanto, usaremos o objeto que você colou:
+            const response = {"idx":0,"id":"76e33437-1a51-4f6f-a058-35a7ab784784","nome_comercio":"Budega Grill e Bebidas","slug":"budegagrillebebidas","whatsapp":"22998052702","endereco_completo":"Rua Nazário Pereira Gomes ","horarios_funcionamento":"{\"dom\": {\"saida\": \"\", \"aberto\": false, \"entrada\": \"\", \"horario\": \"Fechado\"}, \"qua\": {\"saida\": \"22:00\", \"aberto\": true, \"entrada\": \"08:00\", \"horario\": \"08:00 às 22:00\"}, \"qui\": {\"saida\": \"22:00\", \"aberto\": true, \"entrada\": \"08:00\", \"horario\": \"08:00 às 22:00\"}, \"sab\": {\"saida\": \"22:00\", \"aberto\": true, \"entrada\": \"08:00\", \"horario\": \"08:00 às 22:00\"}, \"seg\": {\"saida\": \"22:00\", \"aberto\": true, \"entrada\": \"08:00\", \"horario\": \"08:00 às 22:00\"}, \"sex\": {\"saida\": \"22:00\", \"aberto\": true, \"entrada\": \"08:00\", \"horario\": \"08:00 às 22:00\"}, \"ter\": {\"saida\": \"22:00\", \"aberto\": true, \"entrada\": \"08:00\", \"horario\": \"08:00 às 22:00\"}}"};
+
+            dadosAtuais = response;
+            preencherFormulario(response);
+        }
+
+        function preencherFormulario(data) {
+            document.getElementById('nome_comercio').value = data.nome_comercio;
+            document.getElementById('endereco_completo').value = data.endereco_completo;
+            document.getElementById('whatsapp').value = data.whatsapp;
+            document.getElementById('slug').value = data.slug;
+
+            const horarios = JSON.parse(data.horarios_funcionamento);
+            const container = document.getElementById('container-horarios');
+            const diasNome = { seg: "Segunda", ter: "Terça", qua: "Quarta", qui: "Quinta", sex: "Sexta", sab: "Sábado", dom: "Domingo" };
+
+            container.innerHTML = "";
+            Object.keys(diasNome).forEach(dia => {
+                const h = horarios[dia];
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="text-xs font-bold text-gray-500 w-16">${diasNome[dia]}</span>
+                        <div class="flex items-center gap-2">
+                            <input type="time" id="abertura-${dia}" value="${h.entrada}" ${!h.aberto ? 'disabled' : ''} class="bg-white p-1 rounded-md text-xs border-none outline-none">
+                            <span class="text-gray-300">às</span>
+                            <input type="time" id="fechamento-${dia}" value="${h.saida}" ${!h.aberto ? 'disabled' : ''} class="bg-white p-1 rounded-md text-xs border-none outline-none">
+                        </div>
+                        <input type="checkbox" id="check-${dia}" ${h.aberto ? 'checked' : ''} onchange="toggleDia('${dia}')" class="w-5 h-5 accent-orange-600">
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        function toggleDia(dia) {
+            const check = document.getElementById(`check-${dia}`).checked;
+            document.getElementById(`abertura-${dia}`).disabled = !check;
+            document.getElementById(`fechamento-${dia}`).disabled = !check;
+        }
+
+        async function atualizarLoja() {
+            // 1. Coletar Horários Novos
+            const dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'];
+            let novoHorarioObj = {};
+
+            dias.forEach(dia => {
+                const aberto = document.getElementById(`check-${dia}`).checked;
+                const ent = document.getElementById(`abertura-${dia}`).value;
+                const sai = document.getElementById(`fechamento-${dia}`).value;
+                novoHorarioObj[dia] = {
+                    aberto: aberto,
+                    entrada: ent,
+                    saida: sai,
+                    horario: aberto ? `${ent} às ${sai}` : "Fechado"
+                };
+            });
+
+            // 2. Montar Objeto para o Supabase
+            const updates = {
+                nome_comercio: document.getElementById('nome_comercio').value,
+                endereco_completo: document.getElementById('endereco_completo').value,
+                whatsapp: document.getElementById('whatsapp').value,
+                horarios_funcionamento: JSON.stringify(novoHorarioObj)
+            };
+
+            console.log("Enviando para o Supabase:", updates);
+
+            // Chamada real:
+            // const { error } = await _supabase.from('lojas').update(updates).eq('id', dadosAtuais.id);
+            
+            alert("Dados da Budega atualizados com sucesso!");
+        }
+
+        document.addEventListener('DOMContentLoaded', carregarDadosIniciais);
+    </script>
+</body>
+</html>

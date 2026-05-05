@@ -179,12 +179,28 @@ async function verificarSessao() {
 </script>
 
  <section id="dashboard" class="hidden p-4  mx-auto animate-fadeIn flex flex-col">
-  
-  <div class="mb-8">
-    <h1 class="text-2xl font-black text-gray-900">Visão Geral</h1>
-    <p class="text-gray-500 text-sm">Acompanhe o desempenho da sua loja em tempo real.</p>
-  </div>
 
+   <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-4">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="font-black text-gray-800">STATUS DA OPERAÇÃO</h3>
+        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">LOJA ABERTA</span>
+      </div>
+      
+     
+
+        <div class="grid grid-cols-2 gap-4">
+            <button onclick="navegacao('admProdutos')" class="p-4 bg-gray-900 text-white rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-gray-800 transition-all">
+                <i data-lucide="plus-circle" class="w-6 h-6 text-orange-500"></i>
+                Adicionar Itens
+            </button>
+            <button id="btn_compartilhar" class="p-4 bg-orange-600 text-orange-900 rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-orange-600 transition-all">
+                <i data-lucide="share-2" class="w-6 h-6"></i>
+                Compartilhar Link
+            </button>
+        </div>
+      </div>
+    
+ 
   <div class=" w-full rimg grid grid-cols-1 gap-4 mb-8">
     
     <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100">
@@ -233,40 +249,9 @@ async function verificarSessao() {
       </div>
     </div>
 
-    <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="font-black text-gray-800">STATUS DA OPERAÇÃO</h3>
-        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">LOJA ABERTA</span>
-      </div>
-      
-      <div class="space-y-6">
-        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
-          <div class="flex items-center gap-3">
-            <div class="bg-orange-600 p-2 rounded-lg">
-                <i data-lucide="clock" class="w-5 h-5 text-orange-900"></i>
-            </div>
-            <div>
-              <p class="font-bold text-gray-800">Tempo médio de entrega</p>
-              <p class="text-xs text-gray-500">Baseado nos últimos 7 dias</p>
-            </div>
-          </div>
-          <span class="font-black text-xl text-gray-900">32 min</span>
-        </div>
+   </div>
 
-        <div class="grid grid-cols-2 gap-4">
-            <button onclick="navegacao('admProdutos')" class="p-4 bg-gray-900 text-white rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-gray-800 transition-all">
-                <i data-lucide="plus-circle" class="w-6 h-6 text-orange-500"></i>
-                Adicionar Itens
-            </button>
-            <button id="btn_compartilhar" class="p-4 bg-orange-600 text-orange-900 rounded-2xl font-bold flex flex-col items-center gap-2 hover:bg-orange-600 transition-all">
-                <i data-lucide="share-2" class="w-6 h-6"></i>
-                Compartilhar Link
-            </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
+ 
 </section>
 
 
@@ -344,7 +329,7 @@ function definirFiltro(filtro) {
     
     </div>
  <!--combos para montar-->
-<section id="combosParaMontar" class="hidden  w-full grid gap-4 mx-auto place-items-center">
+<section id="combosParaMontar" class="hidden  w-full grid gap-4 mx-auto grid-cols-1 place-items-center">
 </section>
 <!--modal novo combo montar-->
 
